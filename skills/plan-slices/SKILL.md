@@ -1,6 +1,7 @@
 ---
 name: plan-slices
 description: Create, review, split, merge, and reorder delivery plans for greenfield products and major capabilities. Use for risk-first vertical slicing, explicit NOW/LATER/OUT-OF-SCOPE horizons, independently schedulable product themes, and user-useful developer enablers. Reject horizontal layer-by-layer plans. Reserve isolated fixes and routine refactors for ordinary task planning unless delivery slicing is explicitly requested.
+license: MIT
 ---
 
 # Plan Delivery Slices
