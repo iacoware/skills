@@ -1,7 +1,7 @@
-# Eval: recipe-app
+# Eval `plan-slices` / recipe-app
 
-Scenario di riferimento per la skill `plan-slices`: pianificazione greenfield di un ricettario
-privato condiviso, con ricerca semantica cross-lingua come differenziatore.
+Scenario di riferimento: pianificazione greenfield di un ricettario privato condiviso, con ricerca
+semantica cross-lingua come differenziatore.
 
 ## Struttura
 
@@ -25,7 +25,7 @@ si aggiornano insieme quando cambia l'intento.
 4. Valida la struttura:
 
    ```bash
-   python3 ../../skills/plan-slices/scripts/validate_plan.py results/PLAN-....md
+   python3 ../../../skills/plan-slices/scripts/validate_plan.py results/PLAN-....md
    ```
 
 ## Esecuzioni

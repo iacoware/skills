@@ -35,7 +35,7 @@ make list                     # elenca le skill scoperte, senza installare
 
 ## Evals
 
-`evals/<scenario>/` contiene gli scenari di valutazione delle skill: input in `sources/`, oracolo alla root dello scenario, piani generati in `results/`. Vedi [`evals/recipe-app`](evals/recipe-app).
+`evals/<skill>/<scenario>/` contiene gli scenari di valutazione, fuori dalle cartelle delle skill perché `skills add` copia solo il payload di runtime: input in `sources/`, oracolo alla root dello scenario, output generati in `results/`. Vedi [`evals/plan-slices/recipe-app`](evals/plan-slices/recipe-app).
 
 ## Test
 
