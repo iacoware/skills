@@ -23,13 +23,19 @@ npx skills add iacoware/agent-skills -g
 
 ## Sviluppo locale
 
-Installa dal path locale: la CLI crea symlink, quindi le modifiche al repo sono immediatamente visibili agli agent.
+Dalla root del repo:
 
 ```bash
-npx skills add ./path/a/agent-skills -g -a claude-code -a codex
+make add                      # installa tutte le skill del repo su claude-code e codex
+make add-skill SKILL=plan-slices   # solo una
+make list                     # elenca le skill scoperte, senza installare
 ```
 
-Riavvia la sessione dell'agent dopo aver modificato il frontmatter di un `SKILL.md` (`name` e `description` determinano l'attivazione).
+`skills add` **copia** i file in `~/.agents/skills/`: rilancia `make add` dopo ogni modifica, e riavvia la sessione dell'agent perché la rilegga (obbligatorio quando cambi `name` o `description`, che determinano l'attivazione).
+
+## Evals
+
+`evals/<scenario>/` contiene gli scenari di valutazione delle skill: input in `sources/`, oracolo alla root dello scenario, piani generati in `results/`. Vedi [`evals/recipe-app`](evals/recipe-app).
 
 ## Test
 
