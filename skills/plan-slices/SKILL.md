@@ -212,16 +212,17 @@ section names, field names, and order; write content in the user's language.
   `OUT-OF-SCOPE` is empty.
 - Omit empty optional sections, including `Non-product work` and `Open questions`.
 
-After publishing, run:
+After publishing, run the validator. Resolve `<skill-dir>` to the absolute path of the directory
+containing this `SKILL.md`; the working directory is the user's project, not the skill.
 
 ```bash
-python3 scripts/validate_plan.py path/to/plan.md
+python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md
 ```
 
 When an eval specification exists, run:
 
 ```bash
-python3 scripts/validate_plan.py path/to/plan.md --expectations path/to/expectations.json
+python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md --expectations path/to/expectations.json
 ```
 
 Fix every structural failure. Treat expectation failures as eval evidence: inspect the plan and
