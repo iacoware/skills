@@ -34,9 +34,7 @@ VALID_PLAN = """\
 
 ### 0. Repository setup *(Enabler: delivery)*
 
-**Outcome**
-
-- Developers receive CI feedback.
+---
 
 **Includes**
 
@@ -46,11 +44,13 @@ VALID_PLAN = """\
 
 - CI passes from a clean checkout.
 
-### 1. Walking skeleton *(Enabler: delivery)*
-
 **Outcome**
 
-- Developers can inspect the deployed runtime.
+- Developers receive CI feedback.
+
+### 1. Walking skeleton *(Enabler: delivery)*
+
+---
 
 **Includes**
 
@@ -60,11 +60,13 @@ VALID_PLAN = """\
 
 - The dev URL returns the page.
 
-### 2. Login *(Theme: A)*
-
 **Outcome**
 
-- A user signs in.
+- Developers can inspect the deployed runtime.
+
+### 2. Login *(Theme: A)*
+
+---
 
 **Includes**
 
@@ -74,11 +76,13 @@ VALID_PLAN = """\
 
 - Login and logout work in dev.
 
-### 3. Semantic search *(Theme: B)*
-
 **Outcome**
 
-- A user finds relevant content.
+- A user signs in.
+
+### 3. Semantic search *(Theme: B)*
+
+---
 
 **Includes**
 
@@ -88,6 +92,18 @@ VALID_PLAN = """\
 
 - A representative query returns the expected fixture.
 
+**Learning / risk**
+
+- Retrieval quality decides the product differentiator.
+
+**Outcome**
+
+- A user finds relevant content.
+
+**Cost**
+
+- One embedding call per indexed document.
+
 ## LATER
 
 - **Advanced ranking**
@@ -96,17 +112,6 @@ VALID_PLAN = """\
 ## OUT-OF-SCOPE
 
 - **Public catalog** — Not part of the private-product strategy.
-
-## Hard dependencies
-
-```text
-Repository setup
-└── Walking skeleton
-```
-
-## Sequencing notes
-
-- **Priority preference:** Login before search — validates access conventions.
 
 ## Decision checkpoints
 
@@ -132,13 +137,61 @@ class ValidatePlanTests(unittest.TestCase):
 
     def test_rejects_missing_slice_field(self) -> None:
         invalid = VALID_PLAN.replace(
-            "**Verification**\n\n- Login and logout work in dev.\n\n### 3.",
-            "### 3.",
+            "**Verification**\n\n- Login and logout work in dev.\n\n",
+            "",
         )
 
         errors = validate_structure(parse_plan(invalid))
 
         self.assertTrue(any("NOW slice 2" in error and "Verification" in error for error in errors))
+
+    def test_rejects_missing_rule_after_slice_title(self) -> None:
+        invalid = VALID_PLAN.replace("### 2. Login *(Theme: A)*\n\n---\n", "### 2. Login *(Theme: A)*\n")
+
+        errors = validate_structure(parse_plan(invalid))
+
+        self.assertTrue(any("NOW slice 2" in error and "rule" in error for error in errors))
+
+    def test_rejects_out_of_order_slice_fields(self) -> None:
+        invalid = VALID_PLAN.replace(
+            "**Includes**\n\n- One real identity provider.\n\n"
+            "**Verification**\n\n- Login and logout work in dev.\n",
+            "**Verification**\n\n- Login and logout work in dev.\n\n"
+            "**Includes**\n\n- One real identity provider.\n",
+        )
+
+        errors = validate_structure(parse_plan(invalid))
+
+        self.assertTrue(any("NOW slice 2" in error and "order" in error for error in errors))
+
+    def test_rejects_annotation_before_standard_fields(self) -> None:
+        invalid = VALID_PLAN.replace(
+            "**Includes**\n\n- One real identity provider.\n",
+            "**Cost**\n\n- None.\n\n**Includes**\n\n- One real identity provider.\n",
+        )
+
+        errors = validate_structure(parse_plan(invalid))
+
+        self.assertTrue(any("annotation 'Cost'" in error for error in errors))
+
+    def test_rejects_removed_why_now_field(self) -> None:
+        invalid = VALID_PLAN.replace(
+            "**Outcome**\n\n- A user signs in.\n",
+            "**Outcome**\n\n- A user signs in.\n\n**Why now**\n\n- Access precedes search.\n",
+        )
+
+        errors = validate_structure(parse_plan(invalid))
+
+        self.assertTrue(
+            any("NOW slice 2" in error and "Why now" in error for error in errors)
+        )
+
+    def test_rejects_removed_dependency_sections(self) -> None:
+        invalid = VALID_PLAN + "\n## Hard dependencies\n\n```text\nA\n```\n"
+
+        errors = validate_structure(parse_plan(invalid))
+
+        self.assertTrue(any("legacy section is forbidden: Hard dependencies" in error for error in errors))
 
     def test_checks_scenario_expectations(self) -> None:
         expectations = {

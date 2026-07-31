@@ -19,28 +19,29 @@ REQUIRED_H2 = (
     "NOW",
     "LATER",
     "OUT-OF-SCOPE",
-    "Hard dependencies",
-    "Sequencing notes",
 )
 LIST_ONLY_H2 = (
     "Ordering criteria",
     "Cross-functional concerns",
     "LATER",
     "OUT-OF-SCOPE",
-    "Sequencing notes",
     "Decision checkpoints",
     "Non-product work",
     "Open questions",
 )
-REQUIRED_SLICE_FIELDS = ("Outcome", "Includes", "Verification")
-OPTIONAL_SLICE_FIELDS = ("Why now", "Learning / risk")
-ALL_SLICE_FIELDS = REQUIRED_SLICE_FIELDS + OPTIONAL_SLICE_FIELDS
+LEGACY_H2 = (
+    "Cross-cutting baseline",
+    "Recommended order and weak constraints",
+    "Hard dependencies",
+    "Sequencing notes",
+)
+REQUIRED_SLICE_FIELDS = ("Includes", "Verification", "Outcome")
+STANDARD_SLICE_FIELDS = ("Includes", "Verification", "Learning / risk", "Outcome")
+LEGACY_SLICE_FIELDS = ("Why now",)
+SLICE_RULE = "---"
 H2_PATTERN = re.compile(r"^## (?!#)(.+?)\s*$", re.MULTILINE)
 H3_PATTERN = re.compile(r"^### (\d+)\.\s+(.+?)\s*$", re.MULTILINE)
-FIELD_PATTERN = re.compile(
-    r"^\*\*(" + "|".join(re.escape(field) for field in ALL_SLICE_FIELDS) + r")\*\*\s*$",
-    re.MULTILINE,
-)
+FIELD_PATTERN = re.compile(r"^\*\*([^*]+?)\*\*\s*$", re.MULTILINE)
 LIST_ITEM_PATTERN = re.compile(r"^\s*(?:[-+*]|\d+\.)\s+")
 CONTINUATION_PATTERN = re.compile(r"^\s{2,}\S")
 
@@ -139,10 +140,42 @@ def _list_only_errors(section: Section) -> list[str]:
     return errors
 
 
+def _preamble_errors(slice_: Slice, preamble: str) -> list[str]:
+    lines = [line.strip() for line in preamble.splitlines() if line.strip()]
+    if lines[:1] != [SLICE_RULE]:
+        return [f"NOW slice {slice_.number}: title must be followed by a '{SLICE_RULE}' rule"]
+    if lines[1:]:
+        return [f"NOW slice {slice_.number}: only the '{SLICE_RULE}' rule may precede the fields"]
+    return []
+
+
+def _order_errors(slice_: Slice, fields: Sequence[str]) -> list[str]:
+    errors: list[str] = []
+    standard_positions = [
+        STANDARD_SLICE_FIELDS.index(field) for field in fields if field in STANDARD_SLICE_FIELDS
+    ]
+    if standard_positions != sorted(standard_positions):
+        errors.append(
+            f"NOW slice {slice_.number}: fields must follow the order "
+            f"{', '.join(STANDARD_SLICE_FIELDS)}"
+        )
+
+    last_standard = max(
+        (index for index, field in enumerate(fields) if field in STANDARD_SLICE_FIELDS),
+        default=-1,
+    )
+    for index, field in enumerate(fields):
+        if field not in STANDARD_SLICE_FIELDS and index < last_standard:
+            errors.append(
+                f"NOW slice {slice_.number}: annotation '{field}' must follow the standard fields"
+            )
+    return errors
+
+
 def _field_errors(slice_: Slice) -> list[str]:
     errors: list[str] = []
     matches = list(FIELD_PATTERN.finditer(slice_.body))
-    fields = [match.group(1) for match in matches]
+    fields = [match.group(1).strip() for match in matches]
 
     for required in REQUIRED_SLICE_FIELDS:
         count = fields.count(required)
@@ -151,22 +184,31 @@ def _field_errors(slice_: Slice) -> list[str]:
                 f"NOW slice {slice_.number}: expected one '{required}' field, found {count}"
             )
 
-    if matches and slice_.body[: matches[0].start()].strip():
-        errors.append(f"NOW slice {slice_.number}: prose before first field is not allowed")
+    if fields.count("Learning / risk") > 1:
+        errors.append(f"NOW slice {slice_.number}: 'Learning / risk' is declared more than once")
+
+    for legacy in LEGACY_SLICE_FIELDS:
+        if legacy in fields:
+            errors.append(f"NOW slice {slice_.number}: legacy field is forbidden: {legacy}")
+
+    preamble = slice_.body[: matches[0].start()] if matches else slice_.body
+    errors.extend(_preamble_errors(slice_, preamble))
+    errors.extend(_order_errors(slice_, fields))
 
     for index, match in enumerate(matches):
         end = matches[index + 1].start() if index + 1 < len(matches) else len(slice_.body)
+        field = fields[index]
         content = slice_.body[match.end() : end]
         nonblank = [line for line in content.splitlines() if line.strip()]
         if not nonblank:
-            errors.append(f"NOW slice {slice_.number}: '{match.group(1)}' is empty")
+            errors.append(f"NOW slice {slice_.number}: '{field}' is empty")
             continue
         if not any(LIST_ITEM_PATTERN.match(line) for line in nonblank):
-            errors.append(f"NOW slice {slice_.number}: '{match.group(1)}' must contain a list")
+            errors.append(f"NOW slice {slice_.number}: '{field}' must contain a list")
         for line in nonblank:
             if not (LIST_ITEM_PATTERN.match(line) or CONTINUATION_PATTERN.match(line)):
                 errors.append(
-                    f"NOW slice {slice_.number}: '{match.group(1)}' contains prose outside a list"
+                    f"NOW slice {slice_.number}: '{field}' contains prose outside a list"
                 )
                 break
 
@@ -188,7 +230,7 @@ def validate_structure(plan: Plan) -> list[str]:
     if positions != sorted(positions):
         errors.append("required sections are not in template order")
 
-    for legacy in ("Cross-cutting baseline", "Recommended order and weak constraints"):
+    for legacy in LEGACY_H2:
         if legacy in plan.sections:
             errors.append(f"legacy section is forbidden: {legacy}")
 
@@ -223,10 +265,6 @@ def validate_structure(plan: Plan) -> list[str]:
         section = plan.sections.get(horizon)
         if section and not any(LIST_ITEM_PATTERN.match(line) for line in section.body.splitlines()):
             errors.append(f"{horizon}: expected a list or '- None identified.'")
-
-    dependencies = plan.sections.get("Hard dependencies")
-    if dependencies and "```text" not in dependencies.body:
-        errors.append("Hard dependencies: expected a fenced text graph")
 
     return errors
 

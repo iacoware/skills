@@ -59,20 +59,16 @@ Give every theme:
 - one desired outcome in product language;
 - its first validating `NOW` slice.
 
-Classify predecessor relationships as:
-
-- **hard dependency:** without the predecessor, no controlled input or narrower real precursor can
-  make the dependent outcome realistically verifiable;
-- **soft dependency:** the predecessor helps but can be deferred;
-- **priority preference:** value, risk, frequency, codebase maturity, or review cadence prefers the
-  order.
+Identify hard dependencies only: a predecessor is hard when no controlled input or narrower real
+precursor can make the dependent outcome realistically verifiable. Convenient reuse, a fuller demo,
+or a preferred order is not a hard dependency — leave those to the ordering rules in step 4.
 
 Controlled inputs may replace unfinished UI or administration. They must still traverse every
 production path whose correctness materially affects the outcome. Fixtures that inject derived
 data directly do not remove a dependency on the production computation of that data.
 
-Record one counterfactual for every hard dependency. Convenient reuse or a fuller demo is not a
-hard dependency. Mark outcomes with no predecessors.
+Hard dependencies constrain the slice order and nothing else. Do not grade them, do not write
+counterfactuals for them, and do not publish them.
 
 For greenfield work, add:
 
@@ -85,8 +81,9 @@ runtime path can validate delivery. Make independently useful access and domain 
 slices.
 
 **Proceed when:** every goal maps to an outcome, theme, and horizon; theme split/merge decisions
-pass the independence tests; every predecessor is classified; every hard edge has a valid
-counterfactual; greenfield prerequisites are present and separate.
+pass the independence tests; hard dependencies are limited to outcomes no controlled input can
+verify; greenfield prerequisites are present and separate. Keep this map in reasoning, not in the
+published plan.
 
 ## 3. Cut user-useful vertical slices
 
@@ -201,19 +198,29 @@ delivery maturity; checkpoints name evidence and decisions they can change.
 Read and follow [assets/plan-template.md](assets/plan-template.md). Preserve its heading hierarchy,
 section names, field names, and order; write content in the user's language.
 
-- Use bullets, tables, or graphs for technical sections; avoid prose blocks.
+- Use bullets or tables for technical sections; avoid prose blocks.
 - Keep `Cross-functional concerns`, `NOW`, `LATER`, and `OUT-OF-SCOPE` as exact labels.
 - Detail numbered `NOW` slices only. Keep `LATER` conditional and compact.
-- Give every `NOW` slice bullet lists under `Outcome`, `Includes`, and `Verification`.
-- Add `Why now` or `Learning / risk` only when material.
-- Show hard dependencies once in the graph.
-- Put soft dependencies and priority preferences in terse `Sequencing notes` bullets.
+- Separate every numbered `NOW` slice title from its fields with a `---` rule.
+- Give every `NOW` slice bullet lists under `Includes`, `Verification`, and `Outcome`, in that
+  order.
+- Add `Learning / risk` between `Verification` and `Outcome` only when material.
+- Add other slice-specific annotations only when the plan needs them, as `**Label**` blocks after
+  the standard fields.
+- Publish no dependency graph, no sequencing section, and no per-slice ordering rationale: the slice
+  order carries it, and `Ordering criteria` states the rules once.
 - Always publish all three horizon sections; use `- None identified.` when `LATER` or
   `OUT-OF-SCOPE` is empty.
 - Omit empty optional sections, including `Non-product work` and `Open questions`.
 
-After publishing, run the validator. Resolve `<skill-dir>` to the absolute path of the directory
-containing this `SKILL.md`; the working directory is the user's project, not the skill.
+Keep the document short enough to be read in one pass: at most five bullets per slice field, one
+line per bullet, no restating of `Cross-functional concerns` inside slices.
+
+After publishing, run the validator. It checks section presence and order, the themes table, the
+slice numbering, the `(Theme: …)` or `(Enabler: …)` tag, the `---` rule, field presence, field
+order, and list-only content — so publish first and let it find structural defects instead of
+reading its source. Resolve `<skill-dir>` to the absolute path of the directory containing this
+`SKILL.md`; the working directory is the user's project, not the skill.
 
 ```bash
 python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md
@@ -230,8 +237,8 @@ skill before changing the expectation.
 
 **Complete when:** the validator passes; themes trace to first validators; `NOW` is a coherent
 user-useful release; enablers are vertical and adjacent to their product outcome; `LATER` is
-evidence-dependent; hard and weak ordering constraints are consistent; every source behaviour has
-one horizon; only implementation-changing questions remain.
+evidence-dependent; the slice order respects every hard dependency; every source behaviour has one
+horizon; only implementation-changing questions remain.
 
 ## Review an existing plan
 
@@ -245,5 +252,5 @@ Apply every applicable criterion from steps 2–5. For each failure, state:
 Keep passing verdicts internal. Modify the plan only when requested.
 
 **Complete when:** every applicable criterion has a pass, fail, or not-applicable verdict; every
-differentiator, material risk, horizon assignment, theme boundary, slice, and dependency edge is
+differentiator, material risk, horizon assignment, theme boundary, slice, and ordering constraint is
 traceable to a verdict.

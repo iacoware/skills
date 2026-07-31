@@ -24,9 +24,7 @@
 
 ### 0. [Repository prerequisite] *(Enabler: delivery)*
 
-**Outcome**
-
-- [Developer-useful delivery foundation.]
+---
 
 **Includes**
 
@@ -36,11 +34,13 @@
 
 - [Executable evidence.]
 
-### 1. [Walking skeleton] *(Enabler: delivery)*
-
 **Outcome**
 
-- [Smallest deployed runtime useful to developers testing delivery.]
+- [Developer-useful delivery foundation.]
+
+### 1. [Walking skeleton] *(Enabler: delivery)*
+
+---
 
 **Includes**
 
@@ -50,15 +50,13 @@
 
 - [Evidence from the representative environment.]
 
-### 2. [Stable descriptive slice name] *(Theme: [A])*
-
 **Outcome**
 
-- [One user-useful behaviour.]
+- [Smallest deployed runtime useful to developers testing delivery.]
 
-**Why now**
+### 2. [Stable descriptive slice name] *(Theme: [A])*
 
-- [Optional soft dependency or priority preference; omit when unnecessary.]
+---
 
 **Includes**
 
@@ -71,6 +69,14 @@
 **Learning / risk**
 
 - [Optional material learning or risk; omit when unnecessary.]
+
+**Outcome**
+
+- [One user-useful behaviour.]
+
+**[Additional annotation]**
+
+- [Optional slice-specific note this plan needs; place after the standard fields.]
 
 [Repeat one numbered H3 section per NOW slice.]
 
@@ -87,19 +93,6 @@
 - **[Excluded capability]** — [Source-backed rationale.]
 
 [Use `- None identified.` when empty.]
-
-## Hard dependencies
-
-```text
-[Prerequisite]
-└── [Slice name]
-    ├── [Slice name]
-    └── [Slice name]
-```
-
-## Sequencing notes
-
-- **[Soft dependency | Priority preference]:** [A before B] — [terse reason.]
 
 ## Decision checkpoints
 
