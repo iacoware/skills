@@ -8,13 +8,16 @@ semantica cross-lingua come differenziatore.
 | Percorso | Ruolo |
 | --- | --- |
 | `sources/` | input passati all'agent: `goal.md`, `concepts.md`, `arch-choices.md`, `tech-choices.md` |
-| `IDEAL-SLICES.md` | oracolo: slice e ordine desiderati, scritti a mano |
-| `CRITERI-GIUDIZIO.md` | oracolo: criteri di valutazione e osservazioni per piano |
-| `expectations.json` | oracolo eseguibile (ancora da scrivere: la skill è in iterazione) |
+| `REFERENCE-PLAN.md` | unico oracolo semantico: temi, slice, confini, invarianti e tolleranze |
+| `EVAL-NOTES.md` | diario delle valutazioni e delle modifiche provate nello skill |
 | `results/` | piani generati, uno per esecuzione |
 
-Input, oracolo e output sono separati; i tre file di oracolo stanno alla root dello scenario perché
-si aggiornano insieme quando cambia l'intento.
+Input, riferimento, note e output sono separati. L'agent che genera il piano riceve solo `sources/`;
+reference e note restano nascosti per non contaminare il forward-test.
+
+In questa fase non esiste `expectations.json`: verrà derivato dagli invarianti stabili di
+`REFERENCE-PLAN.md` dopo più generazioni indipendenti soddisfacenti. Il validator controlla soltanto
+la struttura finché l'oracolo semantico continua a evolvere.
 
 ## Riesecuzione
 
@@ -35,10 +38,12 @@ si aggiornano insieme quando cambia l'intento.
 | Risultato | Agent | Skill |
 | --- | --- | --- |
 | `PLAN-CC-CON.md` | Claude Code | sì, versione pre-repo |
+| `PLAN-CC-CON-2.md` | Claude Code | sì, commit non annotato |
 | `PLAN-CC-SENZA.md` | Claude Code | no |
 | `PLAN-CX-CON.md` | Codex | sì, versione pre-repo |
 | `PLAN-CX-CON-2.md` | Codex | sì, versione pre-repo |
 | `PLAN-CX-CON-3.md` | Codex | sì, versione pre-repo |
+| `PLAN-CX-CON-4.md` | Codex | sì, commit non annotato |
 | `PLAN-CX-SENZA.md` | Codex | no |
 
 Dalla prossima esecuzione annota il commit esatto, altrimenti i confronti non sono riproducibili.
