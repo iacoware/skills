@@ -36,8 +36,14 @@ capable of changing scope, order, architecture, or a go/no-go decision as:
 
 Retain sources. Mark unsupported conclusions as assumptions.
 
+Reconcile the inventory before mapping. Do not silently choose between conflicting statements or
+reopen a decision that a source declares closed. When a conflict changes feasibility, scope, or
+order, publish it under `Open questions` or place a spike before the affected slice. Do not state an
+unconditional outcome while its enabling decision remains unresolved.
+
 **Proceed when:** every sequencing-relevant statement has applicable classifications and a source;
-unsupported conclusions are assumptions; exclusions have explicit rationale.
+unsupported conclusions are assumptions; exclusions have explicit rationale; material source
+conflicts are resolved, exposed, or assigned to a spike.
 
 ## 2. Map themes, outcomes, and dependencies
 
@@ -53,6 +59,15 @@ materially in any of:
 Do not optimize for fewer themes. Merge themes only when neither can produce independent feedback
 or move independently. A user-facing identity or access capability may be a theme; an authentication
 library or database layer is not.
+
+Run both tests explicitly:
+
+- **Split test:** split when either capability can be cancelled, deferred, or reordered without
+  invalidating the other's evidence. A shared entity, form, pipeline, or implementation is not a
+  sufficient reason to merge independently schedulable value.
+- **Merge test:** merge when the capabilities share the same interaction, invariant, and learning
+  target, and neither produces useful feedback alone. Separate names or modes are not sufficient
+  reasons to split one coherent behaviour.
 
 Give every theme:
 
@@ -112,6 +127,11 @@ invariant, and learning target, and separation would create a temporary contract
 feedback. Shared create/edit review or multiple inputs to one established media pipeline may
 therefore remain cohesive. Defer independently optional interactions to `LATER`.
 
+After the first cut, audit adjacent slices in both directions. Merge slices that duplicate the same
+interaction and invariant without changing a decision. Split independently testable fallbacks,
+external adapters, lifecycle operations, or failure profiles. Deliver a required correction,
+retry, or escape path before or with the first behaviour that can create the recoverable state.
+
 ### Developer enablers
 
 Allow an explicit `Enabler` slice when its primary user is a developer and it:
@@ -125,6 +145,11 @@ Allow an explicit `Enabler` slice when its primary user is a developer and it:
 Examples include processing normalized fixtures through the real embedding and persistence
 pipeline before semantic retrieval, or deploying the minimum runtime before authentication.
 
+An enabler may include the smallest diagnostic consumer needed to observe its uncertainty, such as
+a command that ranks persisted vectors. Keep product interaction and business feedback in the
+successor, and ensure the successor adds a user outcome rather than merely repackaging the enabler.
+Do not add a domain dependency to the walking skeleton only because the next slice will need it.
+
 ### Size calibration
 
 - Keep early slices narrow while delivery, testing, domain, and UI conventions need frequent human
@@ -133,8 +158,14 @@ pipeline before semantic retrieval, or deploying the minimum runtime before auth
 - Never make later slices larger merely because they occur later.
 
 Include behaviour-specific validation, authorization, failure handling, logging, observability,
-accessibility, and security where required. State repeated expectations once under
-`Cross-functional concerns`. Do not defer production-required failures to generic hardening.
+accessibility, security, and data integrity where required. State repeated expectations once under
+`Cross-functional concerns`, but verify them in the first slice that crosses each trust boundary or
+performs each external side effect. Name relevant abuse, timeout, invalid-output, and partial-failure
+modes; a generic cross-functional statement is not evidence. Do not defer production-required
+failures to generic hardening.
+
+Every material claim under `Learning / risk` must map to an observation in `Verification`. Checking
+that data exists does not demonstrate its quality, usability, latency, or cost.
 
 Classify risk spikes, migrations, and operational work separately when they cannot produce a
 user-useful vertical result.
@@ -156,6 +187,8 @@ behaviour has one owner or explicit exclusion.
   transformation, authorization, persistence, or adapter under test.
 - **Theme compression:** merge independently schedulable value areas to keep the theme count small.
 - **Atomization:** split one cohesive interaction or invariant only to reduce apparent slice size.
+- **Silent contradiction:** publish an unconditional slice while its sources disagree about a
+  decision required to implement or verify it.
 - **Deferred safety:** create generic error-handling, authorization, accessibility, observability,
   or security slices for behaviour required safely in earlier `NOW` slices. Replacing a configured
   scope with an authenticated one at a declared seam is not deferred safety; shipping slices whose
@@ -185,11 +218,24 @@ Respect hard dependencies, then order `NOW` by:
 Use the cheapest real input capable of validating a risky engine. Do not front-load commodity work
 for reuse alone.
 
+After validating existential risks, prefer breadth before depth: deliver one thin validating slice
+from each remaining `NOW` theme before a second slice from one theme. Depart only for another
+differentiator, a material risk, required recovery, or materially higher-frequency behaviour, and
+state that exception once under `Ordering criteria`.
+
 Separate a boundary from the identity behind it. Ship the tenancy, ownership, or scope boundary with
 the first slice that persists data, and let a single named resolver own the current scope; then a
 later slice can replace a configured scope with an authenticated one at one seam. State that seam
 under `Cross-functional concerns`. Never defer the boundary itself, and never defer identity when no
 such seam exists.
+
+Once the evidence that justified deferring identity exists, deliver identity before further
+user-facing slices whose acceptance depends on real ownership or membership.
+
+When `NOW` targets selected end users, end it with the smallest release slice that makes the
+coherent release usable in its intended environment. Tag it `(Release: delivery)`, not `Enabler`,
+and include only source-backed operational readiness. When `NOW` intentionally ends at developer
+validation, state that audience and environment explicitly instead.
 
 When a real slice cannot resolve a material uncertainty, define a time-boxed spike with question,
 evidence, enabled decision, exit criterion, and treatment of experimental code.
@@ -208,7 +254,8 @@ section names, field names, and order; write content in the user's language.
 
 - Use bullets or tables for technical sections; avoid prose blocks.
 - Keep `Cross-functional concerns`, `NOW`, `LATER`, and `OUT-OF-SCOPE` as exact labels.
-- Detail numbered `NOW` slices only. Keep `LATER` conditional and compact.
+- Detail numbered `NOW` slices only. Tag them `(Theme: …)`, `(Enabler: …)`, or
+  `(Release: delivery)`. Keep `LATER` conditional and compact.
 - Separate every numbered `NOW` slice title from its fields with a `---` rule.
 - Give every `NOW` slice bullet lists under `Includes`, `Verification`, and `Outcome`, in that
   order.
@@ -225,10 +272,10 @@ Keep the document short enough to be read in one pass: at most five bullets per 
 line per bullet, no restating of `Cross-functional concerns` inside slices.
 
 After publishing, run the validator. It checks section presence and order, the themes table, the
-slice numbering, the `(Theme: …)` or `(Enabler: …)` tag, the `---` rule, field presence, field
-order, and list-only content — so publish first and let it find structural defects instead of
-reading its source. Resolve `<skill-dir>` to the absolute path of the directory containing this
-`SKILL.md`; the working directory is the user's project, not the skill.
+slice numbering, the slice tag, the `---` rule, field presence, field order, and list-only content —
+so publish first and let it find structural defects instead of reading its source. Resolve
+`<skill-dir>` to the absolute path of the directory containing this `SKILL.md`; the working
+directory is the user's project, not the skill.
 
 ```bash
 python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md
@@ -246,7 +293,8 @@ skill before changing the expectation.
 **Complete when:** the validator passes; themes trace to first validators; `NOW` is a coherent
 user-useful release; enablers are vertical and adjacent to their product outcome; `LATER` is
 evidence-dependent; the slice order respects every hard dependency; every source behaviour has one
-horizon; only implementation-changing questions remain.
+horizon; end-user `NOW` reaches its intended environment; only implementation-changing questions
+remain.
 
 ## Review an existing plan
 

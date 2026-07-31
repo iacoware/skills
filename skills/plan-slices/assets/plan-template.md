@@ -19,6 +19,7 @@
 - **Validation and errors:** [Shared rule.]
 - **Operability:** [Logging, observability, timeout, and failure expectations.]
 - **Accessibility and security:** [Shared rule.]
+- **Data integrity and recovery:** [Invariants, derived data, and partial-failure recovery.]
 
 ## NOW
 
@@ -79,6 +80,9 @@
 - [Optional slice-specific note this plan needs; place after the standard fields.]
 
 [Repeat one numbered H3 section per NOW slice.]
+
+[When NOW targets selected end users, finish with a `*(Release: delivery)*` slice that promotes the
+coherent release to its intended environment. Omit it for explicitly developer-only validation.]
 
 ## LATER
 

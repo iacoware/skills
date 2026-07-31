@@ -254,12 +254,23 @@ def validate_structure(plan: Plan) -> list[str]:
         if numbers not in (expected,) or numbers[0] not in (0, 1):
             errors.append("NOW: slice numbers must be contiguous and start at 0 or 1")
 
+    release_numbers: list[int] = []
     for slice_ in plan.slices:
-        if not re.search(r"\*\((?:Theme|Enabler):\s*[^)]+\)\*", slice_.title):
+        if not re.search(
+            r"\*\((?:(?:Theme|Enabler):\s*[^)]+|Release:\s*delivery)\)\*",
+            slice_.title,
+        ):
             errors.append(
-                f"NOW slice {slice_.number}: title must declare '(Theme: ...)' or '(Enabler: ...)'"
+                f"NOW slice {slice_.number}: title must declare Theme, Enabler, or Release: delivery"
             )
+        if re.search(r"\*\(Release:\s*delivery\)\*", slice_.title):
+            release_numbers.append(slice_.number)
         errors.extend(_field_errors(slice_))
+
+    if len(release_numbers) > 1:
+        errors.append("NOW: expected at most one Release slice")
+    if release_numbers and release_numbers[-1] != plan.slices[-1].number:
+        errors.append("NOW: Release slice must be last")
 
     for horizon in ("LATER", "OUT-OF-SCOPE"):
         section = plan.sections.get(horizon)
@@ -290,6 +301,52 @@ def _validate_order(titles: Sequence[str], patterns: Sequence[str]) -> list[str]
     return errors
 
 
+def _validate_adjacencies(titles: Sequence[str], pairs: Sequence[object]) -> list[str]:
+    errors: list[str] = []
+    for pair in pairs:
+        if not isinstance(pair, list) or len(pair) != 2:
+            errors.append("adjacent_now_titles: each entry must contain two patterns")
+            continue
+        predecessor, successor = (str(pattern) for pattern in pair)
+        if any(
+            re.search(predecessor, titles[index], re.IGNORECASE)
+            and re.search(successor, titles[index + 1], re.IGNORECASE)
+            for index in range(len(titles) - 1)
+        ):
+            continue
+        errors.append(f"NOW adjacency: /{predecessor}/ must be followed by /{successor}/")
+    return errors
+
+
+def _validate_slice_rules(slices: Sequence[Slice], rules: Sequence[object]) -> list[str]:
+    errors: list[str] = []
+    for rule in rules:
+        if not isinstance(rule, dict) or not isinstance(rule.get("title"), str):
+            errors.append("slice_rules: each entry must contain a title pattern")
+            continue
+        title_pattern = rule["title"]
+        matches = [
+            slice_ for slice_ in slices if re.search(title_pattern, slice_.title, re.IGNORECASE)
+        ]
+        if len(matches) != 1:
+            errors.append(f"slice_rules: /{title_pattern}/ matched {len(matches)} NOW slices")
+            continue
+        slice_ = matches[0]
+        value = f"{slice_.title}\n{slice_.body}"
+        label = f"NOW slice {slice_.number}"
+
+        required = rule.get("required_patterns", [])
+        if isinstance(required, list):
+            errors.extend(_require_patterns(label, value, [str(pattern) for pattern in required]))
+
+        forbidden = rule.get("forbidden_patterns", [])
+        if isinstance(forbidden, list):
+            for pattern in forbidden:
+                if re.search(str(pattern), value, re.IGNORECASE | re.MULTILINE):
+                    errors.append(f"{label}: forbidden pattern present /{pattern}/")
+    return errors
+
+
 def validate_expectations(plan: Plan, expectations: dict[str, object]) -> list[str]:
     errors: list[str] = []
 
@@ -310,6 +367,14 @@ def validate_expectations(plan: Plan, expectations: dict[str, object]) -> list[s
     now_order = expectations.get("now_titles_in_order", [])
     if isinstance(now_order, list):
         errors.extend(_validate_order([slice_.title for slice_ in plan.slices], now_order))
+
+    adjacent = expectations.get("adjacent_now_titles", [])
+    if isinstance(adjacent, list):
+        errors.extend(_validate_adjacencies([slice_.title for slice_ in plan.slices], adjacent))
+
+    slice_rules = expectations.get("slice_rules", [])
+    if isinstance(slice_rules, list):
+        errors.extend(_validate_slice_rules(plan.slices, slice_rules))
 
     later = plan.sections.get("LATER")
     later_contains = expectations.get("later_contains", [])
@@ -358,8 +423,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         description=(
             "Validate the deterministic plan structure. Optional JSON expectations support "
             "scenario-specific evals with keys: theme_count, themes_contain, now_title_count, "
-            "now_titles_in_order, later_contains, out_of_scope_contains, required_patterns, "
-            "forbidden_patterns."
+            "now_titles_in_order, adjacent_now_titles, slice_rules, later_contains, "
+            "out_of_scope_contains, required_patterns, forbidden_patterns."
         )
     )
     parser.add_argument("plan", type=Path)

@@ -193,6 +193,27 @@ class ValidatePlanTests(unittest.TestCase):
 
         self.assertTrue(any("legacy section is forbidden: Hard dependencies" in error for error in errors))
 
+    def test_accepts_release_slice(self) -> None:
+        plan = VALID_PLAN.replace("*(Theme: B)*", "*(Release: delivery)*")
+
+        errors = validate_structure(parse_plan(plan))
+
+        self.assertEqual(errors, [])
+
+    def test_rejects_non_final_release_slice(self) -> None:
+        plan = VALID_PLAN.replace("*(Theme: A)*", "*(Release: delivery)*")
+
+        errors = validate_structure(parse_plan(plan))
+
+        self.assertTrue(any("Release slice must be last" in error for error in errors))
+
+    def test_rejects_unknown_release_type(self) -> None:
+        plan = VALID_PLAN.replace("*(Theme: B)*", "*(Release: production)*")
+
+        errors = validate_structure(parse_plan(plan))
+
+        self.assertTrue(any("Release: delivery" in error for error in errors))
+
     def test_checks_scenario_expectations(self) -> None:
         expectations = {
             "theme_count": 2,
@@ -203,6 +224,14 @@ class ValidatePlanTests(unittest.TestCase):
                 "Walking skeleton",
                 "Login",
                 "Semantic search",
+            ],
+            "adjacent_now_titles": [["Login", "Semantic search"]],
+            "slice_rules": [
+                {
+                    "title": "Walking skeleton",
+                    "required_patterns": ["deploy"],
+                    "forbidden_patterns": ["database"],
+                }
             ],
             "later_contains": ["Advanced ranking"],
             "out_of_scope_contains": ["Public catalog"],
@@ -222,6 +251,29 @@ class ValidatePlanTests(unittest.TestCase):
         errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
 
         self.assertTrue(any("NOW order" in error for error in errors))
+
+    def test_reports_scenario_adjacency_regression(self) -> None:
+        expectations = {
+            "adjacent_now_titles": [["Walking skeleton", "Semantic search"]],
+        }
+
+        errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
+
+        self.assertTrue(any("NOW adjacency" in error for error in errors))
+
+    def test_reports_slice_scoped_regression(self) -> None:
+        expectations = {
+            "slice_rules": [
+                {
+                    "title": "Walking skeleton",
+                    "forbidden_patterns": ["deploy"],
+                }
+            ],
+        }
+
+        errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
+
+        self.assertTrue(any("NOW slice 1" in error and "forbidden" in error for error in errors))
 
 
 if __name__ == "__main__":
