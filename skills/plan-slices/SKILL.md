@@ -157,7 +157,9 @@ behaviour has one owner or explicit exclusion.
 - **Theme compression:** merge independently schedulable value areas to keep the theme count small.
 - **Atomization:** split one cohesive interaction or invariant only to reduce apparent slice size.
 - **Deferred safety:** create generic error-handling, authorization, accessibility, observability,
-  or security slices for behaviour required safely in earlier `NOW` slices.
+  or security slices for behaviour required safely in earlier `NOW` slices. Replacing a configured
+  scope with an authenticated one at a declared seam is not deferred safety; shipping slices whose
+  reads are unscoped is.
 - **Horizon dumping:** place unfinished mandatory behaviour in `LATER`, or speculative ideas in
   `NOW`, without an evidence-based reason.
 
@@ -182,6 +184,12 @@ Respect hard dependencies, then order `NOW` by:
 
 Use the cheapest real input capable of validating a risky engine. Do not front-load commodity work
 for reuse alone.
+
+Separate a boundary from the identity behind it. Ship the tenancy, ownership, or scope boundary with
+the first slice that persists data, and let a single named resolver own the current scope; then a
+later slice can replace a configured scope with an authenticated one at one seam. State that seam
+under `Cross-functional concerns`. Never defer the boundary itself, and never defer identity when no
+such seam exists.
 
 When a real slice cannot resolve a material uncertainty, define a time-boxed spike with question,
 evidence, enabled decision, exit criterion, and treatment of experimental code.
