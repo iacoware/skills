@@ -1,288 +1,349 @@
-# Recipe App — Piano di delivery ad alto livello
+# Recipe App — Piano di delivery
 
-## Obiettivo e criteri di pianificazione
+- **Sources:** `sources/goal.md`, `sources/concepts.md`, `sources/arch-choices.md`, `sources/tech-choices.md`.
+- **Current state:** Greenfield; modello, stack e servizi scelti, nessun repository applicativo o percorso runtime esistente.
 
-Portare in uso un ricettario privato condiviso che permetta di acquisire, correggere e
-ritrovare ricette, validando presto i due differenziatori:
+## Ordering criteria
 
-1. ricerca semantica multilingue;
-2. estrazione LLM quando i dati strutturati non sono disponibili.
+- Separare prerequisito repository e walking skeleton; mantenere inizialmente piccole le slice per revisionare presto convenzioni e delivery.
+- Validare prima il differenziatore esistenziale: ricerca semantica cross-lingua su persistenza, embedding e ambiente reali.
+- Usare ricette controllate normalizzate per provare la ricerca senza attendere i flussi di acquisizione.
+- Approfondire poi l'acquisizione dal caso frequente ai fallback; sostituire infine lo scope configurato con identità e membership reali.
 
-Fonti: `goal.md`, `concepts.md`, `arch-choices.md`, `tech-choices.md`. Il repository è
-greenfield: al momento contiene solo documentazione.
+## Themes
 
-Assunzioni di piano:
+| Theme | Desired outcome | First validation |
+|---|---|---|
+| A. Ricerca semantica | Trovare nel ricettario corrente ricette pertinenti anche tra lingue diverse. | Ricerca cross-lingua nel ricettario corrente |
+| B. Consultazione | Consultare rapidamente il contenuto del ricettario corrente. | Home e dettaglio ricetta |
+| C. Acquisizione e manutenzione | Salvare con attrito minimo ricette da fonti diverse e correggerle dopo. | Import da URL con JSON-LD |
+| D. Accesso e collaborazione | Usare più ricettari privati e condividerli tra membri paritari. | Accesso Google a un ricettario privato |
 
-- una slice deve stare in un ciclo focalizzato di circa 3–5 giorni per uno sviluppatore;
-- ogni slice arriva nell'ambiente rappresentativo ed è attivabile o revertibile da sola;
-- l'embedding della query viene calcolato a runtime: è necessario per la ricerca semantica,
-  nonostante alcuni documenti limitino gli embedding alla fase di add/edit;
-- gli inviti sono link ad alta entropia, riutilizzabili e revocabili dal creator;
-- i duplicati sono ammessi, come stabilito in `concepts.md`.
+## Cross-functional concerns
 
-Baseline trasversale per tutte le slice:
+- **Authorization:** Ogni query e mutazione è vincolata a `cookbookId`; un unico resolver passa dallo scope configurato non pubblico alla membership della sessione Google.
+- **Validation and errors:** Schema valida input, JSON-LD e output LLM; gli errori sono tipizzati e gli import mostrano fase reale e causa precisa senza review obbligatoria.
+- **Operability:** Log correlati per richiesta e fase, timeout/retry sugli adapter esterni, metriche su latenza, errori, costo LLM e cold start; nessun segreto nei log.
+- **Accessibility and security:** Flussi da tastiera, stato/progresso annunciato, campi opzionali espliciti, URL e upload non fidati limitati per tipo/dimensione e protetti da SSRF.
+- **Data integrity:** Una sola cover per ricetta; embedding rigenerato dopo ogni modifica indicizzata; duplicati consentiti deliberatamente.
 
-- autorizzazione server-side sul ricettario corrente per ogni lettura e mutazione;
-- validazione degli input ai boundary, errori attesi tipizzati e messaggi utente specifici;
-- log strutturati senza contenuti delle ricette, token o segreti;
-- test automatici proporzionati al rischio, migrazioni reversibili e monitoraggio degli
-  adapter esterni per latenza, errori e costo;
-- UI accessibile, campi obbligatori tramite `required` e soli campi opzionali etichettati.
+## NOW
 
-## Prerequisito non-product — Repository verificabile
+### 0. Repository verificabile *(Enabler: delivery)*
 
-**Outcome:** ogni modifica produce un build ripetibile e un esito CI affidabile.
+---
 
-**Perché ora:** nessuna slice può essere verificata o rilasciata con sicurezza senza una
-baseline automatizzata.
+**Includes**
 
-**Hard dependencies:** nessuna.
+- Applicazione TypeScript/Next.js con Effect, formattazione e struttura minima per test automatici.
+- CI con build, lint, typecheck e test, senza provisioning o deploy.
 
-**Include:** progetto Next.js/TypeScript/Effect; configurazione coerente di formatting, lint,
-typecheck e test; build del container; CI che esegue tutti i quality gate. Nessun provisioning
-e nessun deploy.
+**Verification**
 
-**Verifica:** clone pulito, installazione deterministica e pipeline verde; un errore introdotto
-in lint, tipi o test rende la pipeline rossa.
+- La CI esegue con successo build, lint, typecheck e test da checkout pulito.
 
-**Sblocca:** la walking skeleton e ogni slice successiva.
+**Outcome**
 
-## Slice candidate
+- Gli sviluppatori possono integrare incrementi su una baseline riproducibile e revisionabile.
 
-### Accesso al primo ricettario
+### 1. Walking skeleton in ambiente non produttivo *(Enabler: delivery)*
 
-**Outcome:** un utente entra con Google, crea un ricettario privato, lo seleziona e vede la
-home vuota nell'ambiente rappresentativo.
+---
 
-**Perché ora:** walking skeleton minima; valida subito runtime, cold start, OAuth, connessione
-Postgres e confine di sicurezza multi-tenant.
+**Includes**
 
-**Hard dependencies:** Repository verificabile.
+- Container Docker stateless e configurazione Fly.io con `suspend` e scale-to-zero.
+- CI/CD, provisioning minimo e route diagnostica reale in un ambiente non produttivo rappresentativo.
+- Configurazione e segreti separati dall'immagine, senza autenticazione, tenancy o CRUD di dominio.
 
-**Include:** `User`, `Cookbook`, `Membership`; Auth.js con Google; creazione e selezione del
-ricettario corrente; home vuota; Postgres/pgvector provisionato; Docker e Fly.io
-scale-to-zero; segreti esterni al repository; estensione CI/CD e primo deploy; health check,
-log e gestione degli errori OAuth/DB.
+**Verification**
 
-**Verifica:** da browser reale, login, creazione e riapertura del ricettario dopo suspend;
-un secondo utente non membro non può leggerlo modificando URL o request; deploy e rollback
-completano con successo.
+- Un commit produce e distribuisce l'immagine; la route diagnostica risponde dopo deploy e risveglio da sospensione.
+- Log e misura del cold start sono consultabili nell'ambiente.
 
-**Sblocca:** verifica reale di tutte le funzioni scoped al ricettario.
+**Outcome**
 
-### Ricetta trovabile oltre la lingua
+- Gli sviluppatori verificano il percorso completo da commit a runtime Fly.io.
 
-**Outcome:** un membro inserisce una ricetta manuale, la vede nella home e la ritrova con una
-query semanticamente pertinente in un'altra lingua.
+### 2. Pipeline vettoriale su ricette controllate *(Enabler: ricerca semantica)*
 
-**Perché ora:** è il differenziatore principale e testa l'ipotesi che giustifica il prodotto
-rispetto a Mealie.
+---
 
-**Hard dependencies:** Accesso al primo ricettario.
+**Includes**
 
-**Include:** modello normalizzato `Recipe`; form condivisibile con gli altri ingressi ma
-inizialmente vuoto; salvataggio; elenco; testo indicizzato completo; embedding multilingue;
-similarità pgvector limitata al cookbook corrente; stati vuoto/loading/errore; metriche di
-qualità, latenza e costo della ricerca. Foto escluse.
+- Neon o Supabase con Postgres, pgvector e schema minimo `Cookbook`/`Recipe` tramite Drizzle.
+- Resolver unico di uno scope configurato non pubblico, applicato a scritture e letture.
+- Fixture normalizzate attraversano validazione, embedding cloud multilingue, persistenza e indice HNSW reali.
 
-**Verifica:** corpus controllato italiano/inglese con query cross-lingua e casi negativi;
-ricette di altri cookbook non compaiono; indisponibilità dell'embedder produce un errore
-recuperabile senza dati parziali. Accettazione minima della qualità definita prima del test.
+**Verification**
 
-**Sblocca:** validazione go/no-go del posizionamento e indice derivato riusabile dagli altri
-flussi; correzione post-salvataggio con verifica dell'indice.
+- Un test in ambiente inserisce fixture tramite la pipeline di produzione e ne verifica vettore, dati canonici e isolamento tra due cookbook.
+- Il rerun è osservabile e non richiede scritture dirette di embedding precalcolati.
 
-### Testo non strutturato trasformato in ricetta
+**Learning / risk**
 
-**Outcome:** un membro incolla il testo di una pagina, rivede campi estratti e salva la ricetta
-nel proprio ricettario.
+- Verifica compatibilità Drizzle/pgvector, qualità del modello e affidabilità dell'adapter prima della UI di ricerca.
 
-**Perché ora:** valida presto il secondo differenziatore e il fallback per paywall e siti
-JS-heavy, prima di investire nello scraping esteso.
+**Outcome**
 
-**Hard dependencies:** Accesso al primo ricettario.
+- Gli sviluppatori dispongono di evidenza eseguibile che ricette reali sono indicizzabili nello scope corretto.
 
-**Include:** pulizia del testo; porta di estrazione e adapter LLM economico; structured output
-decodificato con Schema; progress reale sui passi applicabili; form di review riusato; limiti
-di dimensione, timeout e retry controllati; nessun salvataggio prima della conferma; telemetria
-di esito e costo senza registrare il testo.
+### 3. Ricerca cross-lingua nel ricettario corrente *(Theme: A)*
 
-**Verifica:** set rappresentativo di testi rumorosi, incompleti e multilingue; accuratezza dei
-campi confrontata con golden cases; output invalido o timeout non crea ricette e consente
-retry/correzione manuale.
+---
 
-**Sblocca:** fallback riusabile dall'import URL.
+**Includes**
 
-### Ricetta correggibile con indice coerente
+- Campo di ricerca semantica e risultati essenziali ordinati per similarità nel cookbook risolto.
+- Indice composto da nome, ingredienti e preparazione, più tag e tempo quando presenti.
+- Query pgvector scoped, contenuto essenziale del risultato e stati vuoto/errore.
 
-**Outcome:** un membro corregge una ricetta già salvata e i risultati di ricerca riflettono
-subito e soltanto il nuovo contenuto.
+**Verification**
 
-**Perché ora:** completa la promessa di review post-salvataggio e valida l'invariante più
-delicato tra dato canonico ed embedding derivato prima di aprire l'edit ad altri membri.
+- In ambiente, la query italiana `pomodoro` trova la fixture inglese pertinente e non restituisce ricette dell'altro cookbook.
+- Test di accettazione coprono pertinenza minima, nessun risultato e guasto del provider di embedding.
 
-**Hard dependencies:** Ricetta trovabile oltre la lingua. Senza una ricetta realmente salvata,
-indicizzata e ricercabile non è possibile osservare la transizione dal vecchio al nuovo indice;
-una sola fixture non verifica il comportamento end-to-end.
+**Learning / risk**
 
-**Include:** riapertura del form comune; update autorizzato dei campi normalizzati;
-rigenerazione dell'embedding; consistenza atomica o stato esplicito e recuperabile se il provider
-fallisce; concorrenza ottimistica per evitare sovrascritture silenziose; audit tecnico senza
-registrare il contenuto.
+- Misura se il differenziatore cross-lingua è abbastanza rilevante e rapido da giustificare il prodotto rispetto a Mealie.
 
-**Verifica:** dopo la correzione, una query pertinente al vecchio testo non trova più la ricetta
-e una pertinente al nuovo testo sì; provider indisponibile e due edit concorrenti non producono
-una ricetta con embedding obsoleto né perdita silenziosa di dati.
+**Outcome**
 
-**Sblocca:** verifica dell'editing paritario nel ricettario condiviso.
+- Un utente trova ricette pertinenti nel ricettario corrente senza conoscere lingua o parole esatte della fonte.
 
-### Ricettario condiviso tra pari
+### 4. Home e dettaglio ricetta *(Theme: B)*
 
-**Outcome:** il creator condivide un link; un secondo utente entra nel ricettario e può vedere
-e modificare le ricette come gli altri membri.
+---
 
-**Perché ora:** copre il secondo asse di valore del prodotto e verifica presto che il modello
-cookbook-centrico sia comprensibile e sicuro.
+**Includes**
 
-**Hard dependencies:** Ricetta correggibile con indice coerente. Senza una mutazione di ricetta
-già disponibile non è possibile dimostrare che membri diversi possano davvero “editare tutto”;
-la sola membership o una fixture verifica soltanto la lettura.
+- Home con elenco delle ricette del cookbook corrente, cover disponibile e stato vuoto.
+- Dettaglio con titolo, ingredienti e preparazione in testo libero, foto e metadati best-effort disponibili.
 
-**Include:** `Invitation`; emissione e revoca del link da parte del creator; join autenticato
-e idempotente; membership N:N; switch tra più ricettari; riuso dell'edit esistente da parte di
-ogni membro; protezione da token enumerabili, accessi cross-cookbook e race sul join. Nessun
-ruolo granulare.
+**Verification**
 
-**Verifica:** due account reali condividono e modificano la stessa ricetta; lo stesso utente
-può passare tra due cookbook senza contaminazione di dati o ricerca; link revocato, token
-invalido e non membro sono rifiutati; dopo un edit la ricerca usa solo il nuovo contenuto.
+- Test di accettazione naviga da home a dettaglio e conferma che nessun dato di un altro cookbook sia visibile.
+- Controllo accessibilità copre tastiera, gerarchia dei titoli, immagini e stato vuoto.
 
-**Sblocca:** uso familiare reale e feedback sul costo di reinvito per più ricettari.
+**Outcome**
 
-### Import da URL con fallback trasparente
+- Un utente consulta dall'inizio alla fine le ricette del ricettario corrente.
 
-**Outcome:** un membro incolla un URL, segue l'avanzamento reale, corregge l'estratto e salva
-la ricetta; l'app usa JSON-LD oppure passa automaticamente al fallback LLM.
+### 5. Import da URL con JSON-LD *(Theme: C)*
 
-**Perché ora:** è il percorso di acquisizione più frequente; arriva dopo aver provato
-separatamente il rischio LLM e il form comune.
+---
 
-**Hard dependencies:** Accesso al primo ricettario.
+**Includes**
 
-**Include:** fetch sicuro con difese SSRF, redirect/size/time limit; parsing
-`schema.org/Recipe`; fallback sull'adapter di estrazione; eventi reali
-`Scarico pagina → Leggo ricetta → Trovo ingredienti`; `sourceUrl`; review prima del
-salvataggio; messaggi distinti per URL invalido, sito irraggiungibile, paywall, contenuto non
-riconoscibile e provider indisponibile. La persistenza delle foto resta esclusa.
+- Input URL, fetch sicuro, pulizia e parsing validato di `schema.org/Recipe` senza LLM.
+- Salvataggio immediato di campi canonici, tag/tempo opzionali, embedding e immagine sorgente copiata su R2.
+- Progresso sincrono basato su eventi reali e messaggio specifico per la fase fallita.
 
-**Verifica:** matrice di siti con JSON-LD, senza JSON-LD, redirect, JS-heavy/paywall e failure;
-si osserva il ramo realmente eseguito, il fallback avviene solo quando previsto e nessun
-fallimento lascia ricette parziali. Test SSRF coprono indirizzi locali e metadata endpoint.
+**Verification**
 
-**Sblocca:** percorso principale di acquisizione e sorgenti immagine per la galleria.
+- Un URL fixture con JSON-LD produce una ricetta ricercabile e una foto servita da R2 senza schermata di review.
+- Test coprono URL invalido, host vietato, timeout, JSON-LD malformato e fallimento foto senza corrompere i dati.
 
-### Foto multiple e cover durevole
+**Learning / risk**
 
-**Outcome:** un membro associa più foto a una ricetta, sceglie la cover e continua a vederle
-anche se la sorgente originale sparisce.
+- Misura copertura, latenza e affidabilità del percorso gratuito sul caso di acquisizione più frequente.
 
-**Perché ora:** completa la qualità del ricettario dopo aver validato ricerca, acquisizione e
-condivisione; isola il rischio storage dal rischio di estrazione.
+**Outcome**
 
-**Hard dependencies:** Accesso al primo ricettario.
+- Un utente incolla un URL supportato e trova subito la ricetta salvata nel proprio ricettario.
 
-**Include:** `Photo`; Cloudflare R2; copia delle immagini importate senza hotlinking; gestione
-galleria e scelta cover; vincolo di una sola cover; validazione MIME/dimensione, nomi object
-non prevedibili, cleanup compensativo e rimozione autorizzata; progress reale `Salvo foto`.
+### 6. Correzione dopo il salvataggio *(Theme: C)*
 
-**Verifica:** più immagini importate restano disponibili con origine rimossa; cambio cover
-atomico anche con due richieste concorrenti; file non ammesso e guasto R2 hanno esito
-esplicito e non lasciano riferimenti DB o object orfani.
+---
 
-**Sblocca:** esperienza MVP completa.
+**Includes**
 
-## Grafo delle hard dependency
+- Form di modifica per titolo, ingredienti e preparazione liberi, con tag e tempo derivati non obbligatori.
+- Salvataggio nello stesso cookbook e rigenerazione dell'embedding dal contenuto aggiornato.
 
-```text
-Repository verificabile
-└── Accesso al primo ricettario
-    ├── Ricetta trovabile oltre la lingua
-    │   └── Ricetta correggibile con indice coerente
-    │       └── Ricettario condiviso tra pari
-    ├── Testo non strutturato trasformato in ricetta
-    ├── Import da URL con fallback trasparente
-    └── Foto multiple e cover durevole
-```
+**Verification**
 
-Non ci sono altre hard dependency: dati controllati o una capacità più stretta permettono di
-verificare ciascun outcome senza forzare l'ordine raccomandato.
+- Test di accettazione corregge una ricetta importata e la ritrova con termini presenti solo dopo la modifica.
+- Validazione conferma che un errore di reindicizzazione non esponga uno stato canonico incoerente.
 
-## Ordine raccomandato e vincoli deboli
+**Outcome**
 
-1. Repository verificabile.
-2. Accesso al primo ricettario.
-3. Ricetta trovabile oltre la lingua.
-4. Testo non strutturato trasformato in ricetta.
-5. Ricetta correggibile con indice coerente.
-6. Ricettario condiviso tra pari.
-7. Import da URL con fallback trasparente.
-8. Foto multiple e cover durevole.
+- Un utente corregge un'estrazione imperfetta quando serve, senza attrito durante l'import.
 
-Soft dependency:
+### 7. Inserimento manuale *(Theme: C)*
 
-- l'import URL segue preferibilmente l'estrazione da testo, così riusa un fallback già
-  misurato;
-- le foto seguono preferibilmente l'import URL, che fornisce sorgenti realistiche;
-- la correzione segue preferibilmente il test LLM, così un eventuale stop strategico evita
-  ulteriore investimento nel workflow.
+---
 
-Priority preference:
+**Includes**
 
-- ricerca cross-lingua prima di ogni funzione commodity, perché decide il posizionamento;
-- fallback LLM subito dopo, perché è il secondo differenziatore e concentra costo e
-  incertezza;
-- correzione e condivisione prima di approfondire il flusso URL, per coprire presto tutti i
-  temi core;
-- foto per ultime, perché non cambiano il go/no-go del prodotto.
+- Lo stesso form di modifica si apre vuoto per creare una ricetta con i soli campi canonici.
+- Salvataggio immediato e indicizzazione; tag e tempo derivati restano non bloccanti e best-effort.
 
-## Checkpoint decisionali
+**Verification**
 
-- **Dopo Ricetta trovabile oltre la lingua:** misurare rilevanza cross-lingua, latenza e
-  costo. Se la qualità non supera la soglia concordata, fermare le slice non iniziate e
-  valutare modello, composizione del testo o ricerca ibrida; non costruire un clone commodity.
-- **Dopo Testo non strutturato trasformato in ricetta:** confrontare accuratezza, correzioni
-  utente e costo per ricetta. Se insufficienti, restringere i contenuti supportati o cambiare
-  provider prima dell'import URL.
-- **Dopo Ricettario condiviso tra pari:** verificare comprensione di invito, cookbook corrente
-  e reinvito. Solo evidenza di attrito rilevante giustifica anticipare un futuro concetto di
-  gruppo.
-- **Dopo Import da URL con fallback trasparente:** misurare copertura JSON-LD, frequenza del
-  fallback e failure per categoria; adattare solo i parser che aumentano materialmente la
-  copertura.
-- **Dopo Foto multiple e cover durevole:** verificare consumo R2, orphan rate e limiti file
-  prima di estendere upload o trasformazioni.
+- Test di accettazione crea una ricetta manuale, la vede in home e la trova con ricerca semantica.
+- Test di validazione copre campi obbligatori, errori di salvataggio e isolamento del cookbook.
 
-## Esclusioni MVP
+**Outcome**
 
-- cookbook pubblici: valore futuro, nessuna necessità per validare il ricettario privato;
-- filtri strutturati, full-text e ricerca ibrida: profondità prematura prima della misura
-  semantica;
-- ricerca cross-cookbook: contraddice lo scope deciso del cookbook corrente;
-- gruppi/team e ruoli granulari: complessità non giustificata dal modello tra pari;
-- email/password, magic link e passkey: Google OAuth è una decisione già presa;
-- deduplica: i duplicati sono esplicitamente consentiti;
-- vector database separato, IaC generalista e hosting sempre caldo: costo e complessità non
-  giustificati alla scala prevista.
+- Un utente memorizza una ricetta conosciuta senza strutturare ingredienti o quantità.
+
+### 8. Fallback LLM per URL non strutturati *(Theme: C)*
+
+---
+
+**Includes**
+
+- In assenza di JSON-LD, il contenuto pulito passa a un modello economico con output strutturato validato.
+- Retry/timeout limitati, budget osservabile e nessun fallback LLM quando il parsing diretto riesce.
+- Salvataggio, indicizzazione, foto e progresso riusano il percorso di import già verificato.
+
+**Verification**
+
+- Un URL fixture senza JSON-LD produce una ricetta ricercabile; metriche distinguono parser diretto e fallback pagato.
+- Test coprono output invalido, contenuto insufficiente, limite di costo e indisponibilità del modello.
+
+**Learning / risk**
+
+- Misura qualità e costo del vantaggio competitivo sui siti che gli importatori tradizionali non leggono.
+
+**Outcome**
+
+- Un utente salva automaticamente una ricetta da una pagina leggibile priva di dati strutturati.
+
+### 9. Import da testo incollato *(Theme: C)*
+
+---
+
+**Includes**
+
+- Input testo per contenuti da paywall o siti JS-heavy, senza fetch né tentativo JSON-LD.
+- Pulizia, estrazione LLM, validazione, salvataggio, embedding e progresso riusano il motore esistente.
+
+**Verification**
+
+- Test di accettazione incolla testo rumoroso e ottiene una ricetta ricercabile senza chiamate HTTP alla fonte.
+- Test coprono testo vuoto, output incompleto, errore LLM e messaggio di recupero specifico.
+
+**Outcome**
+
+- Un utente aggira un URL illeggibile incollando il contenuto e salva comunque la ricetta.
+
+### 10. Galleria e cover della ricetta *(Theme: C)*
+
+---
+
+**Includes**
+
+- Upload di più foto su R2 durante creazione o modifica.
+- Prima foto come cover predefinita, selezione di una nuova cover e rimozione sicura.
+
+**Verification**
+
+- Test di accettazione aggiunge più foto, cambia cover e verifica home e dettaglio dopo ricaricamento.
+- Test di concorrenza e vincolo dati conferma una sola cover; test storage copre upload/rimozione falliti.
+
+**Outcome**
+
+- Un utente conserva più immagini e sceglie quella rappresentativa della ricetta.
+
+### 11. Accesso Google a un ricettario privato *(Theme: D)*
+
+---
+
+**Includes**
+
+- Auth.js v5 con Google OAuth, sessione Postgres e onboarding del primo cookbook privato.
+- Il resolver di scope passa dalla configurazione alla membership della sessione in un solo seam.
+- Route, query e mutazioni richiedono sessione e appartenenza, senza ruoli granulari.
+
+**Verification**
+
+- Test di accettazione autentica due account e dimostra isolamento completo tra i rispettivi cookbook.
+- Test di sicurezza coprono sessione assente/scaduta, cookbook manipolato e accesso non membro.
+
+**Learning / risk**
+
+- Verifica che la dipendenza da Google e l'onboarding mantengano basso l'attrito per famiglia e amici.
+
+**Outcome**
+
+- Un utente Google accede al proprio ricettario privato senza password o provider email.
+
+### 12. Più ricettari per utente *(Theme: D)*
+
+---
+
+**Includes**
+
+- Creazione di cookbook privati e selezione esplicita del ricettario corrente.
+- Elenco membership dell'utente; ogni home, ricerca e mutazione segue lo scope selezionato.
+
+**Verification**
+
+- Test di accettazione crea e alterna due cookbook, verificando elenchi e risultati di ricerca distinti.
+- Test di autorizzazione rifiuta selezione e mutazione di un cookbook senza membership.
+
+**Outcome**
+
+- Un utente organizza e usa più ricettari senza mescolarne ricette o ricerca.
+
+### 13. Invito e collaborazione paritaria *(Theme: D)*
+
+---
+
+**Includes**
+
+- Il creator genera un link/codice non prevedibile, opzionalmente in scadenza, per un singolo cookbook.
+- Un utente autenticato accetta l'invito e ottiene membership; tutti i membri leggono e modificano allo stesso modo.
+- Accettazione idempotente per membro, validità condivisibile fino a scadenza/revoca e audit minimo.
+
+**Verification**
+
+- Test end-to-end invita un secondo account, che modifica una ricetta condivisa senza accedere agli altri cookbook del creator.
+- Test coprono token invalido, scaduto o revocato, riapertura dallo stesso membro e uso da più invitati.
+
+**Outcome**
+
+- Familiari e amici collaborano come pari in uno specifico ricettario condiviso.
+
+## LATER
+
+- **Filtri strutturati per tag e tempo**
+  - **Promotion trigger:** Le sessioni NOW mostrano ricerche frequenti per vincoli esatti che la similarità non soddisfa.
+  - **Expected value:** Usa i metadati già popolati per restringere risultati senza migrazione retroattiva.
+- **Ricerca ibrida full-text e semantica**
+  - **Promotion trigger:** Le misure di pertinenza NOW mostrano fallimenti sistematici su nomi o ingredienti esatti.
+  - **Expected value:** Migliora precisione senza perdere richiamo cross-lingua.
+- **Ricettari pubblici tematici**
+  - **Promotion trigger:** Utenti chiedono scoperta o condivisione oltre i membri invitati.
+  - **Expected value:** Abilita cataloghi pubblici tramite `visibility=public` già modellata.
+- **Gruppi sopra i ricettari**
+  - **Promotion trigger:** Telemetria e interviste mostrano reinviti ripetuti come attrito materiale.
+  - **Expected value:** Riusa una membership di gruppo su più cookbook.
+- **Ricerca cross-ricettario**
+  - **Promotion trigger:** Utenti con più cookbook cambiano spesso scope per ritrovare la stessa ricetta.
+  - **Expected value:** Trova contenuti autorizzati senza selezionare prima un ricettario.
+- **Passkeys**
+  - **Promotion trigger:** La dipendenza da Google limita adozione e Auth.js offre recupero account maturo.
+  - **Expected value:** Riduce la dipendenza dal provider mantenendo accesso senza password.
+
+## OUT-OF-SCOPE
+
+- **Lista della spesa e scaling porzioni** — Richiedono ingredienti strutturati, esclusi per minimizzare l'attrito MVP.
+- **Parsing di quantità e unità** — Il testo libero è una scelta deliberata e sufficiente per lettura e ricerca semantica.
+- **Ruoli e permessi granulari** — Nell'MVP tutti i membri sono pari; `creatorId` identifica solo chi invita.
+- **Review obbligatoria durante l'import** — Contrasta il salvataggio immediato; le correzioni avvengono dopo.
+- **Email/password e magic link** — Richiedono invio email e recupero credenziali, incompatibili con costo e semplicità MVP.
+- **Vector database dedicato e IaC multi-cloud** — Scala prevista e singolo deploy non ne giustificano costo e complessità.
+
+## Decision checkpoints
+
+- **After slice 3:** Pertinenza cross-lingua, latenza e costo reali → fermare o riposizionare il prodotto, oppure cambiare modello/composizione dell'indice prima degli altri temi.
+- **After slice 5:** Copertura JSON-LD e fallimenti per fonte → cambiare pulizia/progressione o anticipare il fallback che copre il rischio dominante.
+- **After slice 8:** Qualità, latenza e costo LLM su pagine reali → cambiare modello, limiti o trattamento degli errori prima del copia-incolla.
+- **After slice 13:** Tasso di invito, collaborazione e reinviti → promuovere gruppi o riordinare gli approfondimenti di accesso.
 
 ## Open questions
 
-- Scegliere provider Postgres tra Neon e Supabase e modelli/provider effettivi per embedding
-  ed estrazione: le fonti indicano alternative o esempi, non decisioni definitive.
-- Confermare l'embedding della query a runtime e correggere i documenti che dichiarano
-  “embedding solo in fase di add/edit”; senza questo non è implementabile la ricerca semantica
-  su testo libero.
-- Definire corpus e soglie go/no-go per rilevanza cross-lingua e accuratezza dell'estrazione;
-  senza soglie i primi due checkpoint non producono una decisione verificabile.
-- Le foto MVP provengono solo dalle pagine importate oppure è richiesto anche upload manuale
-  per ricette inserite a mano/copia-incolla? La risposta cambia UI, sicurezza e verifica della
-  slice foto.
+- Come viene vettorializzata la query? La ricerca definisce `embedding(query)`, ma `goal.md` e `arch-choices.md` vietano esplicitamente l'uso di embedding a runtime sulle query; la decisione cambia costo, adapter e fattibilità della slice 3.
