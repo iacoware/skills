@@ -208,3 +208,161 @@ Ambiguità o incompletezze delle fonti. Il reference plan non risolve le decisio
 - **Embedding della query a runtime:** il reference plan non sceglie un'interpretazione; un piano corretto espone la contraddizione, le slice bloccate e non afferma contemporaneamente entrambe le condizioni.
 - **Promozione in produzione:** il reference plan applica la prescrizione dello skill e usa `(Release: delivery)`; ometterla o riclassificarla in silenzio è un errore.
 - **Provider aperti:** Postgres (Neon o Supabase), modello di embedding e modello LLM restano decisioni non prese nelle fonti. Vanno in `Open questions` con la slice che bloccano, mai scelte in silenzio dentro una slice.
+
+## Machine-readable expectations
+
+Questo blocco è la fonte delle aspettative deterministiche. `expectations.json` è generato e non va
+modificato direttamente. Le regole codificano solo invarianti stabili; il grader valuta le
+alternative semanticamente valide non esprimibili con questi controlli.
+
+```json
+{
+  "schema_version": 1,
+  "theme_count": 7,
+  "first_validations_resolve": true,
+  "theme_rules": [
+    {
+      "name": "Ricerca|Scoperta semantica",
+      "desired_outcome_patterns": ["lingu|cross"],
+      "first_validation_patterns": ["ricerca semantica"]
+    },
+    {
+      "name": "Consultazione|Lettura",
+      "desired_outcome_patterns": ["apre|legge|contenuto"],
+      "first_validation_patterns": ["lettura|elenco|dettaglio"]
+    },
+    {
+      "name": "Scrittura|Manutenzione",
+      "desired_outcome_patterns": ["salv|scriv|inser", "correg|modific"],
+      "first_validation_patterns": ["manual|scrittura|creazione|correg|modific|edit"]
+    },
+    {
+      "name": "Import|Cattura|Acquisizione",
+      "desired_outcome_patterns": ["link|URL|online"],
+      "first_validation_patterns": ["JSON-LD|strutturat|URL"]
+    },
+    {
+      "name": "Foto|fotograf",
+      "desired_outcome_patterns": ["foto|riconosc"],
+      "first_validation_patterns": ["foto|cover"]
+    },
+    {
+      "name": "Accesso|Identità",
+      "desired_outcome_patterns": ["Google|account|privat"],
+      "first_validation_patterns": ["Google|accesso"]
+    },
+    {
+      "name": "Condivisione|Collaborazione|Ricettario condiviso",
+      "desired_outcome_patterns": ["collabor|contribu|condiv"],
+      "first_validation_patterns": ["invit|collabor"]
+    }
+  ],
+  "precedence_rules": [
+    {"before": "Repository", "after": "Walking skeleton|Runtime minimo"},
+    {"before": "Walking skeleton|Runtime minimo", "after": "Contesto del ricettario|shell.*ricettario"},
+    {"before": "Contesto del ricettario|shell.*ricettario", "after": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile"},
+    {"before": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile", "after": "^Ricerca semantica"},
+    {"before": "^Ricerca semantica", "after": "Inserimento manuale|Scrittura.*ricetta|Ricette manuali"},
+    {"before": "Inserimento manuale|Scrittura.*ricetta|Ricette manuali", "after": "JSON-LD|dati strutturati|Import URL strutturato"},
+    {"before": "JSON-LD|dati strutturati|Import URL strutturato", "after": "Fallback.*LLM"},
+    {"before": "Fallback.*LLM", "after": "testo incollato"},
+    {"before": "testo incollato", "after": "Foto"},
+    {"before": "Foto", "after": "Invit|Collaborazione"},
+    {"before": "Invit|Collaborazione", "after": "Rilascio|MVP disponibile"}
+  ],
+  "adjacent_now_titles": [
+    ["Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile", "^Ricerca semantica"]
+  ],
+  "slice_rules": [
+    {
+      "title": "Walking skeleton|Runtime minimo",
+      "required_patterns": ["deploy|distribu", "database|Postgres", "migraz"]
+    },
+    {
+      "title": "Contesto del ricettario|shell.*ricettario",
+      "required_patterns": ["persist", "resolver|scope", "404", "shell|ricettario"]
+    },
+    {
+      "title": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile",
+      "required_patterns": ["fixture|corpus", "embedding", "persist|pgvector|HNSW", "ranking|top-k"]
+    },
+    {
+      "title": "^Ricerca semantica",
+      "required_patterns": ["cross-lingu|multiling", "scope|altro ricettario", "senza LLM|nessuna chiamata LLM"]
+    },
+    {
+      "title": "Inserimento manuale|Scrittura.*ricetta|Ricette manuali",
+      "required_patterns": ["crea|inser", "modific|correg", "reindic|ranking"]
+    },
+    {
+      "title": "JSON-LD|dati strutturati|Import URL strutturato",
+      "required_patterns": ["JSON-LD|schema.org", "zero chiamate LLM|senza LLM"]
+    },
+    {
+      "title": "Fallback.*LLM",
+      "required_patterns": ["schema|output", "parzial|nessun salvataggio"]
+    },
+    {
+      "title": "testo incollato",
+      "required_patterns": ["paywall|non leggibile", "senza chiamate HTTP|non.*HTTP"]
+    },
+    {
+      "title": "Foto",
+      "required_patterns": ["storage|R2", "cover|copertina", "fall|limite"]
+    },
+    {
+      "title": "Invit|Collaborazione",
+      "required_patterns": ["idempoten", "scadut|revocat", "modific"]
+    },
+    {
+      "title": "Rilascio|MVP disponibile",
+      "required_patterns": ["produzione", "backup|ripristino", "allarm|tetto di spesa"]
+    }
+  ],
+  "section_rules": [
+    {
+      "section": "Cross-functional concerns",
+      "required_patterns": [
+        "resolver|scope corrente",
+        "Schema|input non fidat",
+        "timeout",
+        "retry",
+        "SSRF",
+        "cover|copertina",
+        "optional|opzional"
+      ]
+    },
+    {
+      "section": "Decision checkpoints",
+      "required_patterns": ["ranking|ricerca", "JSON-LD", "LLM", "cold start|utenti pilota"]
+    },
+    {
+      "section": "Open questions",
+      "required_patterns": [
+        "embedding.*query|query.*embedding",
+        "Neon|Supabase|provider Postgres",
+        "modello.*embedding|embedding.*modello",
+        "modello.*LLM|LLM.*modello"
+      ]
+    }
+  ],
+  "horizon_rules": [
+    {"pattern": "filtri strutturati|ricerca ibrida", "horizon": "LATER"},
+    {"pattern": "cross-ricettario", "horizon": "LATER"},
+    {"pattern": "ricettari aggiuntivi|altri ricettari", "horizon": "LATER"},
+    {"pattern": "ricettari pubblici", "horizon": "LATER"},
+    {"pattern": "gruppo", "horizon": "LATER"},
+    {"pattern": "sempre calda", "horizon": "LATER"},
+    {"pattern": "Passkeys", "horizon": "LATER"},
+    {"pattern": "ingredienti strutturati", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "lista della spesa", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "scaling.*porzioni", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "review obbligatoria", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "deduplica", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "ruoli|permessi granulari", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "email.*password|magic link", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "vector DB", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "IaC|Terraform|SST", "horizon": "OUT-OF-SCOPE"}
+  ]
+}
+```

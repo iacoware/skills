@@ -275,6 +275,80 @@ class ValidatePlanTests(unittest.TestCase):
 
         self.assertTrue(any("NOW slice 1" in error and "forbidden" in error for error in errors))
 
+    def test_checks_theme_outcome_and_first_validation(self) -> None:
+        expectations = {
+            "first_validations_resolve": True,
+            "theme_rules": [
+                {
+                    "name": "Search",
+                    "desired_outcome_patterns": ["relevant content"],
+                    "first_validation_patterns": ["Semantic search"],
+                }
+            ],
+        }
+
+        errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
+
+        self.assertEqual(errors, [])
+
+    def test_reports_unresolved_theme_first_validation(self) -> None:
+        plan = VALID_PLAN.replace("| Login |", "| Missing access slice |")
+
+        errors = validate_expectations(
+            parse_plan(plan), {"first_validations_resolve": True}
+        )
+
+        self.assertTrue(any("does not resolve" in error for error in errors))
+
+    def test_checks_pairwise_precedence_without_requiring_exact_order(self) -> None:
+        expectations = {
+            "precedence_rules": [
+                {"before": "Walking skeleton", "after": "Semantic search"},
+            ]
+        }
+
+        errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
+
+        self.assertEqual(errors, [])
+
+    def test_reports_horizon_duplication(self) -> None:
+        plan = VALID_PLAN.replace(
+            "### 3. Semantic search *(Theme: B)*",
+            "### 3. Advanced ranking *(Theme: B)*",
+        )
+        expectations = {
+            "horizon_rules": [{"pattern": "Advanced ranking", "horizon": "LATER"}]
+        }
+
+        errors = validate_expectations(parse_plan(plan), expectations)
+
+        self.assertTrue(any("also found in NOW" in error for error in errors))
+
+    def test_checks_section_specific_patterns(self) -> None:
+        expectations = {
+            "section_rules": [
+                {
+                    "section": "Cross-functional concerns",
+                    "required_patterns": ["Authorization"],
+                    "forbidden_patterns": ["SSRF"],
+                }
+            ]
+        }
+
+        errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
+
+        self.assertEqual(errors, [])
+
+    def test_reports_unknown_expectation_key(self) -> None:
+        errors = validate_expectations(parse_plan(VALID_PLAN), {"theme_counts": 2})
+
+        self.assertEqual(errors, ["unknown expectation key: theme_counts"])
+
+    def test_rejects_unsupported_expectation_schema(self) -> None:
+        errors = validate_expectations(parse_plan(VALID_PLAN), {"schema_version": 2})
+
+        self.assertEqual(errors, ["unsupported expectations schema_version: 2"])
+
 
 if __name__ == "__main__":
     unittest.main()

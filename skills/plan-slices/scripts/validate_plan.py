@@ -44,6 +44,27 @@ H3_PATTERN = re.compile(r"^### (\d+)\.\s+(.+?)\s*$", re.MULTILINE)
 FIELD_PATTERN = re.compile(r"^\*\*([^*]+?)\*\*\s*$", re.MULTILINE)
 LIST_ITEM_PATTERN = re.compile(r"^\s*(?:[-+*]|\d+\.)\s+")
 CONTINUATION_PATTERN = re.compile(r"^\s{2,}\S")
+SUPPORTED_EXPECTATION_KEYS = frozenset(
+    {
+        "_meta",
+        "schema_version",
+        "theme_count",
+        "themes_contain",
+        "theme_rules",
+        "first_validations_resolve",
+        "now_title_count",
+        "now_titles_in_order",
+        "precedence_rules",
+        "adjacent_now_titles",
+        "slice_rules",
+        "section_rules",
+        "horizon_rules",
+        "later_contains",
+        "out_of_scope_contains",
+        "required_patterns",
+        "forbidden_patterns",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -61,11 +82,19 @@ class Slice:
 
 
 @dataclass(frozen=True)
+class Theme:
+    name: str
+    desired_outcome: str
+    first_validation: str
+
+
+@dataclass(frozen=True)
 class Plan:
     text: str
     sections: dict[str, Section]
     slices: tuple[Slice, ...]
     themes: tuple[str, ...]
+    theme_rows: tuple[Theme, ...]
 
 
 def _parse_sections(text: str) -> dict[str, Section]:
@@ -93,8 +122,8 @@ def _parse_slices(now_body: str) -> tuple[Slice, ...]:
     return tuple(slices)
 
 
-def _parse_themes(themes_body: str) -> tuple[str, ...]:
-    rows: list[str] = []
+def _parse_themes(themes_body: str) -> tuple[Theme, ...]:
+    rows: list[Theme] = []
     for line in themes_body.splitlines():
         stripped = line.strip()
         if not stripped.startswith("|") or not stripped.endswith("|"):
@@ -104,7 +133,13 @@ def _parse_themes(themes_body: str) -> tuple[str, ...]:
             continue
         if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
             continue
-        rows.append(cells[0])
+        rows.append(
+            Theme(
+                name=cells[0],
+                desired_outcome=cells[1],
+                first_validation=cells[2],
+            )
+        )
     return tuple(rows)
 
 
@@ -112,11 +147,13 @@ def parse_plan(text: str) -> Plan:
     sections = _parse_sections(text)
     now = sections.get("NOW")
     themes = sections.get("Themes")
+    theme_rows = _parse_themes(themes.body) if themes else ()
     return Plan(
         text=text,
         sections=sections,
         slices=_parse_slices(now.body) if now else (),
-        themes=_parse_themes(themes.body) if themes else (),
+        themes=tuple(theme.name for theme in theme_rows),
+        theme_rows=theme_rows,
     )
 
 
@@ -347,8 +384,235 @@ def _validate_slice_rules(slices: Sequence[Slice], rules: Sequence[object]) -> l
     return errors
 
 
+def _patterns(value: object, label: str) -> tuple[list[str], list[str]]:
+    if value is None:
+        return [], []
+    if not isinstance(value, list):
+        return [], [f"{label}: expected a list of patterns"]
+    return [str(pattern) for pattern in value], []
+
+
+def _validate_theme_rules(plan: Plan, rules: Sequence[object]) -> list[str]:
+    errors: list[str] = []
+    for rule in rules:
+        if not isinstance(rule, dict) or not isinstance(rule.get("name"), str):
+            errors.append("theme_rules: each entry must contain a name pattern")
+            continue
+
+        name_pattern = rule["name"]
+        matches = [
+            theme for theme in plan.theme_rows if re.search(name_pattern, theme.name, re.IGNORECASE)
+        ]
+        if len(matches) != 1:
+            errors.append(f"theme_rules: /{name_pattern}/ matched {len(matches)} themes")
+            continue
+
+        theme = matches[0]
+        outcome_patterns, pattern_errors = _patterns(
+            rule.get("desired_outcome_patterns"),
+            f"theme_rules /{name_pattern}/ desired_outcome_patterns",
+        )
+        errors.extend(pattern_errors)
+        errors.extend(
+            _require_patterns(
+                f"Theme {theme.name} outcome", theme.desired_outcome, outcome_patterns
+            )
+        )
+
+        validation_patterns, pattern_errors = _patterns(
+            rule.get("first_validation_patterns"),
+            f"theme_rules /{name_pattern}/ first_validation_patterns",
+        )
+        errors.extend(pattern_errors)
+        errors.extend(
+            _require_patterns(
+                f"Theme {theme.name} first validation",
+                theme.first_validation,
+                validation_patterns,
+            )
+        )
+    return errors
+
+
+def _normalized_title(value: str) -> str:
+    without_number = re.sub(r"^\s*\d+\.\s*", "", value)
+    without_tag = re.sub(
+        r"\s*\*\((?:(?:Theme|Enabler):\s*[^)]+|Release:\s*delivery)\)\*\s*$",
+        "",
+        without_number,
+        flags=re.IGNORECASE,
+    )
+    return re.sub(r"[^a-z0-9]+", " ", without_tag.lower()).strip()
+
+
+def _validate_first_validations(plan: Plan) -> list[str]:
+    errors: list[str] = []
+    normalized_titles = {
+        slice_.number: _normalized_title(slice_.title) for slice_ in plan.slices
+    }
+
+    for theme in plan.theme_rows:
+        number = re.match(r"^\s*(\d+)\.", theme.first_validation)
+        expected = _normalized_title(theme.first_validation)
+        if number:
+            if int(number.group(1)) in normalized_titles:
+                continue
+        elif expected and any(
+            expected in title or title in expected for title in normalized_titles.values() if title
+        ):
+            continue
+        errors.append(
+            f"Theme {theme.name}: first validation does not resolve to a NOW slice: "
+            f"{theme.first_validation}"
+        )
+    return errors
+
+
+def _validate_precedence_rules(slices: Sequence[Slice], rules: Sequence[object]) -> list[str]:
+    errors: list[str] = []
+    for rule in rules:
+        if (
+            not isinstance(rule, dict)
+            or not isinstance(rule.get("before"), str)
+            or not isinstance(rule.get("after"), str)
+        ):
+            errors.append("precedence_rules: each entry must contain before and after patterns")
+            continue
+
+        before_pattern = rule["before"]
+        after_pattern = rule["after"]
+        before = [
+            index
+            for index, slice_ in enumerate(slices)
+            if re.search(before_pattern, slice_.title, re.IGNORECASE)
+        ]
+        after = [
+            index
+            for index, slice_ in enumerate(slices)
+            if re.search(after_pattern, slice_.title, re.IGNORECASE)
+        ]
+        if len(before) != 1 or len(after) != 1:
+            errors.append(
+                f"NOW precedence: /{before_pattern}/ matched {len(before)} slices; "
+                f"/{after_pattern}/ matched {len(after)} slices"
+            )
+        elif before[0] >= after[0]:
+            errors.append(f"NOW precedence: /{before_pattern}/ must precede /{after_pattern}/")
+    return errors
+
+
+def _validate_section_rules(plan: Plan, rules: Sequence[object]) -> list[str]:
+    errors: list[str] = []
+    for rule in rules:
+        if not isinstance(rule, dict) or not isinstance(rule.get("section"), str):
+            errors.append("section_rules: each entry must contain a section name")
+            continue
+
+        name = rule["section"]
+        section = plan.sections.get(name)
+        if section is None:
+            errors.append(f"section_rules: missing section: {name}")
+            continue
+
+        required, pattern_errors = _patterns(
+            rule.get("required_patterns"), f"section_rules {name} required_patterns"
+        )
+        errors.extend(pattern_errors)
+        errors.extend(_require_patterns(name, section.body, required))
+
+        forbidden, pattern_errors = _patterns(
+            rule.get("forbidden_patterns"), f"section_rules {name} forbidden_patterns"
+        )
+        errors.extend(pattern_errors)
+        for pattern in forbidden:
+            if re.search(pattern, section.body, re.IGNORECASE | re.MULTILINE):
+                errors.append(f"{name}: forbidden pattern present /{pattern}/")
+    return errors
+
+
+def _horizon_items(plan: Plan, horizon: str) -> list[str]:
+    if horizon == "NOW":
+        return [slice_.title for slice_ in plan.slices]
+    section = plan.sections.get(horizon)
+    if section is None:
+        return []
+    return [
+        re.sub(r"[*_`]", "", match.group(1)).strip()
+        for line in section.body.splitlines()
+        if (match := re.match(r"^[-+*]\s+(.+)$", line))
+    ]
+
+
+def _validate_horizon_rules(plan: Plan, rules: Sequence[object]) -> list[str]:
+    errors: list[str] = []
+    horizons = ("NOW", "LATER", "OUT-OF-SCOPE")
+    items = {horizon: _horizon_items(plan, horizon) for horizon in horizons}
+
+    for rule in rules:
+        if (
+            not isinstance(rule, dict)
+            or not isinstance(rule.get("pattern"), str)
+            or rule.get("horizon") not in horizons
+        ):
+            errors.append(
+                "horizon_rules: each entry must contain a pattern and a valid horizon"
+            )
+            continue
+
+        pattern = rule["pattern"]
+        expected = str(rule["horizon"])
+        matches = {
+            horizon: [item for item in values if re.search(pattern, item, re.IGNORECASE)]
+            for horizon, values in items.items()
+        }
+        if not matches[expected]:
+            errors.append(f"horizon_rules: /{pattern}/ missing from {expected}")
+        for horizon in horizons:
+            if horizon != expected and matches[horizon]:
+                errors.append(
+                    f"horizon_rules: /{pattern}/ belongs to {expected}, also found in {horizon}"
+                )
+    return errors
+
+
 def validate_expectations(plan: Plan, expectations: dict[str, object]) -> list[str]:
     errors: list[str] = []
+
+    unknown = sorted(set(expectations) - SUPPORTED_EXPECTATION_KEYS)
+    errors.extend(f"unknown expectation key: {key}" for key in unknown)
+
+    schema_version = expectations.get("schema_version")
+    if schema_version is not None and schema_version != 1:
+        errors.append(f"unsupported expectations schema_version: {schema_version}")
+
+    list_keys = (
+        "themes_contain",
+        "theme_rules",
+        "now_titles_in_order",
+        "precedence_rules",
+        "adjacent_now_titles",
+        "slice_rules",
+        "section_rules",
+        "horizon_rules",
+        "later_contains",
+        "out_of_scope_contains",
+        "required_patterns",
+        "forbidden_patterns",
+    )
+    for key in list_keys:
+        if key in expectations and not isinstance(expectations[key], list):
+            errors.append(f"{key}: expected a list")
+
+    for key in ("theme_count", "now_title_count"):
+        value = expectations.get(key)
+        if value is not None and (not isinstance(value, int) or isinstance(value, bool)):
+            errors.append(f"{key}: expected an integer")
+
+    first_validations_resolve = expectations.get("first_validations_resolve")
+    if first_validations_resolve is not None and not isinstance(
+        first_validations_resolve, bool
+    ):
+        errors.append("first_validations_resolve: expected a boolean")
 
     theme_count = expectations.get("theme_count")
     if isinstance(theme_count, int) and len(plan.themes) != theme_count:
@@ -357,8 +621,17 @@ def validate_expectations(plan: Plan, expectations: dict[str, object]) -> list[s
     themes_contain = expectations.get("themes_contain", [])
     if isinstance(themes_contain, list):
         errors.extend(
-            _require_patterns("Themes", "\n".join(plan.themes), [str(item) for item in themes_contain])
+            _require_patterns(
+                "Themes", "\n".join(plan.themes), [str(item) for item in themes_contain]
+            )
         )
+
+    theme_rules = expectations.get("theme_rules", [])
+    if isinstance(theme_rules, list):
+        errors.extend(_validate_theme_rules(plan, theme_rules))
+
+    if expectations.get("first_validations_resolve") is True:
+        errors.extend(_validate_first_validations(plan))
 
     now_title_count = expectations.get("now_title_count")
     if isinstance(now_title_count, int) and len(plan.slices) != now_title_count:
@@ -368,6 +641,10 @@ def validate_expectations(plan: Plan, expectations: dict[str, object]) -> list[s
     if isinstance(now_order, list):
         errors.extend(_validate_order([slice_.title for slice_ in plan.slices], now_order))
 
+    precedence_rules = expectations.get("precedence_rules", [])
+    if isinstance(precedence_rules, list):
+        errors.extend(_validate_precedence_rules(plan.slices, precedence_rules))
+
     adjacent = expectations.get("adjacent_now_titles", [])
     if isinstance(adjacent, list):
         errors.extend(_validate_adjacencies([slice_.title for slice_ in plan.slices], adjacent))
@@ -375,6 +652,14 @@ def validate_expectations(plan: Plan, expectations: dict[str, object]) -> list[s
     slice_rules = expectations.get("slice_rules", [])
     if isinstance(slice_rules, list):
         errors.extend(_validate_slice_rules(plan.slices, slice_rules))
+
+    section_rules = expectations.get("section_rules", [])
+    if isinstance(section_rules, list):
+        errors.extend(_validate_section_rules(plan, section_rules))
+
+    horizon_rules = expectations.get("horizon_rules", [])
+    if isinstance(horizon_rules, list):
+        errors.extend(_validate_horizon_rules(plan, horizon_rules))
 
     later = plan.sections.get("LATER")
     later_contains = expectations.get("later_contains", [])
@@ -423,7 +708,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         description=(
             "Validate the deterministic plan structure. Optional JSON expectations support "
             "scenario-specific evals with keys: theme_count, themes_contain, now_title_count, "
-            "now_titles_in_order, adjacent_now_titles, slice_rules, later_contains, "
+            "theme_rules, first_validations_resolve, now_titles_in_order, precedence_rules, "
+            "adjacent_now_titles, slice_rules, section_rules, horizon_rules, later_contains, "
             "out_of_scope_contains, required_patterns, forbidden_patterns."
         )
     )
