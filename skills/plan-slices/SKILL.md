@@ -1,10 +1,13 @@
 ---
 name: plan-slices
-description: Create, review, split, merge, and reorder delivery plans for greenfield products and major capabilities. Use for risk-first vertical slicing, explicit NOW/LATER/OUT-OF-SCOPE horizons, independently schedulable product themes, and user-useful developer enablers. Reject horizontal layer-by-layer plans. Reserve isolated fixes and routine refactors for ordinary task planning unless delivery slicing is explicitly requested.
+description: Create, review, split, merge, and reorder high-level delivery roadmaps for greenfield products and major capabilities. Use only when the user requests high-level planning for work too large to complete within one implementation session or context window, involving multiple independently valuable vertical slices, delivery horizons, or product themes. Do not use for implementation plans, execution plans, task breakdowns, issue generation, splitting one delivery slice into tasks, isolated fixes, or routine refactors; use the agent's ordinary planning tools for those.
 license: MIT
 ---
 
 # Plan Delivery Slices
+
+Produce a multi-session delivery map, not an implementation plan or task backlog. Treat each slice
+as an independently schedulable outcome; do not decompose slices into implementation tasks.
 
 Plan for early validated learning, short feedback loops, and cheap reprioritization. Treat a
 result as user-useful when it helps either an end user or a developer test the real product while
