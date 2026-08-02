@@ -326,14 +326,7 @@ directory is the user's project, not the skill.
 python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md
 ```
 
-When an eval specification exists, run:
-
-```bash
-python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md --expectations path/to/expectations.json
-```
-
-Fix every structural failure. Treat expectation failures as eval evidence: inspect the plan and
-skill before changing the expectation.
+Fix every structural failure.
 
 **Complete when:** the validator passes; themes trace to first validators; `NOW` is a coherent
 user-useful release; enablers are vertical and adjacent to their product outcome; `LATER` is
