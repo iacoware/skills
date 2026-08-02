@@ -40,5 +40,5 @@ make list                     # elenca le skill scoperte, senza installare
 ## Test
 
 ```bash
-cd skills/plan-slices/scripts && python3 test_validate_plan.py
+make test
 ```

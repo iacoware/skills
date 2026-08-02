@@ -9,15 +9,15 @@ semantica cross-lingua come differenziatore.
 | --- | --- |
 | `sources/` | input passati all'agent: `goal.md`, `concepts.md`, `arch-choices.md`, `tech-choices.md` |
 | `REFERENCE-PLAN.md` | unico oracolo semantico: temi, slice, confini, invarianti e tolleranze |
+| `expectations.json` | artefatto generato dagli invarianti machine-readable del reference |
 | `EVAL-NOTES.md` | diario delle valutazioni e delle modifiche provate nello skill |
 | `results/` | piani generati, uno per esecuzione |
 
 Input, riferimento, note e output sono separati. L'agent che genera il piano riceve solo `sources/`;
 reference e note restano nascosti per non contaminare il forward-test.
 
-In questa fase non esiste `expectations.json`: verrà derivato dagli invarianti stabili di
-`REFERENCE-PLAN.md` dopo più generazioni indipendenti soddisfacenti. Il validator controlla soltanto
-la struttura finché l'oracolo semantico continua a evolvere.
+`REFERENCE-PLAN.md` resta l'unica fonte normativa. Non modificare `expectations.json` direttamente:
+la sezione `Machine-readable expectations` del reference lo genera e il suo hash rileva ogni drift.
 
 ## Riesecuzione
 
@@ -25,11 +25,43 @@ la struttura finché l'oracolo semantico continua a evolvere.
 2. Chiedi all'agent un piano di delivery ad alto livello a partire da quei documenti.
 3. Salva l'output in `results/` con la convenzione `PLAN-<agent>-<CON|SENZA>[-n].md`, dove
    `CON`/`SENZA` indica se la skill era installata.
-4. Valida la struttura:
+4. Dalla directory `evals/plan-slices`, verifica expectations, struttura e invarianti:
 
    ```bash
-   python3 ../../../skills/plan-slices/scripts/validate_plan.py results/PLAN-....md
+   make validate PLAN=PLAN-....md
    ```
+
+   Usa `make help` per struttura soltanto, rigenerazione delle expectations, grader e test.
+
+## Grader qualitativo
+
+Il grader usa la rubric condivisa `grader-rubric.json`. Con Codex:
+
+```bash
+make grade PLAN=PLAN-....md GRADER=codex
+```
+
+Con Claude Code:
+
+```bash
+make grade PLAN=PLAN-....md GRADER=claude
+```
+
+Per eseguirli entrambi:
+
+```bash
+make grade-all PLAN=PLAN-....md
+```
+
+Entrambi eseguono il grader in una directory temporanea isolata, senza tool né permessi di scrittura,
+e salvano `PLAN-....<grader>.GRADE.json` e `PLAN-....<grader>.SCORE.json`, senza sovrascriversi. Con
+`grade` usa `MODEL=<modello>` per fissarlo; con `grade-all` usa `CODEX_MODEL` e `CLAUDE_MODEL`. Se
+omessi vengono usati i default delle CLI. `grader-prompt` e `grader-score` restano disponibili per
+debug o valutazioni prodotte esternamente.
+
+Confronta versioni dello skill con stesso modello e configurazione e almeno 3–5 generazioni per
+versione. Conserva score per asse, totale, critical failures e pass-rate deterministico: il solo
+totale non spiega una regressione. Se cambia reference o rubric, rivaluta tutti i baseline.
 
 ## Esecuzioni
 
