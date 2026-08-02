@@ -88,12 +88,19 @@ counterfactuals for them, and do not publish them.
 For greenfield work, add:
 
 1. a repository prerequisite with CI build, lint, typecheck, and tests; no provisioning or deploy;
-2. the smallest deployed walking skeleton through build, CI/CD, provisioning, and a representative
-   non-production environment.
+2. the smallest deployed walking skeleton that proves the decided infrastructure is connected and
+   running, through build, CI/CD, provisioning, and a representative non-production environment.
 
-Keep the walking skeleton free of authentication, tenancy, and domain CRUD when a thinner real
-runtime path can validate delivery. Make independently useful access and domain behaviour later
-slices.
+The skeleton must exercise every already-decided stateful or managed dependency that has no thinner
+real validator later — at minimum the datastore, reached at runtime through the real driver and
+connection mode by one non-domain operation, plus the migration runner applying one non-domain
+migration. Connection mode, pooling, migration mechanics, and their interaction with cold start
+cannot be validated more cheaply, and discovering them inside a risky domain slice confounds two
+failures.
+
+Keep the skeleton free of domain entities, domain CRUD, authentication, and tenancy, and leave out
+external adapters used by only one later slice: validate those in that slice. Make independently
+useful access and domain behaviour later slices.
 
 **Proceed when:** every goal maps to an outcome, theme, and horizon; theme split/merge decisions
 pass the independence tests; hard dependencies are limited to outcomes no controlled input can
@@ -148,7 +155,8 @@ pipeline before semantic retrieval, or deploying the minimum runtime before auth
 An enabler may include the smallest diagnostic consumer needed to observe its uncertainty, such as
 a command that ranks persisted vectors. Keep product interaction and business feedback in the
 successor, and ensure the successor adds a user outcome rather than merely repackaging the enabler.
-Do not add a domain dependency to the walking skeleton only because the next slice will need it.
+Do not add a domain dependency to the walking skeleton only because the next slice will need it;
+infrastructure connectivity is not a domain dependency.
 
 ### Size calibration
 
@@ -183,6 +191,9 @@ behaviour has one owner or explicit exclusion.
   executable verification, and named product successor.
 - **Oversized walking skeleton:** combine deploy, login, tenancy, and first CRUD when each can be
   validated independently.
+- **Hollow walking skeleton:** a deployed runtime that answers a static response without reaching
+  the datastore or running a migration, deferring driver, connection, and migration risk into a
+  later domain slice.
 - **Fake verticality:** use mocks or precomputed fixtures that bypass the material production
   transformation, authorization, persistence, or adapter under test.
 - **Theme compression:** merge independently schedulable value areas to keep the theme count small.

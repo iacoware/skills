@@ -11,6 +11,7 @@
 ## Ordering criteria
 
 - Prima il percorso di consegna minimo, poi le convenzioni di dominio e UI su comportamento reale ma minuscolo, poi il rischio esistenziale.
+- Lo skeleton prova che l'infrastruttura già decisa è connessa e gira; gli adapter usati da una sola slice restano in quella slice.
 - Il differenziatore è la ricerca semantica cross-lingua: va validato prima di qualunque slice di acquisizione, perché senza di esso il prodotto è una riscrittura di Mealie.
 - Slice iniziali minuscole finché le convenzioni di delivery, dominio, test e UI richiedono revisione umana frequente; più grandi dopo, solo perché i pattern esistono già nella codebase.
 - Confine di scope dalla prima slice che persiste dati, con un resolver unico dello scope corrente; l'identità sostituisce lo scope configurato in quel solo punto, entro la prima slice destinata a utenti reali.
@@ -45,17 +46,17 @@ e revertibile.
 
 ### 1. Walking skeleton in ambiente dev *(Enabler: delivery)*
 
-- **Esito:** uno sviluppatore raggiunge l'app deployata e ne verifica il runtime reale.
-- **Evidenza:** un commit costruisce l'immagine e la distribuisce; la route diagnostica risponde dopo deploy e dopo risveglio da `suspend`; cold start misurato come baseline.
-- **Fuori dalla slice:** database, autenticazione, tenancy, CRUD di dominio, promozione in produzione.
-- **Perché qui:** valida il percorso commit → runtime sul path più sottile possibile.
+- **Esito:** uno sviluppatore verifica che runtime, database e pipeline di migrazione siano connessi e funzionanti nell'app deployata.
+- **Evidenza:** un commit costruisce l'immagine e la distribuisce; la pipeline applica una migrazione non di dominio; la route diagnostica esegue una query reale sul database attraverso il driver scelto e risponde dopo deploy e dopo risveglio da `suspend`; cold start misurato come baseline, riconnessione al database inclusa.
+- **Fuori dalla slice:** entità e CRUD di dominio, autenticazione, tenancy, object storage, provider di embedding, promozione in produzione.
+- **Perché qui:** prova che l'infrastruttura decisa è connessa e in esecuzione sul path più sottile possibile, prima che un fallimento di connessione si confonda con uno di dominio.
 
 ### 2. Contesto del ricettario corrente *(Enabler: domain conventions)*
 
 - **Esito:** uno sviluppatore crea il ricettario configurato tramite il percorso di produzione e ne apre la shell vuota.
 - **Evidenza:** un input controllato crea e persiste il ricettario; la shell lo legge tramite il resolver unico dello scope; un id fuori scope risponde 404; i dati sopravvivono a un redeploy.
 - **Fuori dalla slice:** creazione tramite UI, ricette, ricerca, identità.
-- **Perché qui:** prima persistenza reale e prima revisione di dominio, scope, ORM, UI e test su un comportamento minimo; non è una dipendenza della ricerca.
+- **Perché qui:** prima persistenza di dominio e prima revisione di dominio, scope, ORM, UI e test su un comportamento minimo; l'infrastruttura Postgres è già provata dalla slice 1 e questa slice non è una dipendenza della ricerca.
 
 ### 3. Pipeline di indicizzazione su fixture *(Enabler: ricerca semantica)*
 
@@ -139,7 +140,7 @@ e revertibile.
 
 Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizioni.
 
-- `0` e `1` sono separati; `1` non contiene database, autenticazione, tenancy né CRUD di dominio.
+- `0` e `1` sono separati; `1` attraversa database e pipeline di migrazione con operazioni non di dominio, e non contiene entità di dominio, CRUD, autenticazione né tenancy.
 - Un enabler di dominio minuscolo stabilisce persistenza, resolver di scope e shell del ricettario corrente prima dell'indicizzazione; non introduce creazione tramite UI.
 - La pipeline di indicizzazione reale precede immediatamente la slice di ricerca.
 - La ricerca semantica precede ogni slice di acquisizione, foto e condivisione.
@@ -194,7 +195,7 @@ Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizi
 ## Open questions attese
 
 - **Embedding della query a runtime:** `goal.md:110` e `arch-choices.md:33` lo vietano, mentre `concepts.md:153` richiede `embedding(query)`; blocca implementazione e verifica delle slice 3 e 4.
-- **Provider Postgres:** Neon o Supabase; blocca la prima persistenza reale nella slice 2.
+- **Provider Postgres:** Neon o Supabase; blocca lo skeleton della slice 1, perché determina driver, modalità di connessione e limiti del free tier.
 - **Modello di embedding:** deve essere multilingue; blocca la pipeline della slice 3.
 - **Modello LLM:** deve supportare output strutturato entro il budget; blocca il fallback della slice 9.
 

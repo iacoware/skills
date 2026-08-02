@@ -46,14 +46,15 @@
 **Includes**
 
 - [Minimum real path through CI/CD, provisioning, deploy, and runtime.]
+- [Datastore reached at runtime by one non-domain operation; migration runner applied.]
 
 **Verification**
 
-- [Evidence from the representative environment.]
+- [Evidence from the representative environment, including the datastore round trip.]
 
 **Outcome**
 
-- [Smallest deployed runtime useful to developers testing delivery.]
+- [Smallest deployed runtime proving the decided infrastructure is connected and running.]
 
 ### 2. [Stable descriptive slice name] *(Theme: [A])*
 
