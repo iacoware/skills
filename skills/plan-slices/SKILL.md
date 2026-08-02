@@ -39,14 +39,21 @@ capable of changing scope, order, architecture, or a go/no-go decision as:
 
 Retain sources. Mark unsupported conclusions as assumptions.
 
-Reconcile the inventory before mapping. Do not silently choose between conflicting statements or
-reopen a decision that a source declares closed. When a conflict changes feasibility, scope, or
-order, publish it under `Open questions` or place a spike before the affected slice. Do not state an
-unconditional outcome while its enabling decision remains unresolved.
+Reconcile the inventory before mapping. Sweep the sources for two separate categories and list each
+entry with a reference for every side:
+
+- **conflicts:** pairs of incompatible statements;
+- **undecided choices:** a provider, model, service, or adapter named without a source that selects
+  it. A qualifying adjective — `cheap`, `multilingual`, `managed` — is not a choice.
+
+Do not silently pick a side or reopen a decision that a source declares closed. Close every material
+entry either with an `Open questions` item naming the slices it blocks, or with a spike before the
+first blocked slice. Until it closes, no `Includes` or `Verification` bullet may assert a side; only
+conditional wording that defers to the pending decision is allowed.
 
 **Proceed when:** every sequencing-relevant statement has applicable classifications and a source;
-unsupported conclusions are assumptions; exclusions have explicit rationale; material source
-conflicts are resolved, exposed, or assigned to a spike.
+unsupported conclusions are assumptions; exclusions have explicit rationale; every material conflict
+and undecided choice is resolved, exposed with the slices it blocks, or assigned to a spike.
 
 ## 2. Map themes, outcomes, and dependencies
 
@@ -137,10 +144,13 @@ invariant, and learning target, and separation would create a temporary contract
 feedback. Shared create/edit review or multiple inputs to one established media pipeline may
 therefore remain cohesive. Defer independently optional interactions to `LATER`.
 
-After the first cut, audit adjacent slices in both directions. Merge slices that duplicate the same
-interaction and invariant without changing a decision. Split independently testable fallbacks,
-external adapters, lifecycle operations, or failure profiles. Deliver a required correction,
-retry, or escape path before or with the first behaviour that can create the recoverable state.
+After the first cut, audit adjacent slices in both directions and record the verdict for each pair.
+Merge slices that duplicate the same interaction and invariant without changing a decision. Split
+independently testable fallbacks, external adapters, lifecycle operations, or failure profiles.
+Split whenever either part can be deferred independently, or when one slice can fail for two
+independent causes that would change different decisions: a shared failure hides its own cause.
+Deliver a required correction, retry, or escape path before or with the first behaviour that can
+create the recoverable state.
 
 ### Developer enablers
 
@@ -182,8 +192,9 @@ Classify risk spikes, migrations, and operational work separately when they cann
 user-useful vertical result.
 
 **Proceed when:** every slice has one outcome and learning target; every enabler passes all enabler
-tests; every split warning is resolved by splitting or a concrete cohesion reason; every in-scope
-behaviour has one owner or explicit exclusion.
+tests and validates no more than one material uncertainty; every split warning is resolved by
+splitting or a concrete cohesion reason; every in-scope behaviour, and every producer feeding a
+shared pipeline or adapter, has one owner or explicit exclusion.
 
 ## ANTI-PATTERNS
 
@@ -199,10 +210,12 @@ behaviour has one owner or explicit exclusion.
   later domain slice.
 - **Fake verticality:** use mocks or precomputed fixtures that bypass the material production
   transformation, authorization, persistence, or adapter under test.
+- **Premature or split shared pipeline:** open a pipeline or adapter shared by several paths before
+  its `NOW` producers exist, or let a second slice re-open what another slice already owns.
 - **Theme compression:** merge independently schedulable value areas to keep the theme count small.
 - **Atomization:** split one cohesive interaction or invariant only to reduce apparent slice size.
-- **Silent contradiction:** publish an unconditional slice while its sources disagree about a
-  decision required to implement or verify it.
+- **Silent contradiction:** publish an unconditional slice while its sources disagree about, or
+  never make, a decision required to implement or verify it.
 - **Deferred safety:** create generic error-handling, authorization, accessibility, observability,
   or security slices for behaviour required safely in earlier `NOW` slices. Replacing a configured
   scope with an authenticated one at a declared seam is not deferred safety; shipping slices whose
@@ -220,6 +233,11 @@ Assign every behaviour to exactly one horizon:
   evidence. Record its promotion trigger.
 - **OUT-OF-SCOPE:** an explicit exclusion. Record its rationale; do not plan implementation.
 
+Admission test: `NOW` requires a source that asks for the behaviour, `LATER` a promotion trigger,
+`OUT-OF-SCOPE` a declared exclusion. Trace each `NOW` slice to the requesting statement in
+reasoning, not in the published plan. A capability merely compatible with the data model, or
+convenient once an entity exists, was never requested: it belongs in `LATER` with its trigger.
+
 Respect hard dependencies, then order `NOW` by:
 
 1. minimum delivery path and early human review needs;
@@ -236,6 +254,12 @@ After validating existential risks, prefer breadth before depth: deliver one thi
 from each remaining `NOW` theme before a second slice from one theme. Depart only for another
 differentiator, a material risk, required recovery, or materially higher-frequency behaviour, and
 state that exception once under `Ordering criteria`.
+
+Required recovery outranks breadth. When a slice names a failure mode in its `Verification` and
+another `NOW` slice is its remedy, deliver the remedy before opening a different theme; a remedy the
+sources declare a fallback of a delivered path closes that path and is not optional depth. Likewise,
+a slice that opens a pipeline or adapter shared by several paths follows every `NOW` slice that
+feeds it, and owns it alone.
 
 Separate a boundary from the identity behind it. Ship the tenancy, ownership, or scope boundary with
 the first slice that persists data, and let a single named resolver own the current scope; then a
@@ -258,8 +282,10 @@ Add checkpoints only where evidence can cancel, promote from `LATER`, reorder, s
 unfinished work.
 
 **Proceed when:** every differentiator and material risk has a first validator; all horizon
-assignments are exclusive; every `LATER` item has a trigger; order respects dependencies and
-delivery maturity; checkpoints name evidence and decisions they can change.
+assignments are exclusive and pass the admission test; every `LATER` item has a trigger; every
+named failure mode whose remedy is in `NOW` gets it before a different theme starts; every shared
+pipeline follows its producers; order respects dependencies and delivery maturity; checkpoints name
+evidence and decisions they can change.
 
 ## 5. Publish and audit
 
@@ -307,8 +333,10 @@ skill before changing the expectation.
 **Complete when:** the validator passes; themes trace to first validators; `NOW` is a coherent
 user-useful release; enablers are vertical and adjacent to their product outcome; `LATER` is
 evidence-dependent; the slice order respects every hard dependency; every source behaviour has one
-horizon; end-user `NOW` reaches its intended environment; only implementation-changing questions
-remain.
+horizon; no slice asserts a side of a listed conflict or undecided choice; every external
+dependency invoked in `NOW` has a selecting source or an `Open questions` entry, and every published
+question names the slices it blocks; end-user `NOW` reaches its intended environment; only
+implementation-changing questions remain.
 
 ## Review an existing plan
 
