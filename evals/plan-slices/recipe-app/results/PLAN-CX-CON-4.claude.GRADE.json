@@ -1,0 +1,136 @@
+{
+  "rubric_version": 1,
+  "candidate": "recipe-app/results/PLAN-CX-CON-4.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "score": 3,
+      "evidence": [
+        "Candidato, tabella Themes: sei temi (A. Scoperta semantica, B. Accesso ai ricettari, C. Manutenzione delle ricette, D. Acquisizione da fonti esterne, E. Collaborazione, F. Raccolta fotografica).",
+        "Candidato, tema C: «Salvare, consultare e correggere una ricetta con il minimo attrito» — la consultazione è assorbita nella scrittura; l'elenco vive nella slice 3 («Home di prova con elenco ricette») e il dettaglio nella slice 5 («Salvataggio immediato, dettaglio e comparsa nell'elenco»).",
+        "Reference, Themes: sette temi con «Consultazione | Vedo il contenuto del ricettario corrente e apro una ricetta per cucinarla | 5. Lettura della ricetta» come tema autonomo.",
+        "Reference, expectations: \"theme_count\": 7 e theme_rules con voce dedicata \"Consultazione|Lettura\".",
+        "Candidato mantiene separati Import (D), Foto (F), Accesso (B) e Collaborazione (E), coerentemente con reference."
+      ],
+      "findings": [
+        "La Consultazione (elenco + dettaglio) non è un tema autonomo ma è distribuita fra la slice di ricerca e quella di scrittura: riduzione del numero di temi rispetto a un'area di valore indipendentemente schedulabile.",
+        "Gli altri confini (import unico, foto unica area, accesso vs condivisione) sono corretti e rispettano indipendenza e learning target.",
+        "Il tema D tiene insieme JSON-LD, fallback LLM e copia-incolla — merge coerente con il reference (stesso motore, interazione forte)."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "score": 2,
+      "evidence": [
+        "Candidato, tema A: first validation = «Motore semantico multilingue verificabile», che nel NOW è la slice 2 marcata «*(Enabler: scoperta semantica)*» con Outcome «Gli sviluppatori hanno evidenza eseguibile...».",
+        "Candidato, slice 3 «Ricerca semantica nel ricettario di prova *(Theme: A. Scoperta semantica)*» è la vera prima slice di tema, ma non è indicata come first validation.",
+        "Reference, Themes: «Ricerca | ... | 4. Ricerca semantica cross-lingua» — il validatore è la slice di prodotto, non la pipeline (slice 3 enabler).",
+        "Rubrica: «Ogni tema indica la prima slice NOW che ne valida il valore, non solo un enabler tecnico».",
+        "Candidato, temi B–F: validatori corretti e risolvibili («Accesso Google e ricettari privati» = slice 4, «Ricette manuali subito correggibili» = slice 5, «Import URL strutturato» = slice 6, «Inviti e modifica condivisa» = slice 9, «Foto multiple e cover» = slice 10)."
+      ],
+      "findings": [
+        "Il tema più importante (differenziatore) è validato da un enabler tecnico dev-facing anziché dalla slice di prodotto che ne dimostra il valore per l'utente.",
+        "Outcome dei temi sono espressi in linguaggio di prodotto e coerenti con i rispettivi validatori negli altri cinque casi.",
+        "Tutti i first validation risolvono a titoli di slice esistenti nel NOW."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "score": 2,
+      "evidence": [
+        "Candidato, slice 1 «Runtime minimo in ambiente non produttivo»: «Endpoint runtime innocuo con log e health check, senza auth, tenancy, database o CRUD di ricette» — nessun database né migrazione.",
+        "Reference, slice 1 e Invarianti d'ordine: «`1` attraversa database e pipeline di migrazione con operazioni non di dominio»; expectations slice_rules per «Walking skeleton|Runtime minimo» richiedono [\"deploy|distribu\", \"database|Postgres\", \"migraz\"].",
+        "Candidato, slice 2 accorpa provisioning Postgres+pgvector, fixture, resolver di scope configurato, pipeline di embedding, comando diagnostico e set di valutazione bilingue in un'unica slice.",
+        "Reference, Invarianti: «Un enabler di dominio minuscolo stabilisce persistenza, resolver di scope e shell del ricettario corrente prima dell'indicizzazione».",
+        "Candidato, slice 6 «Import URL strutturato» include «salvataggio immediato di testo, metadati, embedding e prima foto su R2» e «prima foto impostata come cover»; la slice 10 «Foto multiple e cover» possiede poi upload multiplo, storage R2, validazione e selezione cover.",
+        "Reference, Invarianti: «Le foto arrivano dopo che l'acquisizione testuale è chiusa e stanno in una sola slice»; reference slice 11 possiede l'intera pipeline media (download da `og:image` + upload manuale + cover)."
+      ],
+      "findings": [
+        "Pipeline media con due owner: download/hosting su R2 e default cover nascono nella slice 6, mentre la slice 10 rivendica storage, cover e recupero — il comportamento condiviso non ha un owner unico e la slice 6 non è revertibile senza toccare le foto.",
+        "Lo skeleton non attraversa database e migrazioni: il primo contatto con Postgres avviene dentro la slice del motore semantico, dove un fallimento di connessione si confonde con uno di dominio.",
+        "L'enabler di dominio minuscolo (persistenza + resolver + shell del ricettario) è assorbito nella slice 2, che diventa ampia (infra DB + fixture + pipeline + eval set).",
+        "Positivo: le slice restano verticali con outcome verificabile; capability, fallback LLM e copia-incolla sono correttamente separati; il confine di scope è presente dalla prima slice che persiste dati."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "score": 3,
+      "evidence": [
+        "Candidato, ordine NOW: 0 repo → 1 runtime → 2 motore semantico → 3 ricerca → 4 auth → 5 manuale → 6 JSON-LD → 7 fallback LLM → 8 copia-incolla → 9 inviti → 10 foto → 11 rilascio.",
+        "Candidato, Ordering criteria: «Validare per primo il differenziatore esistenziale, la ricerca semantica cross-lingua» e «Tenere edit e recupero disponibili prima degli import imperfetti».",
+        "Reference, Invarianti: «La pipeline di indicizzazione reale precede immediatamente la slice di ricerca» — soddisfatto (2 → 3 adiacenti).",
+        "Reference, Invarianti: «La form condivisa di inserimento e modifica precede la prima slice di import» — soddisfatto (5 prima di 6); «Il fallback LLM segue l'import JSON-LD; il testo incollato segue il fallback LLM» — soddisfatto (6 → 7 → 8).",
+        "Reference, Invarianti: «L'invito è l'ultimo tema di prodotto» e precedence_rules {\"before\": \"Foto\", \"after\": \"Invit|Collaborazione\"} — candidato inverte: slice 9 inviti prima della slice 10 foto, senza motivazione esplicita.",
+        "Candidato, slice 4: identità introdotta prima di qualunque slice destinata a utenti reali, sostituendo «il ricettario configurato con il resolver basato sulla membership autenticata» — coerente con l'invariante sull'identità."
+      ],
+      "findings": [
+        "Il differenziatore è portato presto (slice 2–3) e l'enabler è adiacente al validatore.",
+        "Il tema Condivisione precede le Foto, contro l'invariante «l'invito è l'ultimo tema di prodotto», senza motivazione dichiarata negli Ordering criteria.",
+        "Rischio infrastrutturale del database (connessione, driver, migrazioni) non isolato nello skeleton: viene validato solo dentro la slice del motore semantico.",
+        "Recovery obbligatorio (edit) chiuso prima degli import; rilascio agli utenti come ultima slice."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "score": 3,
+      "evidence": [
+        "Candidato, slice 3, Verification: «Tester non produttivi trovano una ricetta inglese con query italiane rappresentative»; «Ricette fixture di un secondo ricettario non compaiono né nell'elenco né nei risultati, inclusi errori e query manipolate».",
+        "Candidato, slice 6, Verification: «producono una ricetta ricercabile e correggibile senza invocare il provider LLM»; «La foto è servita da R2, non hotlinkata; retry e cleanup non duplicano ricetta, embedding o oggetti».",
+        "Candidato, slice 7, Verification: «Output inventato, incompleto o fuori schema non viene accettato silenziosamente» + Learning/risk su qualità e costo del secondo differenziatore.",
+        "Candidato, slice 8, Verification: «Nessuna richiesta di rete viene fatta verso l'URL originale e invocazioni/costi LLM restano osservabili».",
+        "Candidato, slice 9, Verification: «token alterati, cookbook mutato e replay non elevano privilegi né duplicano membership» — idempotenza coperta, ma nessuna verifica su token scaduto/revocato benché `concepts.md` modelli `Invitation.expiresAt`.",
+        "Candidato, slice 11, Includes/Verification: promozione, migrazioni, rollback, «limiti di consumo e dashboard minima per errori, latenza, costi» — nessun backup con prova di ripristino, che il reference richiede («backup con prova di ripristino»).",
+        "Candidato, slice 3: la telemetria misura «latenza, chiamate e costo» ma non afferma esplicitamente l'assenza di chiamate LLM nella ricerca (reference slice 4: «nessuna chiamata LLM nei log di ricerca»), coerentemente con la contraddizione lasciata aperta."
+      ],
+      "findings": [
+        "Includes, Verification e Outcome descrivono un risultato unico e coerente in ogni slice; il livello di dettaglio è da accettazione, non da task backlog.",
+        "Learning/risk sono presenti sulle slice rischiose (2, 3, 6, 7, 9) e collegati a decisioni (checkpoint corrispondenti).",
+        "Le verifiche coprono modi di fallimento concreti (paywall, output LLM invalido, upload parziale, replay di invito) e non la mera esistenza dei dati.",
+        "Lacune circoscritte: nessuna prova di ripristino dei backup nella slice di rilascio; nessuna verifica su token di invito scaduto o revocato."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "score": 3,
+      "evidence": [
+        "Candidato, slice 11 «MVP disponibile agli utenti selezionati *(Release: delivery)*»: «Utenti selezionati completano login, creazione/invito, tre modalità di add, edit, foto e ricerca cross-lingua sul deployment finale» — NOW è una release coerente per famiglia e amici.",
+        "Candidato, LATER: cinque voci, ciascuna con Promotion trigger ed Expected value (filtri strutturati, ricerca ibrida, ricettari pubblici, gruppi, macchina Fly sempre attiva).",
+        "Candidato, OUT-OF-SCOPE: «Ricerca cross-ricettario — l'MVP ricerca esclusivamente nel ricettario corrente» e «Password, magic link e passkey — ... passkey immature per questo MVP».",
+        "Reference, horizon_rules: {\"pattern\": \"cross-ricettario\", \"horizon\": \"LATER\"} e {\"pattern\": \"Passkeys\", \"horizon\": \"LATER\"}; reference LATER include entrambe con trigger.",
+        "Candidato, slice 4: «Creazione di un ricettario privato con creator e membership atomici; selezione tra più ricettari dell'utente» vs reference Invarianti «Il primo accesso crea automaticamente il primo ricettario; la creazione esplicita di altri ricettari non precede ricerca o inserimento» e LATER «Creazione di ricettari aggiuntivi dall'interfaccia».",
+        "Nessun comportamento risulta assegnato a due orizzonti: cover di default (slice 6) e selezione cover (slice 10) sono entrambe NOW e distinte."
+      ],
+      "findings": [
+        "Due voci che sono lavoro rimandato con trigger naturale (ricerca cross-ricettario, passkey) sono classificate come esclusioni permanenti anziché LATER; la motivazione data è una constatazione di scope, non un'esclusione argomentata.",
+        "La creazione esplicita e la selezione di ricettari multipli entrano in NOW (slice 4), ampliando il NOW rispetto al minimo coerente; non è però duplicata in LATER.",
+        "«Review obbligatoria prima del salvataggio» non compare in OUT-OF-SCOPE, pur essendo un'esclusione dichiarata dalle fonti; è solo implicita nella slice 5.",
+        "NOW resta sicuro e coerente per l'audience dichiarata; ogni voce LATER ha trigger di promozione ancorato a evidenza NOW."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "score": 3,
+      "evidence": [
+        "Candidato, Open questions: «Come viene generato il vettore della query? `concepts.md` richiede `embedding(query)`, ma `goal.md` e `arch-choices.md` vietano embedding a runtime sulle query; la decisione blocca le slice 2–3».",
+        "Candidato, Non-product work: «Spike query embedding, massimo 2 giorni prima della slice 2 ... uscire con una decisione documentata e soglie per le slice 2–3».",
+        "Candidato, slice 2, Includes: «comando diagnostico che vettorializza una query secondo la decisione dello spike» — non sceglie un lato in silenzio.",
+        "Reference, Open questions attese: oltre all'embedding della query, «Provider Postgres: Neon o Supabase; blocca lo skeleton», «Modello di embedding ... blocca la pipeline», «Modello LLM ... blocca il fallback».",
+        "Candidato, slice 2 e 7: «Postgres con pgvector» e «fallback automatico al modello economico» — provider e modelli restano generici, quindi non scelti in silenzio, ma neppure elencati come decisioni aperte con la slice bloccata."
+      ],
+      "findings": [
+        "La contraddizione bloccante è esposta correttamente, con le slice bloccate nominate e uno spike che la risolve prima delle slice dipendenti: nessuna scelta silenziosa.",
+        "Mancano tre decisioni non prese dalle fonti (provider Postgres, modello di embedding, modello LLM) che il reference attende in Open questions con la slice bloccata; il piano le lascia semplicemente non nominate.",
+        "Nessuna sezione di assunzioni esplicite: l'estensione a ricettari multipli in NOW (slice 4) non è dichiarata come assunzione rispetto alle fonti.",
+        "L'unica domanda aperta presente cambia effettivamente implementazione e verificabilità, quindi non c'è rumore."
+      ],
+      "confidence": "high"
+    }
+  ],
+  "critical_failures": []
+}

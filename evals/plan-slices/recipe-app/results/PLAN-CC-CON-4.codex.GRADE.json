@@ -1,0 +1,121 @@
+{
+  "rubric_version": 1,
+  "candidate": "recipe-app/results/PLAN-CC-CON-4.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "score": 3,
+      "evidence": [
+        "Candidate, `Themes`: seven themes correctly separate consultation, semantic search, writing, web capture, photos, identity, and sharing, matching the seven value areas in Reference `Themes`.",
+        "Candidate, theme G and slices 10–11: `Ricettario condiviso` contains both additional-cookbook creation/switching and invitation-based collaboration; Reference places explicit creation of additional cookbooks in `LATER` and defines `Condivisione` around invitation and peer collaboration."
+      ],
+      "findings": [
+        "Six theme boundaries are coherent.",
+        "Theme G absorbs an independently schedulable multi-cookbook capability that neither validates collaboration nor belongs in NOW according to the reference."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "score": 3,
+      "evidence": [
+        "Candidate, `Themes`: themes A–F state product outcomes and point to NOW slices that directly exercise them, such as semantic search → slice 4 and web capture → slice 6.",
+        "Candidate, theme G: desired outcome is `Famiglia e amici collaborano da pari`, but its declared first validation is slice 10, which only creates and switches private cookbooks; peer collaboration first appears in slice 11.",
+        "Reference, `Themes`: Condivisione is first validated by `Invito e collaborazione paritaria`, not cookbook creation or selection."
+      ],
+      "findings": [
+        "Outcomes and validators are strong except for sharing.",
+        "Slice 10 cannot validate theme G’s stated collaborative value."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "score": 2,
+      "evidence": [
+        "Candidate, slice 2 combines Cookbook and Recipe persistence, the `CurrentCookbook` resolver, HNSW, the embedding adapter, corpus loading, and ranking diagnostics.",
+        "Reference, NOW slices 2–3 and `Invarianti d'ordine`: a tiny cookbook-context slice must establish persistence, scope resolver, shell, and out-of-scope 404 before the separate indexing pipeline.",
+        "Candidate, slices 3–9: most product slices cross UI, application behavior, persistence, and observable verification; slices 6–7 also separate free JSON-LD parsing from the paid LLM fallback.",
+        "Candidate, slice 10 adds multi-cookbook creation and selection as a standalone product capability even though Reference assigns explicit creation of additional cookbooks to `LATER`."
+      ],
+      "findings": [
+        "The indexing enabler is materially over-bundled with first-domain-persistence conventions, weakening reversibility and independent review of the scope boundary.",
+        "Most later slices are cohesive vertical increments and the two extraction adapters are appropriately separated."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "score": 1,
+      "evidence": [
+        "Candidate order: embedding pipeline slice 2 → consultation slice 3 → semantic-search UI slice 4. Reference `Invarianti d'ordine` requires the real indexing pipeline immediately before semantic search.",
+        "Candidate order: LLM fallback slice 7 → photos slice 8 → identity slice 9 → cookbook management slice 10 → invitations slice 11 → pasted-text recovery slice 12.",
+        "Reference `Invarianti d'ordine`: LLM fallback must be followed by pasted text, textual acquisition must close before photos, and invitation must be the final product theme.",
+        "Candidate correctly places semantic-search validation before all acquisition slices and shared create/edit before URL import, satisfying two principal risk dependencies."
+      ],
+      "findings": [
+        "The existential differentiator is tested early, but its enabler and user validator are not adjacent.",
+        "The mandatory paywall recovery path is postponed until after three independent themes, while photos and sharing are opened prematurely.",
+        "Invitation is not the final product theme, contrary to the explicit ordering invariant."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "score": 2,
+      "evidence": [
+        "Candidate slices consistently provide `Includes`, `Verification`, and `Outcome`; slices 6 and 7 connect JSON-LD hit rate and LLM cost/accuracy to explicit decision checkpoints.",
+        "Candidate, slice 4 verification checks cross-language results and cookbook isolation but does not verify absence of LLM calls; Reference slice 4 requires `nessuna chiamata LLM nei log di ricerca`.",
+        "Candidate, slice 11 verifies invalid or expired invitations but not idempotent repeated acceptance; Reference slice 12 requires idempotent acceptance.",
+        "Candidate, slice 13 verifies one user’s login/import/search and production cost, but Reference slice 13 requires two-user import/search/edit/sharing, backup restoration, and LLM/embedding spend caps and alarms.",
+        "Candidate, cross-functional concerns delay Membership verification until slice 11 and no slice verifies that a cross-cookbook recipe ID returns 404; Reference `Scope` requires this behavior for every read/write boundary."
+      ],
+      "findings": [
+        "Many verifications are concrete and learning-oriented, especially around ranking and extraction.",
+        "Material acceptance and failure evidence is missing for search cost behavior, invitation idempotency, cross-scope object access, recovery, and production spend safety.",
+        "The release evidence is too narrow to demonstrate the declared family-and-friends collaborative outcome."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "score": 2,
+      "evidence": [
+        "Candidate NOW slice 10 includes explicit creation of additional cookbooks; Reference `LATER` assigns that capability a promotion trigger based on user demand.",
+        "Candidate `OUT-OF-SCOPE` places cross-cookbook search and passkeys there; Reference assigns both to `LATER` with evidence-based triggers.",
+        "Candidate `LATER` entries generally contain promotion triggers and expected value, including filters, hybrid search, and an always-warm Fly machine.",
+        "Candidate keeps manual cover selection in NOW slice 8; Reference `Tensioni note` explicitly accepts this alternative when kept within the photo slice."
+      ],
+      "findings": [
+        "The cover choice is an accepted alternative.",
+        "Multi-cookbook UI is promoted without NOW evidence, while two evidence-dependent future capabilities are classified as exclusions.",
+        "No behavior is visibly assigned to two incompatible candidate horizons."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "score": 1,
+      "evidence": [
+        "Candidate, slice 4 silently chooses `la query viene embeddata a runtime`; candidate slice 2 simultaneously says the embedding adapter is `invocato solo in scrittura`.",
+        "Sources conflict: `goal.md` and `arch-choices.md` say embeddings are used only during add/edit and never on search queries, while `concepts.md` defines `embedding(query)`. Reference `Open questions attese` says this contradiction blocks slices 3 and 4 and must remain unresolved.",
+        "Candidate `Open questions` identifies Postgres provider and embedding model, but omits the query-embedding contradiction and the unresolved LLM model that Reference says blocks the fallback slice.",
+        "Candidate introduction says all stack and infrastructure choices are decided despite its own unresolved Postgres provider and embedding-model questions."
+      ],
+      "findings": [
+        "A blocking source contradiction is resolved silently and inconsistently inside the candidate.",
+        "Two of four expected blocking decisions are omitted; the embedding-model question is not clearly treated as blocking slice 2.",
+        "The plan does correctly preserve uncertainty about the Postgres provider and multilingual embedding model."
+      ],
+      "confidence": "high"
+    }
+  ],
+  "critical_failures": [
+    {
+      "id": "silent_source_contradiction",
+      "evidence": [
+        "Candidate slice 4 mandates runtime query embedding and omits it from `Open questions`; `goal.md` and `arch-choices.md` prohibit runtime query embeddings, `concepts.md` requires `embedding(query)`, and Reference states this unresolved contradiction blocks indexing/search slices."
+      ]
+    }
+  ]
+}
