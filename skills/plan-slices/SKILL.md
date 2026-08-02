@@ -268,7 +268,11 @@ under `Cross-functional concerns`. Never defer the boundary itself, and never de
 such seam exists.
 
 Once the evidence that justified deferring identity exists, deliver identity before further
-user-facing slices whose acceptance depends on real ownership or membership.
+user-facing slices whose acceptance depends on real ownership or membership. Past the second `NOW`
+slice that delivers behaviour to an end user, justify the remaining deferral once under `Ordering
+criteria`, naming the evidence that still requires it. Every `NOW` slice preceding identity states
+its own audience: an `Outcome` promising "a user" who cannot exist yet belongs to a developer or a
+tester on the declared non-public environment.
 
 When `NOW` targets selected end users, end it with the smallest release slice that makes the
 coherent release usable in its intended environment. Tag it `(Release: delivery)`, not `Enabler`,
@@ -284,8 +288,9 @@ unfinished work.
 **Proceed when:** every differentiator and material risk has a first validator; all horizon
 assignments are exclusive and pass the admission test; every `LATER` item has a trigger; every
 named failure mode whose remedy is in `NOW` gets it before a different theme starts; every shared
-pipeline follows its producers; order respects dependencies and delivery maturity; checkpoints name
-evidence and decisions they can change.
+pipeline follows its producers; every slice preceding identity names an audience compatible with a
+configured scope; order respects dependencies and delivery maturity; checkpoints name evidence and
+decisions they can change.
 
 ## 5. Publish and audit
 
