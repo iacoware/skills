@@ -282,6 +282,23 @@ brief+piani, con controllo incrociato su CON-2, CON-3 e CON-4 di entrambi i mode
   applicata, e la verifica resta `lettura` perché il confronto termine per termine si fa su una
   cella scritta nella lingua dell'utente.
 
+### Difetti degli artefatti mai registrati (2026-08-04)
+
+Difetti reali degli artefatti generati che nessun ciclo aveva annotato. Non sono regressioni: non
+c'è una riga di registro che li dichiarasse chiusi. Gli artefatti non sono stati modificati.
+
+- **`CX` CON-2, CON-3 e CON-4 — 17 celle `First validation` non risolvibili.** `validate_plan.py`
+  fallisce con `must start with a NOW slice number` su 4 righe in CON-2, 7 in CON-3 e 6 in CON-4:
+  ogni cella porta il solo titolo della slice e nessun numero, mentre il template chiede
+  `[NOW slice number]`. Il riferimento va quindi ricostruito accoppiando titoli a mano, che è
+  esattamente il lavoro che la colonna esiste per evitare, e nessuna delle affermazioni di R-008 è
+  decidibile da quelle celle senza quel passaggio. `CC` supera il controllo su tutti e tre i cicli
+  e `CX` CON-5 è il primo piano `CX` che pubblica il numero. Misurato su CON-2..CON-4 · `CX` ·
+  validator.
+  Il difetto non è attribuibile a una riga esistente: R-008 nasce con `9aa2586`, dopo quei tre
+  cicli, e la tolleranza del validator alla cella che porta anche il titolo è di `c10111d`, più
+  recente ancora. Resta un dato sulla direzione del formato, non una previsione smentita.
+
 ## Miglioramenti concordi non arrivati nello skill
 
 Estratti dalle sezioni `Improvements also present in the other report` dei due `REVIEW` CON-4 e
