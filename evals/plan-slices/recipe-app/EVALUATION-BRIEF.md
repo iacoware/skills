@@ -25,3 +25,10 @@
 # Known conflicts
 
 - Manual input skips extraction in `sources/concepts.md`, “Pipeline di estrazione”, while `sources/arch-choices.md`, “Estrazione contenuto”, says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path.
+- Search queries are never embedded at runtime in `sources/goal.md`, “Vincoli e scala”, and `sources/arch-choices.md`, “Embeddings”, while `sources/concepts.md`, “Ricerca (MVP)”, defines search as `similarity(Recipe.embedding, embedding(query))`, which requires embedding the query; no `Includes` or `Verification` bullet may assert either side before the interpretation is resolved, and the resolution — per-query call, cache, or precomputation — belongs to the plan's declared open choices with the slice it blocks.
+
+# Not conflicts
+
+Differences a reader may mistake for a conflict, resolved here so each cycle does not re-litigate them.
+
+- Cost. `sources/goal.md`, “Scelte tecniche”, says everything fits “entro free tier … target ~$0/mese”; `sources/arch-choices.md`, “Hosting”, says Fly has no real free tier and costs cents per month. Both describe the same target: `arch-choices.md` holds the authoritative figures, `goal.md` states the intent.
