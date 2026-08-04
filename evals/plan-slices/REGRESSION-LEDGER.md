@@ -54,7 +54,7 @@ Serve a due cose:
 | R-004 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | Nessuna slice `NOW` consegna un comportamento che le fonti non richiedono; ogni voce `LATER` dichiara un `Promotion trigger` e ogni voce `OUT-OF-SCOPE` una razionale di esclusione. | lettura per il primo membro — lo skill colloca la tracciatura nel ragionamento, non nel piano; il secondo è automatizzabile sulla struttura del template | 2026-08-04 | CON-5 · `CC`+`CX` · fonti | tiene |
 | R-005 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Continuità del tema* ≡ *Keep a theme and its recovery path contiguous* | Se una slice `NOW` nomina un modo di fallimento nella propria `Verification` e un'altra slice `NOW` ne è il rimedio, nessuna slice di un tema diverso è collocata fra le due. | lettura per l'accoppiamento fallimento→rimedio; l'interposizione di temi è automatizzabile sull'annotazione `*(Theme: X)*` delle slice | 2026-08-04 | CON-5 · `CC`+`CX` · piani | tiene |
 | R-006 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | Una pipeline o un adapter condiviso da più percorsi è aperto negli `Includes` di una sola slice `NOW`; le slice successive che lo riusano lo dichiarano tale. Quella slice segue ogni slice `NOW` che le fornisce input, salvo quando valida input controllati che attraversano il calcolo di produzione e il brief dello scenario ammette la validazione anticipata. | lettura per l'identificazione dei produttori; l'unicità del proprietario è automatizzabile in parte (stesso adapter nominato negli `Includes` di due slice) | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
-| R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida più di una incertezza materiale: la sua `Verification` non può fallire per cause che appartengono a due voci diverse di `Material uncertainties` del brief. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito; l'elenco delle incertezze e delle decisioni che cambiano lo pubblica il brief | 2026-08-04 (tentato) | — | da verificare |
+| R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida incertezze su più di un sottosistema: la sua `Verification` non può fallire per cause che, in `Material uncertainties` del brief, appartengono a `Subsystem` diversi. Più voci dello stesso sottosistema sono una incertezza sola, anche quando la risposta invalida la scelta verificata. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito; l'elenco delle incertezze, dei sottosistemi e delle decisioni che cambiano lo pubblica il brief | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
 | R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento; automatizzabile l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | CON-5 · `CC`+`CX` · piani | regredita su `CX` |
 
 ### Regressioni rilevate — ciclo CON-5 (2026-08-04)
@@ -108,23 +108,24 @@ resta il motivo, perché la riscrittura non si perda nella storia del file.
   secondo membro è stato emendato con quella deroga. Resta osservato, senza valore di regressione,
   che `CX` nomina l'embedding negli `Includes` di quattro slice (2, 5, 6, 7) senza mai dichiarare
   quali siano riuso: è la ragione per cui il primo membro ora chiede la dichiarazione esplicita.
-- **R-007 — non decidibile, resta `da verificare`.** Il secondo membro chiede quali *decisioni*
-  cambierebbero se la `Verification` di un `Enabler` fallisse, ma il piano pubblica la mappa
-  decisione↔slice solo dove esiste un `Decision checkpoint`. Per gli `Enabler` di consegna non ne
-  esiste nessuno — `CC` apre i checkpoint alla slice 3, `CX` alla slice 2 — e sono proprio quelli
-  dove il dubbio si pone: la seconda bullet di `Verification` della slice 1 di `CX` («Arresto,
-  risveglio da `suspend`, nuova connessione e redeploy preservano il round trip») può fallire per il
-  modo di sospensione Fly o per il pooling del provider Postgres, che sono decisioni distinte —
-  `LATER` § *Fly sempre caldo* e `Non-product work` § *Selezione Postgres*. Attribuire il
-  fallimento all'una o all'altra richiede di ricostruire la mappa, non di leggerla: il verdetto
-  sarebbe inventato. Sugli `Enabler` semantici — `CC` slice 3, `CX` slice 2 — la riga regge, perché
-  lì il checkpoint pubblica la decisione.
-  La riga è stata riscritta contro `Material uncertainties` del brief, che ora pubblica le cinque
-  incertezze dello scenario e la decisione che ciascuna cambia: la mappa non va più ricostruita dal
-  piano e il caso `CX` slice 1 diventa leggibile — sospensione Fly e pooling Postgres sono due voci
-  distinte della tabella. Lo `Stato` resta `da verificare` di proposito: decidere la riga contro un
-  elenco scritto nella stessa sessione non sarebbe una misura indipendente. Va decisa al prossimo
-  controllo, sugli stessi due piani.
+- **R-007 — riscritta sul criterio dichiarato, verdetto `tiene`.** Nella formulazione originale il
+  membro chiedeva quali *decisioni* cambierebbero al fallimento della `Verification` di un `Enabler`,
+  e il piano pubblica la mappa decisione↔slice solo dove c'è un `Decision checkpoint`: per gli
+  `Enabler` di consegna non ce n'è nessuno — `CC` apre i checkpoint alla slice 3, `CX` alla slice 2 —
+  cioè proprio dove serviva. Il ciclo l'ha quindi lasciata non decisa.
+  Il criterio è stato poi dichiarato: R-007 esiste per impedire che una slice metta troppa carne al
+  fuoco, dove la soglia è che ogni slice resti implementabile in una sessione fredda separata, senza
+  context rot. Da lì discende che il taglio non è per decisione ma per **sottosistema**: verificare
+  che l'infrastruttura di consegna scelta soddisfi resta una incertezza sola anche quando la risposta
+  la invalida e costringe a cambiare bersaglio; sarebbero due se la stessa slice validasse anche il
+  motore semantico. La riga e la tabella `Material uncertainties` del brief sono state riscritte su
+  questo taglio.
+  Verdetto sui sei `Enabler`: `CC` 0 e `CX` 0 non toccano incertezze materiali; `CC` 1 e `CX` 1
+  stanno interamente in *Delivery infrastructure* — la seconda bullet di `Verification` di `CX` 1
+  («Arresto, risveglio da `suspend`, nuova connessione e redeploy preservano il round trip») unisce
+  U1 e U2, stesso sottosistema; `CC` 3 e `CX` 2 stanno interamente in *Semantic engine*, e il
+  controllo di scope in `CX` 2 non conta, perché è un hard constraint del brief e un suo fallimento è
+  un bug, non un cambio di decisione. Nessuno dei due piani viola la riga.
 - **R-002, secondo membro — riscritta, era vera a vuoto.** Il membro quantificava sulle voci di
   `Open questions`, sezione che `CX` non ha: le sue scelte non prese stanno in `Non-product work`,
   ognuna con la slice che blocca («prima della slice 1», «prima della slice 2»…). Così com'era, un
