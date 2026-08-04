@@ -82,7 +82,15 @@ calibrato non sono sul percorso di questa decisione.
    (`results/PLAN-*-CON-4.IMPROVEMENT.md`).
 4. I due piani di miglioramento vengono confrontati fra loro: cosa è presente in entrambi, cosa in
    uno solo, su cosa sono in disaccordo (`results/PLAN-*-CON-4.REVIEW.md`).
-5. Si applicano allo `SKILL.md` **solo i miglioramenti comuni a entrambi i modelli**.
+5. Si decide cosa applicare allo `SKILL.md`. L'accordo fra i due modelli è la ragione più economica
+   per applicare: il punto è già stato filtrato e non serve altra evidenza. Un punto sollevato da un
+   solo modello si applica quando l'umano ritrova il difetto sul piano generato e lo giudica valido;
+   in quel caso la modifica cita il difetto osservato, non il report che l'ha proposta.
+
+Questa forma è essa stessa il risultato di un'evoluzione: i commit dello skill precedenti al ciclo
+CON-4 nascono da conversazioni fra umano e agente sui piani generati, senza confronto fra modelli.
+Il workflow descritto qui è dove quel percorso è arrivato, non come è cominciato: la maggior parte
+della storia dello skill non ha né previsioni scritte né una traccia recuperabile da git.
 
 **Diagnosi: lo strumento c'era già, ed è il passo 5.** Non è "far valutare i piani": è
 l'**intersezione fra due modelli indipendenti sulle modifiche proposte allo skill**. È un filtro di
@@ -91,9 +99,10 @@ precisione, e il suo modo di sbagliare è mancare qualcosa, non applicare qualco
 precisione è la proprietà giusta da massimizzare. Ne discendono due conseguenze:
 
 - l'agreement inter-grader 0,56 è **irrilevante** per questo filtro: un disaccordo non corrompe
-  l'output, semplicemente non passa;
+  l'output. Applicarlo comunque resta una decisione umana che costa una lettura in più e va pagata
+  con un difetto citato, non con il numero;
 - l'**adjudication (slice 6) è superflua**: risolvere un disaccordo con un terzo giudizio è più caro
-  e meno sicuro che scartarlo.
+  e meno sicuro che rimandarlo alla lettura di chi decide.
 
 Il grading system sostituisce un filtro i cui errori sono visibili leggendo con una misura i cui
 errori vanno stimati — e stimarli costa più dello strumento.
