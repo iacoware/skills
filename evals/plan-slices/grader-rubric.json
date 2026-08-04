@@ -1,15 +1,11 @@
 {
-  "version": 1,
-  "scale": {
-    "minimum": 0,
-    "maximum": 4,
-    "labels": {
-      "0": "Assente o in contraddizione sostanziale con fonti e reference.",
-      "1": "Gravi lacune; il piano non sostiene decisioni affidabili.",
-      "2": "Parzialmente corretto; difetti materiali richiedono revisione.",
-      "3": "Corretto con lacune circoscritte che non invalidano il piano.",
-      "4": "Completo, coerente e supportato da evidenze; alternative motivate sono ammesse."
-    }
+  "version": 2,
+  "verdict_scores": {
+    "pass": 4,
+    "minor": 3,
+    "material": 2,
+    "severe": 1,
+    "absent": 0
   },
   "axes": [
     {
@@ -17,9 +13,9 @@
       "label": "Individuazione e confini dei temi",
       "weight": 15,
       "criteria": [
-        "Ogni area di valore indipendentemente schedulabile è un tema autonomo.",
-        "Split e merge rispettano indipendenza, interazione, invarianti e learning target.",
-        "I temi non sono compressi per ridurne artificialmente il numero."
+        {"id": "theme_independent_value", "text": "Ogni area di valore indipendentemente schedulabile è un tema autonomo."},
+        {"id": "theme_split_merge", "text": "Split e merge rispettano indipendenza, interazione, invarianti e learning target."},
+        {"id": "theme_no_compression", "text": "I temi non sono compressi per ridurne artificialmente il numero."}
       ]
     },
     {
@@ -27,9 +23,9 @@
       "label": "Outcome e primo validatore dei temi",
       "weight": 10,
       "criteria": [
-        "Ogni tema ha un outcome espresso in linguaggio di prodotto.",
-        "Ogni tema indica la prima slice NOW che ne valida il valore, non solo un enabler tecnico.",
-        "Outcome, tema e primo validatore sono reciprocamente coerenti."
+        {"id": "theme_product_outcome", "text": "Ogni tema ha un outcome espresso in linguaggio di prodotto."},
+        {"id": "theme_first_product_validator", "text": "Ogni tema indica la prima slice NOW che ne valida l'intero valore, non solo un enabler tecnico."},
+        {"id": "theme_validator_coherence", "text": "Outcome, tema e primo validatore sono reciprocamente coerenti."}
       ]
     },
     {
@@ -37,10 +33,10 @@
       "label": "Suddivisione, coesione e verticalità delle slice",
       "weight": 20,
       "criteria": [
-        "Ogni slice produce un outcome utile, verificabile, distribuibile e revertibile.",
-        "La slice attraversa tutti i layer produttivi necessari senza diventare una layer slice.",
-        "Capability, rischi, fallback e adapter indipendenti sono separati; interazioni e invarianti coesi restano insieme.",
-        "Ogni comportamento e pipeline condivisa ha un solo owner."
+        {"id": "slice_independent_outcome", "text": "Ogni slice produce un outcome utile, verificabile, distribuibile e revertibile."},
+        {"id": "slice_vertical_path", "text": "La slice attraversa tutti i layer produttivi necessari senza diventare una layer slice."},
+        {"id": "slice_cohesive_cut", "text": "Capability, rischi, fallback e adapter indipendenti sono separati; interazioni e invarianti coesi restano insieme."},
+        {"id": "slice_single_owner", "text": "Ogni comportamento, adapter, invariante e pipeline condivisa ha un solo owner completo."}
       ]
     },
     {
@@ -48,10 +44,10 @@
       "label": "Ordine delle slice e validazione anticipata dei rischi",
       "weight": 20,
       "criteria": [
-        "L'ordine rispetta dipendenze dure e porta presto differenziatori e rischi esistenziali.",
-        "Enabler e validatore restano adiacenti o motivatamente vicini.",
-        "Recovery obbligatori chiudono il percorso prima di aprire temi indipendenti.",
-        "Dopo i rischi esistenziali il piano preferisce breadth before depth salvo eccezioni motivate."
+        {"id": "order_dependencies_risk", "text": "L'ordine rispetta dipendenze dure e porta presto differenziatori e rischi esistenziali."},
+        {"id": "order_enabler_validator", "text": "Enabler e validatore restano adiacenti o motivatamente vicini."},
+        {"id": "order_required_recovery", "text": "Recovery obbligatori chiudono il percorso prima di aprire temi indipendenti."},
+        {"id": "order_breadth_before_depth", "text": "Dopo i rischi esistenziali il piano preferisce breadth before depth salvo eccezioni motivate."}
       ]
     },
     {
@@ -59,10 +55,10 @@
       "label": "Contenuto, verifica, learning target e outcome delle slice",
       "weight": 15,
       "criteria": [
-        "Includes, Verification e Outcome descrivono un unico risultato coerente.",
-        "Ogni learning o rischio materiale è collegato a un'osservazione capace di cambiare una decisione.",
-        "Le verifiche coprono casi concreti, qualità e modi di fallimento pertinenti, non mera esistenza dei dati.",
-        "Il dettaglio è sufficiente per accettazione e apprendimento senza diventare un task backlog."
+        {"id": "content_single_result", "text": "Includes, Verification e Outcome descrivono un unico risultato coerente."},
+        {"id": "content_learning_evidence", "text": "Ogni learning o rischio materiale è collegato a un'osservazione capace di cambiare una decisione."},
+        {"id": "content_failure_quality", "text": "Le verifiche coprono casi concreti, qualità e modi di fallimento pertinenti, non mera esistenza dei dati."},
+        {"id": "content_right_detail", "text": "Il dettaglio è sufficiente per accettazione e apprendimento senza diventare un task backlog."}
       ]
     },
     {
@@ -70,10 +66,10 @@
       "label": "Assegnazione a NOW, LATER e OUT-OF-SCOPE",
       "weight": 10,
       "criteria": [
-        "Ogni comportamento appartiene a un solo orizzonte.",
-        "NOW è una release minima coerente e sicura per l'audience dichiarata.",
-        "Ogni voce LATER dipende da evidenza NOW e ha un trigger di promozione.",
-        "OUT-OF-SCOPE contiene esclusioni motivate, non lavoro obbligatorio incompleto."
+        {"id": "horizon_exclusive", "text": "Ogni comportamento appartiene a un solo orizzonte."},
+        {"id": "horizon_coherent_now", "text": "NOW è una release minima coerente e sicura per l'audience dichiarata."},
+        {"id": "horizon_later_trigger", "text": "Ogni voce LATER dipende da evidenza NOW e ha un trigger di promozione."},
+        {"id": "horizon_exclusion_rationale", "text": "OUT-OF-SCOPE contiene esclusioni motivate, non lavoro obbligatorio incompleto."}
       ]
     },
     {
@@ -81,10 +77,10 @@
       "label": "Contraddizioni, assunzioni e domande aperte",
       "weight": 10,
       "criteria": [
-        "Le contraddizioni tra fonti sono esposte senza scegliere silenziosamente un lato.",
-        "Le conclusioni non supportate sono dichiarate come assunzioni.",
-        "Le decisioni non prese nominano le slice bloccate o sono risolte da uno spike precedente.",
-        "Restano aperte solo domande che cambiano implementazione, scope, ordine o verificabilità."
+        {"id": "uncertainty_conflicts", "text": "Le contraddizioni tra fonti sono esposte senza scegliere silenziosamente un lato."},
+        {"id": "uncertainty_assumptions", "text": "Le conclusioni non supportate sono dichiarate come assunzioni."},
+        {"id": "uncertainty_blocking_decisions", "text": "Le decisioni non prese nominano le slice bloccate o sono risolte da uno spike precedente."},
+        {"id": "uncertainty_material_questions", "text": "Restano aperte solo domande che cambiano implementazione, scope, ordine o verificabilità."}
       ]
     }
   ],

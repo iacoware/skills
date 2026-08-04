@@ -1,163 +1,154 @@
 #!/usr/bin/env python3
-"""Tests for grade_plan.py."""
+"""Tests for absolute prompt composition and execution."""
 
 from __future__ import annotations
 
 import tempfile
 import unittest
-from json import dumps
 from pathlib import Path
-from subprocess import CompletedProcess
 from unittest.mock import patch
 
-from grade_plan import (
-    _grader_command,
-    _parse_grader_response,
-    grader_schema,
-    render_prompt,
-    run_grader,
-    score_grade,
-)
+from grade_plan import render_prompt, run_grader
 
 
 RUBRIC = {
-    "version": 1,
-    "scale": {"minimum": 0, "maximum": 4},
+    "version": 2,
+    "verdict_scores": {"pass": 4, "minor": 3, "material": 2, "severe": 1, "absent": 0},
     "axes": [
-        {"id": "themes", "weight": 60},
-        {"id": "slices", "weight": 40},
+        {"id": "themes", "weight": 60, "criteria": [{"id": "theme_cut", "text": "Cut themes"}]},
+        {"id": "slices", "weight": 40, "criteria": [{"id": "slice_cut", "text": "Cut slices"}]},
     ],
-    "critical_failures": [
-        {"id": "silent_conflict", "score_cap": 59},
-    ],
+    "critical_failures": [{"id": "silent_conflict", "score_cap": 59}],
 }
 
 
-def valid_grade() -> dict[str, object]:
+def valid_grade(candidate: str = "PLAN.md") -> dict[str, object]:
     return {
-        "rubric_version": 1,
-        "candidate": "PLAN.md",
+        "rubric_version": 2,
+        "candidate": candidate,
         "axes": [
             {
                 "id": "themes",
-                "score": 4,
-                "evidence": ["Themes table"],
-                "findings": [],
+                "criteria": [{"id": "theme_cut", "verdict": "pass", "evidence": ["Themes"], "defect_ids": []}],
+                "material_passes": ["theme_cut"],
+                "defects_regressions": [],
+                "net_rationale": "Complete",
                 "confidence": "high",
             },
             {
                 "id": "slices",
-                "score": 2,
-                "evidence": ["NOW slice 2"],
-                "findings": ["One split warning"],
+                "criteria": [{"id": "slice_cut", "verdict": "material", "evidence": ["NOW"], "defect_ids": ["split"]}],
+                "material_passes": [],
+                "defects_regressions": ["split"],
+                "net_rationale": "One material defect",
                 "confidence": "medium",
             },
+        ],
+        "defects": [
+            {
+                "id": "split",
+                "primary_axis": "slices",
+                "severity": "material",
+                "criterion_ids": ["slice_cut"],
+                "evidence": ["NOW"],
+            }
         ],
         "critical_failures": [],
     }
 
 
-class ScoreGradeTests(unittest.TestCase):
-    def test_calculates_weighted_total(self) -> None:
-        result = score_grade(RUBRIC, valid_grade())
-
-        self.assertEqual(result["raw_total"], 80.0)
-        self.assertEqual(result["effective_total"], 80.0)
-
-    def test_applies_critical_failure_cap(self) -> None:
-        grade = valid_grade()
-        grade["critical_failures"] = [
-            {"id": "silent_conflict", "evidence": ["Open question omitted"]}
-        ]
-
-        result = score_grade(RUBRIC, grade)
-
-        self.assertEqual(result["raw_total"], 80.0)
-        self.assertEqual(result["effective_total"], 59)
-
-    def test_rejects_missing_axis(self) -> None:
-        grade = valid_grade()
-        grade["axes"] = grade["axes"][:1]
-
-        with self.assertRaisesRegex(ValueError, "mismatch"):
-            score_grade(RUBRIC, grade)
-
-    def test_renders_reference_sources_and_candidate(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            source = root / "source.md"
-            reference = root / "reference.md"
-            plan = root / "plan.md"
-            source.write_text("SOURCE CONTENT", encoding="utf-8")
-            reference.write_text("REFERENCE CONTENT", encoding="utf-8")
-            plan.write_text("PLAN CONTENT", encoding="utf-8")
-
-            prompt = render_prompt(RUBRIC, reference, plan, [source])
-
-        self.assertIn("SOURCE CONTENT", prompt)
-        self.assertIn("REFERENCE CONTENT", prompt)
-        self.assertIn("PLAN CONTENT", prompt)
-        self.assertIn('"rubric_version": 1', prompt)
-
-    def test_builds_provider_specific_commands(self) -> None:
-        root = Path("/tmp/grader")
-        schema = root / "schema.json"
-
-        codex = _grader_command("codex", schema, "{}", root, "codex-model")
-        claude = _grader_command("claude", schema, "{}", root, "claude-model")
-
-        self.assertEqual(codex[:2], ["codex", "exec"])
-        self.assertIn("--output-schema", codex)
-        self.assertIn("read-only", codex)
-        self.assertEqual(codex[-1], "-")
-        self.assertEqual(claude[0], "claude")
-        self.assertIn("--json-schema", claude)
-        self.assertIn("--safe-mode", claude)
-        self.assertIn("--no-session-persistence", claude)
-
-    def test_parses_claude_structured_output(self) -> None:
-        output = dumps({"structured_output": valid_grade()})
-
-        grade = _parse_grader_response("claude", output)
-
-        self.assertEqual(grade, valid_grade())
-
-    def test_generates_schema_from_rubric(self) -> None:
-        schema = grader_schema(RUBRIC)
-        properties = schema["properties"]
-
-        self.assertEqual(properties["rubric_version"]["enum"], [1])
-        self.assertEqual(properties["axes"]["minItems"], 2)
-
-    def test_runs_codex_in_an_isolated_directory(self) -> None:
+class GradePlanTests(unittest.TestCase):
+    def test_prompt_renders_all_reference_authority_classes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / "source.md"
             reference = root / "reference.md"
             plan = root / "plan.md"
             source.write_text("SOURCE", encoding="utf-8")
+            reference.write_text("HARD CONSTRAINTS\nPREFERRED DECOMPOSITION\nACCEPTED ALTERNATIVES\nEXAMPLE EVIDENCE", encoding="utf-8")
+            plan.write_text("PLAN", encoding="utf-8")
+
+            prompt = render_prompt(RUBRIC, reference, plan, [source])
+
+        self.assertLess(prompt.index("Product sources define"), prompt.index("Reference HARD"))
+        self.assertIn("PREFERRED DECOMPOSITION is advisory", prompt)
+        self.assertIn("ACCEPTED ALTERNATIVES", prompt)
+        self.assertIn("EXAMPLE EVIDENCE", prompt)
+        self.assertNotIn('"score":', prompt)
+
+    def test_prompt_states_defect_severity_invariant(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.md"
+            reference = root / "reference.md"
+            plan = root / "plan.md"
+            for path in (source, reference, plan):
+                path.write_text(path.stem, encoding="utf-8")
+
+            prompt = render_prompt(RUBRIC, reference, plan, [source])
+
+        self.assertIn("severity exactly to the lowest-scoring verdict", prompt)
+        self.assertIn("criterion with that verdict must belong", prompt)
+
+    def test_run_records_complete_reproducibility_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rubric_path = root / "rubric.json"
+            source = root / "source.md"
+            reference = root / "reference.md"
+            plan = root / "plan.md"
+            rubric_path.write_text("{}", encoding="utf-8")
+            source.write_text("SOURCE", encoding="utf-8")
             reference.write_text("REFERENCE", encoding="utf-8")
             plan.write_text("PLAN", encoding="utf-8")
-            grader_result = CompletedProcess(
-                args=[], returncode=0, stdout=dumps(valid_grade()), stderr=""
-            )
-            version_result = CompletedProcess(
-                args=[], returncode=0, stdout="codex-cli 1.2.3\n", stderr=""
-            )
 
             with patch(
-                "grade_plan.subprocess.run", side_effect=[grader_result, version_result]
-            ) as run:
+                "grade_plan.run_provider",
+                return_value=(valid_grade(str(plan)), "codex 1.2.3"),
+            ):
                 grade, score = run_grader(
-                    "codex", RUBRIC, reference, plan, [source], None, 30
+                    "codex", RUBRIC, rubric_path, reference, plan, [source],
+                    "gpt-5.6-sol", "high", ["foo=true"], 30,
+                    "run-1", "2026-08-03T00:00:00+00:00", "abc123",
                 )
 
-        command = run.call_args_list[0].args[0]
-        grader_cwd = run.call_args_list[0].kwargs["cwd"]
-        self.assertEqual(grade, valid_grade())
-        self.assertEqual(score["grader"]["provider"], "codex")
-        self.assertIn("--skip-git-repo-check", command)
-        self.assertNotEqual(grader_cwd, root)
+        metadata = score["grader"]
+        self.assertEqual(metadata["requested_model"], "gpt-5.6-sol")
+        self.assertEqual(metadata["effort"], "high")
+        self.assertEqual(metadata["configuration"], ["foo=true"])
+        self.assertEqual(metadata["cli_version"], "codex 1.2.3")
+        self.assertIn("prompt_sha256", metadata)
+        self.assertIn("source_sha256", metadata)
+        self.assertIn("reference_sha256", metadata)
+        self.assertIn("rubric_sha256", metadata)
+        self.assertEqual(metadata["candidates"][0]["path"], str(plan))
+        self.assertEqual(metadata["candidates"][0]["skill_commit"], "abc123")
+        self.assertEqual(metadata["run_id"], "run-1")
+        self.assertEqual(grade["grader"], metadata)
+
+    def test_run_rejects_provider_candidate_substitution(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = [root / name for name in ("rubric.json", "reference.md", "plan.md", "source.md")]
+            for path in paths:
+                path.write_text("{}" if path.suffix == ".json" else path.stem, encoding="utf-8")
+
+            with (
+                patch("grade_plan.run_provider", return_value=(valid_grade("other.md"), "codex 1")),
+                self.assertRaisesRegex(ValueError, "candidate mismatch"),
+            ):
+                run_grader(
+                    "codex",
+                    RUBRIC,
+                    paths[0],
+                    paths[1],
+                    paths[2],
+                    [paths[3]],
+                    "gpt-5.6-sol",
+                    "high",
+                    [],
+                    30,
+                )
 
 
 if __name__ == "__main__":
