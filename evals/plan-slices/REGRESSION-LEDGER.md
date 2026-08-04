@@ -43,6 +43,40 @@ Serve a due cose:
 | R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida più di una incertezza materiale: la sua `Verification` non può fallire per due cause indipendenti che cambierebbero decisioni diverse. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito | 2026-08-04 (tentato) | da verificare — non decidibile |
 | R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento; automatizzabile l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | regredita su `CX` |
 
+### Regressioni rilevate — ciclo CON-5 (2026-08-04)
+
+Controllo offline su `recipe-app/results/PLAN-CC-CON-5.md` e `PLAN-CX-CON-5.md`, generati dopo
+`9aa2586`. Un'affermazione regge solo se regge su entrambi: le righe qui sotto sono smentite da uno
+solo dei due, e tanto basta.
+
+- **R-002, primo membro — `PLAN-CC-CON-5.md`, slice 4, `Includes`.** «Query embeddata e confrontata
+  in una sola interrogazione Postgres, con scope al ricettario risolto» afferma in forma non
+  condizionale il lato `concepts.md` di una contraddizione con le fonti — `goal.md` § *Vincoli e
+  scala* e `arch-choices.md` § *Embeddings* vietano l'embedding «a runtime sulle query di ricerca»,
+  `concepts.md` § *Ricerca (MVP)* definisce la ricerca come `similarity(Recipe.embedding,
+  embedding(query))`. Il piano riconosce la contraddizione altrove — `Learning / risk` della stessa
+  slice e voce `Open questions` che ne blocca l'accettazione — ma la bullet `Includes` resta
+  assertiva. Il piano `CX` non viola il membro: slice 2 e 3 dicono «query generata secondo la
+  decisione presa/della spike».
+- **R-006 — `PLAN-CX-CON-5.md`, slice 2 `Includes` contro slice 5–8.** La pipeline di embedding
+  sulle scritture apre alla slice 2 («Ricette normalizzate controllate attraversano il percorso reale
+  di embedding … e persistenza pgvector») e riappare negli `Includes` della slice 5 («Embedding
+  rigenerato su creazione e modifica»), della 6 («seguito dall'embedding») e della 7 («Stesso
+  salvataggio immediato, embedding»). Il secondo membro cade in modo indipendente
+  dall'interpretazione di «proprietario»: le slice che forniscono ricette all'indice — 5 manuale, 6
+  URL, 7 incolla, 8 fallback — seguono tutte la slice che apre la pipeline, che quindi non segue i
+  propri produttori. Il piano `CC` ha la forma prevista: produttore alla slice 2, pipeline alla
+  slice 3.
+- **R-008 — `PLAN-CX-CON-5.md`, tabella `Themes`.** Tre voci smentiscono la riga, su entrambi i
+  membri. Riga A: la `First validation` è «2. Indicizzazione multilingue osservabile», slice
+  annotata `*(Enabler: ricerca semantica)*`, mentre il desired outcome del tema — «Trovare nel
+  ricettario corrente ricette pertinenti anche tra lingue diverse» — non è dichiarato per uno
+  sviluppatore, quindi l'eccezione non si applica. Riga D: desired outcome «cover controllabile»
+  contro l'`Outcome` della slice 9, «una cover stabile senza hotlink fragile» — la scelta della cover
+  arriva solo alla slice 11. Riga C: desired outcome «da input manuale, URL o testo» contro
+  l'`Outcome` della slice 5, che copre il solo inserimento manuale. Il piano `CC` regge su tutte e
+  sei le righe.
+
 ## Miglioramenti concordi non arrivati nello skill
 
 Estratti dalle sezioni `Improvements also present in the other report` dei due `REVIEW` CON-4 e
