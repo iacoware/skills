@@ -255,6 +255,37 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 - **Correzione per R-008.** Il registro prescrive che a una riga `regredita` segua la riga della
   correzione, e che nessuna delle due si cancelli. R-002 è coperta da R-010; R-008 resta scoperta,
   per le ragioni nella voce qui sotto.
+- **Correzioni rimandate in attesa di un secondo ciclo.** Tre proposte nate dalle stesse due
+  regressioni sono state scritte e non applicate, perché ognuna estende un perimetro o aggiunge un
+  vincolo sulla base di una sola osservazione, su un solo modello. Il registro esiste per distinguere
+  questo caso: sono candidate `giudizio`, e un secondo ciclo le rende `intersezione` di fatto o le
+  scarta. Il pattern comune a R-002 e R-008 non è che manchino regole — quelle violate esistevano
+  entrambe — ma che i gate chiedono affermazioni invece di confronti: aggiungere altri divieti
+  testuali ha una probabilità non piccola di non mordere, come i due già presenti.
+  - **Scelta di un lato per collocazione in un altro horizon.** Il divieto di R-010 copre `Includes` e
+    `Verification`. `CC` ha scelto il lato `concepts.md` del conflitto manuale/estrazione mettendo la
+    derivazione di tag e tempo per le ricette manuali in una voce `LATER`, sede fuori perimetro.
+    L'estensione — collocare in `LATER` o `OUT-OF-SCOPE` un comportamento che solo un lato del
+    conflitto richiede è sceglierlo — va applicata insieme all'allineamento dell'anti-pattern
+    *Silent contradiction*, che oggi nomina solo la slice non condizionale. **Sblocca:** la stessa
+    scelta per collocazione osservata su una generazione diversa da `CC`.
+  - **`First validation` che punta a un `Enabler`, controllata dal validator.** Il controllo sembra
+    sintattico e `validate_plan.py` ha già entrambi i dati — risolve la cella a una slice `NOW`
+    esistente e parsifica il tag del titolo — ma l'eccezione dello skill («unless the theme's desired
+    outcome is itself for a developer») è semantica, e il registro la legge come dichiarata nel
+    desired outcome. Un controllo sintattico boccerebbe un piano che usa legittimamente l'eccezione,
+    cercando una parola in una cella che lo skill impone di scrivere nella lingua dell'utente.
+    **Sblocca:** un marcatore esplicito dell'eccezione nel template, oppure la decisione di degradare
+    il controllo a warning — che però lascerebbe R-008 `lettura`.
+  - **Copertura del desired outcome, confronto termine per termine.** `CX` ha scritto desired outcome
+    enumerativi («da input manuale, URL o testo», «cover controllabile») e li ha validati con slice
+    che ne coprono un termine. La regola sulla copertura parziale esiste già ed è corretta: chiede
+    una valutazione invece di un confronto. Prima di aggiungerne una accanto va decisa una diagnosi
+    alternativa: il tema C di `CX` — tre ingressi con failure mode e rischi diversi — potrebbe essere
+    un caso di `Theme compression`, e allora la sede giusta è il test di split, non il primo
+    validatore. Nel dubbio si scriverebbe una regola contro il difetto sbagliato, e la seconda
+    regressione al ciclo successivo verrebbe letta come formulazione sbagliata invece che come
+    puntamento sbagliato. **Sblocca:** la rilettura del test di split e dei `REVIEW` CON-4 sul tema C.
 - **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo) e
   `b0d6dc5` (limitazione alle roadmap ad alto livello) non sono ricostruibili dall'intersezione dei
   due `REVIEW`: il primo non compare in nessuna delle due sezioni `also present`, il secondo non ha
