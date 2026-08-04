@@ -17,8 +17,10 @@ scelto su fixture etichettate.
 - [x] **Slice 2 — Brief e anonimizzazione:** brief attivo, prompt assoluto/paired neutrali,
   alias validati, mapping confinato ai metadata, hash di brief/fonti/prompt/mapping registrati.
 - [ ] **Slice 3 — Severità e critical failure:** rubric/grade contract e fixture di confine sono
-  implementati e verificati offline; layout e raccolta shard-safe sono pronti. Mancano soltanto le
-  tre run per grader e il checkpoint umano sulla scala dei verdict.
+  implementati e verificati offline; layout e raccolta shard-safe sono pronti. La raccolta provider è
+  stata avviata e si è fermata a 15 unità valide su 36: 6 unità sono fallite perché i grader hanno
+  violato il grade contract e 15 non sono state eseguite per fail-fast. Il checkpoint umano sulla
+  scala dei verdict resta aperto e ora dipende anche da una decisione su contratto e budget.
 - [ ] **Slice 4 — Un solo addebito:** contratto `primary_criterion` e validazioni principali sono
   implementati; restano fixture/test di accettazione completi dopo il checkpoint della slice 3.
 - [ ] **Slice 5 — Adjudication:** richiesta cieca, hash e risoluzione assoluta/paired sono parzialmente
@@ -39,8 +41,14 @@ scelto su fixture etichettate.
   zero paired e zero adjudication; report diagnostico separato dalla calibrazione completa.
 - [x] Quattro dry-run shard: 9 chiamate e 18 target ciascuno, unione 36/72, intersezione zero,
   nessun report condiviso e tutti i target macchina sotto `calibration-v3/raw/`.
-- [ ] Run provider, resume su artefatti reali e checkpoint umano non eseguiti; nessuna autorizzazione
-  agli invii è stata concessa in questa sessione.
+- [x] Smoke test su provider reali: `boundary-absent` run-01 per Claude e per Codex completati e poi
+  ripresi con `RESUME=1` senza nuove chiamate. Lo structured output v3, incluso `pattern` su
+  `candidate`, è accettato da entrambi i provider: il rischio schema residuo è chiuso.
+- [x] Resume su artefatti reali verificato: 15 unità riprese senza chiamate; `calibrate-critical-report`
+  rifiuta il join con `report-only requires every provider artifact to resume successfully` e non
+  scrive nulla in `results/calibration-v3/`.
+- [ ] Matrice 36/36 e checkpoint umano non completati. 21 delle 36 chiamate autorizzate sono state
+  consumate; 15 restano autorizzate ma non bastano a chiudere le 21 unità mancanti.
 
 ### Slice 3 — attività residue e rischi
 
@@ -71,16 +79,82 @@ scelto su fixture etichettate.
 - [x] Copertura offline per evidenza incompleta, uso improprio di `absent` e critical failure senza
   condizioni, esclusioni o citazioni.
 - [x] Validazione strutturale delle sei fixture di confine e suite offline completa.
-- [ ] Eseguire almeno tre run per grader sulle fixture di confine; richiede autorizzazione esplicita
-  perché invoca provider esterni o a pagamento. Non eseguito durante la ripresa.
+- [ ] Eseguire almeno tre run per grader sulle fixture di confine. Parzialmente eseguito il
+  2026-08-04 con autorizzazione esplicita a 36 chiamate: nessuna fixture ha tre run complete per
+  entrambi i grader e due fixture non hanno alcun dato.
 - [ ] Confrontare accuratezza e ripetibilità sui risultati reali, quindi svolgere il checkpoint umano
-  che decide se mantenere i cinque verdict o versionare una scala semplificata; bloccato fino alle
-  run autorizzate.
+  che decide se mantenere i cinque verdict o versionare una scala semplificata. Le metriche parziali
+  esistono ma non sono utilizzabili per il checkpoint: campione incompleto e distorto dagli scarti.
+
+### Slice 3 — esito della raccolta provider del 2026-08-04
+
+- **Consumo autorizzazione:** 21 chiamate su 36. Due smoke test più 19 chiamate negli shard, di cui
+  13 hanno prodotto artefatti validi e 6 sono state rifiutate dopo la risposta del provider. Restano
+  15 chiamate autorizzate contro 21 unità mancanti: la matrice non è chiudibile nell'autorizzazione
+  corrente nemmeno se ogni chiamata residua andasse a buon fine.
+- **Partizionamento:** sei shard `SHARD_COUNT=6`, unione 36, intersezione vuota, 72 target unici tutti
+  sotto `calibration-v3/raw/`, nessun report negli shard. Il partizionamento ha funzionato: nessuna
+  collisione, nessun overwrite, nessuno staging orfano. `CALIBRATION-CRITICAL.v3.json` non è stato
+  generato e `results/calibration-v3/` contiene solo `raw/`.
+- **Artefatti validi:** 15 unità, 30 file. `boundary-pass` 2 Claude + 3 Codex; `boundary-local`
+  2 Claude + 3 Codex; `boundary-restructure` 1 Claude + 2 Codex; `boundary-absent` 1 Claude + 1 Codex.
+  `boundary-severe` e `boundary-safety` hanno zero unità.
+- **Failure di contratto, non di trasporto:** i sei scarti sono grade sintatticamente validi che
+  violano il grade contract v3. Tre modalità distinte:
+  `absent is only valid for a totally missing element` (2 volte, entrambe Claude: `severity: absent`
+  con `element_absent: false`); `non-pass requires a defect` (1 volta, Claude: criterio non-pass con
+  `defect_ids` vuoto); `may be charged only to its primary criterion` (3 volte, tutte Codex: un
+  criterio cita un difetto il cui `primary_criterion` è un altro criterio).
+- **Il prompt enuncia già le tre regole** (`grade_plan.py`, blocco `Rules`). Gli scarti sono
+  non-conformità dei grader, non istruzioni mancanti. Resta però un'ambiguità reale sulla terza:
+  il prompt dice di addebitare il difetto a un solo `primary_criterion`, mentre il validator vieta
+  anche la semplice citazione da un altro criterio. Le tre regole sono vincoli cross-field che lo
+  structured output schema non può esprimere, quindi vengono intercettate solo a valle della chiamata.
+- **Amplificazione fail-fast:** un solo grade rifiutato interrompe l'intero shard. Sei scarti hanno
+  bloccato 15 unità mai tentate; lo shard 3 ha perso 5 unità su 6 per un rifiuto alla prima. È la
+  causa principale della bassa resa, non il tasso di rifiuto in sé (6 su 19, circa 32%).
+
+### Slice 3 — metriche parziali, non valide per il checkpoint
+
+Calcolate con `calibration_report.build_report` sulle 15 unità disponibili e scritte solo in
+scratchpad; non pubblicate come `CALIBRATION-CRITICAL.v3.json`.
+
+| Metrica | Valore | Numeratore/Denominatore |
+|---|---|---|
+| Accuratezza vs label, complessiva | 0.5949 | 232/390 |
+| Accuratezza Claude | 0.4744 | 74/156 |
+| Accuratezza Codex | 0.6752 | 158/234 |
+| Intra-grader esatto | 0.7308 | 171/234 |
+| Intra-grader entro un livello | 0.8590 | 201/234 |
+| Inter-grader esatto | 0.5615 | 219/390 |
+| Inter-grader entro un livello | 0.7974 | 311/390 |
+| Critical failure precision | 0.3077 | 4/13 |
+| Critical failure recall | 1.0000 | 4/4 |
+| Primary criterion corretto | 0.1186 | 21/177 |
+| Paired direction | null | 0/0, fuori scope |
+
+- **Perché non sono utilizzabili:** il campione copre 4 fixture su 6 ed è sbilanciato fra provider
+  (6 unità Claude contro 9 Codex); mancano del tutto `boundary-severe` e `boundary-safety`, cioè
+  proprio i confini alti della scala che il checkpoint deve giudicare. Soprattutto, gli scarti non
+  sono casuali: le risposte che violavano il contratto sono state eliminate, quindi le metriche
+  descrivono il sottoinsieme conforme e sovrastimano la disciplina dei grader.
+- **Segnali comunque annotabili, da confermare su matrice completa:** precision dei critical failure
+  bassa con recall pieno indica sovra-attivazione; l'accuratezza del `primary_criterion` sotto 0.12
+  è coerente con i tre scarti Codex sulla regola dell'addebito unico e riguarda direttamente la
+  slice 4; `theme_independent_value`, `uncertainty_conflicts` e `slice_single_owner` sono i criteri
+  con accordo peggiore.
 - **Attività offline residue:** nessuna nota per la slice 3. Il join reale resta impossibile finché
   non esistono i 72 artefatti GRADE/SCORE prodotti dalle run autorizzate.
 - **Rischio:** finché run e checkpoint restano aperti, la distinzione tra `minor`, `material`,
   `severe` e `absent` è verificata contrattualmente ma non calibrata sul comportamento dei grader;
   la slice 4 non deve avanzare.
+- **Rischio — costo delle non-conformità:** ogni grade rifiutato è una chiamata già pagata che non
+  produce artefatto. Con l'attuale rigidità del contratto e il fail-fast, completare la matrice costa
+  più delle 36 chiamate preventivate. Qualunque rilassamento del contratto o modifica di prompt o
+  rubric cambia gli hash e invalida il resume delle 15 unità già raccolte, che andrebbero ripagate.
+- **Rischio — invalidazione retroattiva:** le 15 unità valide sono legate a brief, fonti, rubric,
+  prompt, modelli, effort e versioni CLI correnti. Vanno considerate consumate finché non si decide
+  se il contratto resta invariato.
 - **Rischio operativo:** i candidati storici `PLAN-*-CON-5.md` hanno `Themes.First validation` non
   numerico e falliscono correttamente il preflight v3; usarli richiede una nuova generazione, non la
   modifica degli artefatti immutabili.
@@ -99,16 +173,21 @@ scelto su fixture etichettate.
 - [x] **Archivio storico:** spostati senza modificarne il contenuto 4 artefatti v2 in
   `calibration-v2/raw/` e 16 artefatti v1 in `calibration-legacy/raw/`; piani e artefatti umani
   restano direttamente in `results/`.
-- [ ] **Prossimo run — 36 chiamate provider:** soltanto dopo il prerequisito, i test e un nuovo
-  preflight, ottenere autorizzazione esplicita, raccogliere i grade assoluti con subagent paralleli
-  e completare `CALIBRATION-CRITICAL.v3.json`; non avviare slice 4. Preflight e probe provider sono
-  stati ripetuti il 2026-08-04 e sono verdi: manca solo l'autorizzazione agli invii.
-- [ ] **Smoke test consigliato prima delle 36:** due chiamate singole (una per provider) con
-  `SHARD_COUNT=36`, per esercitare lo structured output v3 su provider reali. Gli artefatti prodotti
-  fanno parte delle 36 e vengono riusati da `RESUME=1`; il costo aggiuntivo è nullo.
-- [ ] **Commit prima degli invii:** slice 0–3 sono interamente non committate. Committare prima del
-  run lega i 36 artefatti a una revisione nota e impedisce che una modifica successiva a brief,
-  rubric, prompt o fixture invalidi il resume degli artefatti già pagati.
+- [ ] **Run 36 chiamate provider:** avviato il 2026-08-04 con autorizzazione esplicita e subagent
+  paralleli su shard disgiunti; interrotto a 15 unità valide. `CALIBRATION-CRITICAL.v3.json` non
+  esiste. Slice 4 non avviata.
+- [x] **Smoke test prima delle 36:** eseguito con `SHARD_COUNT=36`, indici 1 e 4. Entrambi i provider
+  hanno accettato lo structured output v3 e gli artefatti sono stati riusati da `RESUME=1` a costo
+  nullo.
+- [x] **Commit prima degli invii:** slice 0–3 sono committate; l'albero era pulito all'avvio del run,
+  quindi i 15 artefatti sono legati a una revisione nota.
+- [ ] **Decisione umana necessaria prima di riprendere:** servono tre risposte, nessuna delle quali è
+  presa in questa sessione. Primo, se autorizzare le chiamate aggiuntive oltre le 36 necessarie a
+  chiudere 21 unità con margine per le non-conformità. Secondo, se il grade contract deve restare
+  invariato, rendere la citazione incrociata dei difetti un avvertimento anziché un errore, o
+  chiarire il prompt; ogni modifica a prompt o rubric ripaga le 15 unità già raccolte. Terzo, se
+  sostituire il fail-fast per shard con un proseguimento che marca la singola unità come fallita,
+  così che una non-conformità non blocchi le unità indipendenti restanti.
 - [x] **Partizionamento obbligatorio:** assegnare a ogni worker un insieme disgiunto di unità
   fixture/provider/run. Prima degli invii, i dry-run degli shard devono avere unione di 36 unità,
   intersezione vuota e target finali unici; un solo coordinatore genera il report dopo il join.
@@ -263,9 +342,11 @@ scelto su fixture etichettate.
 
 - [x] Schema e validator rifiutano evidenza incompleta, `absent` usato come grave generico e critical
   failure senza condizioni/citazioni.
-- [ ] Eseguire almeno tre run per grader sulle fixture di confine.
+- [ ] Eseguire almeno tre run per grader sulle fixture di confine. Parziale: 15 unità su 36, nessuna
+  fixture con copertura completa, `boundary-severe` e `boundary-safety` senza dati.
 - [ ] Confrontare accuratezza sulle label e ripetibilità. Prima della slice 4 decidere se mantenere i
-  cinque verdict o semplificare la scala; un cambio incrementa nuovamente la versione rubric.
+  cinque verdict o semplificare la scala; un cambio incrementa nuovamente la versione rubric. Le
+  metriche parziali sono registrate ma non sufficienti a decidere.
 
 ### 4. Un solo addebito per difetto — parziale
 
@@ -388,6 +469,13 @@ versione/configurazione e non diventano baseline canonica finché la slice 7 non
 
 ## Open questions
 
-- Dopo il report delle 36 chiamate, il checkpoint umano mantiene i cinque verdict o richiede una
-  scala semplificata e una nuova rubric? La decisione blocca la slice 4 e non è anticipabile senza i
-  dati empirici.
+- Il checkpoint umano mantiene i cinque verdict o richiede una scala semplificata e una nuova rubric?
+  La decisione blocca la slice 4 e resta non anticipabile: la matrice è ferma a 15 unità su 36 e i
+  due confini alti della scala non hanno alcun dato.
+- Si autorizzano chiamate provider oltre le 36 iniziali? Ne servono almeno 21 per le unità mancanti,
+  più un margine per le non-conformità, e ne restano 15 autorizzate.
+- Il grade contract resta invariato o la citazione di un difetto da un criterio diverso dal suo
+  `primary_criterion` smette di essere un errore fatale? Ogni modifica a contratto, prompt o rubric
+  invalida il resume delle 15 unità già pagate.
+- Il fail-fast per shard resta, o una singola unità non conforme viene marcata fallita lasciando
+  proseguire le unità indipendenti dello stesso shard?
