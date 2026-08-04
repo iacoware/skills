@@ -189,9 +189,9 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 - **R-001, mai controllata.** Nasce da `2c89e7f`, precedente ai cinque commit, e il ciclo CON-5 non
   l'ha inclusa. Va verificata sugli stessi due piani, con lo stesso criterio: regge solo se regge su
   entrambi.
-- **Correzioni per R-002, R-006 e R-008.** Il registro prescrive che a una riga `regredita` segua la
-  riga della correzione, e che nessuna delle due si cancelli. Le tre righe restano scoperte finché
-  una modifica dello `SKILL.md` non le riapre: la sessione CON-5 misurava, non correggeva.
+- **Correzioni per R-002 e R-008.** Il registro prescrive che a una riga `regredita` segua la riga
+  della correzione, e che nessuna delle due si cancelli. Le due righe restano scoperte finché una
+  modifica dello `SKILL.md` non le riapre: la sessione CON-5 misurava, non correggeva.
 - **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo),
   `b0d6dc5` (limitazione alle roadmap ad alto livello) e `a06a5cc` (soglia al differimento
   dell'identità) non sono ricostruibili dall'intersezione dei due `REVIEW`: il primo non compare in
