@@ -54,11 +54,16 @@ class ValidatePlanV3Tests(unittest.TestCase):
     def test_accepts_numeric_first_validation(self) -> None:
         self.assertEqual(validate_structure(parse_plan(PLAN)), [])
 
+    def test_accepts_first_validation_carrying_the_slice_title(self) -> None:
+        for cell in ("1. Search proof", "1) Search proof", "NOW slice 1"):
+            with self.subTest(cell=cell):
+                self.assertEqual(validate_structure(parse_plan(PLAN.replace("| 1 |", f"| {cell} |"))), [])
+
     def test_rejects_missing_or_out_of_range_first_validation(self) -> None:
         missing = PLAN.replace("| 1 |", "| Search proof |")
-        out_of_range = PLAN.replace("| 1 |", "| 4 |")
+        out_of_range = PLAN.replace("| 1 |", "| 4. Search proof |")
 
-        self.assertTrue(any("must be a NOW slice number" in error for error in validate_structure(parse_plan(missing))))
+        self.assertTrue(any("must start with a NOW slice number" in error for error in validate_structure(parse_plan(missing))))
         self.assertTrue(any("references missing NOW slice 4" in error for error in validate_structure(parse_plan(out_of_range))))
 
     def test_paraphrases_do_not_change_structural_result(self) -> None:

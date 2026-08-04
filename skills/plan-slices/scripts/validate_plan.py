@@ -43,7 +43,9 @@ H3_PATTERN = re.compile(r"^### (\d+)\.\s+(.+?)\s*$", re.MULTILINE)
 FIELD_PATTERN = re.compile(r"^\*\*([^*]+?)\*\*\s*$", re.MULTILINE)
 LIST_ITEM_PATTERN = re.compile(r"^\s*(?:[-+*]|\d+\.)\s+")
 CONTINUATION_PATTERN = re.compile(r"^\s{2,}\S")
-FIRST_VALIDATION_PATTERN = re.compile(r"^(?:NOW\s+)?(?:slice\s+)?(\d+)$", re.IGNORECASE)
+FIRST_VALIDATION_PATTERN = re.compile(
+    r"^(?:NOW\s+)?(?:slice\s+)?(\d+)(?:[.)]\s+\S.*)?$", re.IGNORECASE
+)
 
 
 @dataclass(frozen=True)
@@ -211,7 +213,7 @@ def _theme_reference_errors(plan: Plan) -> list[str]:
         match = FIRST_VALIDATION_PATTERN.fullmatch(theme.first_validation.strip())
         if match is None:
             errors.append(
-                f"Themes: first validation for '{theme.name}' must be a NOW slice number"
+                f"Themes: first validation for '{theme.name}' must start with a NOW slice number"
             )
         elif int(match.group(1)) not in slice_numbers:
             errors.append(
