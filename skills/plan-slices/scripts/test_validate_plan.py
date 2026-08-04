@@ -200,6 +200,17 @@ class ValidatePlanTests(unittest.TestCase):
 
         self.assertEqual(errors, [])
 
+    def test_structure_does_not_grade_theme_decomposition(self) -> None:
+        plan = VALID_PLAN.replace(
+            "| A. Access | User enters the product. | Login |\n"
+            "| B. Search | User finds relevant content. | Semantic search |",
+            "| Product | User enters and finds relevant content. | Login |",
+        )
+
+        errors = validate_structure(parse_plan(plan))
+
+        self.assertEqual(errors, [])
+
     def test_rejects_non_final_release_slice(self) -> None:
         plan = VALID_PLAN.replace("*(Theme: A)*", "*(Release: delivery)*")
 
@@ -216,14 +227,10 @@ class ValidatePlanTests(unittest.TestCase):
 
     def test_checks_scenario_expectations(self) -> None:
         expectations = {
-            "theme_count": 2,
             "themes_contain": ["Access", "Search"],
-            "now_title_count": 4,
-            "now_titles_in_order": [
-                "Repository setup",
-                "Walking skeleton",
-                "Login",
-                "Semantic search",
+            "precedence_rules": [
+                {"before": "Repository setup", "after": "Walking skeleton"},
+                {"before": "Login", "after": "Semantic search"},
             ],
             "adjacent_now_titles": [["Login", "Semantic search"]],
             "slice_rules": [
@@ -242,15 +249,6 @@ class ValidatePlanTests(unittest.TestCase):
         errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
 
         self.assertEqual(errors, [])
-
-    def test_reports_scenario_order_regression(self) -> None:
-        expectations = {
-            "now_titles_in_order": ["Semantic search", "Login"],
-        }
-
-        errors = validate_expectations(parse_plan(VALID_PLAN), expectations)
-
-        self.assertTrue(any("NOW order" in error for error in errors))
 
     def test_reports_scenario_adjacency_regression(self) -> None:
         expectations = {

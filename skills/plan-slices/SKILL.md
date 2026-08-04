@@ -82,7 +82,11 @@ Run both tests explicitly:
 Give every theme:
 
 - one desired outcome in product language;
-- its first validating `NOW` slice.
+- its first `NOW` product slice that validates the complete desired outcome.
+
+An enabler may precede that validator but cannot substitute for it unless the theme's desired
+outcome is itself for a developer. A slice that validates only one capability inside a broader
+theme outcome is not that theme's first validator.
 
 Identify hard dependencies only: a predecessor is hard when no controlled input or narrower real
 precursor can make the dependent outcome realistically verifiable. Convenient reuse, a fuller demo,
@@ -152,6 +156,11 @@ independent causes that would change different decisions: a shared failure hides
 Deliver a required correction, retry, or escape path before or with the first behaviour that can
 create the recoverable state.
 
+Different failure profiles do not justify non-adjacent partial ownership of one adapter or
+invariant. Co-locate the behaviour, or make the first slice establish a complete stable capability
+that later slices consume without reopening ownership. Never interleave another theme while shared
+adapter or invariant ownership remains partial.
+
 ### Developer enablers
 
 Allow an explicit `Enabler` slice when its primary user is a developer and it:
@@ -170,6 +179,10 @@ a command that ranks persisted vectors. Keep product interaction and business fe
 successor, and ensure the successor adds a user outcome rather than merely repackaging the enabler.
 Do not add a domain dependency to the walking skeleton only because the next slice will need it;
 infrastructure connectivity is not a domain dependency.
+
+Allow a separate domain-convention enabler only when it independently validates new scope,
+persistence, UI, or test conventions needed before a materially riskier slice. Reuse by later work
+or presence in an example plan is insufficient.
 
 ### Size calibration
 
@@ -250,6 +263,10 @@ Respect hard dependencies, then order `NOW` by:
 Use the cheapest real input capable of validating a risky engine. Do not front-load commodity work
 for reuse alone.
 
+Controlled cheap inputs may validate shared machinery in an enabler, but do not reorder
+independently useful product flows. When sources define a recovery chain, extend the primary
+interaction with required automatic recovery before adding a separate manual escape.
+
 After validating existential risks, prefer breadth before depth: deliver one thin validating slice
 from each remaining `NOW` theme before a second slice from one theme. Depart only for another
 differentiator, a material risk, required recovery, or materially higher-frequency behaviour, and
@@ -293,6 +310,19 @@ configured scope; order respects dependencies and delivery maturity; checkpoints
 decisions they can change.
 
 ## 5. Publish and audit
+
+Before publication, complete an unpublished ledger mapping:
+
+- every source behaviour to its theme, horizon, and owning slice or explicit exclusion;
+- every theme to its complete product outcome and first product validator;
+- every shared adapter and invariant to one complete owner;
+- every named failure to its recovery and required position;
+- every unresolved decision to blocked slices and its prior spike or open question;
+- every adjacent slice pair to its split/merge verdict.
+
+Reject the draft when a mapping is missing, conflicting, duplicated incompatibly, or points to
+partial ownership or a partial theme validator. Keep the ledger in reasoning, not the published
+plan.
 
 Read and follow [assets/plan-template.md](assets/plan-template.md). Preserve its heading hierarchy,
 section names, field names, and order; write content in the user's language.
