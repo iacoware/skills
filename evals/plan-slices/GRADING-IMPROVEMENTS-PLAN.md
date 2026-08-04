@@ -10,6 +10,9 @@ scelto su fixture etichettate.
 
 ## Stato implementazione — 2026-08-04
 
+> Le slice 5, 6, 7 e 8 sono sospese dietro il gate del `Riesame del 2026-08-04`: si riprendono solo
+> se il workflow originale più `REGRESSION-LEDGER.md` lascia sfuggire una regressione reale.
+
 - [x] **Slice 0 — Protezione baseline e versioning:** contratti/versioni v3, naming centralizzato,
   ripetizioni, metadata con manifest/label-set, resume hash-bound e protezione overwrite.
 - [x] **Slice 1 — Preflight strutturale:** expectations eliminate; validator solo strutturale con
@@ -45,6 +48,147 @@ diretto. La ex slice 4 resta al suo posto perché congela lo schema grade prima 
 regola ora esplicita in `Ordering criteria`. Le attività empiriche della slice 3 — tre run per grader,
 accuratezza e ripetibilità — passano alla slice 7; alla slice 3 restano contratto, fixture e test
 offline, che sono completi.
+
+### Riesame del 2026-08-04 — quale strumento serve davvero
+
+Sezione autoconsistente, scritta per essere ripresa in una sessione nuova senza altro contesto.
+Sostituisce una versione precedente che indicava il test nullo come prossimo passo: quella
+conclusione è superata dalla ricostruzione del workflow in uso *prima* del grading system, descritto
+qui sotto. Il test nullo resta valido, ma come gate di un percorso che non è più il prossimo.
+
+**La perplessità.** Il progetto sta scivolando dal costruire uno strumento decisionale al costruire
+un evaluator corretto. I numeri: `SKILL.md` ha 13 commit, `evals/plan-slices` ne ha 33, con 3.477
+righe di Python, 1.466 di documenti, 26 criteri di rubric e 21 chiamate provider già pagate. Nessun
+miglioramento allo `SKILL.md` è finora derivato da uno score. Il più sostanzioso — `2c89e7f`,
+separazione fra confine di scope e identità — nasce da un umano che ha letto un piano generato,
+formulato un sospetto, verificato contro le fonti e scoperto che il difetto vero era un altro: la
+giunzione non dichiarata. Nessuno dei 26 criteri conteneva quella proprietà, perché non esisteva
+prima che la lettura la producesse. La lettura umana produce conoscenza nuova; il grading system
+misura conoscenza già codificata.
+
+**L'obiettivo.** Poter modificare `SKILL.md` e sapere se la modifica ha migliorato o peggiorato lo
+skill. Serve un **segno con un errore noto**, non un numero: soglie, formula di aggregazione e score
+calibrato non sono sul percorso di questa decisione.
+
+**Il workflow in uso prima del grading system.** Va conosciuto per capire il resto della sezione.
+
+1. Solo validazione strutturale sui piani generati.
+2. Ogni modello valuta i piani generati dall'altro, insieme a `REFERENCE-PLAN.md`, su sette assi:
+   individuazione e confini dei temi; outcome e primo validatore dei temi; suddivisione, coesione e
+   verticalità delle slice; ordine delle slice e validazione anticipata dei rischi; contenuto,
+   verifica, learning target e outcome delle slice; assegnazione a `NOW`, `LATER` e `OUT-OF-SCOPE`;
+   contraddizioni, assunzioni e domande aperte.
+3. Da ogni valutazione l'agente genera un piano di miglioramento dello skill
+   (`results/PLAN-*-CON-4.IMPROVEMENT.md`).
+4. I due piani di miglioramento vengono confrontati fra loro: cosa è presente in entrambi, cosa in
+   uno solo, su cosa sono in disaccordo (`results/PLAN-*-CON-4.REVIEW.md`).
+5. Si applicano allo `SKILL.md` **solo i miglioramenti comuni a entrambi i modelli**.
+
+**Diagnosi: lo strumento c'era già, ed è il passo 5.** Non è "far valutare i piani": è
+l'**intersezione fra due modelli indipendenti sulle modifiche proposte allo skill**. È un filtro di
+precisione, e il suo modo di sbagliare è mancare qualcosa, non applicare qualcosa di falso. Su uno
+`SKILL.md`, dove ogni regola aggiunta è debito permanente che condiziona ogni generazione futura, la
+precisione è la proprietà giusta da massimizzare. Ne discendono due conseguenze:
+
+- l'agreement inter-grader 0,56 è **irrilevante** per questo filtro: un disaccordo non corrompe
+  l'output, semplicemente non passa;
+- l'**adjudication (slice 6) è superflua**: risolvere un disaccordo con un terzo giudizio è più caro
+  e meno sicuro che scartarlo.
+
+Il grading system sostituisce un filtro i cui errori sono visibili leggendo con una misura i cui
+errori vanno stimati — e stimarli costa più dello strumento.
+
+**Il buco, ed è uno solo.** Il workflow **genera** miglioramenti e non **verifica** miglioramenti.
+Ogni ciclo produce una lista fresca di difetti e non dice mai se la modifica del ciclo precedente ha
+funzionato. Il rischio è il cricchetto: si aggiusta A rompendo B, il ciclo dopo si trova B, si
+aggiusta B rompendo A, e lo `SKILL.md` cresce senza convergere. Il grading system è stato costruito
+per chiudere questo buco ed è sproporzionato al buco.
+
+**La chiusura proporzionata: `REGRESSION-LEDGER.md`.** Ogni modifica allo `SKILL.md` derivata da un
+`REVIEW` implica una previsione falsificabile — *«al prossimo ciclo questo difetto non ricompare»*.
+In `NOTES.md` è già scritta, ma solo quando capita. Il registro la rende obbligatoria: una riga per
+modifica applicata, con id, commit dello skill, origine, affermazione verificabile, modo di verifica
+(validator strutturale o lettura umana), ultimo controllo ed esito.
+
+Lo stesso registro copre anche le regressioni **non previste**, senza bisogno di un secondo
+artefatto: se il piano di miglioramento del ciclo N solleva un difetto che il ciclo N-2 aveva chiuso,
+quella è una regressione, ed è output che già si paga e che oggi si butta via. Serve solo l'indice
+per riconoscerla quando ricompare.
+
+**Quando una valutazione segnala un peggioramento.** Se il confronto dice `better` su tre criteri e
+`worse` su uno, la mossa giusta è l'indagine qualitativa: chiedere all'agente quale criterio è
+peggiorato e quale regola dello `SKILL.md` può averlo causato. Vincolo obbligatorio: l'agente
+produrrà sempre una spiegazione plausibile, anche in assenza di nesso. Vale solo se nomina una
+clausola specifica e genera una previsione falsificabile — *«togli o riformula questa clausola e il
+criterio risale»* — verificata rigenerando. Senza il passo di falsificazione è un racconto ben
+scritto.
+
+**Percorso incrementale, con i gate.**
+
+- **Passo 0 — ripristinare il workflow originale come default.** Costo zero, è ciò che ha prodotto
+  tutti i miglioramenti esistenti, e non richiede di finire né di cancellare niente del grading
+  system. Con due sostituzioni già pronte e già pagate: `REFERENCE-PLAN.md` → `EVALUATION-BRIEF.md`
+  più le fonti (confrontare con un piano ideale misura la somiglianza a quel piano, non la qualità);
+  anonimizzazione dei candidati. La tassonomia dei sette assi coincide con quella della rubric v3 e
+  si tiene come struttura di lettura; ciò che non serve è la scala a cinque verdetti e lo score.
+- **Passo 1 — chiudere il buco.** Introdurre `REGRESSION-LEDGER.md` e alimentarlo a ogni modifica
+  dello skill. Costo: nessuna chiamata, minuti per ciclo.
+- **Gate.** Eseguire due o tre cicli completi in questa forma.
+- **Passo 2 — solo se il passo 1 fallisce**, cioè se si scopre in ritardo una regressione che il
+  registro non aveva intercettato. Quella è l'evidenza che serve un rilevatore che guarda dove
+  l'umano non sta guardando. Solo allora si spendono le 8 chiamate del percorso grader qui sotto.
+  Il passo 2 va giustificato da una regressione realmente sfuggita, non dall'ipotesi che possa
+  sfuggirne una.
+
+**Cosa tenere e cosa congelare.**
+
+- *Tenere e usare subito:* `validate_plan.py` strutturale; `EVALUATION-BRIEF.md`; anonimizzazione;
+  la tassonomia dei sette assi come struttura del prompt; hashing di prompt, fonti e brief con
+  artefatti immutabili, che tiene i cicli confrontabili; la disciplina di `NOTES.md`.
+- *Congelare, non cancellare:* scala a cinque verdetti e severità del grade contract, che i modelli
+  violano una volta su tre; matrice di calibrazione e metriche di accuratezza e agreement (slice 7);
+  formula di scoring e cap (slice 8); adjudication (slice 6). Il codice resta in git: se il passo 2
+  arriva, si riprende; se non arriva, non è stato mantenuto. I 15 artefatti pagati restano
+  immutabili come evidenza storica.
+
+**Il percorso grader, dietro il gate del passo 2.** Due test, in quest'ordine, prima di qualunque
+altra spesa sulle slice 5, 7 e 8.
+
+- *Test nullo (falsi positivi).* Due piani generati sullo stesso scenario, dallo stesso commit di
+  `SKILL.md`, dallo stesso modello e con la stessa configurazione; `make compare` nei due ordini per
+  entrambi i grader. Una coppia simile non esiste ancora: `PLAN-CC-CON-5` e `PLAN-CX-CON-5` vengono
+  da modelli diversi. Costo: 2 generazioni più 4 chiamate.
+- *Test di sensibilità (falsi negativi).* Il test nullo da solo è superato a pieni voti da uno
+  strumento che risponde sempre `same`. Serve una coppia con effetto noto e reale: rigenerare il
+  piano con lo `SKILL.md` immediatamente precedente a una modifica di effetto noto — il candidato
+  naturale è `2c89e7f` — e verificare che i grader riportino la direzione attesa sui criteri attesi
+  e `same` altrove. La coppia `learning-evidence-improvement` del manifest verifica la stessa
+  proprietà su fixture sintetiche ed è un controllo più debole, perché la differenza è costruita per
+  essere visibile. Costo: 2 generazioni più 4 chiamate.
+- *Pre-registrazione, obbligatoria.* Le due coppie vanno etichettate a mano **prima** di vedere
+  qualunque output dei grader, dichiarando per ciascun criterio se è realmente invariante: una coppia
+  A/A contiene differenze di generazione vere, quindi `same` su tutti e 26 i criteri non è un atteso
+  giustificato a priori. Le soglie di successo si fissano nello stesso momento e si scrivono qui. È
+  lo stesso errore già diagnosticato in `NOTES.md` per il ritentare fino alla conformità: decidere il
+  filtro dopo aver visto i dati falsifica la misura. Chi etichetta non dovrebbe essere chi ha scritto
+  le regole di cui si misura l'effetto.
+- *Budget.* Restano 15 chiamate autorizzate delle 36 iniziali. I due test ne consumano 8 e ne
+  lasciano 7 di margine per le non-conformità, il cui tasso osservato è alto: 6 risposte rifiutate su
+  19. Le generazioni di piano non pesano su questo budget.
+- *Stop rule.* Test nullo fallito: lo strumento non risolve l'effetto di una modifica ordinaria e
+  nessuna calibrazione lo corregge; si chiudono le slice 5, 7 e 8. Test nullo superato e sensibilità
+  fallita: lo strumento è stabile ma cieco alle modifiche reali, e l'ipotesi da testare diventa la
+  rubric a 26 criteri, non la scala dei verdict. Entrambi superati: si completa la sola slice 5, con
+  N generazioni per versione, e le slice 7 e 8 restano fuori finché un numero non serve a qualcuno.
+- *Varianza di generazione.* `make compare BEFORE= AFTER=` confronta un piano contro un piano, e le
+  ripetizioni previste (`runs: 3`) misurano la ripetibilità del grader, non quella del generatore. Un
+  before/after singolo confonde l'effetto della modifica con la variabilità di una generazione. Il
+  test nullo produce anche la prima stima di quella varianza, che è il parametro con cui dimensionare
+  N: è il dato più utile da estrarne anche in caso di esito ambiguo.
+
+**Limiti che restano in ogni percorso.** Tutto gira su un solo scenario, `recipe-app`: uno skill può
+migliorare su un dominio e peggiorare su un altro. E «peggiorato» non è definito quando i segnali
+sono discordi: la decisione resta umana e guarda quali criteri, non quanti.
 
 ### Verifiche completate
 
@@ -573,6 +717,14 @@ versione/configurazione e non diventano baseline canonica finché la slice 8 non
 
 ## Open questions
 
+- Si accetta il percorso del `Riesame del 2026-08-04` — workflow originale con brief e
+  anonimizzazione, più `REGRESSION-LEDGER.md`, e slice 5-8 sospese dietro il gate? Precede ogni altra
+  domanda: le voci successive di questa lista si aprono solo se il gate viene superato.
+- Si retrodata il registro ricostruendo le affermazioni dai `REVIEW` esistenti, o lo si lascia partire
+  dalla prossima modifica dello skill?
+- Quanti cicli completi valgono come gate: due o tre?
+- Chi etichetta le due coppie del percorso grader, se ci si arriva, e le etichetta prima di vedere gli
+  output? Chi ha scritto le regole dello skill non è imparziale sull'effetto delle proprie modifiche.
 - Il checkpoint umano mantiene i cinque verdict o richiede una scala semplificata e una nuova rubric?
   La decisione blocca la slice 7 e resta non anticipabile: la matrice è ferma a 15 unità su 36 e i
   due confini alti della scala non hanno alcun dato.
