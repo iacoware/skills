@@ -1,24 +1,31 @@
 # Grading di `plan-slices` — Piano di miglioramento
 
 - **Sources:** `EVAL-WORKFLOW.md`, `grader-rubric.json`, evaluator v2, fixture e
-  artefatti `recipe-app/results/PLAN-CC-CON-5.*.v2.*`.
-- **Current state:** il preflight orchestrato esegue già solo la validazione strutturale; il grading
-  semantico è criterion-level e lo scoring è deterministico, ma reference, severità, aggregazione e
-  adjudication lasciano ancora ampia variabilità interpretativa.
-- **Evidence:** sullo stesso candidato Codex produce `43,75` e Claude `70,00`; il validator delle
-  expectations segnala otto errori, dei quali sei sono mismatch lessicali e due omissioni reali.
+  artefatti `recipe-app/results/PLAN-CC-CON-5.*.v2.*`; run critica v3 del 2026-08-04 e
+  `NOTES.md`.
+- **Current state:** il preflight orchestrato esegue già solo la validazione strutturale; brief,
+  severità operative e contratto dei difetti sono in v3. La prima raccolta assoluta reale si è
+  fermata a 15 unità su 36 e misura agreement inter-grader 0.56 esatto e 0.80 entro un livello.
+- **Evidence:** sullo stesso candidato Codex produce `43,75` e Claude `70,00`. Sul subset critico v3
+  i grader concordano sul livello esatto poco più di una volta su due, ma quasi sempre entro un
+  livello: il disaccordo è sulla risoluzione della scala, non sul giudizio.
 - **Decisione:** eliminare interamente expectations, regex semantiche, lint semantico, Plan IR ed
   estrazione semantica; mantenere soltanto validazione strutturale e grading.
-- **Audience:** sviluppatori dello skill e dell'evaluator; il risultato `NOW` è una baseline
-  calibrata per decisioni interne, non una release rivolta a utenti finali.
+- **Audience:** sviluppatori dello skill e dell'evaluator; il risultato `NOW` è uno strumento di
+  misura per decisioni interne, non una release rivolta a utenti finali.
 
 ## Ordering criteria
 
 - Semplificare prima il confine di validazione, così nessuna calibrazione incorpora segnali regex.
-- Stabilire autorità, severità e ownership dei difetti prima di confrontare nuovamente i grader.
-- Risolvere il grading assoluto prima di usare gli score per giudicare regressioni paired.
+- Stabilire autorità, severità e ownership dei difetti prima di misurare il comportamento dei grader.
+- Validare lo strumento relativo prima di completare la calibrazione assoluta: la decisione che
+  l'evaluator serve è un before/after, e la differenza fra due verdetti assoluti rumorosi è meno
+  affidabile di un confronto diretto fra i due candidati nella stessa chiamata.
+- Ogni modifica al contratto capace di invalidare artefatti già raccolti precede le run che li
+  raccolgono; le run pagate non si ripetono per un cambio di schema evitabile.
 - Scegliere la formula di aggregazione solo dopo fixture etichettate e run ripetute.
-- Versionare ogni modifica capace di cambiare verdict, score o interpretazione degli artefatti.
+- Versionare ogni modifica capace di cambiare verdict, direzione, score o interpretazione degli
+  artefatti.
 
 ## Themes
 
@@ -26,8 +33,9 @@
 |---|---|---|
 | A. Confine di validazione | Solo difetti di formato bloccano il candidato prima del grading | 1. Preflight esclusivamente strutturale |
 | B. Giudizio semantico stabile | Grader diversi applicano la stessa autorità e soglie operative | 2. Brief valutativo senza piano ideale |
-| C. Risoluzione dei disaccordi | Ogni divergenza materiale produce un grade risolto e auditabile | 5. Adjudication del grading assoluto |
-| D. Misura calibrata | Score e direzione paired sono scelti contro casi etichettati, non per intuizione | 6. Baseline di calibrazione etichettata |
+| C. Risoluzione dei disaccordi | Ogni divergenza materiale produce un risultato risolto e auditabile | 6. Adjudication dei disaccordi |
+| D. Misura relativa affidabile | Una modifica alla skill risulta migliore o peggiore con un errore misurato | 5. Strumento relativo validato |
+| E. Misura assoluta calibrata | Score e soglie sono scelti contro casi etichettati, non per intuizione | 7. Calibrazione assoluta etichettata |
 
 ## Cross-functional concerns
 
@@ -37,10 +45,13 @@
   grader possiede ogni giudizio scenario-specifico e qualitativo.
 - **Reproducibility:** prompt, fonti, brief, rubric, candidati, modello, effort e configurazione sono
   identificati e hashati in ogni artefatto.
-- **Auditability:** ogni verdict e critical failure cita candidato ed evidenza controllante; score e
-  cap sono sempre derivati in codice.
+- **Auditability:** ogni verdict, direzione e critical failure cita candidato ed evidenza
+  controllante; score e cap sono sempre derivati in codice.
 - **Data integrity and recovery:** output immutabili, scrittura atomica e resume accettano soltanto
-  artefatti completi con schema, configurazione e hash coincidenti.
+  artefatti completi con schema, configurazione e hash coincidenti; una risposta rifiutata dal
+  contratto è conservata in quarantena, non scartata.
+- **Cost of measurement:** ogni chiamata provider è autorizzata esplicitamente e contata; il tasso di
+  conformità al contratto è una metrica pubblicata, non uno scarto operativo.
 
 ## NOW
 
@@ -116,9 +127,9 @@
 **Verification**
 
 - Fixture di confine distinguono correzione locale, ristrutturazione e invalidazione della release.
-- Entrambi i grader attivano lo stesso critical failure sui casi netti e nessuno sulle alternative
-  accettate.
-- Run ripetute non reinterpretano `absent` come sinonimo generico di `severe`.
+- Lo schema rifiuta evidenza incompleta, `absent` usato come grave generico e critical failure senza
+  condizioni o citazioni.
+- Le regole del prompt sono enunciate sui campi che il modello compila, non sui soli concetti.
 
 **Outcome**
 
@@ -134,6 +145,7 @@
 - Nella prima versione, vietare effetti secondari: un difetto può ridurre un solo criterio.
 - Richiedere conseguenza concreta ed evidenza specifica per ogni difetto.
 - Mantenere separati difetti distinti anche quando derivano dalla stessa area del piano.
+- Chiudere ogni modifica allo schema grade prima delle run che ne raccolgono gli artefatti.
 
 **Verification**
 
@@ -150,18 +162,53 @@
 
 - Lo score riflette difetti distinti invece del numero di rubriche alle quali un grader li collega.
 
-### 5. Adjudication del grading assoluto *(Theme: C)*
+### 5. Strumento relativo validato *(Theme: D)*
 
 ---
 
 **Includes**
 
-- Attivare adjudication anche tra grade assoluti dello stesso candidato, non solo dopo confronti paired.
+- Scollegare le unità paired dai grade assoluti nell'orchestrator; il prompt di confronto riceve già
+  soltanto rubric, fonti, brief e i due candidati.
+- Eseguire ogni coppia anche a ordine invertito e registrare l'inversione nei metadata.
+- Comporre altre coppie etichettate dalle fixture di confine esistenti, con direzioni attese e
+  criteri invarianti.
+- Misurare tasso di falso cambiamento sui criteri invarianti, stabilità fra i due ordini e agreement
+  inter-grader sulla direzione.
+- Conservare le risposte rifiutate dal contratto e pubblicare il tasso di conformità per provider.
+
+**Verification**
+
+- I criteri etichettati invarianti risultano `same` in entrambi gli ordini e ogni deviazione è contata.
+- Invertire l'ordine non cambia la direzione riportata sui criteri con direzione attesa.
+- Il report distingue direzione corretta, falso cambiamento e disaccordo fra grader.
+- Nessuna unità paired richiede artefatti assoluti per essere eseguita.
+
+**Learning / risk**
+
+- Se il tasso di falso cambiamento resta alto, il problema è la rubric a 26 criteri, non la scala dei
+  verdict, e la calibrazione assoluta non lo correggerebbe.
+- Il contratto paired pretende direzione, confidence ed evidenza per ogni criterio: il rischio di
+  non-conformità è almeno pari a quello assoluto.
+
+**Outcome**
+
+- Una modifica alla skill è giudicabile migliore o peggiore con un errore misurato, senza passare
+  dalla differenza fra due score assoluti.
+
+### 6. Adjudication dei disaccordi *(Theme: C)*
+
+---
+
+**Includes**
+
+- Attivare adjudication tra grade assoluti dello stesso candidato e tra confronti paired discordanti.
 - Mostrare all'adjudicator soltanto criteri discordanti, evidenze concorrenti e parti controllanti
   delle fonti e del brief, con grader anonimizzati.
-- Usare inizialmente revisione umana e registrare verdict, critical failure, motivazione ed evidenza.
+- Usare inizialmente revisione umana e registrare verdict, direzione, critical failure, motivazione
+  ed evidenza.
 - Produrre `RESOLVED.GRADE.json` e ricalcolare `RESOLVED.SCORE.json` esclusivamente in codice.
-- Applicare lo stesso workflow ai disaccordi paired senza mediare score o direzioni.
+- Risolvere i disaccordi paired sulla direzione senza mediare score o direzioni.
 
 **Verification**
 
@@ -173,7 +220,7 @@
 
 - Una divergenza materiale produce un risultato autorevole e riproducibile per la decisione successiva.
 
-### 6. Baseline di calibrazione etichettata *(Theme: D)*
+### 7. Calibrazione assoluta etichettata *(Theme: E)*
 
 ---
 
@@ -183,22 +230,26 @@
   learning senza osservazione, ownership e conseguenze duplicate.
 - Far assegnare a revisori umani verdict ammessi, difetto primario e critical failure attesi.
 - Eseguire almeno tre run per grader sul subset critico con evaluator e input identici.
-- Misurare accuratezza contro etichette, ripetibilità intra-grader, agreement inter-grader, precisione
-  e recall dei critical failure e direzione paired.
+- Misurare accuratezza contro etichette, ripetibilità intra-grader, agreement inter-grader e
+  precisione e recall dei critical failure.
 - Mantenere le soglie non bloccanti finché dimensione e copertura del campione non sono sufficienti.
 
 **Verification**
 
 - Il report distingue agreement da correttezza rispetto alle etichette umane.
 - Ogni metrica espone numeratore, denominatore, distribuzione per criterio e versione evaluator.
-- Le fixture paired verificano anche criteri invariati, evitando miglioramenti ottenuti spostando il
-  difetto altrove.
+- Run ripetute non reinterpretano `absent` come sinonimo generico di `severe`.
+
+**Learning / risk**
+
+- Ritentare un'unità rifiutata finché è conforme filtra proprio i casi che il grader sbaglia e
+  falsifica le metriche che questa slice deve produrre.
 
 **Outcome**
 
 - Le modifiche al grader sono valutabili contro una baseline esplicita, non contro convergenza casuale.
 
-### 7. Formula di scoring calibrata *(Theme: D)*
+### 8. Formula di scoring calibrata *(Theme: E)*
 
 ---
 
@@ -236,6 +287,10 @@
   - **Promotion trigger:** fixture etichettate mostrano conseguenze indipendenti perse dal solo
     `primary_criterion` e agreement stabile sulla loro attribuzione.
   - **Expected value:** rappresentare impatti multipli reali senza reintrodurre doppio addebito.
+- **Rubric ridotta ai criteri discriminanti**
+  - **Promotion trigger:** la slice 5 mostra falso cambiamento concentrato su un sottoinsieme stabile
+    di criteri, oppure criteri che nessun grader distingue mai.
+  - **Expected value:** ridurre rumore e costo per chiamata senza perdere potere diagnostico.
 - **Scenari di dominio aggiuntivi**
   - **Promotion trigger:** la baseline `recipe-app` è stabile e nuovi domini rivelano rischi di
     overfitting della rubric o del brief.
@@ -254,10 +309,23 @@
 
 ## Decision checkpoints
 
-- **After slice 3:** ripetibilità sulle fixture di severità → confermare la scala a cinque livelli o
-  semplificarla prima di cambiare il contratto dei difetti.
-- **After slice 5:** costo e qualità delle risoluzioni umane → definire soglia e casi candidati per un
+- **After slice 4:** contratto grade congelato → autorizzare le run pagate, sapendo che una modifica
+  successiva allo schema le invaliderebbe.
+- **After slice 5:** falso cambiamento sui criteri invarianti e stabilità fra ordini → decidere se lo
+  strumento relativo basta per giudicare le modifiche alla skill e con quale profondità serve ancora
+  la calibrazione assoluta.
+- **After slice 6:** costo e qualità delle risoluzioni umane → definire soglia e casi candidati per un
   adjudicator automatico in `LATER`.
-- **After slice 6:** metriche etichettate → scegliere la formula di scoring e soglie di affidabilità,
-  senza ottimizzare per la sola concordanza tra modelli.
-- **After slice 7:** baseline completa → autorizzare nuovi confronti tra versioni dello skill.
+- **After slice 7:** ripetibilità e accuratezza sulle fixture di severità → confermare la scala a
+  cinque livelli o versionare una rubric semplificata.
+- **After slice 8:** baseline completa → autorizzare nuovi confronti tra versioni dello skill.
+
+## Open questions
+
+- La scala a cinque verdict resta o viene semplificata? La risposta cambia rubric, contratto e
+  metriche; blocca la slice 7 e il rollout della slice 8, non le slice 4 e 5.
+- Quante chiamate provider sono autorizzate oltre le 36 iniziali, di cui 21 già consumate? Blocca
+  ogni run delle slice 5 e 7.
+- Il grade contract resta invariato o la citazione di un difetto da un criterio diverso dal proprio
+  `primary_criterion` smette di essere un errore fatale? Blocca la chiusura della slice 4 e, per
+  effetto delle versioni, le run delle slice 5 e 7.
