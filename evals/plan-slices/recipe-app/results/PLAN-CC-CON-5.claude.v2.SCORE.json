@@ -1,0 +1,117 @@
+{
+  "rubric_version": 2,
+  "candidate": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/results/PLAN-CC-CON-5.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "score": 3,
+      "weight": 15,
+      "weighted_score": 11.25,
+      "criterion_verdicts": {
+        "theme_independent_value": "pass",
+        "theme_split_merge": "minor",
+        "theme_no_compression": "pass"
+      }
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "score": 4,
+      "weight": 10,
+      "weighted_score": 10.0,
+      "criterion_verdicts": {
+        "theme_product_outcome": "pass",
+        "theme_first_product_validator": "pass",
+        "theme_validator_coherence": "pass"
+      }
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "score": 3,
+      "weight": 20,
+      "weighted_score": 15.0,
+      "criterion_verdicts": {
+        "slice_independent_outcome": "pass",
+        "slice_vertical_path": "pass",
+        "slice_cohesive_cut": "minor",
+        "slice_single_owner": "pass"
+      }
+    },
+    {
+      "id": "ordering_risk",
+      "score": 2,
+      "weight": 20,
+      "weighted_score": 10.0,
+      "criterion_verdicts": {
+        "order_dependencies_risk": "material",
+        "order_enabler_validator": "pass",
+        "order_required_recovery": "pass",
+        "order_breadth_before_depth": "pass"
+      }
+    },
+    {
+      "id": "slice_content_evidence",
+      "score": 3,
+      "weight": 15,
+      "weighted_score": 11.25,
+      "criterion_verdicts": {
+        "content_single_result": "pass",
+        "content_learning_evidence": "pass",
+        "content_failure_quality": "minor",
+        "content_right_detail": "pass"
+      }
+    },
+    {
+      "id": "horizons",
+      "score": 2,
+      "weight": 10,
+      "weighted_score": 5.0,
+      "criterion_verdicts": {
+        "horizon_exclusive": "pass",
+        "horizon_coherent_now": "material",
+        "horizon_later_trigger": "pass",
+        "horizon_exclusion_rationale": "pass"
+      }
+    },
+    {
+      "id": "uncertainty_integrity",
+      "score": 3,
+      "weight": 10,
+      "weighted_score": 7.5,
+      "criterion_verdicts": {
+        "uncertainty_conflicts": "pass",
+        "uncertainty_assumptions": "minor",
+        "uncertainty_blocking_decisions": "pass",
+        "uncertainty_material_questions": "pass"
+      }
+    }
+  ],
+  "raw_total": 70.0,
+  "effective_total": 70.0,
+  "applied_caps": [],
+  "critical_failure_ids": [],
+  "grader": {
+    "provider": "claude",
+    "requested_model": "claude-opus-5",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "2.1.220 (Claude Code)",
+    "prompt_sha256": "a9e91206f43842302504c2f4d4bdde8845fd9fcb6ba3d05c71cc4308a20e85c3",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "reference_sha256": "ba5afac208ec06d7106ffcd6de97aad02d394966036064bd926099985e5255d5",
+    "rubric_sha256": "fb8262e4fce63ac8cb8369df37a11de1288b0c5844cb9bdf880b176282d55cc6",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/results/PLAN-CC-CON-5.md",
+        "sha256": "1ec1703432ad4a1654bca82486f7fb21966f23ebb7a52f20bd1c2b00ea45fd3f",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "81282350-13d9-4da3-a9fa-6573f3d6dc63",
+    "timestamp_utc": "2026-08-03T21:07:41.446233+00:00"
+  }
+}

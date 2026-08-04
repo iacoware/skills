@@ -18,6 +18,20 @@ Diario empirico per iterare su `plan-slices`. Il riferimento semantico unico è
 |---|---|---|
 | Confronto `PLAN-CX-CON-4.md` / `PLAN-CC-CON-2.md` | Aggiunti audit split/merge, recovery, enabler diagnostici, breadth-before-depth, conflitti espliciti, safety verificabile e `Release: delivery` | Da verificare con nuove generazioni indipendenti |
 | Confronto `PLAN-CC-CON-4.md` / `PLAN-CX-CON-4.md` | Skeleton ridefinito come prova di connettività dell'infrastruttura decisa (datastore via driver reale + migrazione non di dominio), anti-pattern `Hollow walking skeleton`, invariante 1 e slice 1 del reference riscritti | Da verificare con nuove generazioni indipendenti |
+| Iterazione 6 — sola ricalibrazione evaluator | Reference classificato, verdetti per criterio, scoring deterministico, metadata riproducibile, fixture e confronto paired | Test offline verdi e grading assoluto v2 di `PLAN-CC-CON-5`; non costituisce evidenza di miglioramento del generatore |
+| Iterazione 6 — modifica del generatore | Chiariti validator completi, recovery chain, ownership di adapter/invarianti, enabler di convenzioni e ledger finale | Evidenza empirica pendente: nessun confronto paired tra iterazioni |
+
+## Iterazione 6: stato dell'evidenza
+
+- **Evaluator recalibration:** verificata offline tramite contratti, schema, scoring, parser provider,
+  collision guard, expectations derivate e fixture metamorfica source-supported.
+- **Generator improvement:** non ancora misurato; nessuna conclusione di qualità deriva dalla sola
+  variazione degli score v2.
+- **External runs:** grading assoluto v2 di `PLAN-CC-CON-5` completato con Codex e Claude; nessun
+  paired comparison o adjudication. Il commit dello skill è `unknown`, quindi gli score non isolano
+  una modifica del generatore.
+- **Next evidence:** 3–5 generazioni indipendenti per condizione, regrade 4/5 con entrambi i grader,
+  confronti paired 4→5 e 5→6, quindi adjudication cieca per ogni trigger documentato.
 
 ## Schema per le prossime valutazioni
 

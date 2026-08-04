@@ -1,0 +1,436 @@
+{
+  "rubric_version": 2,
+  "candidate": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/results/PLAN-CC-CON-5.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "criteria": [
+        {
+          "id": "theme_independent_value",
+          "verdict": "pass",
+          "evidence": [
+            "Il piano copre le aree di valore delle fonti con temi autonomi: 'B. Import automatico dal web', 'C. Ricerca semantica cross-lingua', 'D. Foto delle ricette', 'E. Identità e accesso', 'F. Condivisione del ricettario' (goal.md 'Cosa fa (MVP)': Home/elenco, Aggiunta, Ricerca, Condivisione).",
+            "La consultazione non ha tema proprio ma resta esplicita nell'outcome del tema A ('la ritrova in un elenco consultabile'), scelta difendibile perché elenco, dettaglio e form condividono l'entità Recipe (concepts.md: 'Recipe, la ricetta, source of truth')."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_split_merge",
+          "verdict": "minor",
+          "evidence": [
+            "Il tema 'A. Ricettario e cattura manuale' fonde due aree indipendentemente schedulabili che il reference tiene separate ('Consultazione' con first validation '5. Lettura della ricetta'; 'Scrittura manuale' con first validation '7. Inserimento manuale e modifica'), con un unico primo validatore (slice 2) che copre persistenza, form condivisa, elenco e dettaglio.",
+            "Il merge è parzialmente sostenuto dalle fonti (concepts.md: 'L'inserimento manuale usa lo stesso form dell'edit con campi vuoti'), quindi l'effetto è contenuto ma produce un primo taglio di dominio non minuscolo."
+          ],
+          "defect_ids": [
+            "merged_consultation_writing_theme"
+          ]
+        },
+        {
+          "id": "theme_no_compression",
+          "verdict": "pass",
+          "evidence": [
+            "Sei temi di prodotto distinti (A–F) più enabler e release espliciti, senza compressione artificiale; il reference dichiara che 'La tabella è una decomposizione consigliata, non impone titoli o numero di temi'."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "theme_independent_value",
+        "theme_no_compression"
+      ],
+      "defects_regressions": [
+        "merged_consultation_writing_theme"
+      ],
+      "net_rationale": "La mappa dei temi copre tutte le aree di valore delle fonti con confini leggibili e senza compressione; l'unico scostamento è la fusione di consultazione e scrittura manuale in un solo tema, difendibile ma che concentra due valori indipendenti su un unico primo validatore.",
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "criteria": [
+        {
+          "id": "theme_product_outcome",
+          "verdict": "pass",
+          "evidence": [
+            "Outcome in linguaggio di prodotto per tutti i temi: 'Aggiungere una ricetta trovata online costa un incolla di URL' (B), 'Si trova una ricetta per significato, anche se scritta in un'altra lingua' (C), 'Famiglia e amici collaborano su uno stesso ricettario' (F), coerenti con goal.md ('Differenziatore', 'Condivisione')."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_first_product_validator",
+          "verdict": "pass",
+          "evidence": [
+            "Ogni tema indica una slice NOW di prodotto e non un enabler: C → '4. Ricerca semantica nel ricettario corrente' (non la slice 3 enabler di indicizzazione), B → '6. Aggiunta da link con dati strutturati', E → '5. Accesso con Google e ricettario personale', F → '9. Ricettari condivisi su invito', D → '10. Foto delle ricette'.",
+            "Coerente con il vincolo duro del reference 'La pipeline reale di indicizzazione precede il validatore di ricerca'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_validator_coherence",
+          "verdict": "pass",
+          "evidence": [
+            "I validatori dimostrano l'intero valore del tema: slice 4 verifica che 'Query come \"cena leggera\" o \"pomodoro\" recuperano ricette scritte in un'altra lingua', esattamente l'outcome del tema C e il differenziatore di goal.md ('la ricerca semantica cross-lingua è il vero elemento distintivo')."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "theme_product_outcome",
+        "theme_first_product_validator",
+        "theme_validator_coherence"
+      ],
+      "defects_regressions": [],
+      "net_rationale": "Outcome in linguaggio di prodotto, primi validatori sempre su slice di prodotto e non su enabler tecnici, e coerenza piena fra tema, outcome e slice indicata: nessun difetto su questo asse.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "criteria": [
+        {
+          "id": "slice_independent_outcome",
+          "verdict": "pass",
+          "evidence": [
+            "Ogni slice dichiara un esito osservabile e verificabile, es. slice 8 'Il percorso completo link fallito → copia-incolla riuscito è dimostrato end-to-end'; gli enabler sono etichettati ('Enabler: delivery', 'Enabler: ricerca semantica') con outcome per sviluppatori, come ammesso dal reference per le slice iniziali."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_vertical_path",
+          "verdict": "pass",
+          "evidence": [
+            "Slice verticali e non layer slice: la 6 include 'Input URL, fetch della pagina e pulizia del contenuto, con progress sincrona sui passi realmente eseguiti' fino al salvataggio e alla ricercabilità ('apribile e già ricercabile'), coerente con la pipeline unica di concepts.md."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_cohesive_cut",
+          "verdict": "minor",
+          "evidence": [
+            "La slice 2 concentra 'Schema e migrazioni per Cookbook e Recipe; risolutore currentCookbook configurato', la 'Form condiviso creazione ed edit' e 'Elenco delle ricette del ricettario corrente e pagina di dettaglio', cioè quanto il reference distribuisce su tre slice (2 contesto ricettario, 5 lettura, 7 inserimento e modifica).",
+            "Contrasta con il criterio d'ordine dichiarato dal piano stesso ('la revisione umana è ancora frequente') e con la preferenza del reference 'Un enabler di dominio minuscolo valida persistenza, resolver di scope, shell, UI e test prima dell'indicizzazione'; i contenuti restano però coesi attorno all'entità Recipe."
+          ],
+          "defect_ids": [
+            "oversized_first_domain_slice"
+          ]
+        },
+        {
+          "id": "slice_single_owner",
+          "verdict": "pass",
+          "evidence": [
+            "Owner unici e dichiarati: 'l'embedding è indice derivato, rigenerato a ogni write dall'unico owner della persistenza ricetta'; il risolutore 'currentCookbook' è unico con seam di sostituzione nella sola slice 5; la pipeline media apre una volta sola nella slice 10, che possiede anche il download dell'immagine di import ('Acquisizione dell'immagine della pagina durante l'import e ricarica sul nostro storage')."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "slice_independent_outcome",
+        "slice_vertical_path",
+        "slice_single_owner"
+      ],
+      "defects_regressions": [
+        "oversized_first_domain_slice"
+      ],
+      "net_rationale": "Slice verticali con esiti verificabili e ownership unica di embedding, scope e pipeline foto; l'unica debolezza è il primo taglio di dominio (slice 2), che accorpa persistenza, form condivisa, elenco e dettaglio quando le convenzioni sono ancora da stabilire.",
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "criteria": [
+        {
+          "id": "order_dependencies_risk",
+          "verdict": "material",
+          "evidence": [
+            "La slice 2 'Ricette a mano nel ricettario corrente (Theme: A)' è il primo validatore di un tema di acquisizione e precede il validatore del differenziatore, slice 4 'Ricerca semantica nel ricettario corrente (Theme: C)', contro il vincolo duro 'la ricerca semantica cross-lingua precede l'acquisizione perché è il rischio esistenziale dichiarato'.",
+            "Il reference indica come input più economico per validare il motore rischioso le fixture ('Pipeline di indicizzazione su fixture ... senza attendere le slice di aggiunta'), mentre il piano antepone form condivisa, elenco e dettaglio; il differenziatore resta comunque validato presto (slice 4 su 11) con motivazione esplicita ('validata sull'input reale più economico')."
+          ],
+          "defect_ids": [
+            "acquisition_theme_before_differentiator"
+          ]
+        },
+        {
+          "id": "order_enabler_validator",
+          "verdict": "pass",
+          "evidence": [
+            "Enabler e validatore adiacenti: '3. Indice semantico sulle ricette reali' precede immediatamente '4. Ricerca semantica nel ricettario corrente'; '0. Fondamenta di repository' precede '1. Runtime deployato con Postgres reale', come richiesto dal vincolo duro 'Repository/CI e walking skeleton sono separati'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_required_recovery",
+          "verdict": "pass",
+          "evidence": [
+            "Le slice 7 (fallback LLM) e 8 (copia-incolla) seguono immediatamente la 6 prima di aprire altri temi, con motivazione esplicita: 'gli slice 7 e 8 sono i rimedi dichiarati dalle sorgenti per i fallimenti nominati dallo slice 6 e lo seguono prima di aprire un altro tema', coerente con 'l'LLM è recovery automatico dello stesso flusso; il testo incollato è il successivo escape manuale'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_breadth_before_depth",
+          "verdict": "pass",
+          "evidence": [
+            "Dopo il rischio esistenziale il piano apre 5 (accesso), 6 (import), 9 (condivisione), 10 (foto) con una slice per tema, e l'unico approfondimento consecutivo (6→7→8) è giustificato come recovery obbligatorio; le foto arrivano dopo tutti i percorsi che le alimentano ('lo storage foto apre dopo tutti i percorsi che lo alimentano')."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "order_enabler_validator",
+        "order_required_recovery",
+        "order_breadth_before_depth"
+      ],
+      "defects_regressions": [
+        "acquisition_theme_before_differentiator"
+      ],
+      "net_rationale": "Adiacenza enabler-validatore, chiusura dei recovery obbligatori e breadth-before-depth sono rispettate con motivazioni esplicite; pesa però l'anticipo di un tema di acquisizione manuale completo prima del validatore del differenziatore, contro il vincolo duro sull'ordine del rischio esistenziale.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "criteria": [
+        {
+          "id": "content_single_result",
+          "verdict": "pass",
+          "evidence": [
+            "Includes, Verification e Outcome convergono su un unico risultato: la slice 7 include l'estrazione LLM 'invocata solo quando il JSON-LD manca', verifica il rifiuto dell'output non conforme e conclude 'I siti senza dati strutturati smettono di essere un vicolo cieco per l'aggiunta da link', coerente con arch-choices.md 'Fallback LLM ... solo quando il JSON-LD manca'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_learning_evidence",
+          "verdict": "pass",
+          "evidence": [
+            "Learning collegati a osservazioni che cambiano decisioni: slice 3 'Il recall cross-lingua dell'embedder multilingue scelto è il rischio esistenziale del prodotto' con checkpoint 'Dopo lo slice 3: ... sostituire l'embedder ... o riconsiderare il differenziatore'; slice 6 'L'hit-rate del JSON-LD sui blog realmente usati determina quanto peso e quanto costo avrà il fallback LLM'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_failure_quality",
+          "verdict": "minor",
+          "evidence": [
+            "Le verifiche coprono modi di fallimento concreti ('Timeout, host irraggiungibile e URL verso indirizzi interni non lasciano ricette parziali salvate'; 'Un output non conforme allo schema viene rifiutato senza salvare dati inventati'; 'Un token scaduto, già consumato oltre le sue regole o manomesso viene rifiutato senza creare membership').",
+            "Manca la verifica dell'idempotenza richiesta dal vincolo duro 'Il primo accesso autenticato crea il primo ricettario in modo idempotente': la slice 5 dichiara solo 'al primo accesso viene creato il ricettario personale dell'utente' e verifica isolamento e sessione, senza il secondo accesso; anche l'accettazione ripetuta dell'invito ('accettazione idempotente per lo stesso membro' nel reference) resta non verificata nella slice 9."
+          ],
+          "defect_ids": [
+            "idempotency_verification_gaps"
+          ]
+        },
+        {
+          "id": "content_right_detail",
+          "verdict": "pass",
+          "evidence": [
+            "Dettaglio sufficiente per accettazione senza diventare backlog: slice 10 'Cambiando copertina la precedente perde il flag, verificato anche con richieste concorrenti' resta a livello di invariante (concepts.md: 'una sola cover per ricetta') senza elencare task implementativi."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "content_single_result",
+        "content_learning_evidence",
+        "content_right_detail"
+      ],
+      "defects_regressions": [
+        "idempotency_verification_gaps"
+      ],
+      "net_rationale": "Contenuto e verifiche di alta qualità, con casi concreti, fallimenti pertinenti e learning azionabili collegati ai decision checkpoint; unico buco: l'idempotenza della creazione del ricettario al primo accesso e dell'accettazione dell'invito non è verificata pur essendo un invariante duro.",
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "criteria": [
+        {
+          "id": "horizon_exclusive",
+          "verdict": "pass",
+          "evidence": [
+            "Nessun comportamento in due orizzonti: i filtri strutturati stanno solo in LATER mentre NOW si limita a popolare i campi ('tag e tempo derivati best-effort quando presenti', slice 6); la cover modificabile sta solo in NOW dentro la slice 10, alternativa esplicitamente ammessa dal reference ('Un piano che la tiene in NOW non è in errore se la mantiene dentro la slice 11')."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_coherent_now",
+          "verdict": "material",
+          "evidence": [
+            "La slice '11. Rilascio a familiari e amici' porta il prodotto in produzione ma non prevede backup ripristinabile né tetto o allarme di spesa: include solo 'Log ed errori consultabili e procedura di rollback tramite redeploy' e verifica 'Un rollback riporta l'app alla versione precedente senza perdita di dati' e 'Il costo mensile osservato ... è coerente con il target dichiarato'.",
+            "Il vincolo duro del reference richiede che 'NOW raggiunge utenti selezionati in produzione, con backup ripristinabile e limiti/allarmi di spesa per LLM ed embedding', a protezione del principio di goal.md 'Budget bassissimo ... target realistico ~$0/mese (free tier) + centesimi di LLM'."
+          ],
+          "defect_ids": [
+            "release_missing_backup_and_spend_guardrails"
+          ]
+        },
+        {
+          "id": "horizon_later_trigger",
+          "verdict": "pass",
+          "evidence": [
+            "Ogni voce LATER ha trigger ancorato a evidenza NOW: 'Macchina sempre calda invece dello scale-to-zero — Promotion trigger: la latenza del primo accesso misurata agli slice 1 e 11 risulta fastidiosa nell'uso reale'; 'Filtri strutturati per tag e tempo — Expected value: i campi sono già popolati best-effort dallo slice 6, quindi il filtro si abilita senza migrazione', coerente con goal.md 'Filtri strutturati ... rimandati a dopo l'MVP'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_exclusion_rationale",
+          "verdict": "pass",
+          "evidence": [
+            "OUT-OF-SCOPE contiene solo esclusioni motivate dalle fonti: ingredienti strutturati, lista della spesa e scaling porzioni, review obbligatoria, deduplica, ruoli granulari, email+password e magic-link, vector DB dedicato, IaC con SST o Terraform, ciascuna con motivazione ('a ≤10.000 ricette Postgres con pgvector e indice HNSW è sufficiente'), come in arch-choices.md e concepts.md."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "horizon_exclusive",
+        "horizon_later_trigger",
+        "horizon_exclusion_rationale"
+      ],
+      "defects_regressions": [
+        "release_missing_backup_and_spend_guardrails"
+      ],
+      "net_rationale": "Orizzonti disgiunti, LATER con trigger legati a evidenza NOW e OUT-OF-SCOPE interamente motivato dalle fonti; il NOW però raggiunge gli utenti pilota senza backup ripristinabile né limiti o allarmi di spesa su LLM ed embedding, garanzie richieste per una release sicura entro il vincolo di costo.",
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "criteria": [
+        {
+          "id": "uncertainty_conflicts",
+          "verdict": "pass",
+          "evidence": [
+            "La contraddizione è esposta senza scegliere un lato: 'Le sorgenti si contraddicono sull'ammissibilità di una chiamata di embedding a runtime per query ... la strumentazione fornisce l'evidenza per decidere cache o pre-calcolo senza anticipare la decisione' (slice 4) e in Open questions 'le sorgenti vietano chiamate a runtime sulle query di ricerca ma descrivono la ricerca come similarità con l'embedding della query', esattamente la tensione fra goal.md/arch-choices.md e concepts.md."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_assumptions",
+          "verdict": "minor",
+          "evidence": [
+            "Alcune conclusioni non supportate dalle fonti sono presentate come dato: 'un suo fallimento non blocca il salvataggio ma marca la ricetta da reindicizzare' (Cross-functional concerns) e 'Creazione di ricettari aggiuntivi e selettore del ricettario corrente' dentro la slice 9, che il reference colloca in LATER ('Creazione di ricettari aggiuntivi dall'interfaccia').",
+            "Sono scelte difendibili (goal.md: 'Un utente può appartenere a più ricettari'; 'Nessun passo obbligatorio prima del salvataggio') ma non sono dichiarate come assunzioni del piano."
+          ],
+          "defect_ids": [
+            "unflagged_derived_decisions"
+          ]
+        },
+        {
+          "id": "uncertainty_blocking_decisions",
+          "verdict": "pass",
+          "evidence": [
+            "Ogni domanda aperta nomina le slice bloccate: 'Provider Postgres gestito ... Blocca lo slice 1 e ogni slice che persiste dati'; 'Embedder multilingue ... Blocca gli slice 3 e 4'; 'Modello di estrazione LLM ... Blocca gli slice 7 e 8'; 'Embedding a runtime sulle query ... Blocca l'accettazione dello slice 4', coerente con il vincolo duro 'una slice bloccata non può affermare silenziosamente una scelta'."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_material_questions",
+          "verdict": "pass",
+          "evidence": [
+            "Le cinque domande aperte cambiano implementazione, ordine o verificabilità (provider e driver Postgres, embedder multilingue, modello LLM, embedding della query) e corrispondono alle decisioni non prese dalle fonti: arch-choices.md 'Provider: Neon o Supabase', 'es. OpenAI text-embedding-3-small', 'modello cheap, Haiku-class'; nessuna domanda decorativa."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "material_passes": [
+        "uncertainty_conflicts",
+        "uncertainty_blocking_decisions",
+        "uncertainty_material_questions"
+      ],
+      "defects_regressions": [
+        "unflagged_derived_decisions"
+      ],
+      "net_rationale": "La contraddizione sull'embedding della query è esposta con le slice bloccate e senza scelta silenziosa, e tutte le domande aperte sono materiali e ancorate alle slice; restano un paio di decisioni derivate presentate come fatto anziché come assunzione dichiarata.",
+      "confidence": "medium"
+    }
+  ],
+  "defects": [
+    {
+      "id": "acquisition_theme_before_differentiator",
+      "primary_axis": "ordering_risk",
+      "severity": "material",
+      "criterion_ids": [
+        "order_dependencies_risk"
+      ],
+      "evidence": [
+        "Slice 2 'Ricette a mano nel ricettario corrente (Theme: A)' è il primo validatore di un tema di acquisizione e precede il validatore del differenziatore, slice 4 'Ricerca semantica nel ricettario corrente (Theme: C)'.",
+        "Vincolo duro del reference: 'La pipeline reale di indicizzazione precede il validatore di ricerca; la ricerca semantica cross-lingua precede l'acquisizione perché è il rischio esistenziale dichiarato'; goal.md: 'la ricerca semantica cross-lingua è il vero elemento distintivo. Senza di essa staremmo in gran parte riscrivendo Mealie'."
+      ]
+    },
+    {
+      "id": "oversized_first_domain_slice",
+      "primary_axis": "slice_cohesion_verticality",
+      "severity": "minor",
+      "criterion_ids": [
+        "slice_cohesive_cut"
+      ],
+      "evidence": [
+        "Slice 2 include 'Schema e migrazioni per Cookbook e Recipe; risolutore currentCookbook configurato su un ricettario di seed', 'Form condiviso creazione ed edit' e 'Elenco delle ricette del ricettario corrente e pagina di dettaglio' in un solo taglio.",
+        "Il reference preferisce 'Un enabler di dominio minuscolo valida persistenza, resolver di scope, shell, UI e test prima dell'indicizzazione' e distribuisce lo stesso contenuto sulle slice 2, 5 e 7."
+      ]
+    },
+    {
+      "id": "merged_consultation_writing_theme",
+      "primary_axis": "theme_boundaries",
+      "severity": "minor",
+      "criterion_ids": [
+        "theme_split_merge"
+      ],
+      "evidence": [
+        "Tema 'A. Ricettario e cattura manuale — Chi conosce una ricetta la scrive e la ritrova in un elenco consultabile' fonde consultazione e scrittura manuale sotto un unico primo validatore (slice 2).",
+        "Il reference le tiene separate come 'Consultazione' (first validation '5. Lettura della ricetta') e 'Scrittura manuale' (first validation '7. Inserimento manuale e modifica'), aree indipendentemente schedulabili."
+      ]
+    },
+    {
+      "id": "release_missing_backup_and_spend_guardrails",
+      "primary_axis": "horizons",
+      "severity": "material",
+      "criterion_ids": [
+        "horizon_coherent_now"
+      ],
+      "evidence": [
+        "Slice 11 'Rilascio a familiari e amici' elenca solo 'Log ed errori consultabili e procedura di rollback tramite redeploy' e verifica costo osservato e rollback: nessun backup ripristinabile e nessun tetto o allarme di spesa su LLM ed embedding, in tutto il piano.",
+        "Vincolo duro del reference: 'NOW raggiunge utenti selezionati in produzione, con backup ripristinabile e limiti/allarmi di spesa per LLM ed embedding'; goal.md: 'Budget bassissimo ... target realistico ~$0/mese (free tier) + centesimi di LLM'."
+      ]
+    },
+    {
+      "id": "idempotency_verification_gaps",
+      "primary_axis": "slice_content_evidence",
+      "severity": "minor",
+      "criterion_ids": [
+        "content_failure_quality"
+      ],
+      "evidence": [
+        "Slice 5 dichiara 'al primo accesso viene creato il ricettario personale dell'utente' ma nessuna verifica copre un secondo accesso; slice 9 verifica solo 'Un token scaduto, già consumato oltre le sue regole o manomesso viene rifiutato senza creare membership'.",
+        "Vincoli duri del reference: 'Il primo accesso autenticato crea il primo ricettario in modo idempotente' e, per l'invito, 'accettazione idempotente per lo stesso membro'."
+      ]
+    },
+    {
+      "id": "unflagged_derived_decisions",
+      "primary_axis": "uncertainty_integrity",
+      "severity": "minor",
+      "criterion_ids": [
+        "uncertainty_assumptions"
+      ],
+      "evidence": [
+        "Cross-functional concerns afferma come dato 'un suo fallimento non blocca il salvataggio ma marca la ricetta da reindicizzare', comportamento non descritto dalle fonti; slice 9 include 'Creazione di ricettari aggiuntivi e selettore del ricettario corrente' senza dichiararlo come scelta di scope.",
+        "Il reference colloca 'Creazione di ricettari aggiuntivi dall'interfaccia' in LATER e richiede che le conclusioni non sostenute dalle fonti siano esplicitate; il piano non le marca come assunzioni."
+      ]
+    }
+  ],
+  "critical_failures": [],
+  "grader": {
+    "provider": "claude",
+    "requested_model": "claude-opus-5",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "2.1.220 (Claude Code)",
+    "prompt_sha256": "a9e91206f43842302504c2f4d4bdde8845fd9fcb6ba3d05c71cc4308a20e85c3",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "reference_sha256": "ba5afac208ec06d7106ffcd6de97aad02d394966036064bd926099985e5255d5",
+    "rubric_sha256": "fb8262e4fce63ac8cb8369df37a11de1288b0c5844cb9bdf880b176282d55cc6",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/results/PLAN-CC-CON-5.md",
+        "sha256": "1ec1703432ad4a1654bca82486f7fb21966f23ebb7a52f20bd1c2b00ea45fd3f",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "81282350-13d9-4da3-a9fa-6573f3d6dc63",
+    "timestamp_utc": "2026-08-03T21:07:41.446233+00:00"
+  }
+}
