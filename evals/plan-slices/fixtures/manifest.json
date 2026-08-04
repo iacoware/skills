@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "immutability": "Never edit a fixture after it has been used in a recorded calibration run; add a new fixture id instead.",
+  "fixtures": [
+    {"id": "strong", "path": "strong-reference-aligned.md", "criterion_verdict_ranges": {"theme_split_merge": ["pass"], "slice_single_owner": ["pass"], "order_dependencies_risk": ["pass"]}, "defect_primary_axes": {}, "critical_failures": []},
+    {"id": "accepted_alternative", "path": "source-supported-alternative.md", "criterion_verdict_ranges": {"theme_split_merge": ["pass", "minor"], "order_breadth_before_depth": ["pass", "minor"]}, "defect_primary_axes": {}, "critical_failures": []},
+    {"id": "theme_compression", "path": "unjustified-theme-compression.md", "criterion_verdict_ranges": {"theme_no_compression": ["material", "severe"]}, "defect_primary_axes": {"theme-compression": "theme_boundaries"}, "critical_failures": []},
+    {"id": "shared_ownership", "path": "atomized-shared-ownership.md", "criterion_verdict_ranges": {"slice_single_owner": ["material", "severe"]}, "defect_primary_axes": {"split-adapter-ownership": "slice_cohesion_verticality"}, "critical_failures": []},
+    {"id": "justified_reorder", "path": "reordered-justified.md", "criterion_verdict_ranges": {"order_breadth_before_depth": ["pass", "minor"]}, "defect_primary_axes": {}, "critical_failures": []},
+    {"id": "hard_dependency", "path": "hard-dependency-violation.md", "criterion_verdict_ranges": {"order_dependencies_risk": ["severe", "absent"]}, "defect_primary_axes": {"fake-search-validator": "ordering_risk"}, "critical_failures": ["missing_differentiator_validator"]},
+    {"id": "silent_contradiction", "path": "silent-contradiction.md", "criterion_verdict_ranges": {"uncertainty_conflicts": ["severe", "absent"]}, "defect_primary_axes": {"silent-query-embedding-choice": "uncertainty_integrity"}, "critical_failures": ["silent_source_contradiction"]},
+    {"id": "missing_scope", "path": "missing-scope-boundary.md", "criterion_verdict_ranges": {"horizon_coherent_now": ["severe", "absent"]}, "defect_primary_axes": {"missing-scope-boundary": "horizons"}, "critical_failures": ["unsafe_scope_boundary"]}
+  ],
+  "paired": [
+    {"id": "single_owner_fix", "before": "paired-isolated-change.before.md", "after": "paired-isolated-change.after.md", "expected_directions": {"slice_single_owner": "better"}, "unaffected_criteria": ["theme_split_merge", "order_dependencies_risk"]}
+  ]
+}
