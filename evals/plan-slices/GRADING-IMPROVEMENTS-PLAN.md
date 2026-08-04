@@ -443,6 +443,12 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
 
 ## Decisioni di progetto
 
+- `REGRESSION-LEDGER.md` è retrodatato ai `REVIEW` CON-4 e si ferma lì: le sette affermazioni
+  R-002…R-008 coprono i miglioramenti comuni recepiti dai cinque commit di `SKILL.md` derivati da
+  quel ciclo. Retrodatare oltre non è possibile senza inventare previsioni: le modifiche precedenti
+  non hanno un `REVIEW` da cui ricostruirle. Il ritorno vero del retrodatare non è il registro ma
+  l'elenco dei miglioramenti concordi mai applicati, che la sola lettura dei `REVIEW` ha prodotto a
+  costo zero.
 - `recipe-app/EVALUATION-BRIEF.md` sostituisce `REFERENCE-PLAN.md`; il reference v2 resta nella
   storia Git, non nell'evaluator attivo.
 - Rubric, schema grade, scoring e manifest hanno versioni esplicite e indipendenti. Gli artefatti
@@ -720,8 +726,6 @@ versione/configurazione e non diventano baseline canonica finché la slice 8 non
 - Si accetta il percorso del `Riesame del 2026-08-04` — workflow originale con brief e
   anonimizzazione, più `REGRESSION-LEDGER.md`, e slice 5-8 sospese dietro il gate? Precede ogni altra
   domanda: le voci successive di questa lista si aprono solo se il gate viene superato.
-- Si retrodata il registro ricostruendo le affermazioni dai `REVIEW` esistenti, o lo si lascia partire
-  dalla prossima modifica dello skill?
 - Quanti cicli completi valgono come gate: due o tre?
 - Chi etichetta le due coppie del percorso grader, se ci si arriva, e le etichetta prima di vedere gli
   output? Chi ha scritto le regole dello skill non è imparziale sull'effetto delle proprie modifiche.
