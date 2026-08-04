@@ -44,8 +44,8 @@ Serve a due cose:
 | ID | Commit `SKILL.md` | Origine | Affermazione verificabile | Verifica | Ultimo controllo | Stato |
 |---|---|---|---|---|---|---|
 | R-001 | `2c89e7f` | `giudizio` — `NOTES.md` § *Confine di scope vs identità* | Il piano colloca l'identità dopo il differenziatore **e** dichiara in `Cross-functional concerns` la giunzione unica da cui si risolve lo scope corrente. | lettura, automatizzabile in parte | — | da verificare |
-| R-002 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Sweep sistematico delle contraddizioni* ≡ *Explicit handling of source contradictions* | Nessuna bullet `Includes` o `Verification` afferma in forma non condizionale un lato di una contraddizione fra le fonti, e ogni voce di `Open questions` nomina le slice `NOW` che blocca. | lettura per il primo membro; il secondo è automatizzabile (ogni voce di `Open questions` cita almeno un numero di slice `NOW` esistente) | 2026-08-04 | regredita su `CC` |
-| R-003 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Decisioni mai prese distinte dalle decisioni prese* ≡ *Explicit handling of undecided choices* | Ogni provider, modello, servizio o adapter esterno nominato da una slice `NOW` è selezionato da una fonte citabile oppure compare in `Open questions` con la slice che blocca; un aggettivo qualificante — `cheap`, `multilingual`, `managed` — non conta come scelta. | lettura: l'inventario delle dipendenze esterne richiede il confronto con le fonti | 2026-08-04 | tiene |
+| R-002 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Sweep sistematico delle contraddizioni* ≡ *Explicit handling of source contradictions* | Nessuna bullet `Includes` o `Verification` afferma in forma non condizionale un lato di un conflitto fra le fonti — quelli elencati in `Known conflicts` del brief, più quelli dimostrabili citando due fonti in disaccordo — e ogni scelta che il piano dichiara aperta nomina le slice `NOW` che blocca, in qualunque sezione la dichiari. | lettura per il primo membro; il secondo è automatizzabile sulla sezione delle scelte aperte, qualunque sia il suo titolo (ogni voce cita almeno un numero di slice `NOW` esistente) | 2026-08-04 | regredita su `CC` |
+| R-003 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Decisioni mai prese distinte dalle decisioni prese* ≡ *Explicit handling of undecided choices* | Nessuna slice `NOW` dipende da una scelta esterna — provider, modello, servizio o adapter — che non sia presa da una fonte citabile, o presa dal piano fra le alternative che il brief dichiara accettabili, o dichiarata aperta con la slice che blocca, in qualunque sezione la dichiari; un aggettivo qualificante — `cheap`, `multilingual`, `managed` — non conta come scelta. | lettura: l'inventario delle dipendenze esterne richiede il confronto con le fonti e con le `Accepted alternatives` del brief | 2026-08-04 | tiene |
 | R-004 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | Nessuna slice `NOW` consegna un comportamento che le fonti non richiedono; ogni voce `LATER` dichiara un `Promotion trigger` e ogni voce `OUT-OF-SCOPE` una razionale di esclusione. | lettura per il primo membro — lo skill colloca la tracciatura nel ragionamento, non nel piano; il secondo è automatizzabile sulla struttura del template | 2026-08-04 | tiene |
 | R-005 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Continuità del tema* ≡ *Keep a theme and its recovery path contiguous* | Se una slice `NOW` nomina un modo di fallimento nella propria `Verification` e un'altra slice `NOW` ne è il rimedio, nessuna slice di un tema diverso è collocata fra le due. | lettura per l'accoppiamento fallimento→rimedio; l'interposizione di temi è automatizzabile sull'annotazione `*(Theme: X)*` delle slice | 2026-08-04 | tiene |
 | R-006 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | Una pipeline o un adapter condiviso da più percorsi è aperto negli `Includes` di una sola slice `NOW`; le slice successive che lo riusano lo dichiarano tale. Quella slice segue ogni slice `NOW` che le fornisce input, salvo quando valida input controllati che attraversano il calcolo di produzione e il brief dello scenario ammette la validazione anticipata. | lettura per l'identificazione dei produttori; l'unicità del proprietario è automatizzabile in parte (stesso adapter nominato negli `Includes` di due slice) | 2026-08-04 | tiene |
@@ -104,16 +104,21 @@ resta il motivo, perché la riscrittura non si perda nella storia del file.
   fallimento all'una o all'altra richiede di ricostruire la mappa, non di leggerla: il verdetto
   sarebbe inventato. Sugli `Enabler` semantici — `CC` slice 3, `CX` slice 2 — la riga regge, perché
   lì il checkpoint pubblica la decisione.
-- **R-002, secondo membro — non falsificabile su un piano senza `Open questions`.** `CX` non ha
-  quella sezione: le scelte non prese stanno in `Non-product work`, ognuna con la slice che blocca
-  («prima della slice 1», «prima della slice 2»…). Il membro risulta quindi vero a vuoto, e un piano
-  può soddisfarlo omettendo la sezione. Il verdetto della riga viene dal primo membro.
-- **R-003 — decisa sulla sostanza, non sulla lettera.** La disgiunzione nomina `Open questions` come
-  unica sede alternativa a una fonte citabile. Su `CX` provider Postgres, percorso di embedding e
-  modello di estrazione sono dichiarati non decisi in `Non-product work`, con la slice che
-  bloccano: stessa informazione, sezione diversa. La riga è `tiene` perché nessuna slice `NOW` di
-  nessuno dei due piani nomina una dipendenza esterna né scelta da una fonte né dichiarata aperta;
-  letta alla lettera sarebbe `regredita` su `CX` per il solo nome della sezione.
+- **R-002, secondo membro — riscritta, era vera a vuoto.** Il membro quantificava sulle voci di
+  `Open questions`, sezione che `CX` non ha: le sue scelte non prese stanno in `Non-product work`,
+  ognuna con la slice che blocca («prima della slice 1», «prima della slice 2»…). Così com'era, un
+  piano lo soddisfaceva omettendo la sezione. Ora il membro quantifica sulle scelte dichiarate
+  aperte, qualunque sia il titolo della sezione che le ospita. Il primo membro è stato agganciato ai
+  `Known conflicts` del brief, che nel frattempo ha ricevuto il conflitto sull'embedding di query:
+  prima il conflitto andava ricostruito dalle fonti a ogni ciclo.
+- **R-003 — riscritta, puniva chi decide.** La disgiunzione ammetteva solo «selezionato da una fonte
+  citabile oppure in `Open questions`», ma `EVALUATION-BRIEF.md` § *Accepted alternatives* consente
+  al piano di scegliere da sé Neon o Supabase, l'embedder multilingue e il modello di estrazione: un
+  piano che sceglie sarebbe stato bocciato. Il vincolo che conta è che nessuna scelta esterna entri
+  in `NOW` senza essere né presa né dichiarata aperta, e la riga ora dice quello. Sui due candidati
+  il verdetto non cambia — entrambi dichiarano tutte le scelte esterne aperte con la slice che
+  bloccano, `CC` in `Open questions` e `CX` in `Non-product work` — ma prima reggeva solo scegliendo
+  la lettura sostanziale contro quella letterale.
 
 ## Miglioramenti concordi non arrivati nello skill
 
