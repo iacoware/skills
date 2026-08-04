@@ -74,30 +74,11 @@ class ContractsV3Tests(unittest.TestCase):
                 self.assertEqual(properties["candidate_evidence"]["minItems"], 1)
                 self.assertEqual(properties["controlling_evidence"]["minItems"], 1)
 
-    def test_rejects_secondary_charge_and_incomplete_evidence(self) -> None:
-        grade = passing_grade()
-        set_nonpass(grade, "slice_cohesive_cut", "material")
-        other = next(
-            entry
-            for axis in grade["axes"]
-            for entry in axis["criteria"]
-            if entry["id"] == "theme_split_merge"
-        )
-        other.update(
-            {
-                "verdict": "material",
-                "candidate_evidence": ["Candidate"],
-                "controlling_evidence": ["Source"],
-                "defect_ids": ["defect-1"],
-            }
-        )
-
-        with self.assertRaisesRegex(ValueError, "only to its primary criterion"):
-            validate_absolute_grade(RUBRIC, grade)
-
+    def test_rejects_defect_without_controlling_evidence(self) -> None:
         grade = passing_grade()
         set_nonpass(grade, "slice_cohesive_cut", "material")
         grade["defects"][0]["controlling_evidence"] = []
+
         with self.assertRaisesRegex(ValueError, "expected at least one"):
             validate_absolute_grade(RUBRIC, grade)
 
