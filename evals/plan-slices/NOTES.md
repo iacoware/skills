@@ -3,6 +3,58 @@
 Osservazioni emerse eseguendo gli eval delle skill, con le modifiche che ne sono derivate e cosa
 resta da verificare. Ogni nota è autoconsistente: non serve il contesto della sessione in cui è nata.
 
+## Evaluator — Ritentare finché la risposta è valida contamina una baseline di calibrazione
+
+**Contesto.** Raccolta di calibrazione dell'evaluator `plan-slices` v3: sei fixture di confine, tre
+ripetizioni indipendenti per due grader, 36 chiamate provider, sei shard paralleli disgiunti. Lo
+scopo era misurare quanto i grader sono accurati rispetto a label umane e quanto sono ripetibili,
+per decidere se la scala dei verdict a cinque livelli regge. Il grade contract valida ogni risposta
+e scarta quelle non conformi.
+
+**Osservazione.** Sei risposte su diciannove sono state rifiutate non per errori di trasporto ma per
+violazione del contratto: uso di `absent` come gravità generica, criterio non-pass senza difetti,
+difetto citato da un criterio diverso dal proprio `primary_criterion`. Le regole erano già enunciate
+nel prompt. Il riflesso naturale è ritentare l'unità fallita finché produce un artefatto valido.
+
+**Il riflesso è sbagliato, e non per il costo.** Ritentare finché la risposta è conforme è un filtro
+di qualità silenzioso: le unità su cui un grader tende a sbagliare vengono ricampionate finché
+obbedisce, quelle facili passano al primo colpo. La baseline che ne risulta misura i grader *quando
+si comportano bene*. Per un eval funzionale sarebbe accettabile; per una **baseline di calibrazione**
+è autodistruttivo, perché le grandezze che deve stimare — accuratezza, ripetibilità, correttezza
+dell'attribuzione — sono esattamente quelle che il filtro distorce. Nel campione parziale
+l'accuratezza del criterio primario risultava 0.119, ed era già misurata sul solo sottoinsieme
+conforme: il numero vero è peggiore, non migliore.
+
+**Conseguenza di metodo: la conformità al contratto è una metrica, non uno scarto operativo.** Va
+contata e riportata per provider e per modo di fallimento, accanto ad accuratezza e agreement. Se il
+tasso resta basso anche dopo aver chiarito il prompt, il risultato non è "i grader sbagliano", è "il
+contratto chiede più di quanto i grader sappiano produrre" — che è un'informazione diretta sul
+contratto, e nel caso specifico un argomento concreto per semplificare la scala dei verdict.
+
+**Due difetti operativi che questo ha rivelato.**
+
+- **L'output rifiutato veniva distrutto.** Il leaf command validava prima di scrivere, quindi il
+  grade non conforme non raggiungeva mai il file e lo staging veniva ripulito. Di sei risposte pagate
+  restavano sei righe di errore. Una risposta rifiutata è evidenza già acquistata: va messa in
+  quarantena fuori dal set di resume, non cancellata.
+- **Il fail-fast amplificava una violazione locale in perdita di copertura.** Un solo grade rifiutato
+  interrompeva l'intero shard: sei scarti hanno bloccato quindici unità mai tentate, e uno shard ne
+  ha perse cinque su sei per un rifiuto alla prima unità. Il fail-fast serve per la causa condivisa
+  — schema rifiutato, autenticazione rotta, configurazione errata — dove proseguire brucerebbe tutto.
+  Non serve per una non-conformità della singola risposta, che non dice nulla sull'unità successiva.
+  La forma giusta è un circuit breaker: prosegui, aborta dopo N fallimenti consecutivi.
+
+**Generalizzazione.** Quando un contratto rigido filtra l'output di un modello non deterministico,
+decidere *prima* se il filtro è parte della misura o parte della raccolta. Se è parte della misura,
+ritentare falsifica il risultato e il tasso di scarto va pubblicato. Se è parte della raccolta,
+ritentare è legittimo ma va dichiarato, perché chi legge la baseline deve sapere quante risposte sono
+state guardate per ottenerne una.
+
+**Da verificare.** Se una riformulazione meccanica delle regole nel prompt — espresse sui campi che
+il modello compila, non sui concetti — alza sensibilmente il tasso di conformità, il problema era la
+formulazione. Se non lo alza, era la richiesta, e il contratto va semplificato prima di spendere una
+matrice completa.
+
 ## plan-slices — Confine di scope vs identità nell'ordinamento delle slice
 
 **Contesto.** Eval `evals/plan-slices/recipe-app`: pianificazione di una recipe app greenfield
