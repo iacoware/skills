@@ -56,6 +56,7 @@ Serve a due cose:
 | R-006 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | Una pipeline o un adapter condiviso da più percorsi è aperto negli `Includes` di una sola slice `NOW`; le slice successive che lo riusano lo dichiarano tale. Quella slice segue ogni slice `NOW` che le fornisce input, salvo quando valida input controllati che attraversano il calcolo di produzione e il brief dello scenario ammette la validazione anticipata. | lettura per l'identificazione dei produttori; l'unicità del proprietario è automatizzabile in parte (stesso adapter nominato negli `Includes` di due slice) | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
 | R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida incertezze su più di un sottosistema: la sua `Verification` non può fallire per cause che, in `Material uncertainties` del brief, appartengono a `Subsystem` diversi. Più voci dello stesso sottosistema sono una incertezza sola, anche quando la risposta invalida la scelta verificata. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito; l'elenco delle incertezze, dei sottosistemi e delle decisioni che cambiano lo pubblica il brief | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
 | R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento; automatizzabile l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | CON-5 · `CC`+`CX` · piani | regredita su `CX` |
+| R-009 | `a06a5cc` | `giudizio` — messaggio di commit di `a06a5cc`, difetto osservato su un piano graduato | Nessun `Outcome` di una slice `NOW` che precede l'identità promette un utente reale: ogni slice che precede l'identità e consegna un comportamento nomina il proprio pubblico, sviluppatore o tester sull'ambiente non pubblico dichiarato. Se le slice `NOW` che consegnano comportamento a un utente finale prima dell'identità sono più di due, `Ordering criteria` giustifica una volta il differimento residuo nominando l'evidenza che lo richiede. | lettura: il pubblico si legge dagli `Outcome` e la giustificazione dagli `Ordering criteria`, ma decidere se una slice consegna a un utente finale richiede giudizio | 2026-08-04 | CON-5 · `CC`+`CX` · piani | tiene |
 
 ### Regressioni rilevate — ciclo CON-5 (2026-08-04)
 
@@ -170,6 +171,22 @@ sbagliato. Stessi due piani, stesso criterio: un'affermazione regge solo se regg
   brief, e le righe su foto multiple e cover cambiabile. Il secondo membro è strutturale e regge:
   sette voci `LATER` in `CC` e otto in `CX`, tutte con `Promotion trigger`; nove voci `OUT-OF-SCOPE`
   in `CC` e cinque in `CX`, tutte con razionale.
+- **R-009 — riga nuova, ricostruita da `a06a5cc`, `tiene` su entrambi.** Il commit non ha riga di
+  registro e non è ricostruibile dai `REVIEW`: il miglioramento compare in un solo report. Il difetto
+  osservato sta nel suo messaggio — «one graded plan accepted four product slices on a scope no user
+  owned, each Outcome promising a user who did not exist yet» — e la previsione è ricostruita da lì.
+  La formulazione sceglie il criterio dell'`Outcome` che promette un utente inesistente, non la
+  lettura letterale «ogni slice dichiara un pubblico»: quest'ultima boccerebbe un `Enabler` il cui
+  `Outcome` non promette nessun utente — `CC` slice 1 — che è esattamente il caso che il difetto
+  osservato non riguarda. La soglia resta il secondo membro, condizionale, come nel commit: fa
+  scattare una giustificazione, non un tetto al differimento.
+  Verdetto: nelle slice che precedono l'identità nessun `Outcome` promette un utente reale. `CC`
+  (identità alla slice 5) dichiara sviluppatori alle slice 0, 2 e 3, «chi prova l'app sull'ambiente
+  non pubblico» alla 4; `CX` (identità alla slice 4) dichiara sviluppatori alle slice 0, 1 e 2 e «un
+  tester» alla 3, con l'`Includes` che limita il pubblico ai tester autorizzati. Le slice `NOW` che
+  consegnano a un utente finale prima dell'identità sono quindi zero in entrambi e la soglia non
+  scatta; `CC` giustifica comunque il differimento negli `Ordering criteria` («nessuna behaviour
+  rivolta a utenti reali precede lo slice 5»).
 
 ## Miglioramenti concordi non arrivati nello skill
 
@@ -218,13 +235,13 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 - **Correzioni per R-002 e R-008.** Il registro prescrive che a una riga `regredita` segua la riga
   della correzione, e che nessuna delle due si cancelli. Le due righe restano scoperte finché una
   modifica dello `SKILL.md` non le riapre: la sessione CON-5 misurava, non correggeva.
-- **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo),
-  `b0d6dc5` (limitazione alle roadmap ad alto livello) e `a06a5cc` (soglia al differimento
-  dell'identità) non sono ricostruibili dall'intersezione dei due `REVIEW`: il primo non compare in
-  nessuna delle due sezioni `also present`, `a06a5cc` corrisponde a un miglioramento presente in un
-  solo report, `b0d6dc5` non ha una corrispondenza verificata. Sono modifiche entrate per giudizio
-  su un difetto osservato — `a06a5cc` cita il proprio nel messaggio di commit — e la loro previsione
-  va ricostruita da lì, non dai `REVIEW`.
+- **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo) e
+  `b0d6dc5` (limitazione alle roadmap ad alto livello) non sono ricostruibili dall'intersezione dei
+  due `REVIEW`: il primo non compare in nessuna delle due sezioni `also present`, il secondo non ha
+  una corrispondenza verificata. Sono modifiche entrate per giudizio su un difetto osservato e la
+  loro previsione va ricostruita da lì, non dai `REVIEW`. `a06a5cc` (soglia al differimento
+  dell'identità) era nella stessa condizione ed è ora R-009, ricostruita dal proprio messaggio di
+  commit, che nomina il difetto osservato.
 - **Modifiche precedenti a `d88328f`.** Nascono da conversazioni fra umano e agente sui piani
   generati, precedenti al confronto fra modelli: non esiste un artefatto da cui ricostruire una
   previsione. Si registrano solo se un ciclo futuro ne solleva una regressione.
