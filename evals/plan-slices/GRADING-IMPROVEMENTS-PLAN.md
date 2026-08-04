@@ -159,6 +159,59 @@ scratchpad; non pubblicate come `CALIBRATION-CRITICAL.v3.json`.
   numerico e falliscono correttamente il preflight v3; usarli richiede una nuova generazione, non la
   modifica degli artefatti immutabili.
 
+### Slice 3 — remediation proposta
+
+Proposte, non attività autorizzate: nessuna è decisa e nessuna va eseguita prima delle risposte in
+`Open questions`. Sono scritte in prosa proprio per non confonderle con il lavoro approvato.
+
+**Conservare gli output rifiutati.** `run_grader` valida prima di scrivere, quindi il grade non
+conforme non raggiunge mai il file e l'orchestrator ripulisce lo staging vuoto: delle sei risposte
+pagate resta solo la riga di errore. Salvarle sotto `raw/rejected/`, fuori dal set di resume e dal
+join del report, costa nulla e conserva evidenza già pagata. Capire *come* i grader violano il
+contratto è materiale della slice 3, non rumore operativo.
+
+**Sostituire il fail-fast con un circuit breaker.** Il fail-fast va conservato per il caso sistemico
+— schema rifiutato, autenticazione rotta, configurazione errata — dove proseguire brucerebbe ogni
+unità dello shard. Non serve invece per una non-conformità della singola risposta, che non dice nulla
+sull'unità successiva. Regola proposta: proseguire dopo una violazione di contratto, abortire lo
+shard dopo due o tre fallimenti consecutivi. Sarebbe bastato a recuperare gran parte delle 15 unità
+mai tentate.
+
+**Non rilassare il contratto, correggere il prompt.** La regola dell'addebito unico è portante: se un
+criterio potesse citare un difetto di un altro, quel difetto influenzerebbe due verdict, cioè il
+doppio addebito che la v3 esiste per vietare, e la slice 4 perderebbe il proprio invariante.
+Degradarla ad avvertimento non è raccomandato. Il problema è che il prompt descrive le regole in
+termini di concetti mentre il validator le applica ai campi; riformularle meccanicamente:
+`defect_ids` di un criterio può contenere solo difetti il cui `primary_criterion` è quel criterio;
+`severity: absent` se e solo se `element_absent: true`; ogni criterio non-pass elenca almeno un
+`defect_id`. Sono vincoli cross-field che lo structured output schema non può esprimere, quindi il
+prompt resta l'unico punto di controllo prima della spesa.
+
+**Perché non completare la matrice con il prompt attuale.** Ritentare le unità fallite finché la
+risposta è conforme è un filtro di qualità silenzioso: le fixture su cui un grader tende a violare
+verrebbero ricampionate finché non obbedisce, e la baseline misurerebbe i grader quando si comportano
+bene. È lo stesso difetto che rende inutilizzabili le metriche parziali di oggi, esteso a tutte e 36
+le unità, e colpisce proprio accuratezza, ripetibilità e correttezza del `primary_criterion`. Il tasso
+di conformità al contratto va trattato come metrica di prima classe, non come scarto operativo.
+
+**Sequenza proposta.** Primo, applicare quarantena, circuit breaker e prompt: sono modifiche offline a
+costo zero. Secondo, uno smoke da due chiamate sul prompt corretto, mirato ai due modi di fallimento
+osservati — Claude su `boundary-restructure` per l'uso improprio di `absent`, Codex su
+`boundary-severe` per la citazione incrociata. Terzo, decidere il budget in base a quell'esito e non
+prima. Lo smoke è il test decisivo più economico disponibile: se la non-conformità persiste anche con
+il prompt corretto, il problema non è la formulazione ma la richiesta, e diventa un argomento
+concreto per la scala semplificata al checkpoint.
+
+**Ordini di grandezza.** Con la resa osservata di 13 unità valide su 19 chiamate, completare le 21
+unità mancanti con il prompt attuale costa circa 31 chiamate; ricollezionare tutte e 36 con il prompt
+corretto ne costa circa 40 se la resa sale attorno al 90%. La differenza di costo è modesta rispetto
+alla differenza di qualità della baseline.
+
+**Vincolo operativo se il prompt cambia.** Le 15 unità valide vanno archiviate sotto un prefisso
+pilota prima di rilanciare. Con gli hash cambiati il resume le rifiuta e senza resume `check_targets`
+si rifiuta di sovrascrivere: in entrambi i casi il preflight aborta. Non vanno cancellate: hanno
+comprato il dato di conformità, circa il 68%, con modi di fallimento distinti per provider.
+
 ### Slice 3 — checkpoint esterno residuo
 
 - [x] **Prerequisito — riorganizzare artefatti e script:** collocare i file macchina v3, inclusi
