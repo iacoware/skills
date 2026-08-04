@@ -29,6 +29,15 @@ Serve a due cose:
 - Una riga `regredita` non si cancella: si aggiunge la riga della correzione e si lasciano entrambe.
   La sequenza di regressioni sullo stesso tema è il segnale che la regola è formulata male, non che
   va riscritta ancora.
+- **Il controllo si fa contro l'`EVALUATION-BRIEF.md` dello scenario prima che contro le fonti.** Il
+  brief è l'autorità su quali conflitti esistono, quali alternative sono accettate e quali incertezze
+  sono materiali; le fonti si aprono solo per verificare una citazione. Il registro sta sopra i
+  singoli scenari e le sue righe non conoscono il brief: senza questo passo produce falsi positivi
+  contro l'autorità dello scenario.
+- **Se una riga contraddice una voce di `Accepted alternatives`, il difetto è nella riga.** Si
+  riscrive per ammettere l'alternativa; non si registra una regressione. Stessa cosa se l'affermazione
+  non è decidibile da ciò che il piano pubblica, o lo è solo scegliendo fra due letture: in tutti e
+  tre i casi si annota il motivo, la data e i piani su cui è emerso, sotto *Formulazioni riscritte*.
 
 ## Registro
 
