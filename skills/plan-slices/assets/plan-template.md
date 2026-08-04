@@ -13,6 +13,9 @@
 |---|---|---|
 | [A. Independently schedulable value area] | [User-useful outcome] | [NOW slice number] |
 
+[Append `*(Developer outcome)*` to the desired outcome only when that outcome is itself for a
+developer; it is the only case in which `First validation` may name an `Enabler` slice.]
+
 ## Cross-functional concerns
 
 - **Authorization:** [Shared rule.]

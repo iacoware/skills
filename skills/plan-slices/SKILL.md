@@ -89,8 +89,10 @@ Give every theme:
 - its first `NOW` product slice that validates the complete desired outcome.
 
 An enabler may precede that validator but cannot substitute for it unless the theme's desired
-outcome is itself for a developer. A slice that validates only one capability inside a broader
-theme outcome is not that theme's first validator.
+outcome is itself for a developer; a theme claiming that exception appends `*(Developer outcome)*`
+to its desired outcome in the published table, so the claim stands next to the enabler it
+authorises. A slice that validates only one capability inside a broader theme outcome is not that
+theme's first validator.
 
 Identify hard dependencies only: a predecessor is hard when no controlled input or narrower real
 precursor can make the dependent outcome realistically verifiable. Convenient reuse, a fuller demo,

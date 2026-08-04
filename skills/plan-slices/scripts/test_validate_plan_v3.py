@@ -66,6 +66,21 @@ class ValidatePlanV3Tests(unittest.TestCase):
         self.assertTrue(any("must start with a NOW slice number" in error for error in validate_structure(parse_plan(missing))))
         self.assertTrue(any("references missing NOW slice 4" in error for error in validate_structure(parse_plan(out_of_range))))
 
+    def test_rejects_enabler_first_validation_without_the_developer_outcome_marker(self) -> None:
+        enabler = PLAN.replace("*(Theme: Search)*", "*(Enabler: search)*")
+
+        errors = validate_structure(parse_plan(enabler))
+
+        self.assertTrue(any("is an Enabler slice" in error for error in errors))
+
+    def test_accepts_enabler_first_validation_when_the_desired_outcome_is_marked(self) -> None:
+        marked = PLAN.replace("*(Theme: Search)*", "*(Enabler: search)*").replace(
+            "Users find relevant content.",
+            "Developers get executable evidence. *(Developer outcome)*",
+        )
+
+        self.assertEqual(validate_structure(parse_plan(marked)), [])
+
     def test_paraphrases_do_not_change_structural_result(self) -> None:
         paraphrase = PLAN.replace("Search proof", "Retrieval evidence").replace("Measure ranked relevance", "Observe relevance ordering")
 

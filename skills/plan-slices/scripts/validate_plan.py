@@ -46,6 +46,8 @@ CONTINUATION_PATTERN = re.compile(r"^\s{2,}\S")
 FIRST_VALIDATION_PATTERN = re.compile(
     r"^(?:NOW\s+)?(?:slice\s+)?(\d+)(?:[.)]\s+\S.*)?$", re.IGNORECASE
 )
+ENABLER_TITLE_PATTERN = re.compile(r"\*\(Enabler:\s*[^)]+\)\*")
+DEVELOPER_OUTCOME_MARKER = "*(Developer outcome)*"
 
 
 @dataclass(frozen=True)
@@ -208,17 +210,27 @@ def _field_errors(slice_: Slice) -> list[str]:
 
 def _theme_reference_errors(plan: Plan) -> list[str]:
     errors: list[str] = []
-    slice_numbers = {slice_.number for slice_ in plan.slices}
+    slices_by_number = {slice_.number: slice_ for slice_ in plan.slices}
     for theme in plan.theme_rows:
         match = FIRST_VALIDATION_PATTERN.fullmatch(theme.first_validation.strip())
         if match is None:
             errors.append(
                 f"Themes: first validation for '{theme.name}' must start with a NOW slice number"
             )
-        elif int(match.group(1)) not in slice_numbers:
+            continue
+        validator = slices_by_number.get(int(match.group(1)))
+        if validator is None:
             errors.append(
                 f"Themes: first validation for '{theme.name}' references missing NOW slice "
                 f"{match.group(1)}"
+            )
+        elif (
+            ENABLER_TITLE_PATTERN.search(validator.title)
+            and DEVELOPER_OUTCOME_MARKER not in theme.desired_outcome
+        ):
+            errors.append(
+                f"Themes: first validation for '{theme.name}' is an Enabler slice; either point to "
+                f"a product slice or mark the desired outcome '{DEVELOPER_OUTCOME_MARKER}'"
             )
     return errors
 
