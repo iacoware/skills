@@ -1,0 +1,227 @@
+{
+  "manifest_version": 3,
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "scoring_version": 3,
+  "criterion_ids": [
+    "theme_independent_value",
+    "theme_split_merge",
+    "theme_no_compression",
+    "theme_product_outcome",
+    "theme_first_product_validator",
+    "theme_validator_coherence",
+    "slice_independent_outcome",
+    "slice_vertical_path",
+    "slice_cohesive_cut",
+    "slice_single_owner",
+    "order_dependencies_risk",
+    "order_enabler_validator",
+    "order_required_recovery",
+    "order_breadth_before_depth",
+    "content_single_result",
+    "content_learning_evidence",
+    "content_failure_quality",
+    "content_right_detail",
+    "horizon_exclusive",
+    "horizon_coherent_now",
+    "horizon_later_trigger",
+    "horizon_exclusion_rationale",
+    "uncertainty_conflicts",
+    "uncertainty_assumptions",
+    "uncertainty_blocking_decisions",
+    "uncertainty_material_questions"
+  ],
+  "label_profiles": {
+    "pass": {
+      "theme_independent_value": ["pass"],
+      "theme_split_merge": ["pass"],
+      "theme_no_compression": ["pass"],
+      "theme_product_outcome": ["pass"],
+      "theme_first_product_validator": ["pass"],
+      "theme_validator_coherence": ["pass"],
+      "slice_independent_outcome": ["pass"],
+      "slice_vertical_path": ["pass"],
+      "slice_cohesive_cut": ["pass"],
+      "slice_single_owner": ["pass"],
+      "order_dependencies_risk": ["pass"],
+      "order_enabler_validator": ["pass"],
+      "order_required_recovery": ["pass"],
+      "order_breadth_before_depth": ["pass"],
+      "content_single_result": ["pass"],
+      "content_learning_evidence": ["pass"],
+      "content_failure_quality": ["pass"],
+      "content_right_detail": ["pass"],
+      "horizon_exclusive": ["pass"],
+      "horizon_coherent_now": ["pass"],
+      "horizon_later_trigger": ["pass"],
+      "horizon_exclusion_rationale": ["pass"],
+      "uncertainty_conflicts": ["pass"],
+      "uncertainty_assumptions": ["pass"],
+      "uncertainty_blocking_decisions": ["pass"],
+      "uncertainty_material_questions": ["pass"]
+    }
+  },
+  "pair_profiles": {
+    "same": {
+      "theme_independent_value": ["same"],
+      "theme_split_merge": ["same"],
+      "theme_no_compression": ["same"],
+      "theme_product_outcome": ["same"],
+      "theme_first_product_validator": ["same"],
+      "theme_validator_coherence": ["same"],
+      "slice_independent_outcome": ["same"],
+      "slice_vertical_path": ["same"],
+      "slice_cohesive_cut": ["same"],
+      "slice_single_owner": ["same"],
+      "order_dependencies_risk": ["same"],
+      "order_enabler_validator": ["same"],
+      "order_required_recovery": ["same"],
+      "order_breadth_before_depth": ["same"],
+      "content_single_result": ["same"],
+      "content_learning_evidence": ["same"],
+      "content_failure_quality": ["same"],
+      "content_right_detail": ["same"],
+      "horizon_exclusive": ["same"],
+      "horizon_coherent_now": ["same"],
+      "horizon_later_trigger": ["same"],
+      "horizon_exclusion_rationale": ["same"],
+      "uncertainty_conflicts": ["same"],
+      "uncertainty_assumptions": ["same"],
+      "uncertainty_blocking_decisions": ["same"],
+      "uncertainty_material_questions": ["same"]
+    }
+  },
+  "fixtures": [
+    {
+      "id": "boundary-pass",
+      "path": "v3/boundary-pass.md",
+      "runs": 3,
+      "critical_subset": true,
+      "labels": {
+        "profile": "pass",
+        "criteria": {},
+        "primary_criteria": [],
+        "critical_failures": {"expected": [], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "unsafe_scope_boundary", "incoherent_now_release", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "criterion-by-criterion source review"}
+      }
+    },
+    {
+      "id": "boundary-local",
+      "path": "v3/boundary-local.md",
+      "runs": 3,
+      "critical_subset": true,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"content_learning_evidence": ["minor", "material"], "content_failure_quality": ["minor"]},
+        "primary_criteria": ["content_learning_evidence", "content_failure_quality"],
+        "critical_failures": {"expected": [], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "unsafe_scope_boundary", "incoherent_now_release", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "severity boundary review"}
+      }
+    },
+    {
+      "id": "boundary-restructure",
+      "path": "v3/boundary-restructure.md",
+      "runs": 3,
+      "critical_subset": true,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"slice_cohesive_cut": ["material"], "content_single_result": ["material"]},
+        "primary_criteria": ["slice_cohesive_cut", "content_single_result"],
+        "critical_failures": {"expected": [], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "unsafe_scope_boundary", "incoherent_now_release", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "split and merge boundary review"}
+      }
+    },
+    {
+      "id": "boundary-severe",
+      "path": "v3/boundary-severe.md",
+      "runs": 3,
+      "critical_subset": true,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"theme_independent_value": ["absent"], "order_dependencies_risk": ["severe"], "horizon_coherent_now": ["severe"]},
+        "primary_criteria": ["theme_independent_value", "order_dependencies_risk", "horizon_coherent_now"],
+        "critical_failures": {"expected": ["missing_differentiator_validator", "incoherent_now_release"], "absent": ["silent_source_contradiction", "unsafe_scope_boundary", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "invalidated outcome review"}
+      }
+    },
+    {
+      "id": "boundary-safety",
+      "path": "v3/boundary-safety.md",
+      "runs": 3,
+      "critical_subset": true,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"horizon_coherent_now": ["severe"], "slice_vertical_path": ["severe"]},
+        "primary_criteria": ["horizon_coherent_now", "slice_vertical_path"],
+        "critical_failures": {"expected": ["unsafe_scope_boundary", "incoherent_now_release"], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "safety boundary review"}
+      }
+    },
+    {
+      "id": "boundary-absent",
+      "path": "v3/boundary-absent.md",
+      "runs": 3,
+      "critical_subset": true,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"theme_independent_value": ["absent"], "order_dependencies_risk": ["absent"], "horizon_coherent_now": ["severe"]},
+        "primary_criteria": ["theme_independent_value", "order_dependencies_risk", "horizon_coherent_now"],
+        "critical_failures": {"expected": ["missing_differentiator_validator", "incoherent_now_release"], "absent": ["silent_source_contradiction", "unsafe_scope_boundary", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "total absence boundary review"}
+      }
+    },
+    {
+      "id": "accepted-alternative",
+      "path": "v3/accepted-alternative.md",
+      "runs": 1,
+      "critical_subset": false,
+      "labels": {
+        "profile": "pass",
+        "criteria": {},
+        "primary_criteria": [],
+        "critical_failures": {"expected": [], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "unsafe_scope_boundary", "incoherent_now_release", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "accepted alternative review"}
+      }
+    },
+    {
+      "id": "predecided-conflict",
+      "path": "v3/predecided-conflict.md",
+      "runs": 1,
+      "critical_subset": false,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"uncertainty_assumptions": ["minor", "material"]},
+        "primary_criteria": ["uncertainty_assumptions"],
+        "critical_failures": {"expected": [], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "unsafe_scope_boundary", "incoherent_now_release", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "recorded conflict resolution review"}
+      }
+    },
+    {
+      "id": "shared-ownership",
+      "path": "v3/shared-ownership.md",
+      "runs": 1,
+      "critical_subset": false,
+      "labels": {
+        "profile": "pass",
+        "criteria": {"slice_single_owner": ["material"], "order_breadth_before_depth": ["material"]},
+        "primary_criteria": ["slice_single_owner", "order_breadth_before_depth"],
+        "critical_failures": {"expected": [], "absent": ["missing_differentiator_validator", "silent_source_contradiction", "unsafe_scope_boundary", "incoherent_now_release", "duplicate_horizon_assignment"]},
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "ownership and duplicate-consequence review"}
+      }
+    }
+  ],
+  "paired": [
+    {
+      "id": "learning-evidence-improvement",
+      "before": "v3/boundary-local.md",
+      "after": "v3/boundary-pass.md",
+      "runs": 3,
+      "labels": {
+        "profile": "same",
+        "directions": {"content_learning_evidence": ["better"], "content_failure_quality": ["better"]},
+        "invariant_criteria": ["theme_independent_value", "theme_split_merge", "theme_no_compression", "theme_product_outcome", "theme_first_product_validator", "theme_validator_coherence", "slice_independent_outcome", "slice_vertical_path", "slice_cohesive_cut", "slice_single_owner", "order_dependencies_risk", "order_enabler_validator", "order_required_recovery", "order_breadth_before_depth", "content_single_result", "content_right_detail", "horizon_exclusive", "horizon_coherent_now", "horizon_later_trigger", "horizon_exclusion_rationale", "uncertainty_conflicts", "uncertainty_assumptions", "uncertainty_blocking_decisions", "uncertainty_material_questions"],
+        "provenance": {"reviewer": "human-review-2026-08", "reviewed_at": "2026-08-04", "method": "isolated paired comparison review"}
+      }
+    }
+  ]
+}

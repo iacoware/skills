@@ -16,6 +16,3 @@ list:
 test:
 	cd skills/plan-slices/scripts && python3 -m unittest
 	cd evals/plan-slices/scripts && python3 -m unittest
-	python3 evals/plan-slices/scripts/derive_expectations.py \
-		evals/plan-slices/recipe-app/REFERENCE-PLAN.md \
-		evals/plan-slices/recipe-app/expectations.json --check

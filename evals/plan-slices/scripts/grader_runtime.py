@@ -110,8 +110,8 @@ def require_reproducibility(
     if not exploratory:
         if not model or not effort or model == "cli-default" or effort == "cli-default":
             raise ValueError("explicit non-default model and effort are required")
-        if any(".v2." not in path.name for path in output_paths):
-            raise ValueError("baseline outputs must include '.v2.' in each artifact name")
+        if any(".v3." not in path.name for path in output_paths):
+            raise ValueError("baseline outputs must include '.v3.' in each artifact name")
         return model, effort
     if any(".exploratory." not in path.name for path in output_paths):
         raise ValueError("exploratory outputs must include '.exploratory.' in each artifact name")
@@ -180,12 +180,15 @@ def reproducibility_metadata(
     cli_version_value: str,
     prompt: str,
     sources: Sequence[Path],
-    reference: Path,
+    brief: Path,
     rubric: Path,
     candidates: Sequence[Path],
     run_id: str,
     timestamp_utc: str,
     candidate_skill_commits: dict[str, str] | None = None,
+    alias_mapping: dict[str, str] | None = None,
+    manifest: Path | None = None,
+    label_set: object | None = None,
 ) -> dict[str, object]:
     commits = candidate_skill_commits or {}
     return {
@@ -196,7 +199,7 @@ def reproducibility_metadata(
         "cli_version": cli_version_value,
         "prompt_sha256": sha256_text(prompt),
         "source_sha256": {str(path): sha256_file(path) for path in sources},
-        "reference_sha256": sha256_file(reference),
+        "brief_sha256": sha256_file(brief),
         "rubric_sha256": sha256_file(rubric),
         "candidates": [
             {
@@ -208,4 +211,7 @@ def reproducibility_metadata(
         ],
         "run_id": run_id,
         "timestamp_utc": timestamp_utc,
+        "alias_mapping": alias_mapping or {},
+        "manifest_sha256": sha256_file(manifest) if manifest else None,
+        "label_set_sha256": sha256_text(json.dumps(label_set, sort_keys=True)) if label_set is not None else None,
     }

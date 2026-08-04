@@ -55,8 +55,8 @@ class GraderRuntimeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "explicit"):
             require_reproducibility(None, None, exploratory=False)
 
-    def test_baseline_requires_v2_artifact_names(self) -> None:
-        with self.assertRaisesRegex(ValueError, "v2"):
+    def test_baseline_requires_v3_artifact_names(self) -> None:
+        with self.assertRaisesRegex(ValueError, "v3"):
             require_reproducibility(
                 "gpt-5.6-sol", "high", exploratory=False,
                 output_paths=[Path("plan.GRADE.json")],
@@ -84,12 +84,12 @@ class GraderRuntimeTests(unittest.TestCase):
     def test_orchestrated_staging_requires_owned_restrictive_file(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            staging = root / ".run-1.random.plan.codex.v2.GRADE.json"
+            staging = root / ".run-1.random.plan.codex.v3.GRADE.json"
             staging.touch(mode=0o600)
 
             require_owned_staging([staging], "run-1")
 
-            final = root / "plan.codex.v2.GRADE.json"
+            final = root / "plan.codex.v3.GRADE.json"
             final.touch(mode=0o600)
             with self.assertRaisesRegex(ValueError, "unsafe"):
                 require_owned_staging([final], "run-1")

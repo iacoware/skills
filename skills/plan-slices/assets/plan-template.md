@@ -11,7 +11,7 @@
 
 | Theme | Desired outcome | First validation |
 |---|---|---|
-| [A. Independently schedulable value area] | [User-useful outcome] | [NOW slice name] |
+| [A. Independently schedulable value area] | [User-useful outcome] | [NOW slice number] |
 
 ## Cross-functional concerns
 

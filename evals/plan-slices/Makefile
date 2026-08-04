@@ -13,23 +13,25 @@ DRY_RUN ?=
 RESUME ?=
 CONFIRM_SEND ?=
 SKILL_COMMITS ?=
+SHARD_COUNT ?=
+SHARD_INDEX ?=
 
 ROOT := ../..
 SCENARIO_DIR := $(SCENARIO)
 RESULTS_DIR := $(SCENARIO_DIR)/results
-REFERENCE := $(SCENARIO_DIR)/REFERENCE-PLAN.md
-EXPECTATIONS := $(SCENARIO_DIR)/expectations.json
+V3_RESULTS_DIR := $(RESULTS_DIR)/calibration-v3
+BRIEF := $(SCENARIO_DIR)/EVALUATION-BRIEF.md
 SOURCES := \
 	$(SCENARIO_DIR)/sources/goal.md \
 	$(SCENARIO_DIR)/sources/concepts.md \
 	$(SCENARIO_DIR)/sources/arch-choices.md \
 	$(SCENARIO_DIR)/sources/tech-choices.md
-RUBRIC := grader-rubric.json
-FIXTURE_MANIFEST ?= fixtures/manifest.json
-CALIBRATION_REPORT ?= $(RESULTS_DIR)/CALIBRATION.json
+RUBRIC := grader-rubric.v3.json
+FIXTURE_MANIFEST ?= fixtures/manifest.v3.json
+CALIBRATION_REPORT ?= $(V3_RESULTS_DIR)/CALIBRATION.v3.json
+CRITICAL_CALIBRATION_REPORT ?= $(V3_RESULTS_DIR)/CALIBRATION-CRITICAL.v3.json
 
 VALIDATOR := $(ROOT)/skills/plan-slices/scripts/validate_plan.py
-EXPECTATIONS_TOOL := scripts/derive_expectations.py
 ORCHESTRATOR_TOOL := scripts/orchestrate_grading.py
 
 ENABLED_VALUES := 1 true yes
@@ -39,9 +41,9 @@ CONFIRM_SEND_ARG = $(if $(filter $(ENABLED_VALUES),$(CONFIRM_SEND)),--confirm-se
 SKILL_COMMIT_ARGS = $(foreach commit,$(SKILL_COMMITS),--candidate-skill-commit "$(commit)")
 COMMON_ARGS = \
 	$(foreach source,$(SOURCES),--source "$(source)") \
-	--reference "$(REFERENCE)" \
+	--brief "$(BRIEF)" \
 	--rubric "$(RUBRIC)" \
-	--output-dir "$(RESULTS_DIR)" \
+	--output-dir "$(V3_RESULTS_DIR)" \
 	--codex-model "$(CODEX_MODEL)" \
 	--codex-effort "$(CODEX_EFFORT)" \
 	--claude-model "$(CLAUDE_MODEL)" \
@@ -52,14 +54,18 @@ COMMON_ARGS = \
 	$(RESUME_ARG) \
 	$(CONFIRM_SEND_ARG)
 
-.PHONY: help test validate validate-structure expectations-check expectations-generate \
-	grade compare calibrate require-orchestrator require-plan require-plans require-comparison
+.PHONY: help test validate \
+	grade compare calibrate calibrate-critical calibrate-critical-report \
+	require-orchestrator require-plan require-plans require-comparison
 
 help:
 	@echo "Plan-slices evaluation commands (SCENARIO defaults to recipe-app):"
 	@echo "  make grade PLANS='PLAN-CX-5.md PLAN-CC-5.md' DRY_RUN=1"
 	@echo "  make compare BEFORE=PLAN-CX-5.md AFTER=PLAN-CX-6.md DRY_RUN=1"
 	@echo "  make calibrate DRY_RUN=1"
+	@echo "  make calibrate-critical DRY_RUN=1  # 36 absolute calls; no paired/adjudication"
+	@echo "  make calibrate-critical DRY_RUN=1 SHARD_COUNT=4 SHARD_INDEX=1"
+	@echo "  make calibrate-critical-report  # offline join; requires all 36 raw artifacts"
 	@echo "  Add RESUME=1 to verify and reuse existing artifacts."
 	@echo "  Add CONFIRM_SEND=1 only after reviewing dry-run output."
 	@echo "  make validate PLAN=PLAN-CX-5.md"
@@ -68,19 +74,9 @@ help:
 test:
 	cd $(ROOT)/skills/plan-slices/scripts && python3 -m unittest
 	cd scripts && python3 -m unittest
-	$(MAKE) expectations-check
 
-validate: require-plan expectations-check
-	python3 $(VALIDATOR) $(RESULTS_DIR)/$(PLAN) --expectations $(EXPECTATIONS)
-
-validate-structure: require-plan
+validate: require-plan
 	python3 $(VALIDATOR) $(RESULTS_DIR)/$(PLAN)
-
-expectations-check:
-	python3 $(EXPECTATIONS_TOOL) $(REFERENCE) $(EXPECTATIONS) --check
-
-expectations-generate:
-	python3 $(EXPECTATIONS_TOOL) $(REFERENCE) $(EXPECTATIONS)
 
 grade: require-orchestrator require-plans
 	python3 $(ORCHESTRATOR_TOOL) grade \
@@ -100,6 +96,24 @@ calibrate: require-orchestrator
 		--manifest "$(FIXTURE_MANIFEST)" \
 		--report-output "$(CALIBRATION_REPORT)" \
 		$(COMMON_ARGS)
+
+calibrate-critical: require-orchestrator
+	python3 $(ORCHESTRATOR_TOOL) calibrate \
+		--manifest "$(FIXTURE_MANIFEST)" \
+		--report-output "$(CRITICAL_CALIBRATION_REPORT)" \
+		--critical-subset \
+		$(if $(SHARD_COUNT),--shard-count "$(SHARD_COUNT)",) \
+		$(if $(SHARD_INDEX),--shard-index "$(SHARD_INDEX)",) \
+		$(COMMON_ARGS)
+
+calibrate-critical-report: require-orchestrator
+	python3 $(ORCHESTRATOR_TOOL) calibrate \
+		--manifest "$(FIXTURE_MANIFEST)" \
+		--report-output "$(CRITICAL_CALIBRATION_REPORT)" \
+		--critical-subset \
+		--report-only \
+		--resume \
+		$(filter-out --resume,$(COMMON_ARGS))
 
 require-orchestrator:
 	@test -f "$(ORCHESTRATOR_TOOL)" || { \
