@@ -48,7 +48,7 @@ Serve a due cose:
 
 | ID | Commit `SKILL.md` | Origine | Affermazione verificabile | Verifica | Ultimo controllo | Misurato su | Stato |
 |---|---|---|---|---|---|---|---|
-| R-001 | `2c89e7f` | `giudizio` — `NOTES.md` § *Confine di scope vs identità* | Il piano colloca l'identità dopo il differenziatore **e** dichiara in `Cross-functional concerns` la giunzione unica da cui si risolve lo scope corrente. | lettura, automatizzabile in parte | — | — | da verificare |
+| R-001 | `2c89e7f` | `giudizio` — `NOTES.md` § *Confine di scope vs identità* | Il piano colloca l'identità dopo il differenziatore **e** dichiara in `Cross-functional concerns` la giunzione unica da cui si risolve lo scope corrente. | lettura, automatizzabile in parte | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
 | R-002 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Sweep sistematico delle contraddizioni* ≡ *Explicit handling of source contradictions* | Nessuna bullet `Includes` o `Verification` afferma in forma non condizionale un lato di un conflitto fra le fonti — quelli elencati in `Known conflicts` del brief, più quelli dimostrabili citando due fonti in disaccordo — e ogni scelta che il piano dichiara aperta nomina le slice `NOW` che blocca, in qualunque sezione la dichiari. | lettura per il primo membro; il secondo è automatizzabile sulla sezione delle scelte aperte, qualunque sia il suo titolo (ogni voce cita almeno un numero di slice `NOW` esistente) | 2026-08-04 | CON-5 · `CC`+`CX` · brief+fonti | regredita su `CC` |
 | R-003 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Decisioni mai prese distinte dalle decisioni prese* ≡ *Explicit handling of undecided choices* | Nessuna slice `NOW` dipende da una scelta esterna — provider, modello, servizio o adapter — che non sia presa da una fonte citabile, o presa dal piano fra le alternative che il brief dichiara accettabili, o dichiarata aperta con la slice che blocca, in qualunque sezione la dichiari; un aggettivo qualificante — `cheap`, `multilingual`, `managed` — non conta come scelta. | lettura: l'inventario delle dipendenze esterne richiede il confronto con le fonti e con le `Accepted alternatives` del brief | 2026-08-04 | CON-5 · `CC`+`CX` · brief+fonti | tiene |
 | R-004 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | Nessuna slice `NOW` consegna un comportamento che le fonti non richiedono; ogni voce `LATER` dichiara un `Promotion trigger` e ogni voce `OUT-OF-SCOPE` una razionale di esclusione. | lettura per il primo membro — lo skill colloca la tracciatura nel ragionamento, non nel piano; il secondo è automatizzabile sulla struttura del template | 2026-08-04 | CON-5 · `CC`+`CX` · fonti | tiene |
@@ -142,6 +142,22 @@ resta il motivo, perché la riscrittura non si perda nella storia del file.
   bloccano, `CC` in `Open questions` e `CX` in `Non-product work` — ma prima reggeva solo scegliendo
   la lettura sostanziale contro quella letterale.
 
+### Chiusura del ciclo CON-5 — righe rimaste (2026-08-04)
+
+Righe che il primo passaggio del ciclo non aveva toccato, o che aveva misurato con lo strumento
+sbagliato. Stessi due piani, stesso criterio: un'affermazione regge solo se regge su entrambi.
+
+- **R-001 — `tiene` su entrambi.** Primo membro: il brief dichiara che il differenziatore è la
+  ricerca semantica multilingue e che `NOW` deve validarla; `CC` la valida agli slice 3 e 4 e
+  consegna l'identità allo slice 5, `CX` agli slice 2 e 3 con l'identità allo slice 4. Il secondo
+  differenziatore che `CX` dichiara negli `Ordering criteria` — l'estrazione fallback, slice 7 e 8 —
+  non sposta il verdetto: l'autorità sul differenziatore è il brief, non il piano. Secondo membro:
+  `CC` § *Authorization* dichiara «l'unico risolutore `currentCookbook` … diventa derivato dalla
+  sessione allo slice 5, che è il seam unico del passaggio»; `CX` dichiara «un solo
+  `CurrentCookbookResolver`; lo scope configurato delle slice 2–3 è sostituito da sessione e
+  membership nella slice 4». In entrambi la giunzione è unica e nominata con la slice che la
+  attraversa.
+
 ## Miglioramenti concordi non arrivati nello skill
 
 Estratti dalle sezioni `Improvements also present in the other report` dei due `REVIEW` CON-4 e
@@ -186,9 +202,6 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 
 ## Da popolare
 
-- **R-001, mai controllata.** Nasce da `2c89e7f`, precedente ai cinque commit, e il ciclo CON-5 non
-  l'ha inclusa. Va verificata sugli stessi due piani, con lo stesso criterio: regge solo se regge su
-  entrambi.
 - **Correzioni per R-002 e R-008.** Il registro prescrive che a una riga `regredita` segua la riga
   della correzione, e che nessuna delle due si cancelli. Le due righe restano scoperte finché una
   modifica dello `SKILL.md` non le riapre: la sessione CON-5 misurava, non correggeva.
