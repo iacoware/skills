@@ -1,0 +1,467 @@
+{
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "candidate": "candidate-A",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "criteria": [
+        {
+          "id": "theme_independent_value",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Themes contiene soltanto «Semantic retrieval».",
+            "NOW contiene solo «Connected runtime» e «Cross-language retrieval proof»; LATER contiene solo «Structured filters»."
+          ],
+          "controlling_evidence": [
+            "Source 1, Visione e Cosa fa (MVP): memorizzazione tramite URL, inserimento manuale e copia-incolla sono comportamenti richiesti.",
+            "Source 1, Aggiunta ricetta e Condivisione: edit/recovery, foto multiple e collaborazione cookbook-centrica sono aree di valore richieste e schedulabili indipendentemente.",
+            "Source 2, Modello di condivisione e Pipeline di estrazione: membership/inviti e i diversi ingressi di acquisizione hanno interazioni e rischi distinti."
+          ],
+          "defect_ids": [
+            "D1"
+          ]
+        },
+        {
+          "id": "theme_split_merge",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "«Semantic retrieval» mantiene insieme embedding multilingue, persistenza pgvector, query scoped e apprendimento sul ranking."
+          ],
+          "controlling_evidence": [
+            "Source 2, Ricerca (MVP): embedding, similarità e cookbookId formano un unico comportamento di ricerca.",
+            "Evaluation brief, Accepted alternatives: fixture controllate possono validare la ricerca attraversando il calcolo produttivo."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_no_compression",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "«Connected runtime» è classificata come enabler, non accorpata al tema di prodotto.",
+            "Il solo tema pubblicato non combina outcome indipendenti."
+          ],
+          "controlling_evidence": [
+            "Source 1, Differenziatore: la ricerca semantica cross-lingua costituisce un valore unitario e distintivo."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Il tema pubblicato è coeso, ma il piano non rappresenta diverse aree di valore MVP indipendentemente schedulabili.",
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "criteria": [
+        {
+          "id": "theme_product_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Desired outcome: «A tester finds English recipes with an Italian query inside one cookbook.»"
+          ],
+          "controlling_evidence": [
+            "Source 1, Ricerca: una query italiana deve trovare ricette inglesi nel ricettario corrente."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_first_product_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "La tabella indica numericamente «First validation: 2».",
+            "NOW 2 è «Cross-language retrieval proof»."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: NOW deve validare la ricerca semantica multilingue."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_validator_coherence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Tema, outcome e slice 2 richiedono tutti il recupero di ricette inglesi tramite query italiana entro uno scope cookbook."
+          ],
+          "controlling_evidence": [
+            "Source 1, Differenziatore e Ricerca: questo è il comportamento cross-lingua distintivo richiesto."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Il tema presente ha outcome di prodotto, validatore numerico e corrispondenza diretta con la verifica della slice 2.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "criteria": [
+        {
+          "id": "slice_independent_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1: «Developers can deploy and observe the decided infrastructure.»",
+            "Slice 2: «A tester can validate the product differentiator in a non-public environment.»",
+            "Entrambe includono verifiche eseguibili e audience esplicite."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Accepted alternatives: input controllati possono validare ricerca ed embedding prima dell'entry point finale.",
+            "Il candidato dichiara un ambiente non pubblico destinato alla validazione developer."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_vertical_path",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 attraversa deploy, migration runner, driver, connessione e runtime.",
+            "Slice 2 attraversa embedding reale, persistenza pgvector e query di similarità."
+          ],
+          "controlling_evidence": [
+            "Source 1, Principi guida: ogni incremento deve attraversare i layer necessari.",
+            "Evaluation brief accetta fixture solo quando attraversano il calcolo produttivo."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_cohesive_cut",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Il runtime connesso è separato come enabler.",
+            "Embedding, persistenza, query scoped, ranking e failure dell'adapter restano insieme nel validatore semantico."
+          ],
+          "controlling_evidence": [
+            "Source 2, Ricerca (MVP): tali elementi concorrono alla stessa interazione e allo stesso learning target.",
+            "Source 3 separa hosting/runtime dal rischio dell'adapter semantico."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_single_owner",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 possiede la validazione del runtime connesso.",
+            "Slice 2 possiede embedding, vettori, query e failure semantiche.",
+            "Cross-functional concerns assegna ogni accesso a un unico cookbook resolver."
+          ],
+          "controlling_evidence": [
+            "Source 2: Recipe.embedding è derivato e la ricerca è scoped tramite cookbookId.",
+            "Evaluation brief: ogni lettura, scrittura e query semantica deve essere scoped al cookbook corrente."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Le due slice hanno outcome distinti, attraversano percorsi produttivi e non duplicano ownership.",
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "criteria": [
+        {
+          "id": "order_dependencies_risk",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "«Validate multilingual semantic retrieval before commodity product breadth.»",
+            "Il runtime minimo precede immediatamente il validatore del differenziatore."
+          ],
+          "controlling_evidence": [
+            "Source 1, Differenziatore: senza ricerca semantica cross-lingua il prodotto riscriverebbe sostanzialmente Mealie.",
+            "Evaluation brief: il differenziatore deve avere un validatore NOW."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_enabler_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW 1 «Connected runtime» è immediatamente seguito da NOW 2 «Cross-language retrieval proof»."
+          ],
+          "controlling_evidence": [
+            "La slice 2 dipende dal runtime, dal driver e dal datastore verificati dalla slice 1."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_required_recovery",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Il NOW pubblicato non apre un flusso add che produca ricette da correggere e non avvia un tema indipendente dopo tale stato."
+          ],
+          "controlling_evidence": [
+            "Source 1 e Source 2 richiedono edit come recovery dopo add; nessun add è dichiarato nel NOW candidato."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_breadth_before_depth",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW termina dopo il validatore esistenziale e non introduce approfondimenti del tema.",
+            "Structured filters è condizionale e rimane in LATER."
+          ],
+          "controlling_evidence": [
+            "Source 1 rimanda i filtri strutturati e prioritizza la ricerca semantica cross-lingua."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "L'enabler è adiacente al validatore esistenziale; nessuna variante profonda interrompe la sequenza.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "criteria": [
+        {
+          "id": "content_single_result",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Includes, Verification e Outcome della slice 1 riguardano tutti il runtime deployabile e connesso.",
+            "Includes, Verification, Learning/risk e Outcome della slice 2 riguardano tutti la validazione della ricerca cross-lingua scoped."
+          ],
+          "controlling_evidence": [
+            "Source 3 definisce runtime, Postgres e pgvector; Source 1 definisce il comportamento semantico distintivo."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_learning_evidence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "La verifica misura recall, latency e cost su un labeled set.",
+            "«Ranking quality and cost determine whether the selected embedding adapter remains viable.»"
+          ],
+          "controlling_evidence": [
+            "Source 3 richiede un modello cloud multilingue compatibile con il vincolo di costo.",
+            "Source 1 richiede comportamento cross-lingua effettivo."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_failure_quality",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 verifica migration, driver, connection e runtime health in CI e ambiente rappresentativo.",
+            "Slice 2 verifica recall, latenza, costo, output provider invalido, timeout e leakage cross-cookbook con errori distinti."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief richiede scope cookbook per ogni query.",
+            "Source 3 rende qualità multilingue, costo e failure dell'adapter aspetti materiali."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_right_detail",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Ogni slice usa Includes, Verification e Outcome comportamentali e limitati.",
+            "La slice 2 collega misure concrete alla decisione sull'adapter senza decomporre il lavoro in task."
+          ],
+          "controlling_evidence": [
+            "Il rubric richiede dettaglio sufficiente per accettazione e apprendimento, senza task backlog."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Le slice descrivono risultati singoli, failure pertinenti ed evidenza capace di cambiare una decisione.",
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "criteria": [
+        {
+          "id": "horizon_exclusive",
+          "verdict": "material",
+          "candidate_evidence": [
+            "NOW assegna solo runtime e prova semantica.",
+            "LATER assegna solo structured filters.",
+            "OUT-OF-SCOPE assegna solo cross-cookbook search.",
+            "Acquisizione URL/manuale/copia-incolla, edit recovery, foto, autenticazione, membership e inviti non compaiono in alcun orizzonte."
+          ],
+          "controlling_evidence": [
+            "Source 1, Cosa fa (MVP): elenco, tre modalità di aggiunta, edit, foto, ricerca e condivisione sono comportamenti MVP.",
+            "Source 2, Entità principali e Pipeline di estrazione: membership, invitation, recipe/photo ed ingressi di acquisizione definiscono comportamenti richiesti.",
+            "Evaluation brief, Hard constraints: add, edit/recovery, cookbook scope e stack MVP sono obbligatori; solo le capability elencate come escluse possono restare fuori MVP."
+          ],
+          "defect_ids": [
+            "D2"
+          ]
+        },
+        {
+          "id": "horizon_coherent_now",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "«Current state: Greenfield; developer validation in a non-public environment.»",
+            "Il diagnostic è esplicitamente ristretto all'ambiente non pubblico.",
+            "La slice finale consente al tester di validare il differenziatore e verifica il leakage cross-cookbook."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, incoherent_now_release exclusion: un NOW developer-only in ambiente non pubblico non deve costituire l'intero MVP end-user.",
+            "Evaluation brief accetta validazione tramite input controllati."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_later_trigger",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Structured filters: «Promotion trigger: Semantic-search evidence shows users need precision unavailable from embeddings.»"
+          ],
+          "controlling_evidence": [
+            "Source 1 rimanda i filtri strutturati e ne consente la promozione dopo evidenza sulla ricerca semantica."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_exclusion_rationale",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "«Cross-cookbook search — MVP sources restrict search to the current cookbook.»"
+          ],
+          "controlling_evidence": [
+            "Source 1, Fuori scope MVP: ricerca cross-ricettario esclusa.",
+            "Source 2, Ricerca (MVP): query limitata al cookbook corrente."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Le assegnazioni pubblicate non si duplicano e il NOW è sicuro per l'audience dichiarata, ma numerosi comportamenti MVP non ricevono alcun orizzonte.",
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "criteria": [
+        {
+          "id": "uncertainty_conflicts",
+          "verdict": "absent",
+          "candidate_evidence": [
+            "Il candidato non contiene una sezione Open questions né alcuna nota sul conflitto del percorso manuale.",
+            "Nessuna parte del piano espone le due interpretazioni incompatibili del manual input."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Known conflicts: Source 2 afferma che manual input salta l'estrazione, mentre Source 3 afferma che riusa motore e schema di estrazione.",
+            "Source 2, Pipeline di estrazione: «Input manuale → form vuoto» e «salta l'estrazione».",
+            "Source 3, Estrazione contenuto: «Copia-incolla / manuale ... riusano lo stesso motore e schema»."
+          ],
+          "defect_ids": [
+            "D3"
+          ]
+        },
+        {
+          "id": "uncertainty_assumptions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Il candidato dichiara esplicitamente greenfield, audience developer e ambiente non pubblico.",
+            "Usa un «agreed labeled set» senza trasformare una soglia di ranking non supportata in requisito."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief consente la validazione controllata prima dell'entry point finale."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_blocking_decisions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "La viabilità dell'adapter embedding è risolta dalla prova della slice 2.",
+            "Il percorso manuale conflittuale non è asserito da nessuna slice candidata."
+          ],
+          "controlling_evidence": [
+            "Source 3 lascia sostituibile il modello entro la classe cloud, economica e multilingue.",
+            "Evaluation brief richiede una risoluzione prima di asserire il percorso manuale."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_material_questions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Non sono pubblicate domande irrilevanti.",
+            "L'incertezza sulla viabilità dell'adapter è espressa come learning verificabile nella slice 2."
+          ],
+          "controlling_evidence": [
+            "Source 3 rende qualità multilingue e costo condizioni materiali per la scelta dell'adapter."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Le assunzioni del proof sono dichiarate e il rischio dell'adapter è verificabile; manca totalmente l'esposizione del conflitto controllante sul manual input.",
+      "confidence": "high"
+    }
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "Acquisizione e recovery delle ricette, collaborazione cookbook-centrica e gestione foto non sono rappresentate come aree di valore schedulabili; completare il piano richiede aggiungere temi e relativi validatori, cambiandone sostanzialmente i confini.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "La tabella Themes contiene unicamente «Semantic retrieval».",
+        "NOW e LATER non contengono temi per acquisizione/edit, condivisione o foto."
+      ],
+      "controlling_evidence": [
+        "Source 1, Visione e Cosa fa (MVP): URL, manuale, copia-incolla, edit, foto e condivisione sono capability richieste.",
+        "Source 2, Modello di condivisione e Pipeline di estrazione: collaborazione e acquisizione hanno interazioni, invarianti e rischi distinti."
+      ]
+    },
+    {
+      "id": "D2",
+      "primary_criterion": "horizon_exclusive",
+      "consequence": "Il piano non dichiara quando o se verranno consegnati molti comportamenti MVP obbligatori; correggerlo richiede nuove assegnazioni NOW/LATER e quindi una ristrutturazione degli orizzonti.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "LATER contiene solo structured filters; OUT-OF-SCOPE solo cross-cookbook search.",
+        "Non esiste assegnazione per add URL/manuale/copia-incolla, edit, foto, Google OAuth, membership o inviti."
+      ],
+      "controlling_evidence": [
+        "Source 1, Cosa fa (MVP), Aggiunta ricetta e Condivisione definisce tali comportamenti come MVP.",
+        "Evaluation brief, Hard constraints rende obbligatori add/recovery, scope cookbook e Google OAuth; le esclusioni MVP sono elencate separatamente."
+      ]
+    },
+    {
+      "id": "D3",
+      "primary_criterion": "uncertainty_conflicts",
+      "consequence": "Il contratto del percorso manuale rimane invisibile e irrisolto; una futura slice manual-add non può affermare o verificare il proprio percorso produttivo senza prima scegliere esplicitamente un'interpretazione.",
+      "severity": "absent",
+      "element_absent": true,
+      "candidate_evidence": [
+        "Nessuna sezione o voce candidata menziona il conflitto sul manual input.",
+        "Open questions è totalmente assente."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Known conflicts registra l'incompatibilità e richiede una risoluzione prima di asserire il manual path.",
+        "Source 2 dice che manual input salta l'estrazione; Source 3 dice che manual input riusa motore e schema."
+      ]
+    }
+  ],
+  "critical_failures": [],
+  "grader": {
+    "provider": "codex",
+    "requested_model": "gpt-5.6-sol",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "codex-cli 0.146.0",
+    "prompt_sha256": "f4723f1805c523642514acadff9532cc2d8485afd0d4c90b73b5c4730cd989f7",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "brief_sha256": "9e8c28a7b85baf7b2c86a188dd8b9702e39b2ace8c6fe13a855037bb0597a618",
+    "rubric_sha256": "47e1e216cec6cb961e0ab333d7fbc9c80b53ee82b81a3b1826db253335ebd264",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-pass.md",
+        "sha256": "95290363ddbd5a86d126d5a68b35efd43b20a4825f2e7f84fe122d8f2d8fd3d7",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "12eb4779-f571-4fcc-b72f-760d58f7aeed",
+    "timestamp_utc": "2026-08-04T14:02:23.992331+00:00",
+    "alias_mapping": {
+      "candidate-A": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-pass.md"
+    },
+    "manifest_sha256": "66bdbe9e738d344ef7c4779e515cd6bcf733ea37929ae30163cf695c173f6214",
+    "label_set_sha256": "96933d7496d1c96c58c5aba7d52fca94654df95f3133f3263a79dba6d98726b3"
+  }
+}

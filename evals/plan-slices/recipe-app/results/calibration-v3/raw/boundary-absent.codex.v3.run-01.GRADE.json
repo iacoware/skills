@@ -1,0 +1,622 @@
+{
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "candidate": "candidate-A",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "criteria": [
+        {
+          "id": "theme_independent_value",
+          "verdict": "absent",
+          "candidate_evidence": [
+            "The Themes table contains only “Catalog”; semantic search, extraction, and cookbook collaboration have no autonomous themes."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore”: multilingual semantic search is the true differentiator.",
+            "Source 1, “Cosa fa (MVP)”: adding, semantic search, and cookbook collaboration provide distinct product value."
+          ],
+          "defect_ids": [
+            "D1"
+          ]
+        },
+        {
+          "id": "theme_split_merge",
+          "verdict": "material",
+          "candidate_evidence": [
+            "The Catalog theme and its sole slice combine storing, editing, listing, and collaborative use."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Cosa fa (MVP)”: Home, Aggiunta ricetta, Ricerca, and Condivisione have distinct interactions and learning targets.",
+            "Source 2, “Pipeline di estrazione” and “Ricerca (MVP)”: ingestion and retrieval have distinct computations and invariants."
+          ],
+          "defect_ids": [
+            "D2"
+          ]
+        },
+        {
+          "id": "theme_no_compression",
+          "verdict": "material",
+          "candidate_evidence": [
+            "A greenfield MVP with multiple required value areas is represented by one broad Catalog theme."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Visione” and “Cosa fa (MVP)”: MVP includes three add modes, photos, semantic search, and cookbook sharing.",
+            "Source 1, “Differenziatore”: semantic search must remain visible as the product’s north star."
+          ],
+          "defect_ids": [
+            "D3"
+          ]
+        }
+      ],
+      "rationale": "The single Catalog theme omits the differentiator and compresses independently schedulable ingestion, retrieval, and collaboration value.",
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "criteria": [
+        {
+          "id": "theme_product_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Catalog outcome: “Members store recipes.”"
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_first_product_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Catalog names numeric first validation “1,” corresponding to NOW slice 1."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_validator_coherence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 creates, edits, and lists recipes, coherently validating the Catalog outcome that members store recipes."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The sole declared theme has a product outcome and a coherent numeric NOW validator; omitted themes are charged under theme boundaries.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "criteria": [
+        {
+          "id": "slice_independent_outcome",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Slice 1 provides useful create, edit, and list behavior, but verifies only that members see saved edits."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Principi guida”: every increment must produce verifiable behavior.",
+            "Evaluation brief, Hard constraints: every recipe read and write must be scoped to the current cookbook."
+          ],
+          "defect_ids": [
+            "D4"
+          ]
+        },
+        {
+          "id": "slice_vertical_path",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The slice states user-visible creation, editing, listing, persistence, and observation of saved edits rather than isolating one technical layer."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_cohesive_cut",
+          "verdict": "material",
+          "candidate_evidence": [
+            "The only slice combines create, edit, list, and collaborative maintenance without a cohesion rationale."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Home” and “Aggiunta ricetta”: listing, adding, and post-save correction are separately observable behaviors.",
+            "Source 2, “Pipeline di estrazione”: add inputs and edit recovery have distinct branches and failure profiles."
+          ],
+          "defect_ids": [
+            "D5"
+          ]
+        },
+        {
+          "id": "slice_single_owner",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Only generic cross-functional concerns name authorization and persistence; no slice owns the required extraction, embedding, photo, authentication, or invitation adapters and invariants."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: URL extraction, pasted extraction, manual input, re-embedding, R2, Google OAuth, and cookbook scoping are mandatory.",
+            "Source 2, “Pipeline di estrazione” and “Entità principali”: these behaviors and shared pipelines have defined invariants."
+          ],
+          "defect_ids": [
+            "D6"
+          ]
+        }
+      ],
+      "rationale": "The slice is vertical in form but weakly verified, combines independently reviewable behavior, and leaves mandatory pipelines and adapters ownerless.",
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "criteria": [
+        {
+          "id": "order_dependencies_risk",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "Ordering says only “Deliver a basic shared catalog”; NOW contains no multilingual semantic-search behavior or evidence."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore”: cross-language semantic search is the true differentiator and without it the product largely rewrites Mealie.",
+            "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+          ],
+          "defect_ids": [
+            "D7"
+          ]
+        },
+        {
+          "id": "order_enabler_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "No explicit enabler is introduced, so no enabler is separated from its product validator."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "order_required_recovery",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Create and edit are delivered together in slice 1; no later independent theme precedes the stated edit capability."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "order_breadth_before_depth",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The plan never reaches a post-differentiator sequence in which breadth-versus-depth ordering can be violated; the missing early differentiator is charged separately."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The decisive ordering failure is front-loading commodity catalog behavior while omitting the required existential-risk validator.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "criteria": [
+        {
+          "id": "content_single_result",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Includes covers create, edit, and list; Verification checks only saved edits; Outcome broadens to collaborative maintenance."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Home,” “Aggiunta ricetta,” and “Condivisione”: listing, adding, editing, and membership are separately observable behaviors."
+          ],
+          "defect_ids": [
+            "D8"
+          ]
+        },
+        {
+          "id": "content_learning_evidence",
+          "verdict": "material",
+          "candidate_evidence": [
+            "The only observation is “Members see saved edits”; no decision-changing observation addresses semantic relevance, extraction fallback, cookbook isolation, or add friction."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore”: cross-language semantic relevance is the strategic product hypothesis.",
+            "Source 1, “Aggiunta ricetta”: immediate save, real progress, precise failures, and fallback extraction are material product choices."
+          ],
+          "defect_ids": [
+            "D9"
+          ]
+        },
+        {
+          "id": "content_failure_quality",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "Verification contains no negative or failure-mode checks; authorization, validation, and logging appear only as generic concern labels."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: every read and write must be cookbook-scoped.",
+            "Source 1, “Aggiunta ricetta”: failed extraction steps require precise messages.",
+            "Source 2, “Pipeline di estrazione”: URL fallback and edit recovery are required behaviors."
+          ],
+          "defect_ids": [
+            "D10"
+          ]
+        },
+        {
+          "id": "content_right_detail",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Slice 1 has one generic Includes bullet and one generic Verification sentence."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: acceptance must cover scoped access, add-path semantics, recovery, authentication, persistence, storage, and semantic search.",
+            "Source 1, “Cosa fa (MVP)”: the required MVP behaviors are explicitly observable and distinguishable."
+          ],
+          "defect_ids": [
+            "D11"
+          ]
+        }
+      ],
+      "rationale": "The slice lacks coherent acceptance coverage, decision-changing evidence, pertinent failure checks, and sufficient detail for the controlling requirements.",
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "criteria": [
+        {
+          "id": "horizon_exclusive",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Catalog behavior appears only in NOW; public cookbooks appear only in OUT-OF-SCOPE; LATER is empty."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_coherent_now",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "NOW promises “A family maintains recipes together” but contains only generic create, edit, and list behavior."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: multilingual search, scoped access, three add paths, immediate-save recovery, Google OAuth, and the selected MVP stack are mandatory.",
+            "Source 1, “Cosa fa (MVP)”: home, adding, semantic search, and cookbook sharing define the MVP."
+          ],
+          "defect_ids": [
+            "D12"
+          ]
+        },
+        {
+          "id": "horizon_later_trigger",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "LATER says “None identified,” so no LATER item lacks a promotion trigger."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_exclusion_rationale",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "“Public cookbooks — Excluded from MVP” is an explicit, source-supported exclusion."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Horizon assignments do not duplicate behavior and the stated exclusion is valid, but NOW cannot produce the promised safe, coherent collaborative release.",
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "criteria": [
+        {
+          "id": "uncertainty_conflicts",
+          "verdict": "absent",
+          "candidate_evidence": [
+            "The candidate has no conflicts section, conditional manual-path wording, or resolution spike."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Known conflicts: Source 2 says manual input skips extraction while Source 3 says it reuses the extraction engine and schema."
+          ],
+          "defect_ids": [
+            "D13"
+          ]
+        },
+        {
+          "id": "uncertainty_assumptions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The candidate makes no material provider or implementation choice beyond the supplied decisions; its family audience is supported by Source 1’s vision."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_blocking_decisions",
+          "verdict": "absent",
+          "candidate_evidence": [
+            "No unresolved decision or blocked slice is named despite the unresolved manual-input interpretation."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Known conflicts: the manual-path interpretation must be resolved before asserting implementation.",
+            "Source 1, “Visione”: manual input is required MVP scope."
+          ],
+          "defect_ids": [
+            "D14"
+          ]
+        },
+        {
+          "id": "uncertainty_material_questions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "No immaterial or implementation-neutral questions are listed; omission of the known conflict is charged under conflict and blocking-decision criteria."
+          ],
+          "controlling_evidence": [],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The known manual-input conflict and the slice it blocks are totally absent; no separate unsupported assumption or immaterial open question is present.",
+      "confidence": "high"
+    }
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "The semantic-search differentiator and other independent value areas cannot be scheduled or validated autonomously.",
+      "severity": "absent",
+      "element_absent": true,
+      "candidate_evidence": [
+        "Only “Catalog” appears in the Themes table; no semantic-search, ingestion, or collaboration theme appears."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Differenziatore”: multilingual semantic search is the true differentiator.",
+        "Source 1, “Cosa fa (MVP)”: adding, searching, and sharing are separate MVP areas."
+      ]
+    },
+    {
+      "id": "D2",
+      "primary_criterion": "theme_split_merge",
+      "consequence": "Catalog maintenance and collaborative access cannot be independently deferred, reviewed, or reprioritized without restructuring the theme.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The Catalog theme uses a member-oriented outcome and one slice combining create, edit, and list."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Home” and “Condivisione”: catalog interaction and cookbook membership are distinct product capabilities.",
+        "Source 2, “Modello di condivisione”: collaboration has its own membership and invitation invariants."
+      ]
+    },
+    {
+      "id": "D3",
+      "primary_criterion": "theme_no_compression",
+      "consequence": "The single-theme representation hides required ingestion, retrieval, media, and sharing scope from roadmap governance.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The greenfield roadmap declares only one broad Catalog theme."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Cosa fa (MVP)”: the MVP contains multiple add modes, photos, semantic search, and cookbook sharing."
+      ]
+    },
+    {
+      "id": "D4",
+      "primary_criterion": "slice_independent_outcome",
+      "consequence": "The slice’s full create/edit/list outcome is not independently verifiable because only edit visibility is observed and safe scoped operation is untested.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Verification: “Members see saved edits.”"
+      ],
+      "controlling_evidence": [
+        "Source 1, “Principi guida”: each increment must produce verifiable behavior.",
+        "Evaluation brief, Hard constraints: every recipe read and write must be cookbook-scoped."
+      ]
+    },
+    {
+      "id": "D5",
+      "primary_criterion": "slice_cohesive_cut",
+      "consequence": "Create, edit recovery, listing, and collaborative use require distinct acceptance demonstrations, so the slice needs substantial recutting.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Slice 1 combines “Create, edit, and list recipes” and a collaborative family outcome."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Home,” “Aggiunta ricetta,” and “Condivisione”: these behaviors have distinct interactions and invariants.",
+        "Source 2, “Pipeline di estrazione”: edit is the recovery path after addition."
+      ]
+    },
+    {
+      "id": "D6",
+      "primary_criterion": "slice_single_owner",
+      "consequence": "Mandatory extraction, embedding, media, identity, invitation, and access invariants can be omitted or reopened because no complete slice owner is assigned.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The sole slice owns only generic create/edit/list behavior; other requirements appear neither in a slice nor as explicit exclusions."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Hard constraints: extraction, re-embedding, R2, Google OAuth, cookbook scoping, and semantic search are mandatory.",
+        "Source 2, “Pipeline di estrazione” and “Entità principali”: the shared pipelines and adapters have defined ownership-sensitive invariants."
+      ]
+    },
+    {
+      "id": "D7",
+      "primary_criterion": "order_dependencies_risk",
+      "consequence": "The roadmap can deliver a commodity catalog without testing whether the product’s essential differentiator works.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Ordering prioritizes “a basic shared catalog”; NOW and Verification contain no semantic-search evidence."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Differenziatore”: without multilingual semantic search the product largely rewrites Mealie.",
+        "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+      ]
+    },
+    {
+      "id": "D8",
+      "primary_criterion": "content_single_result",
+      "consequence": "The verification establishes only saved edits, leaving creation, listing, and the broader collaborative outcome unaccepted.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Includes names create, edit, and list; Verification names only saved edits; Outcome claims collaborative maintenance."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Home,” “Aggiunta ricetta,” and “Condivisione”: these are separately observable behaviors."
+      ]
+    },
+    {
+      "id": "D9",
+      "primary_criterion": "content_learning_evidence",
+      "consequence": "The plan produces no evidence capable of changing decisions about differentiation, ingestion fallback, isolation, or user friction.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The sole observation is “Members see saved edits.”"
+      ],
+      "controlling_evidence": [
+        "Source 1, “Differenziatore”: cross-language retrieval is the strategic differentiator.",
+        "Source 1, “Aggiunta ricetta”: fallback behavior and minimum-friction addition are material choices."
+      ]
+    },
+    {
+      "id": "D10",
+      "primary_criterion": "content_failure_quality",
+      "consequence": "Cross-cookbook leakage and required extraction or recovery failures could pass unnoticed, preventing safe verification of the release.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "No failure-mode verification exists; concerns say only “Membership scopes access,” “Validate required fields,” and “Log failures.”"
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Hard constraints: all accesses require cookbook scoping and extraction must follow the required fallback.",
+        "Source 1, “Aggiunta ricetta”: extraction failures require precise step-specific messages."
+      ]
+    },
+    {
+      "id": "D11",
+      "primary_criterion": "content_right_detail",
+      "consequence": "The slice cannot be accepted against most mandatory product and architectural constraints without substantial elaboration and restructuring.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Slice 1 contains one generic Includes bullet and one generic Verification sentence."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Hard constraints: semantic search, add pipelines, recovery, storage, authentication, authorization, and the selected stack are mandatory.",
+        "Source 1, “Cosa fa (MVP)”: detailed observable MVP behavior is specified."
+      ]
+    },
+    {
+      "id": "D12",
+      "primary_criterion": "horizon_coherent_now",
+      "consequence": "NOW cannot safely serve the declared collaborative audience or constitute the source-defined MVP release.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "NOW promises collaborative family maintenance but includes only create, edit, and list and verifies only saved edits."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Hard constraints: multilingual search, scoped access, all add paths, immediate-save recovery, and Google OAuth are mandatory.",
+        "Source 1, “Cosa fa (MVP)”: home, adding, search, and sharing define the MVP."
+      ]
+    },
+    {
+      "id": "D13",
+      "primary_criterion": "uncertainty_conflicts",
+      "consequence": "The roadmap provides no visible mechanism for resolving the incompatible manual-input semantics before that mandatory path is implemented.",
+      "severity": "absent",
+      "element_absent": true,
+      "candidate_evidence": [
+        "No conflict, conditional statement, question, or spike appears."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Known conflicts: Source 2 says manual input skips extraction; Source 3 says it reuses the extraction engine and schema."
+      ]
+    },
+    {
+      "id": "D14",
+      "primary_criterion": "uncertainty_blocking_decisions",
+      "consequence": "The unresolved manual-input decision names no blocked slice, so sequencing cannot prevent implementation from silently choosing a side.",
+      "severity": "absent",
+      "element_absent": true,
+      "candidate_evidence": [
+        "The candidate has no open decisions and no manual-add slice."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief, Known conflicts: the interpretation must be resolved before asserting the manual path.",
+        "Source 1, “Visione”: manual addition is mandatory MVP scope."
+      ]
+    }
+  ],
+  "critical_failures": [
+    {
+      "id": "missing_differentiator_validator",
+      "conditions_met": [
+        "Source 1 identifies multilingual semantic search as the true differentiator and existential product risk.",
+        "No NOW slice traverses multilingual embedding and scoped semantic retrieval or produces decision-changing relevance evidence."
+      ],
+      "exclusions_checked": [
+        "No source-supported alternative validator is present; the only verification concerns saved edits.",
+        "Semantic search is not outside scope; the evaluation brief explicitly requires its NOW validation."
+      ],
+      "candidate_evidence": [
+        "The sole theme is Catalog; NOW slice 1 includes only create, edit, and list; Verification says only “Members see saved edits.”"
+      ],
+      "controlling_evidence": [
+        "Source 1, “Differenziatore” and “Ricerca (MVP)”: multilingual semantic search is the key differentiator.",
+        "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+      ]
+    },
+    {
+      "id": "incoherent_now_release",
+      "conditions_met": [
+        "NOW promises use by a collaborative audience: “A family maintains recipes together.”",
+        "Mandatory multilingual search, add modes, authentication/invitation behavior, verified cookbook isolation, and recovery semantics are missing from NOW."
+      ],
+      "exclusions_checked": [
+        "NOW is not declared developer-only or restricted to a non-public validation environment.",
+        "The missing behaviors are mandatory MVP capabilities, not conditional LATER variants; LATER is empty."
+      ],
+      "candidate_evidence": [
+        "NOW contains only slice 1 with generic create, edit, and list behavior and saved-edit verification."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Cosa fa (MVP)”: home, three add modes, semantic search, and cookbook sharing are MVP behavior.",
+        "Evaluation brief, Hard constraints: multilingual search, scoped access, recovery, Google OAuth, and required add paths are mandatory."
+      ]
+    }
+  ],
+  "grader": {
+    "provider": "codex",
+    "requested_model": "gpt-5.6-sol",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "codex-cli 0.146.0",
+    "prompt_sha256": "f9f60b663fcd5df8f98f01587f7945c9f27ffb0ccac274d0d6143de7bd6204bf",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "brief_sha256": "9e8c28a7b85baf7b2c86a188dd8b9702e39b2ace8c6fe13a855037bb0597a618",
+    "rubric_sha256": "47e1e216cec6cb961e0ab333d7fbc9c80b53ee82b81a3b1826db253335ebd264",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-absent.md",
+        "sha256": "729dca5f0b1b420f6235d3bf65e20f92309468a1cb3172f102cd8e739b7955fe",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "e4b3bff6-47a8-481c-b7fd-faf77e5cf14a",
+    "timestamp_utc": "2026-08-04T13:52:22.655042+00:00",
+    "alias_mapping": {
+      "candidate-A": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-absent.md"
+    },
+    "manifest_sha256": "66bdbe9e738d344ef7c4779e515cd6bcf733ea37929ae30163cf695c173f6214",
+    "label_set_sha256": "8af5b8d101a0665dd3138b5f6efeac0ce4f74d8f3436a9d05671ab501f3338fc"
+  }
+}

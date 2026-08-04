@@ -1,0 +1,661 @@
+{
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "candidate": "candidate-A",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "criteria": [
+        {
+          "id": "theme_independent_value",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "Candidate A > Themes contains only “Recipe capture”.",
+            "Candidate A > NOW contains only capture and recovery behavior."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Cosa fa (MVP)”: Home requires recipe listing, addition, and semantic search; “Condivisione” requires cookbook-centered collaboration.",
+            "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+          ],
+          "defect_ids": [
+            "D1"
+          ]
+        },
+        {
+          "id": "theme_split_merge",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Candidate A > NOW 1 combines extraction, manual entry, pasted-text fallback, photos, editing, and cover selection.",
+            "Candidate A > Learning / risk says these capabilities affect separate decisions."
+          ],
+          "controlling_evidence": [
+            "Source 2, “Pipeline di estrazione”: URL, pasted text, manual entry, and edit follow materially different paths.",
+            "Source 3, “Object storage foto”: photo ingestion uses a distinct R2 adapter and failure profile."
+          ],
+          "defect_ids": [
+            "D2"
+          ]
+        },
+        {
+          "id": "theme_no_compression",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Candidate A > Ordering criteria: “Ship all add modes together because they write Recipe.”"
+          ],
+          "controlling_evidence": [
+            "Source 2, “Pipeline di estrazione”: sharing the Recipe destination does not eliminate the distinct URL, pasted-text, and manual paths.",
+            "Source 1, “Visione”: URL is the frequent mode, manual is less frequent, and pasted text is a fallback, allowing independent prioritization."
+          ],
+          "defect_ids": [
+            "D3"
+          ]
+        }
+      ],
+      "rationale": "The plan recognizes capture value but omits other independently valuable MVP areas and uses a shared entity to compress distinct capture paths, adapters, and learning targets.",
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "criteria": [
+        {
+          "id": "theme_product_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Candidate A > Themes: “Members save recipes from URL, pasted text, or manual entry.”"
+          ],
+          "controlling_evidence": [
+            "Source 1, “Visione” defines these recipe-add modes."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_first_product_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Candidate A > Themes numerically identifies slice “1” as the first validation.",
+            "Candidate A > NOW 1 includes each mode named by the theme outcome."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Aggiunta ricetta” supports the stated capture modes."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_validator_coherence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The Recipe capture theme, its outcome, and NOW 1 all concern saving recipes through the MVP input modes."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Visione” and “Aggiunta ricetta” define the same capture value."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The sole declared theme has a product-language outcome and a coherent numbered validator. Missing themes are assessed under theme boundaries.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "criteria": [
+        {
+          "id": "slice_independent_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Candidate A > Outcome promises a useful member capability: capture and correction through every included mode.",
+            "Candidate A > Verification lists demonstrations for the included paths."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Aggiunta ricetta” identifies capture and later correction as useful MVP behavior."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_vertical_path",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW 1 spans user input, extraction, recipe saving, derived-data regeneration, photo handling, correction, and observable failures."
+          ],
+          "controlling_evidence": [
+            "Sources 1–3 define these as the required production path from input through persistence, derived data, and photo storage."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_cohesive_cut",
+          "verdict": "material",
+          "candidate_evidence": [
+            "NOW 1 combines every input mode, paywall fallback, the photo adapter, edit recovery, and cover management.",
+            "Learning / risk identifies extraction quality, fallback demand, form usability, and photo reliability as separate decisions."
+          ],
+          "controlling_evidence": [
+            "Source 2, “Pipeline di estrazione” separates URL, pasted-text, manual, and edit paths.",
+            "Source 3 separates extraction, embeddings, and R2 photo concerns."
+          ],
+          "defect_ids": [
+            "D4"
+          ]
+        },
+        {
+          "id": "slice_single_owner",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The only NOW slice owns all candidate capture, recovery, derived-data, and photo behavior; no second slice reopens those pipelines."
+          ],
+          "controlling_evidence": [
+            "Source 2 requires shared extraction and embedding-regeneration invariants; Candidate A assigns them to one slice or its cross-functional concerns."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The slice is product-facing and plausibly vertical with a single owner, but its cut confounds independently schedulable paths, adapters, and risks.",
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "criteria": [
+        {
+          "id": "order_dependencies_risk",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "Candidate A prioritizes all capture modes because they persist Recipe.",
+            "No NOW verification exercises multilingual semantic retrieval."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore”: cross-language semantic search is the true differentiator and north star.",
+            "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+          ],
+          "defect_ids": [
+            "D5"
+          ]
+        },
+        {
+          "id": "order_enabler_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Candidate A declares no separate enabler whose validator is delayed or separated."
+          ],
+          "controlling_evidence": [
+            "The controlling sources do not require a separate enabler; the evaluation brief merely accepts controlled-input validation as an alternative."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_required_recovery",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW 1 includes edit correction with capture.",
+            "NOW 1 also includes the pasted-text paywall fallback with URL capture."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief requires edit as the recovery path and Source 2 identifies pasted text as the fallback for unreadable URLs."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_breadth_before_depth",
+          "verdict": "material",
+          "candidate_evidence": [
+            "The sole NOW slice completes URL, pasted-text, manual, photos, edit, and cover depth before any listing, search, identity, or sharing outcome."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Cosa fa (MVP)” spans listing, addition, semantic search, and sharing.",
+            "Evaluation brief prioritizes early validation of semantic search."
+          ],
+          "defect_ids": [
+            "D6"
+          ]
+        }
+      ],
+      "rationale": "Recovery is correctly colocated, but the plan front-loads capture depth and entirely misses the existential search risk.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "criteria": [
+        {
+          "id": "content_single_result",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Includes, Verification, and Outcome consistently describe comprehensive recipe capture and correction."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Aggiunta ricetta” supports capture plus post-save correction."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_learning_evidence",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Learning / risk lists extraction quality, fallback demand, manual-form usability, and photo reliability.",
+            "Verification only says to demonstrate the paths; it supplies no observation or decision condition for those learnings."
+          ],
+          "controlling_evidence": [
+            "Source 1 distinguishes mode frequency and accepts imperfect extraction, making quality, fallback demand, and usability decision-relevant.",
+            "Source 3 makes extraction cost and photo reliability architecture-relevant."
+          ],
+          "defect_ids": [
+            "D7"
+          ]
+        },
+        {
+          "id": "content_failure_quality",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Verification covers paywall fallback, photo failure, correction, and cover changes but does not verify JSON-LD-first fallback, validated LLM output, real progress steps, or precise error reporting."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief requires JSON-LD before a validated LLM fallback.",
+            "Source 1, “Aggiunta ricetta” requires progress over real steps and precise failure messages."
+          ],
+          "defect_ids": [
+            "D8"
+          ]
+        },
+        {
+          "id": "content_right_detail",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "“Independently demonstrate” gives no acceptance conditions for immediate saving, no mandatory review, extraction ordering, or regeneration of embeddings."
+          ],
+          "controlling_evidence": [
+            "Source 1 requires immediate save without mandatory review.",
+            "Source 2 requires embedding regeneration on edit and specifies the extraction cascade."
+          ],
+          "defect_ids": [
+            "D9"
+          ]
+        }
+      ],
+      "rationale": "The content describes one broad result, but its learning and verification statements need local, behavior-specific observations and acceptance conditions.",
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "criteria": [
+        {
+          "id": "horizon_exclusive",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Capture behavior appears only in NOW.",
+            "Ingredient parsing appears only in OUT-OF-SCOPE; LATER is empty."
+          ],
+          "controlling_evidence": [
+            "Source 1 explicitly excludes ingredient quantity/unit parsing from MVP."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_coherent_now",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "NOW promises use by “Members” but includes no Google OAuth, cookbook creation or membership flow, recipe list/read experience, or semantic search.",
+            "The cross-functional authorization statement scopes only writes."
+          ],
+          "controlling_evidence": [
+            "Source 1 requires Google OAuth, cookbook-centered membership, recipe listing, and semantic search.",
+            "Evaluation brief requires every read and write to be cookbook-scoped and mandates multilingual semantic-search validation in NOW."
+          ],
+          "defect_ids": [
+            "D10"
+          ]
+        },
+        {
+          "id": "horizon_later_trigger",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Candidate A states “LATER — None identified.”"
+          ],
+          "controlling_evidence": [
+            "No candidate LATER behavior requires a promotion trigger."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_exclusion_rationale",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "OUT-OF-SCOPE excludes ingredient parsing because sources retain free text."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Principi guida” deliberately excludes quantity/unit parsing, shopping lists, and serving scaling."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Assignments are exclusive and the explicit exclusion is justified, but NOW cannot form the required safe member-facing MVP release.",
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "criteria": [
+        {
+          "id": "uncertainty_conflicts",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Candidate A includes the manual form without exposing or resolving how it relates to the extraction engine.",
+            "No conflict note, conditional formulation, or spike appears."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Known conflicts: Source 2 says manual input skips extraction, while Source 3 says it reuses the extraction engine and schema; interpretation must be resolved before implementation."
+          ],
+          "defect_ids": [
+            "D11"
+          ]
+        },
+        {
+          "id": "uncertainty_assumptions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The candidate states its bundling rationale explicitly under Ordering criteria rather than presenting it as a source fact."
+          ],
+          "controlling_evidence": [
+            "The sources establish the shared Recipe destination, even though the resulting planning decision is graded separately as defective."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_blocking_decisions",
+          "verdict": "material",
+          "candidate_evidence": [
+            "NOW 1 asserts manual entry but does not identify slice 1 as blocked by the unresolved manual-path interpretation."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Known conflicts: implementation must defer to a resolved interpretation before asserting the manual path."
+          ],
+          "defect_ids": [
+            "D12"
+          ]
+        },
+        {
+          "id": "uncertainty_material_questions",
+          "verdict": "absent",
+          "candidate_evidence": [
+            "Candidate A contains no Open questions section or equivalent material question."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief identifies an unresolved manual-input decision that changes implementation and verification."
+          ],
+          "defect_ids": [
+            "D13"
+          ]
+        }
+      ],
+      "rationale": "The plan does not silently assert a specific extraction implementation for manual entry, but it entirely omits the known conflict, the blocked slice, and the required material question.",
+      "confidence": "high"
+    }
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "Required listing, semantic retrieval, identity/access, and cookbook-sharing value cannot be scheduled or validated, so the roadmap cannot reach the sourced MVP.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Only “Recipe capture” appears under Themes and NOW."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Cosa fa (MVP)” requires listing, addition, semantic search, and sharing.",
+        "Evaluation brief mandates multilingual semantic-search validation in NOW."
+      ]
+    },
+    {
+      "id": "D2",
+      "primary_criterion": "theme_split_merge",
+      "consequence": "Extraction paths, photo behavior, and edit recovery cannot be deferred or reprioritized independently without restructuring the plan.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "NOW 1 combines all input paths, photos, edit, and cover selection.",
+        "Learning / risk names separate decisions."
+      ],
+      "controlling_evidence": [
+        "Source 2 distinguishes URL, pasted-text, manual, and edit paths.",
+        "Source 3 defines separate extraction and R2 adapters."
+      ]
+    },
+    {
+      "id": "D3",
+      "primary_criterion": "theme_no_compression",
+      "consequence": "Using the shared Recipe destination as the reason to ship all add modes together artificially couples modes with different frequency, fallback status, and learning value.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Ordering criteria: “Ship all add modes together because they write Recipe.”"
+      ],
+      "controlling_evidence": [
+        "Source 1 distinguishes frequent URL import, less-frequent manual entry, and pasted-text fallback.",
+        "Source 2 assigns them different processing paths."
+      ]
+    },
+    {
+      "id": "D4",
+      "primary_criterion": "slice_cohesive_cut",
+      "consequence": "One slice can fail for unrelated extraction, usability, storage, or recovery causes, preventing independent learning and requiring a substantial split.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "NOW 1 includes extraction modes, photo failure, correction, and cover changes.",
+        "Learning / risk says these change separate decisions."
+      ],
+      "controlling_evidence": [
+        "Source 2 defines distinct input and recovery paths.",
+        "Source 3 separates LLM extraction, embeddings, and R2 photo storage."
+      ]
+    },
+    {
+      "id": "D5",
+      "primary_criterion": "order_dependencies_risk",
+      "consequence": "NOW can finish without evidence that the product's essential cross-language semantic-search differentiator works.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "NOW and Verification contain no semantic-search behavior or cross-language retrieval evidence."
+      ],
+      "controlling_evidence": [
+        "Source 1 calls multilingual semantic search the true differentiator.",
+        "Evaluation brief requires its validation in NOW."
+      ]
+    },
+    {
+      "id": "D6",
+      "primary_criterion": "order_breadth_before_depth",
+      "consequence": "The roadmap invests in comprehensive capture depth before establishing a thin path through the other required MVP value areas.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The only NOW slice contains every capture mode, multiple photos, editing, and cover selection."
+      ],
+      "controlling_evidence": [
+        "Source 1 requires Home listing, semantic search, and cookbook sharing in addition to capture.",
+        "Evaluation brief prioritizes the search differentiator."
+      ]
+    },
+    {
+      "id": "D7",
+      "primary_criterion": "content_learning_evidence",
+      "consequence": "The four stated risks cannot change a decision because no observable measure, comparison, or decision condition is defined.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Learning / risk names four risks; Verification only requests independent demonstrations."
+      ],
+      "controlling_evidence": [
+        "Source 1 makes input frequency, fallback behavior, and accepted extraction imperfection decision-relevant.",
+        "Source 3 makes extraction cost and photo-adapter reliability decision-relevant."
+      ]
+    },
+    {
+      "id": "D8",
+      "primary_criterion": "content_failure_quality",
+      "consequence": "The slice could pass despite violating required extraction ordering, output validation, progress accuracy, or failure-message quality.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Verification mentions paywall and photo failures but omits these required conditions."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief requires JSON-LD before validated LLM fallback.",
+        "Source 1 requires progress based on real steps and precise failure messages."
+      ]
+    },
+    {
+      "id": "D9",
+      "primary_criterion": "content_right_detail",
+      "consequence": "Reviewers must invent acceptance rules for immediate saving, review avoidance, extraction order, and embedding regeneration.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Includes and Verification provide capability names without these acceptance conditions."
+      ],
+      "controlling_evidence": [
+        "Sources 1–2 explicitly require immediate save, no mandatory review, extraction-path rules, and regeneration on edit."
+      ]
+    },
+    {
+      "id": "D10",
+      "primary_criterion": "horizon_coherent_now",
+      "consequence": "The declared member-facing NOW is neither a safe usable MVP release nor a validator of its essential value hypothesis.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "NOW contains capture/recovery only and promises use by members.",
+        "Authorization mentions only cookbook-scoped writes."
+      ],
+      "controlling_evidence": [
+        "Source 1 requires Google OAuth, listing, semantic search, and cookbook collaboration.",
+        "Evaluation brief requires scoped reads and writes and multilingual search validation."
+      ]
+    },
+    {
+      "id": "D11",
+      "primary_criterion": "uncertainty_conflicts",
+      "consequence": "Implementers lack the controlling interpretation for whether manual input enters or bypasses the extraction engine.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The manual form is included without conflict disclosure or conditional treatment."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief records the incompatible manual-input statements in Sources 2 and 3 and requires resolution before implementation."
+      ]
+    },
+    {
+      "id": "D12",
+      "primary_criterion": "uncertainty_blocking_decisions",
+      "consequence": "Slice 1 appears implementation-ready even though a decision that changes its manual path remains unresolved.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "No blocked-slice annotation or prior decision accompanies manual entry in NOW 1."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief states that implementation must defer to a resolved manual-path interpretation."
+      ]
+    },
+    {
+      "id": "D13",
+      "primary_criterion": "uncertainty_material_questions",
+      "consequence": "The implementation-changing manual-path question has no place to be resolved before work starts.",
+      "severity": "absent",
+      "element_absent": true,
+      "candidate_evidence": [
+        "No Open questions section or equivalent question exists."
+      ],
+      "controlling_evidence": [
+        "Evaluation brief identifies the unresolved manual-input extraction conflict."
+      ]
+    }
+  ],
+  "critical_failures": [
+    {
+      "id": "missing_differentiator_validator",
+      "conditions_met": [
+        "Source 1 identifies multilingual semantic search as the essential differentiator.",
+        "No NOW slice traverses multilingual query embedding, cookbook-scoped pgvector similarity, and cross-language result evidence."
+      ],
+      "exclusions_checked": [
+        "No source-supported alternative validator appears in Candidate A.",
+        "Semantic search is explicitly MVP scope and is not listed OUT-OF-SCOPE."
+      ],
+      "candidate_evidence": [
+        "Themes and NOW cover only recipe capture.",
+        "Verification contains no semantic-search or cross-language retrieval check."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Differenziatore” and “Ricerca (MVP)”.",
+        "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+      ]
+    },
+    {
+      "id": "unsafe_scope_boundary",
+      "conditions_met": [
+        "NOW 1 saves and edits recipes for an audience described as members, implying multi-cookbook persisted access.",
+        "Candidate A scopes writes only and supplies no resolver or verification limiting recipe reads, edits, photo access, and cover operations to the current cookbook from first use."
+      ],
+      "exclusions_checked": [
+        "Candidate A does not declare a single-scope, non-public environment.",
+        "No configured-scope-to-identity seam is declared; the stated membership control covers only writes."
+      ],
+      "candidate_evidence": [
+        "Cross-functional concerns: “Cookbook membership scopes writes.”",
+        "NOW 1 includes edit, photos, correction, and cover changes for members."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Condivisione”: users may belong to multiple cookbooks.",
+        "Evaluation brief requires every recipe read and write to be scoped to the current cookbook."
+      ]
+    },
+    {
+      "id": "incoherent_now_release",
+      "conditions_met": [
+        "The NOW Outcome promises use by cookbook members.",
+        "Google OAuth, complete cookbook-scoped access, recipe listing, and mandatory multilingual semantic search are missing from NOW."
+      ],
+      "exclusions_checked": [
+        "NOW is not declared developer-only or restricted to a non-public single-scope environment.",
+        "The missing behaviors are mandatory MVP requirements, not conditional LATER variants."
+      ],
+      "candidate_evidence": [
+        "Outcome: “Members can capture and correct recipes through every MVP mode.”",
+        "NOW contains only the capture/recovery slice."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Home”, “Condivisione”, and “Auth — decisione presa: Google OAuth”.",
+        "Evaluation brief hard constraints for scoped access, OAuth, and multilingual semantic-search validation."
+      ]
+    }
+  ],
+  "grader": {
+    "provider": "codex",
+    "requested_model": "gpt-5.6-sol",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "codex-cli 0.146.0",
+    "prompt_sha256": "8df3da77b50147061b5a0eddf8f212a76248b3fed732d95e4c479610668d12f8",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "brief_sha256": "9e8c28a7b85baf7b2c86a188dd8b9702e39b2ace8c6fe13a855037bb0597a618",
+    "rubric_sha256": "47e1e216cec6cb961e0ab333d7fbc9c80b53ee82b81a3b1826db253335ebd264",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-restructure.md",
+        "sha256": "d2f76bc335e0d6a1942e707ae355efbc48889f428724d4fb5ab702e0cce5aaba",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "a2a0f912-9096-4796-a536-48d592a6419a",
+    "timestamp_utc": "2026-08-04T14:02:18.003161+00:00",
+    "alias_mapping": {
+      "candidate-A": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-restructure.md"
+    },
+    "manifest_sha256": "66bdbe9e738d344ef7c4779e515cd6bcf733ea37929ae30163cf695c173f6214",
+    "label_set_sha256": "d9b84a99fa5e48234579b7e8e362ec0a1a706918b8e164683b9d1f8faade228d"
+  }
+}

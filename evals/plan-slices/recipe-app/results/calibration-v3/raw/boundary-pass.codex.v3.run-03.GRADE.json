@@ -1,0 +1,545 @@
+{
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "candidate": "candidate-A",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "criteria": [
+        {
+          "id": "theme_independent_value",
+          "verdict": "material",
+          "candidate_evidence": [
+            "Themes table contains only “Semantic retrieval”.",
+            "NOW contains only “Connected runtime” and “Cross-language retrieval proof”; no other product-value areas appear in any horizon."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Cosa fa (MVP)”: Home requires recipe listing, three add modes, and semantic search.",
+            "Source 1, “Aggiunta ricetta”: URL import, pasted-text fallback, manual entry, post-save edit, and multiple photos are required.",
+            "Source 1, “Condivisione”: cookbook creation, membership, and invitations are independently useful collaboration behavior.",
+            "Evaluation brief, Hard constraints: URL extraction, pasted text, manual input, edit recovery, Google OAuth, and cookbook-scoped collaboration are mandatory MVP capabilities."
+          ],
+          "defect_ids": [
+            "D-THEME-CATALOG",
+            "D-THEME-MANUAL-EDIT",
+            "D-THEME-URL-IMPORT",
+            "D-THEME-PASTE-FALLBACK",
+            "D-THEME-PHOTOS",
+            "D-THEME-COLLABORATION"
+          ]
+        },
+        {
+          "id": "theme_split_merge",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "“Semantic retrieval” is represented as a distinct theme rather than merged with the delivery enabler."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore”: multilingual semantic search is the principal independent differentiator."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_no_compression",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The represented semantic value is not bundled into an omnibus theme; omitted value areas are charged under theme_independent_value."
+          ],
+          "controlling_evidence": [
+            "Source 1 separates semantic search from addition, browsing, photos, and sharing capabilities."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The differentiator has a clean boundary, but most independently schedulable MVP value areas are omitted rather than mapped as themes.",
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "criteria": [
+        {
+          "id": "theme_product_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Desired outcome: “A tester finds English recipes with an Italian query inside one cookbook.”"
+          ],
+          "controlling_evidence": [
+            "Source 1, “Ricerca”: an Italian query such as “pomodoro” must find an English recipe within the current cookbook."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_first_product_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The Themes table numerically identifies slice “2” as first validation for Semantic retrieval."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: NOW must validate multilingual semantic search."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_validator_coherence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Theme outcome, slice 2 Includes, Verification, and Outcome all address cookbook-scoped cross-language semantic retrieval."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore” and “Ricerca”: cross-language semantic retrieval is the differentiator and is scoped to the current cookbook."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The sole represented theme has a product-language outcome and a coherent, numbered NOW validator.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "criteria": [
+        {
+          "id": "slice_independent_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 yields a deployable and observable connected runtime.",
+            "Slice 2 yields an independently testable retrieval proof in the declared non-public environment."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Accepted alternatives: controlled inputs may validate embeddings and search when they traverse production computation."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_vertical_path",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 crosses deployment, migration, runtime driver, and Postgres connectivity.",
+            "Slice 2 crosses real multilingual embeddings, pgvector persistence, scoped similarity queries, and observable errors."
+          ],
+          "controlling_evidence": [
+            "Source 3 requires Postgres with pgvector and multilingual cloud embeddings.",
+            "Source 1, “Principi guida”: increments must cross all necessary layers and produce verifiable behavior."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_cohesive_cut",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Infrastructure connectivity is isolated in slice 1; differentiating retrieval and its embedding-adapter risk remain together in slice 2."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief permits controlled production-path validation before the final user entry point.",
+            "Source 3 separates hosting/datastore connectivity from the embedding-backed retrieval behavior."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_single_owner",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Cross-functional concerns assign all read/write scoping to one configured cookbook resolver and one replacement seam.",
+            "Slice 2 alone owns the embedding, pgvector persistence, similarity-query proof, and leakage verification."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief, Hard constraints: every recipe access and semantic query must be scoped to the current cookbook.",
+            "Source 2 makes Cookbook the unit of recipe ownership and search scope."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Both NOW slices are narrow vertical paths; represented scope, retrieval pipeline, and adapter behavior have unambiguous ownership.",
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "criteria": [
+        {
+          "id": "order_dependencies_risk",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "A minimal connected runtime precedes the first product-risk slice, and multilingual retrieval is the first product behavior validated.",
+            "Ordering criteria explicitly prioritize multilingual semantic retrieval before commodity breadth."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Differenziatore”: semantic cross-language search is the true differentiator and must remain the north star.",
+            "Evaluation brief requires a NOW validator for multilingual semantic search."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_enabler_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 “Connected runtime” is immediately followed by slice 2 “Cross-language retrieval proof”."
+          ],
+          "controlling_evidence": [
+            "Source 3 requires the deployed Next.js runtime, Postgres connection, and pgvector infrastructure used by retrieval."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_required_recovery",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The represented NOW retrieval proof does not create a user recipe state requiring a separate recovery slice; adapter failures terminate with distinct observable errors."
+          ],
+          "controlling_evidence": [
+            "Source 1 requires edit recovery after recipe addition, but no addition behavior is opened by Candidate A's NOW slices."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_breadth_before_depth",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW ends after the first differentiator validator and contains no second depth slice that overtakes another represented NOW theme."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief requires early differentiator validation; it does not require a developer-only validation horizon to include every end-user capability."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "Within the represented developer-validation scope, infrastructure enables and immediately precedes the existential retrieval proof; no recovery or depth-order violation is introduced.",
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "criteria": [
+        {
+          "id": "content_single_result",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 fields consistently prove a connected deployable runtime.",
+            "Slice 2 fields consistently prove cookbook-scoped multilingual semantic retrieval."
+          ],
+          "controlling_evidence": [
+            "Source 3 connects runtime deployment, migration, driver, and Postgres health as one infrastructure path.",
+            "Source 1 defines cross-language semantic retrieval as one differentiating product result."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_learning_evidence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 2 states that ranking quality and cost decide adapter viability, while Verification captures recall, latency, and cost on a labeled set."
+          ],
+          "controlling_evidence": [
+            "Source 1 prioritizes semantic cross-language quality.",
+            "Source 3 makes multilingual capability and very low provider cost material adapter constraints."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_failure_quality",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 2 verifies ranking quality, recall, latency, cost, invalid provider output, timeout, and cross-cookbook leakage with distinguishable errors.",
+            "Slice 1 verifies migration, driver, connection, runtime, and representative-environment health."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief requires cookbook scoping and the selected production stack.",
+            "Source 3 identifies provider, connection, cost, and latency concerns."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_right_detail",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Each slice provides concise Includes, Verification, and Outcome statements sufficient to accept its behavior without decomposing into implementation tasks."
+          ],
+          "controlling_evidence": [
+            "Source 1 requires vertical, verifiable increments; Candidate A supplies behavior-level rather than task-level detail."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The represented slices have coherent outcomes, decision-changing measurements, and relevant trust-boundary and adapter-failure verification.",
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "criteria": [
+        {
+          "id": "horizon_exclusive",
+          "verdict": "material",
+          "candidate_evidence": [
+            "NOW assigns only runtime connectivity and multilingual retrieval; LATER assigns only structured filters; OUT-OF-SCOPE assigns only cross-cookbook search.",
+            "Recipe listing, add/import modes, edit recovery, photos, authentication, cookbook collaboration, public cookbooks, groups, and granular roles have no horizon assignment."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Cosa fa (MVP)” requires listing, three add modes, search, photos, and cookbook collaboration.",
+            "Source 1, “Fuori scope MVP” excludes public cookbooks, groups, granular roles, and cross-cookbook search.",
+            "Evaluation brief classifies mandatory MVP capabilities and exclusions."
+          ],
+          "defect_ids": [
+            "D-HORIZON-COVERAGE"
+          ]
+        },
+        {
+          "id": "horizon_coherent_now",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Current state explicitly declares “developer validation in a non-public environment”.",
+            "Slice 2 Outcome promises only tester validation in that environment, and cookbook leakage is tested."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief accepts controlled production-path validation before final user entry points.",
+            "Evaluation brief's incoherent-release exclusion allows developer-only operation in a non-public environment."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_later_trigger",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Structured filters are promoted only when semantic-search evidence shows precision needs embeddings cannot meet."
+          ],
+          "controlling_evidence": [
+            "Source 1 defers structured filters until after MVP semantic search."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_exclusion_rationale",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Cross-cookbook search is excluded because MVP sources restrict search to the current cookbook."
+          ],
+          "controlling_evidence": [
+            "Source 1, “Fuori scope MVP”: cross-cookbook search is explicitly excluded."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "The declared developer-only NOW is coherent and safe, and the listed LATER/OOS entries are valid; however, most source behavior is not assigned to any horizon.",
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "criteria": [
+        {
+          "id": "uncertainty_conflicts",
+          "verdict": "absent",
+          "candidate_evidence": [
+            "Candidate A contains no conflict register, conditional manual-path wording, spike, or Open questions section; the manual path is omitted entirely."
+          ],
+          "controlling_evidence": [
+            "Source 2, “Pipeline di estrazione”: manual input skips extraction and uses the empty shared form.",
+            "Source 3, “Estrazione contenuto”: manual input reuses the extraction engine and schema.",
+            "Evaluation brief, Known conflicts: implementation must defer to a resolved interpretation before asserting the manual path."
+          ],
+          "defect_ids": [
+            "D-CONFLICT-MANUAL"
+          ]
+        },
+        {
+          "id": "uncertainty_assumptions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "The plan does not name an unsupported product requirement or assert a specific undecided provider/model.",
+            "The non-public developer-validation audience and configured-scope seam are stated explicitly."
+          ],
+          "controlling_evidence": [
+            "Evaluation brief accepts controlled inputs and alternative Postgres, embedding, and extraction providers.",
+            "Evaluation brief requires cookbook scoping from first access."
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_blocking_decisions",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Slice 1 refers to “the decided infrastructure” without identifying Neon or Supabase.",
+            "Slice 2 refers to “the selected embedding adapter” without naming the selection or a question that blocks slice 2.",
+            "No Open questions section identifies the affected slices."
+          ],
+          "controlling_evidence": [
+            "Source 3, “Datastore”: the provider remains “Neon or Supabase”.",
+            "Source 3, “Embeddings”: OpenAI is an example rather than a uniquely selected provider.",
+            "Evaluation brief, Accepted alternatives: either Postgres provider and any qualifying cheap multilingual cloud embedding model are accepted."
+          ],
+          "defect_ids": [
+            "D-UNRESOLVED-ADAPTERS"
+          ]
+        },
+        {
+          "id": "uncertainty_material_questions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Candidate A publishes no immaterial or implementation-neutral questions."
+          ],
+          "controlling_evidence": [
+            "The known manual-path conflict is separately charged under uncertainty_conflicts; no unrelated question list is present."
+          ],
+          "defect_ids": []
+        }
+      ],
+      "rationale": "No unsupported provider is asserted and no low-value questions are retained, but the known manual-path contradiction is completely undisclosed and two implementation-required adapter choices are referenced as though resolved.",
+      "confidence": "high"
+    }
+  ],
+  "defects": [
+    {
+      "id": "D-THEME-CATALOG",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "Recipe browsing/listing has no theme or validating slice, so the roadmap cannot schedule or obtain feedback on the basic cookbook-reading job without adding a new product boundary.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Themes and all horizons omit Home recipe listing."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Home”: the current cookbook must show its recipe list."
+      ]
+    },
+    {
+      "id": "D-THEME-MANUAL-EDIT",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "Manual creation and post-save correction have no theme, leaving the canonical recipe-authoring and mandatory recovery path unscheduled; repair requires a new product theme/slice boundary.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Themes and all horizons omit manual entry and edit."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Aggiunta ricetta”: manual input uses the shared form and correction is always available after saving.",
+        "Source 2, “Recipe”: edits regenerate the derived embedding."
+      ]
+    },
+    {
+      "id": "D-THEME-URL-IMPORT",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "The most frequent add mode and its JSON-LD/LLM extraction risk have no independent theme or validator, requiring substantial roadmap expansion before the primary acquisition job can be tested.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Themes and all horizons omit URL import and extraction."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Visione”: adding from a URL is the most frequent mode.",
+        "Evaluation brief requires JSON-LD before a validated LLM fallback."
+      ]
+    },
+    {
+      "id": "D-THEME-PASTE-FALLBACK",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "The independently exercisable pasted-text fallback is omitted, so paywall and JS-heavy import recovery cannot be scheduled or validated without adding a separate capability boundary.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Themes and all horizons omit pasted-text extraction."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Visione”: copy-paste is the fallback for unreadable links.",
+        "Source 2, “Pipeline di estrazione”: pasted text skips JSON-LD and uses the LLM output schema."
+      ]
+    },
+    {
+      "id": "D-THEME-PHOTOS",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "Photo ingestion and cover management—including the independent R2 side-effect and hotlinking risk—have no theme, requiring a new independently reviewable product/adapter slice.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Themes and all horizons omit photos and cover selection."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Aggiunta ricetta”: recipes support multiple photos and a changeable default cover.",
+        "Source 3, “Object storage foto”: imported images must be copied to Cloudflare R2."
+      ]
+    },
+    {
+      "id": "D-THEME-COLLABORATION",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "Identity, cookbook membership, and invitations are absent as a collaboration/access value area, so end-user sharing cannot be scheduled without adding a new theme and multiple vertical slices.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Themes and all horizons omit Google OAuth, cookbook creation/membership, and invitations; only a configured scope seam is mentioned."
+      ],
+      "controlling_evidence": [
+        "Source 1, “Condivisione”: creators invite equal members and users may join multiple cookbooks.",
+        "Source 2 defines Cookbook, Membership, and Invitation invariants.",
+        "Evaluation brief requires Google OAuth and cookbook-scoped collaboration."
+      ]
+    },
+    {
+      "id": "D-HORIZON-COVERAGE",
+      "primary_criterion": "horizon_exclusive",
+      "consequence": "The roadmap does not say whether most mandatory MVP capabilities and explicit exclusions are NOW, LATER, or OUT-OF-SCOPE, so its overall delivery boundary cannot be implemented or reviewed without material horizon reassignment.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "The three horizon sections exist but assign only runtime/retrieval, structured filters, and cross-cookbook search."
+      ],
+      "controlling_evidence": [
+        "Source 1 assigns listing, addition, edit, photos, and collaboration to MVP and assigns public cookbooks, groups, cross-cookbook search, and granular roles outside MVP.",
+        "Evaluation brief repeats these hard constraints and exclusions."
+      ]
+    },
+    {
+      "id": "D-CONFLICT-MANUAL",
+      "primary_criterion": "uncertainty_conflicts",
+      "consequence": "Reviewers are not told that the controlling sources disagree about whether manual input skips extraction or reuses its engine/schema, preventing a deliberate resolution before the omitted manual path is planned.",
+      "severity": "absent",
+      "element_absent": true,
+      "candidate_evidence": [
+        "Candidate A has no conflict statement, conditional manual behavior, spike, or Open questions section."
+      ],
+      "controlling_evidence": [
+        "Source 2, “Pipeline di estrazione”: manual input skips extraction.",
+        "Source 3, “Estrazione contenuto”: manual input reuses the extraction engine and schema.",
+        "Evaluation brief explicitly records this known conflict."
+      ]
+    },
+    {
+      "id": "D-UNRESOLVED-ADAPTERS",
+      "primary_criterion": "uncertainty_blocking_decisions",
+      "consequence": "Slices 1 and 2 cannot be executed reproducibly until a Postgres provider and embedding adapter are selected, but the plan neither records the selections nor names the affected slices as blocked.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Slice 1 says “decided infrastructure”; slice 2 says “selected embedding adapter”; neither identifies the choice."
+      ],
+      "controlling_evidence": [
+        "Source 3 leaves Postgres at Neon or Supabase and names OpenAI only as an embedding example.",
+        "Evaluation brief accepts multiple provider/model alternatives rather than selecting one."
+      ]
+    }
+  ],
+  "critical_failures": [],
+  "grader": {
+    "provider": "codex",
+    "requested_model": "gpt-5.6-sol",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "codex-cli 0.146.0",
+    "prompt_sha256": "f4723f1805c523642514acadff9532cc2d8485afd0d4c90b73b5c4730cd989f7",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "brief_sha256": "9e8c28a7b85baf7b2c86a188dd8b9702e39b2ace8c6fe13a855037bb0597a618",
+    "rubric_sha256": "47e1e216cec6cb961e0ab333d7fbc9c80b53ee82b81a3b1826db253335ebd264",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-pass.md",
+        "sha256": "95290363ddbd5a86d126d5a68b35efd43b20a4825f2e7f84fe122d8f2d8fd3d7",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "0451976d-4dda-44e1-8356-90bf30a5ef22",
+    "timestamp_utc": "2026-08-04T14:02:29.913365+00:00",
+    "alias_mapping": {
+      "candidate-A": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-pass.md"
+    },
+    "manifest_sha256": "66bdbe9e738d344ef7c4779e515cd6bcf733ea37929ae30163cf695c173f6214",
+    "label_set_sha256": "96933d7496d1c96c58c5aba7d52fca94654df95f3133f3263a79dba6d98726b3"
+  }
+}

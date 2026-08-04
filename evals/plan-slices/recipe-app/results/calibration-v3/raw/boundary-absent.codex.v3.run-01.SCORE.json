@@ -1,0 +1,173 @@
+{
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "scoring_version": 3,
+  "scoring_strategy": "axis_worst",
+  "candidate": "candidate-A",
+  "components": [
+    {
+      "id": "theme_boundaries",
+      "weight": 15,
+      "criterion_verdicts": {
+        "theme_independent_value": "absent",
+        "theme_split_merge": "material",
+        "theme_no_compression": "material"
+      },
+      "criterion_scores": {
+        "theme_independent_value": 0,
+        "theme_split_merge": 2,
+        "theme_no_compression": 2
+      },
+      "axis_score": 0.0,
+      "weighted_score": 0.0
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "weight": 10,
+      "criterion_verdicts": {
+        "theme_product_outcome": "pass",
+        "theme_first_product_validator": "pass",
+        "theme_validator_coherence": "pass"
+      },
+      "criterion_scores": {
+        "theme_product_outcome": 4,
+        "theme_first_product_validator": 4,
+        "theme_validator_coherence": 4
+      },
+      "axis_score": 4.0,
+      "weighted_score": 10.0
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "weight": 20,
+      "criterion_verdicts": {
+        "slice_independent_outcome": "minor",
+        "slice_vertical_path": "pass",
+        "slice_cohesive_cut": "material",
+        "slice_single_owner": "material"
+      },
+      "criterion_scores": {
+        "slice_independent_outcome": 3,
+        "slice_vertical_path": 4,
+        "slice_cohesive_cut": 2,
+        "slice_single_owner": 2
+      },
+      "axis_score": 2.0,
+      "weighted_score": 10.0
+    },
+    {
+      "id": "ordering_risk",
+      "weight": 20,
+      "criterion_verdicts": {
+        "order_dependencies_risk": "severe",
+        "order_enabler_validator": "pass",
+        "order_required_recovery": "pass",
+        "order_breadth_before_depth": "pass"
+      },
+      "criterion_scores": {
+        "order_dependencies_risk": 1,
+        "order_enabler_validator": 4,
+        "order_required_recovery": 4,
+        "order_breadth_before_depth": 4
+      },
+      "axis_score": 1.0,
+      "weighted_score": 5.0
+    },
+    {
+      "id": "slice_content_evidence",
+      "weight": 15,
+      "criterion_verdicts": {
+        "content_single_result": "minor",
+        "content_learning_evidence": "material",
+        "content_failure_quality": "severe",
+        "content_right_detail": "material"
+      },
+      "criterion_scores": {
+        "content_single_result": 3,
+        "content_learning_evidence": 2,
+        "content_failure_quality": 1,
+        "content_right_detail": 2
+      },
+      "axis_score": 1.0,
+      "weighted_score": 3.75
+    },
+    {
+      "id": "horizons",
+      "weight": 10,
+      "criterion_verdicts": {
+        "horizon_exclusive": "pass",
+        "horizon_coherent_now": "severe",
+        "horizon_later_trigger": "pass",
+        "horizon_exclusion_rationale": "pass"
+      },
+      "criterion_scores": {
+        "horizon_exclusive": 4,
+        "horizon_coherent_now": 1,
+        "horizon_later_trigger": 4,
+        "horizon_exclusion_rationale": 4
+      },
+      "axis_score": 1.0,
+      "weighted_score": 2.5
+    },
+    {
+      "id": "uncertainty_integrity",
+      "weight": 10,
+      "criterion_verdicts": {
+        "uncertainty_conflicts": "absent",
+        "uncertainty_assumptions": "pass",
+        "uncertainty_blocking_decisions": "absent",
+        "uncertainty_material_questions": "pass"
+      },
+      "criterion_scores": {
+        "uncertainty_conflicts": 0,
+        "uncertainty_assumptions": 4,
+        "uncertainty_blocking_decisions": 0,
+        "uncertainty_material_questions": 4
+      },
+      "axis_score": 0.0,
+      "weighted_score": 0.0
+    }
+  ],
+  "raw_total": 31.25,
+  "effective_total": 31.25,
+  "applied_caps": [
+    {
+      "id": "missing_differentiator_validator",
+      "cap": 49
+    },
+    {
+      "id": "incoherent_now_release",
+      "cap": 59
+    }
+  ],
+  "grader": {
+    "provider": "codex",
+    "requested_model": "gpt-5.6-sol",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "codex-cli 0.146.0",
+    "prompt_sha256": "f9f60b663fcd5df8f98f01587f7945c9f27ffb0ccac274d0d6143de7bd6204bf",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "brief_sha256": "9e8c28a7b85baf7b2c86a188dd8b9702e39b2ace8c6fe13a855037bb0597a618",
+    "rubric_sha256": "47e1e216cec6cb961e0ab333d7fbc9c80b53ee82b81a3b1826db253335ebd264",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-absent.md",
+        "sha256": "729dca5f0b1b420f6235d3bf65e20f92309468a1cb3172f102cd8e739b7955fe",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "e4b3bff6-47a8-481c-b7fd-faf77e5cf14a",
+    "timestamp_utc": "2026-08-04T13:52:22.655042+00:00",
+    "alias_mapping": {
+      "candidate-A": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-absent.md"
+    },
+    "manifest_sha256": "66bdbe9e738d344ef7c4779e515cd6bcf733ea37929ae30163cf695c173f6214",
+    "label_set_sha256": "8af5b8d101a0665dd3138b5f6efeac0ce4f74d8f3436a9d05671ab501f3338fc"
+  }
+}

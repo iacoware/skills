@@ -1,0 +1,509 @@
+{
+  "rubric_version": 3,
+  "grade_schema_version": 3,
+  "candidate": "candidate-A",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "rationale": "Il piano riconosce un solo tema (\"Semantic retrieval\"). Le altre aree di valore indipendentemente schedulabili delle fonti — pipeline di aggiunta (link con JSON-LD → LLM, copia-incolla, inserimento manuale), foto e edit come recovery, condivisione cookbook-centrica (creator, invito, membership), identità Google OAuth — non compaiono come tema in nessun orizzonte, né in LATER né in OUT-OF-SCOPE. La condivisione è degradata a una nota di \"cross-functional concern\" (resolver di scope), che non è un tema con outcome e validatore. Il tema presente è internamente coerente e non mescola learning target eterogenei, quindi lo split/merge del poco che c'è regge; il problema è l'assenza, non il taglio.",
+      "confidence": "high",
+      "criteria": [
+        {
+          "id": "theme_independent_value",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "Sezione \"Themes\": la tabella contiene una sola riga, \"Semantic retrieval\"",
+            "\"Authorization: A configured cookbook resolver scopes every read and write until identity replaces it at one seam\" — la condivisione compare solo come cross-functional concern",
+            "NOW contiene solo \"1. Connected runtime\" e \"2. Cross-language retrieval proof\""
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Condivisione\": \"Ogni ricettario ha un creator che invita gli altri tramite link/codice condivisibile\"; \"Un utente può appartenere a più ricettari\"",
+            "concepts.md, \"Entità principali\": Cookbook, Membership (N:N), Invitation come entità di primo livello",
+            "brief, Hard constraints: \"Every recipe read, write, and semantic query is scoped to the current cookbook; members can edit all cookbook content\"; \"MVP uses Google OAuth ...\""
+          ],
+          "defect_ids": [
+            "D2",
+            "D3"
+          ]
+        },
+        {
+          "id": "theme_split_merge",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Tema \"Semantic retrieval\" con outcome \"A tester finds English recipes with an Italian query inside one cookbook\" e prima validazione 2"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Differenziatore\": \"la ricerca semantica cross-lingua è il vero elemento distintivo\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_no_compression",
+          "verdict": "severe",
+          "candidate_evidence": [
+            "Tabella \"Themes\" con un unico tema",
+            "NOW: nessuna slice tocca estrazione da URL, JSON-LD, fallback LLM, copia-incolla, inserimento manuale, foto o edit"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Cosa fa (MVP)\": Home (elenco, aggiungi, ricerca), Aggiunta ricetta (link, manuale, copia-incolla), foto multiple con cover",
+            "concepts.md, \"Pipeline di estrazione (fase di add)\": due ingressi, un solo motore, JSON-LD → LLM in fallback",
+            "brief, Hard constraints: \"URL extraction tries JSON-LD before a validated LLM fallback; pasted text uses the extraction schema; manual input uses the shared edit form\""
+          ],
+          "defect_ids": [
+            "D1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "rationale": "Il singolo tema presente è ben formato: outcome in linguaggio di prodotto (utente che cerca in italiano e trova ricette in inglese dentro un ricettario), primo validatore indicato numericamente (slice 2) e coerenza piena tra outcome, tema e contenuto della slice 2, che esercita embedding multilingue reale, persistenza pgvector e query di similarità.",
+      "confidence": "high",
+      "criteria": [
+        {
+          "id": "theme_product_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Desired outcome: A tester finds English recipes with an Italian query inside one cookbook.\""
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Ricerca (MVP: solo semantica)\": \"linki una ricetta in inglese ma cerchi 'pomodoro' e la trova\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_first_product_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Colonna \"First validation\" = 2, che rimanda a \"2. Cross-language retrieval proof\""
+          ],
+          "controlling_evidence": [
+            "brief, Hard constraints: \"NOW must validate multilingual semantic search; it is the differentiator\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "theme_validator_coherence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 2 Verification: \"Italian queries rank relevant English recipes in the agreed labeled set\"",
+            "Slice 2 Outcome: \"A tester can validate the product differentiator in a non-public environment.\""
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Differenziatore\": ricerca semantica cross-lingua via embeddings",
+            "arch-choices.md, \"Embeddings\": \"Deve essere multilingue (vincolo per la ricerca cross-lingua)\""
+          ],
+          "defect_ids": []
+        }
+      ]
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "rationale": "Le due slice presenti sono tagliate correttamente: la 1 è un enabler infrastrutturale dichiarato come tale (deploy, migrazione non di dominio, round trip Postgres), la 2 attraversa il calcolo di produzione (embedding multilingue reale → pgvector → query di similarità) usando fixture controllate, esplicitamente ammesso dal brief come validazione anticipata prima dell'entry point utente finale. Nessuna delle due è una layer slice e ciascuna è distribuibile e revertibile. Unica imprecisione: il resolver di scope cookbook è dichiarato solo nei cross-functional concerns e nessuna slice ne assume esplicitamente la proprietà di implementazione, pur essendo verificato dalla slice 2.",
+      "confidence": "medium",
+      "criteria": [
+        {
+          "id": "slice_independent_outcome",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 Outcome: \"Developers can deploy and observe the decided infrastructure.\"",
+            "Slice 2 Outcome: \"A tester can validate the product differentiator in a non-public environment.\""
+          ],
+          "controlling_evidence": [
+            "brief, Accepted alternatives: \"Controlled inputs may validate extraction, embeddings, or search before their final user entry point when they traverse the production computation\"",
+            "goal.md, \"Principi guida\": \"Slice verticali: ogni incremento attraversa tutti i layer e produce comportamento verificabile\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_vertical_path",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 2 Includes: \"Process scoped recipe fixtures through real multilingual embedding, pgvector persistence, and similarity query paths.\"",
+            "Slice 1 è etichettata \"(Enabler: delivery)\""
+          ],
+          "controlling_evidence": [
+            "arch-choices.md, \"Datastore — Postgres + pgvector\" e \"Embeddings — API cloud multilingue\"",
+            "concepts.md, \"Ricerca (MVP)\": \"similarity( Recipe.embedding, embedding(query) ) scoped a cookbookId corrente\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_cohesive_cut",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 separa l'enabler di runtime/migrazione dalla capability di retrieval della slice 2"
+          ],
+          "controlling_evidence": [
+            "tech-choices.md, \"Persistenza / ORM — Drizzle\": connessione via driver standard su TCP verso Neon"
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "slice_single_owner",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "\"Authorization: A configured cookbook resolver scopes every read and write until identity replaces it at one seam\" (Cross-functional concerns)",
+            "Slice 2 Verification: \"... cross-cookbook result leakage fail with distinct observable errors\" — ma nessun Includes assegna la costruzione del resolver a una slice"
+          ],
+          "controlling_evidence": [
+            "brief, Hard constraints: \"Every recipe read, write, and semantic query is scoped to the current cookbook\"",
+            "concepts.md, \"Membership (N:N User ↔ Cookbook)\": \"Essere membro = poter leggere ed editare\""
+          ],
+          "defect_ids": [
+            "D4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ordering_risk",
+      "rationale": "L'ordine, nel perimetro consegnato, è corretto: l'enabler minimo di runtime/persistenza precede immediatamente il validatore del differenziatore, che è la prima slice di prodotto e porta subito il rischio esistenziale (qualità del ranking cross-lingua e costo dell'adapter di embedding). Enabler e validatore sono adiacenti (1 → 2). Nel perimetro pianificato non esiste un percorso di add che generi un obbligo di recovery pendente, e il concern di integrità dichiara già i dati derivati rigenerabili. L'assenza di breadth successiva discende interamente dall'omissione di temi già contestata nell'asse dei confini e non viene ri-addebitata qui.",
+      "confidence": "medium",
+      "criteria": [
+        {
+          "id": "order_dependencies_risk",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Ordering criteria: Validate multilingual semantic retrieval before commodity product breadth.\"",
+            "Slice 2 è la prima slice di prodotto in NOW"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Nota strategica\": \"la ricerca semantica cross-lingua è il vero elemento distintivo. Senza di essa staremmo in gran parte riscrivendo Mealie\"",
+            "brief, Hard constraints: \"NOW must validate multilingual semantic search; it is the differentiator\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_enabler_validator",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1 \"Connected runtime (Enabler: delivery)\" precede direttamente la slice 2 che la consuma"
+          ],
+          "controlling_evidence": [
+            "arch-choices.md, \"Hosting — Fly.io\" e \"Datastore — Postgres + pgvector\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_required_recovery",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Data integrity and recovery: Recipe text is canonical; embeddings are regenerated derived data.\""
+          ],
+          "controlling_evidence": [
+            "concepts.md, \"Recipe\": \"Il campo embedding è un indice derivato, non dato canonico: rigenerato a ogni edit\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "order_breadth_before_depth",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW: 1. Connected runtime → 2. Cross-language retrieval proof; nessun approfondimento verticale anticipato sul differenziatore"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Principi guida\": \"Slice verticali\"; \"Differenziatore\""
+          ],
+          "defect_ids": []
+        }
+      ]
+    },
+    {
+      "id": "slice_content_evidence",
+      "rationale": "Includes, Verification e Outcome di entrambe le slice descrivono un solo risultato coerente. La slice 2 collega esplicitamente il learning materiale (qualità del ranking e costo) a osservazioni capaci di cambiare la decisione sull'adapter di embedding, e verifica failure mode pertinenti (output provider non valido, timeout, leakage cross-cookbook) e non la mera esistenza. Il dettaglio resta a livello di accettazione, senza degenerare in backlog di task. Il riferimento a \"the agreed labeled set\" è un'assunzione non dichiarata, addebitata all'asse incertezza e non qui.",
+      "confidence": "high",
+      "criteria": [
+        {
+          "id": "content_single_result",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 1: Includes deploy/migrazione/round trip → Verification su migrazione, driver, connessione, health → Outcome deploy e osservabilità",
+            "Slice 2: Includes fixture→embedding→pgvector→query → Verification ranking e failure → Outcome validazione differenziatore"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Principi guida\": \"ogni incremento attraversa tutti i layer e produce comportamento verificabile\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_learning_evidence",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Learning / risk: Ranking quality and cost determine whether the selected embedding adapter remains viable.\"",
+            "\"capture recall, latency, and cost\""
+          ],
+          "controlling_evidence": [
+            "arch-choices.md, \"Embeddings\": costo ~$0.02/1M token, vincolo multilingue",
+            "brief, Accepted alternatives: \"A cheap multilingual cloud embedding model may replace the named example if it preserves cross-language behavior and the cost constraint\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_failure_quality",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Invalid provider output, timeout, and cross-cookbook result leakage fail with distinct observable errors.\""
+          ],
+          "controlling_evidence": [
+            "tech-choices.md, \"Business logic — Effect\": \"Errori: solo Data.TaggedError; gestione ai boundary con catchTag\"; \"Schema per validare (non castare) l'output dell'estrazione LLM\"",
+            "concepts.md, \"Ricerca (MVP)\": query \"scoped a cookbookId corrente\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "content_right_detail",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Slice 2 descrive percorso, metriche e failure senza elencare task implementativi"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Principi guida\": \"Semplicità sopra tutto\""
+          ],
+          "defect_ids": []
+        }
+      ]
+    },
+    {
+      "id": "horizons",
+      "rationale": "Non ci sono comportamenti duplicati tra orizzonti. NOW è dichiarato esplicitamente developer-only in ambiente non pubblico (\"Current state: Greenfield; developer validation in a non-public environment\"), con resolver di scope attivo dalla prima persistenza e identità differita a una singola seam dichiarata: per l'audience dichiarata è coerente e sicuro. La voce LATER dipende da evidenza NOW e ha un trigger di promozione conforme alle fonti; OUT-OF-SCOPE contiene un'esclusione motivata dalle fonti, non lavoro obbligatorio parcheggiato. L'incompletezza del perimetro complessivo è addebitata ai confini dei temi, non qui.",
+      "confidence": "medium",
+      "criteria": [
+        {
+          "id": "horizon_exclusive",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "NOW (runtime, retrieval), LATER (structured filters), OUT-OF-SCOPE (cross-cookbook search) non si sovrappongono"
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Fuori scope MVP\": filtri strutturati e ricerca cross-ricettario elencati separatamente"
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_coherent_now",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Current state: Greenfield; developer validation in a non-public environment.\"",
+            "\"Accessibility and security: The diagnostic is restricted to the non-public environment.\"",
+            "Slice 2 Outcome: \"A tester can validate the product differentiator in a non-public environment.\""
+          ],
+          "controlling_evidence": [
+            "brief, Accepted alternatives: validazione con input controllati prima dell'entry point utente finale quando attraversa il calcolo di produzione",
+            "brief, Hard constraints: scoping al cookbook corrente per ogni lettura/scrittura/query"
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_later_trigger",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Structured filters — Promotion trigger: Semantic-search evidence shows users need precision unavailable from embeddings.\""
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Ricerca\": \"Filtri strutturati (tag, tempo) rimandati a dopo l'MVP: i campi si popolano da subito in automatico\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "horizon_exclusion_rationale",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "\"Cross-cookbook search — MVP sources restrict search to the current cookbook.\""
+          ],
+          "controlling_evidence": [
+            "goal.md, \"Fuori scope MVP\": \"Ricerca cross-ricettario\"",
+            "concepts.md, \"Ricerca (MVP)\": scope a cookbookId corrente"
+          ],
+          "defect_ids": []
+        }
+      ]
+    },
+    {
+      "id": "uncertainty_integrity",
+      "rationale": "Il piano non sceglie alcun lato del conflitto noto sull'inserimento manuale, semplicemente perché non pianifica il percorso di add: nessuna affermazione incondizionata da correggere. Restano però due imprecisioni locali: alcune premesse operative sono asserite come date (\"the agreed labeled set\", \"the decided infrastructure\") senza essere dichiarate assunzioni, e non esiste alcuna registrazione della decisione interpretativa ancora aperta con le slice che essa bloccherebbe. Non ci sono domande aperte immateriali.",
+      "confidence": "medium",
+      "criteria": [
+        {
+          "id": "uncertainty_conflicts",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Nessuna slice o concern del piano afferma il comportamento del percorso di inserimento manuale"
+          ],
+          "controlling_evidence": [
+            "brief, Known conflicts: \"Manual input skips extraction in concepts.md ... while arch-choices.md ... says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path\""
+          ],
+          "defect_ids": []
+        },
+        {
+          "id": "uncertainty_assumptions",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Slice 2 Verification: \"Italian queries rank relevant English recipes in the agreed labeled set\"",
+            "Slice 1 Outcome: \"Developers can deploy and observe the decided infrastructure.\""
+          ],
+          "controlling_evidence": [
+            "arch-choices.md, \"Datastore\": \"Provider: Neon o Supabase\" (scelta non chiusa)",
+            "brief, Accepted alternatives: \"Neon or Supabase may provide Postgres because the source leaves that provider undecided\"",
+            "Le fonti non menzionano alcun set etichettato di valutazione della ricerca"
+          ],
+          "defect_ids": [
+            "D5"
+          ]
+        },
+        {
+          "id": "uncertainty_blocking_decisions",
+          "verdict": "minor",
+          "candidate_evidence": [
+            "Il documento non contiene alcuna sezione di decisioni aperte, domande o spike"
+          ],
+          "controlling_evidence": [
+            "brief, Known conflicts: interpretazione del percorso manuale da risolvere prima di affermarlo",
+            "concepts.md, \"Pipeline di estrazione\": \"[Input manuale] → (form vuoto) ... (salta l'estrazione)\" vs arch-choices.md, \"Estrazione contenuto\": \"Copia-incolla / manuale: saltano il JSON-LD, riusano lo stesso motore e schema\""
+          ],
+          "defect_ids": [
+            "D6"
+          ]
+        },
+        {
+          "id": "uncertainty_material_questions",
+          "verdict": "pass",
+          "candidate_evidence": [
+            "Nessuna domanda aperta immateriale o cosmetica è lasciata nel piano"
+          ],
+          "controlling_evidence": [
+            "tech-choices.md, \"Decisioni di stack aperte: Nessuna\""
+          ],
+          "defect_ids": []
+        }
+      ]
+    }
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "primary_criterion": "theme_no_compression",
+      "consequence": "L'intera area di valore dell'acquisizione ricetta (estrazione da URL con JSON-LD e fallback LLM validato, copia-incolla, inserimento manuale, foto multiple con cover, edit come percorso di correzione) non è rappresentata da alcun tema né collocata in alcun orizzonte: il piano non è schedulabile per l'MVP descritto dalle fonti e richiede la creazione ex novo di temi, slice e ordine.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Tabella \"Themes\": unica riga \"Semantic retrieval\"",
+        "NOW contiene solo \"1. Connected runtime\" e \"2. Cross-language retrieval proof\"",
+        "LATER contiene solo \"Structured filters\"; OUT-OF-SCOPE solo \"Cross-cookbook search\""
+      ],
+      "controlling_evidence": [
+        "goal.md, \"Cosa fa (MVP)\" → \"Aggiunta ricetta\": estrazione sincrona con progress sui passi reali, nessuna review obbligatoria, stesso form per edit e inserimento manuale, foto multiple con cover",
+        "concepts.md, \"Pipeline di estrazione (fase di add)\": due ingressi, un solo motore, JSON-LD → LLM structured output",
+        "brief, Hard constraints: \"URL extraction tries JSON-LD before a validated LLM fallback ...\"; \"Add saves without mandatory review; edit is the recovery path and regenerates derived embeddings\""
+      ]
+    },
+    {
+      "id": "D2",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "La condivisione cookbook-centrica (creazione ricettario, invito via link/codice, membership N:N, parità di editing tra membri) è ridotta a una riga di cross-functional concern sul resolver di scope, senza tema, outcome né validatore: un'area di valore indipendentemente schedulabile e portante dell'MVP resta non pianificata.",
+      "severity": "severe",
+      "element_absent": false,
+      "candidate_evidence": [
+        "\"Authorization: A configured cookbook resolver scopes every read and write until identity replaces it at one seam.\"",
+        "Tabella \"Themes\" priva di qualsiasi tema su cookbook, invito o membership"
+      ],
+      "controlling_evidence": [
+        "goal.md, \"Condivisione\": creator che invita tramite link/codice, membri pari, utente in più ricettari",
+        "concepts.md, \"Modello di condivisione: cookbook-centrico\" e entità Cookbook / Membership / Invitation",
+        "brief, Hard constraints: \"members can edit all cookbook content\""
+      ]
+    },
+    {
+      "id": "D3",
+      "primary_criterion": "theme_independent_value",
+      "consequence": "L'identità (Google OAuth via Auth.js) è solo accennata come sostituzione futura del resolver \"at one seam\", senza comparire come tema in NOW, LATER o OUT-OF-SCOPE: la transizione dal perimetro developer-only a un'app usabile da famiglia e amici non è schedulata né verificabile.",
+      "severity": "material",
+      "element_absent": false,
+      "candidate_evidence": [
+        "\"... until identity replaces it at one seam.\" (Cross-functional concerns → Authorization)",
+        "Nessuna voce su autenticazione in Themes, NOW, LATER o OUT-OF-SCOPE"
+      ],
+      "controlling_evidence": [
+        "goal.md, \"Auth — decisione presa: Google OAuth\"",
+        "tech-choices.md, \"Auth — Auth.js (NextAuth v5) + Google OAuth\"",
+        "brief, Hard constraints: \"MVP uses Google OAuth ...\""
+      ]
+    },
+    {
+      "id": "D4",
+      "primary_criterion": "slice_single_owner",
+      "consequence": "Il resolver di scope cookbook è verificato dalla slice 2 (leakage cross-cookbook) ma nessuna slice ne dichiara negli Includes la proprietà di implementazione: l'invariante condivisa resta senza owner esplicito e la correzione è locale (aggiungere l'owner negli Includes della slice 2).",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Slice 2 Includes: \"Process scoped recipe fixtures through real multilingual embedding, pgvector persistence, and similarity query paths.\"",
+        "Cross-functional concerns → Authorization: \"A configured cookbook resolver scopes every read and write ...\""
+      ],
+      "controlling_evidence": [
+        "brief, Hard constraints: \"Every recipe read, write, and semantic query is scoped to the current cookbook\"",
+        "concepts.md, \"Ricerca (MVP)\": \"scoped a cookbookId corrente\""
+      ]
+    },
+    {
+      "id": "D5",
+      "primary_criterion": "uncertainty_assumptions",
+      "consequence": "Premesse non supportate dalle fonti sono asserite come fatti: l'esistenza di un set etichettato \"agreed\" per misurare il ranking e un'infrastruttura \"decided\" benché il provider Postgres resti aperto tra Neon e Supabase; senza dichiararle come assunzioni l'accettazione della slice 2 non è riproducibile.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "\"Italian queries rank relevant English recipes in the agreed labeled set\"",
+        "\"Developers can deploy and observe the decided infrastructure.\""
+      ],
+      "controlling_evidence": [
+        "arch-choices.md, \"Datastore — Postgres + pgvector\": \"Provider: Neon o Supabase (free tier, pgvector incluso)\"",
+        "brief, Accepted alternatives: \"Neon or Supabase may provide Postgres because the source leaves that provider undecided\""
+      ]
+    },
+    {
+      "id": "D6",
+      "primary_criterion": "uncertainty_blocking_decisions",
+      "consequence": "La contraddizione nota sull'inserimento manuale (salta l'estrazione vs riusa motore e schema) non è registrata da nessuna parte insieme alle slice che bloccherebbe, quindi chi riprenderà il piano per pianificare il percorso di add non trova traccia della decisione ancora da prendere.",
+      "severity": "minor",
+      "element_absent": false,
+      "candidate_evidence": [
+        "Il documento non contiene sezioni di assunzioni, domande aperte o decisioni pendenti"
+      ],
+      "controlling_evidence": [
+        "brief, Known conflicts: \"implementation must defer to a resolved interpretation before asserting the manual path\"",
+        "concepts.md, \"Pipeline di estrazione\": \"[Input manuale] → (form vuoto) (salta l'estrazione)\"",
+        "arch-choices.md, \"Estrazione contenuto\": \"Copia-incolla / manuale: saltano il JSON-LD, riusano lo stesso motore e schema\""
+      ]
+    }
+  ],
+  "critical_failures": [],
+  "grader": {
+    "provider": "claude",
+    "requested_model": "claude-opus-5",
+    "effort": "high",
+    "configuration": [],
+    "cli_version": "2.1.221 (Claude Code)",
+    "prompt_sha256": "f4723f1805c523642514acadff9532cc2d8485afd0d4c90b73b5c4730cd989f7",
+    "source_sha256": {
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/goal.md": "422deeb75dba36597d0680e0866871208995dc79e953004f0f1027f5d0eb2382",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/concepts.md": "6931d50182823792dee53308cfffd190635ca14f74bb970f2ab019f74eb97568",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/arch-choices.md": "44de300caf1a8f809056ec8c7cc4a3862755b54f187d451d36da6c9443679e25",
+      "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/recipe-app/sources/tech-choices.md": "9168e884c03364739cc04cef77eee1c95c7484e7820a555a3bcc4c696ae41065"
+    },
+    "brief_sha256": "9e8c28a7b85baf7b2c86a188dd8b9702e39b2ace8c6fe13a855037bb0597a618",
+    "rubric_sha256": "47e1e216cec6cb961e0ab333d7fbc9c80b53ee82b81a3b1826db253335ebd264",
+    "candidates": [
+      {
+        "path": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-pass.md",
+        "sha256": "95290363ddbd5a86d126d5a68b35efd43b20a4825f2e7f84fe122d8f2d8fd3d7",
+        "skill_commit": "unknown"
+      }
+    ],
+    "run_id": "7a5128d4-c35b-4428-bf07-61294d181da6",
+    "timestamp_utc": "2026-08-04T14:02:00.395996+00:00",
+    "alias_mapping": {
+      "candidate-A": "/Users/iacoware/projects/iacoware/agent-skills/evals/plan-slices/fixtures/v3/boundary-pass.md"
+    },
+    "manifest_sha256": "66bdbe9e738d344ef7c4779e515cd6bcf733ea37929ae30163cf695c173f6214",
+    "label_set_sha256": "96933d7496d1c96c58c5aba7d52fca94654df95f3133f3263a79dba6d98726b3"
+  }
+}
