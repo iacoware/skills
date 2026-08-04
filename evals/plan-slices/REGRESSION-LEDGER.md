@@ -77,6 +77,34 @@ solo dei due, e tanto basta.
   l'`Outcome` della slice 5, che copre il solo inserimento manuale. Il piano `CC` regge su tutte e
   sei le righe.
 
+### Formulazioni da riscrivere — emerse nel ciclo CON-5
+
+Righe che il ciclo non ha potuto decidere, o che ha deciso solo scegliendo fra due letture. Restano
+al loro posto: il difetto è nella formulazione, non nel piano, e riscriverle senza un secondo caso
+significherebbe adattarle a questi due candidati.
+
+- **R-007 — non decidibile, resta `da verificare`.** Il secondo membro chiede quali *decisioni*
+  cambierebbero se la `Verification` di un `Enabler` fallisse, ma il piano pubblica la mappa
+  decisione↔slice solo dove esiste un `Decision checkpoint`. Per gli `Enabler` di consegna non ne
+  esiste nessuno — `CC` apre i checkpoint alla slice 3, `CX` alla slice 2 — e sono proprio quelli
+  dove il dubbio si pone: la seconda bullet di `Verification` della slice 1 di `CX` («Arresto,
+  risveglio da `suspend`, nuova connessione e redeploy preservano il round trip») può fallire per il
+  modo di sospensione Fly o per il pooling del provider Postgres, che sono decisioni distinte —
+  `LATER` § *Fly sempre caldo* e `Non-product work` § *Selezione Postgres*. Attribuire il
+  fallimento all'una o all'altra richiede di ricostruire la mappa, non di leggerla: il verdetto
+  sarebbe inventato. Sugli `Enabler` semantici — `CC` slice 3, `CX` slice 2 — la riga regge, perché
+  lì il checkpoint pubblica la decisione.
+- **R-002, secondo membro — non falsificabile su un piano senza `Open questions`.** `CX` non ha
+  quella sezione: le scelte non prese stanno in `Non-product work`, ognuna con la slice che blocca
+  («prima della slice 1», «prima della slice 2»…). Il membro risulta quindi vero a vuoto, e un piano
+  può soddisfarlo omettendo la sezione. Il verdetto della riga viene dal primo membro.
+- **R-003 — decisa sulla sostanza, non sulla lettera.** La disgiunzione nomina `Open questions` come
+  unica sede alternativa a una fonte citabile. Su `CX` provider Postgres, percorso di embedding e
+  modello di estrazione sono dichiarati non decisi in `Non-product work`, con la slice che
+  bloccano: stessa informazione, sezione diversa. La riga è `tiene` perché nessuna slice `NOW` di
+  nessuno dei due piani nomina una dipendenza esterna né scelta da una fonte né dichiarata aperta;
+  letta alla lettera sarebbe `regredita` su `CX` per il solo nome della sezione.
+
 ## Miglioramenti concordi non arrivati nello skill
 
 Estratti dalle sezioni `Improvements also present in the other report` dei due `REVIEW` CON-4 e
