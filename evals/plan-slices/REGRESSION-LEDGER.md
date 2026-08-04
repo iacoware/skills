@@ -55,9 +55,10 @@ Serve a due cose:
 | R-005 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Continuità del tema* ≡ *Keep a theme and its recovery path contiguous* | Se una slice `NOW` nomina un modo di fallimento nella propria `Verification` e un'altra slice `NOW` ne è il rimedio, nessuna slice di un tema diverso è collocata fra le due. | lettura per l'accoppiamento fallimento→rimedio; l'interposizione di temi è automatizzabile sull'annotazione `*(Theme: X)*` delle slice | 2026-08-04 | CON-5 · `CC`+`CX` · piani | tiene |
 | R-006 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | Una pipeline o un adapter condiviso da più percorsi è aperto negli `Includes` di una sola slice `NOW`; le slice successive che lo riusano lo dichiarano tale. Quella slice segue ogni slice `NOW` che le fornisce input, salvo quando valida input controllati che attraversano il calcolo di produzione e il brief dello scenario ammette la validazione anticipata. | lettura per l'identificazione dei produttori; l'unicità del proprietario è automatizzabile in parte (stesso adapter nominato negli `Includes` di due slice) | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
 | R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida incertezze su più di un sottosistema: la sua `Verification` non può fallire per cause che, in `Material uncertainties` del brief, appartengono a `Subsystem` diversi. Più voci dello stesso sottosistema sono una incertezza sola, anche quando la risposta invalida la scelta verificata. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito; l'elenco delle incertezze, dei sottosistemi e delle decisioni che cambiano lo pubblica il brief | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
-| R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento; automatizzabile l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | CON-5 · `CC`+`CX` · piani | regredita su `CX` |
+| R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento e, da R-011, per l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | regredita su `CX` |
 | R-009 | `a06a5cc` | `giudizio` — messaggio di commit di `a06a5cc`, difetto osservato su un piano graduato | Nessun `Outcome` di una slice `NOW` che precede l'identità promette un utente reale: ogni slice che precede l'identità e consegna un comportamento nomina il proprio pubblico, sviluppatore o tester sull'ambiente non pubblico dichiarato. Se le slice `NOW` che consegnano comportamento a un utente finale prima dell'identità sono più di due, `Ordering criteria` giustifica una volta il differimento residuo nominando l'evidenza che lo richiede. | lettura: il pubblico si legge dagli `Outcome` e la giustificazione dagli `Ordering criteria`, ma decidere se una slice consegna a un utente finale richiede giudizio | 2026-08-04 | CON-5 · `CC`+`CX` · piani | tiene |
 | R-010 | `87150d3` | `giudizio` — correzione di R-002, primo membro, regredita su `CC` in CON-5 | Una scelta che il piano non risolve citando una fonte che seleziona resta aperta anche quando il piano la dichiara in `Open questions` o le assegna una spike: nessuna bullet `Includes` o `Verification` di una slice che quella scelta blocca ne asserisce un lato. | lettura: riconoscere quali slice una scelta aperta blocca richiede il confronto fra la dichiarazione e le bullet | — | — | da verificare |
+| R-011 | `eb926bb` | `giudizio` — correzione di R-008, clausola `Enabler`, regredita su `CX` in CON-5 | Nessuna riga della tabella `Themes` la cui `First validation` risolve a una slice annotata `*(Enabler: …)*` omette il marcatore `*(Developer outcome)*` nella cella `Desired outcome`. | validator: il controllo incrocia due fatti già pubblicati, il numero di slice risolto dalla cella e il tag del titolo di quella slice | — | — | da verificare |
 
 ### Regressioni rilevate — ciclo CON-5 (2026-08-04)
 
@@ -208,6 +209,79 @@ sbagliato. Stessi due piani, stesso criterio: un'affermazione regge solo se regg
   ritorno dell'assertivo ma il suo opposto: piani che rinviano tutto alla decisione pendente e non
   pubblicano più niente di verificabile. Se compare, il difetto è in R-010, non nei piani.
 
+- **R-011, correzione di R-008 limitata alla clausola `Enabler` — `eb926bb`.** Anche qui la regola
+  violata esisteva già: il § 2 la porta da `9aa2586`, e `PLAN-CX-CON-5.md` è stato generato dopo
+  quel commit e l'ha violata lo stesso. Un secondo divieto testuale sarebbe la mossa già fallita.
+  La modifica non aggiunge un vincolo: rende **dichiarabile** l'eccezione già ammessa. Il tema che
+  la invoca appende `*(Developer outcome)*` alla cella `Desired outcome`, e il validator confronta
+  quel marcatore con il tag del titolo della slice che la cella risolve. Il gate smette di chiedere
+  a chi scrive un'affermazione e mette a confronto due fatti che il piano pubblica già.
+  Verificato sugli artefatti esistenti: il controllo scatta su `CX` CON-5 riga A e su `CC` CON-3
+  riga B — stesso difetto, altro modello, ciclo precedente a `9aa2586` — e non produce falsi
+  positivi su `CC` CON-2, CON-4 e CON-5, che restano `OK`. La correzione non nasce quindi da una
+  sola osservazione su un solo modello, che era la ragione per cui era stata rimandata.
+  **Da cercare al prossimo ciclo, oltre alla riga.** Il marcatore è dichiarativo: un piano può
+  apporlo a un desired outcome che per uno sviluppatore non è. Il validator non lo può sapere, e
+  quel residuo resta `lettura` dentro R-008. Il fallimento da sorvegliare è il marcatore apposto
+  per far passare il controllo, non la sua assenza.
+
+### Diagnosi decise dopo il ciclo CON-5 (2026-08-04)
+
+Le tre voci della tabella `Themes` di `PLAN-CX-CON-5.md` che hanno fatto regredire R-008 non hanno
+la stessa causa, e questo era il nodo che bloccava la correzione. Misurato su CON-5 · `CX` ·
+brief+piani, con controllo incrociato su CON-2, CON-3 e CON-4 di entrambi i modelli.
+
+- **Riga A — puntamento sbagliato, corretta da R-011.** Il tema è tagliato bene e la slice che
+  copre l'intero desired outcome esiste già: la 3, `*(Theme: A)*`, `Outcome` «Un tester può
+  valutare il principale differenziatore nel prodotto reale distribuito». La cella punta una slice
+  troppo presto, alla 2, il cui `Outcome` nomina esplicitamente gli sviluppatori mentre il desired
+  outcome del tema — «Trovare nel ricettario corrente ricette pertinenti anche tra lingue diverse»
+  — no. L'`Accepted alternative` del brief sugli input controlli («may validate extraction,
+  embeddings, or search before their final user entry point») autorizza l'**ordine**, cioè che
+  l'`Enabler` preceda il validatore, cosa che R-008 già ammette al primo periodo; non dice nulla su
+  quale slice la cella `First validation` debba nominare. Nessuna contraddizione con il brief:
+  il difetto è nel piano.
+- **Riga C — `Theme compression`, non primo validatore parziale.** Il tema C tiene le slice 5
+  (manuale), 6 (URL/JSON-LD), 7 (incolla/LLM) e 8 (fallback LLM automatico).
+  *Test di split, applicato:* ciascuna può essere cancellata, differita o riordinata senza
+  invalidare l'evidenza delle altre. L'evidenza della 6 è l'hit-rate JSON-LD sui blog reali (U4 del
+  brief), quella della 7 è accuratezza e costo del modello cheap a output strutturato (U5), quella
+  della 5 è che il modello testuale minimo riduce l'attrito — nessuna delle tre ha bisogno delle
+  altre. Il piano lo dichiara da sé: tre `Learning / risk` distinti e due voci di `Non-product work`
+  separate, «Arricchimento manuale, prima della slice 5» e «Selezione LLM estrazione, prima della
+  slice 7». I cinque criteri del § 2 separano su quattro: lavoro dell'utente (scrivere una ricetta
+  che si conosce vs salvarne una trovata online), frequenza d'uso (gli `Ordering criteria` dello
+  stesso piano dicono che l'import da URL è il «caso più frequente»), rischio primario (attrito vs
+  U4 vs U5), adapter e profilo operativo (form condiviso vs fetch server-side con SSRF e parser
+  JSON-LD vs provider LLM con timeout e costo per chiamata).
+  *Test di merge, applicato:* fallisce. Ciò che le quattro slice condividono è il salvataggio
+  immediato, il form di edit e la rigenerazione dell'embedding — cioè «a shared entity, form,
+  pipeline, or implementation», che il § 2 nomina esplicitamente come ragione **non** sufficiente
+  per unire valore schedulabile in modo indipendente.
+  *Controprova strutturale:* se il tema fosse legittimo, l'unica slice che copre «manuale, URL o
+  testo» sarebbe la 8, l'ultima del tema. Un tema il cui desired outcome è validabile solo dalla
+  propria ultima slice non ha un primo validatore per costruzione: è compresso, non mal puntato.
+  *Controprova fra generazioni:* `CX` CON-3 taglia le stesse capacità in tre temi (C manuale, D
+  importazione web, E estrazione resiliente) e CON-4 in due (C manutenzione, D acquisizione da
+  fonti esterne); `CC` CON-5 in due (A cattura manuale, B import automatico). CON-5 di `CX`
+  comprime rispetto ai propri cicli precedenti e rispetto all'altro modello.
+  *Sede:* il test di split del § 2, che vieta già esattamente questo e non va riscritto. **R-008
+  resta scoperta sulla riga C**: la correzione non è sua. Nessuna modifica applicata — un vincolo
+  aggiunto a R-008 sulla copertura enumerativa avrebbe scritto una regola contro il difetto
+  sbagliato, che è la ragione per cui la proposta era stata rimandata.
+- **Riga D — copertura parziale, causa diversa dalla C.** Qui il tema regge: le slice 9 e 11
+  condividono l'adapter R2 e l'unico invariante pubblicato in `Cross-functional concerns` («una sola
+  foto è cover»), e la 11 non produce evidenza utile senza la 9. Il test di merge passa su
+  interazione e invariante, quindi non c'è compressione. Il difetto è la copertura: desired outcome
+  «Conservare foto affidabili con una cover controllabile» contro l'`Outcome` della slice 9, «una
+  cover stabile senza hotlink fragile», che copre il solo termine dell'affidabilità; la scelta della
+  cover arriva alla 11. La lettura alternativa — «controllabile» come «controllata dal sistema,
+  non in hotlink» — è esclusa dal vocabolario del piano stesso: la slice 11 chiama quell'atto
+  «controllarne l'immagine principale». Decidibile da ciò che il piano pubblica, quindi la riga non
+  va in *Formulazioni riscritte*. La terza clausola di R-008 vieta già il caso; nessuna modifica
+  applicata, e la verifica resta `lettura` perché il confronto termine per termine si fa su una
+  cella scritta nella lingua dell'utente.
+
 ## Miglioramenti concordi non arrivati nello skill
 
 Estratti dalle sezioni `Improvements also present in the other report` dei due `REVIEW` CON-4 e
@@ -252,9 +326,11 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 
 ## Da popolare
 
-- **Correzione per R-008.** Il registro prescrive che a una riga `regredita` segua la riga della
-  correzione, e che nessuna delle due si cancelli. R-002 è coperta da R-010; R-008 resta scoperta,
-  per le ragioni nella voce qui sotto.
+- **Correzione per R-008, parziale.** R-002 è coperta da R-010; R-008 è coperta da R-011 sulla sola
+  clausola `Enabler`, cioè sulla riga A della regressione. Restano scoperte la riga C — la cui sede
+  è il test di split del § 2, non R-008 — e la riga D, che R-008 vieta già e che nessuno strumento
+  può decidere al posto di una lettura. Le tre diagnosi stanno in *Diagnosi decise dopo il ciclo
+  CON-5*.
 - **Correzioni rimandate in attesa di un secondo ciclo.** Tre proposte nate dalle stesse due
   regressioni sono state scritte e non applicate, perché ognuna estende un perimetro o aggiunge un
   vincolo sulla base di una sola osservazione, su un solo modello. Il registro esiste per distinguere
@@ -269,23 +345,18 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
     conflitto richiede è sceglierlo — va applicata insieme all'allineamento dell'anti-pattern
     *Silent contradiction*, che oggi nomina solo la slice non condizionale. **Sblocca:** la stessa
     scelta per collocazione osservata su una generazione diversa da `CC`.
-  - **`First validation` che punta a un `Enabler`, controllata dal validator.** Il controllo sembra
-    sintattico e `validate_plan.py` ha già entrambi i dati — risolve la cella a una slice `NOW`
-    esistente e parsifica il tag del titolo — ma l'eccezione dello skill («unless the theme's desired
-    outcome is itself for a developer») è semantica, e il registro la legge come dichiarata nel
-    desired outcome. Un controllo sintattico boccerebbe un piano che usa legittimamente l'eccezione,
-    cercando una parola in una cella che lo skill impone di scrivere nella lingua dell'utente.
-    **Sblocca:** un marcatore esplicito dell'eccezione nel template, oppure la decisione di degradare
-    il controllo a warning — che però lascerebbe R-008 `lettura`.
-  - **Copertura del desired outcome, confronto termine per termine.** `CX` ha scritto desired outcome
-    enumerativi («da input manuale, URL o testo», «cover controllabile») e li ha validati con slice
-    che ne coprono un termine. La regola sulla copertura parziale esiste già ed è corretta: chiede
-    una valutazione invece di un confronto. Prima di aggiungerne una accanto va decisa una diagnosi
-    alternativa: il tema C di `CX` — tre ingressi con failure mode e rischi diversi — potrebbe essere
-    un caso di `Theme compression`, e allora la sede giusta è il test di split, non il primo
-    validatore. Nel dubbio si scriverebbe una regola contro il difetto sbagliato, e la seconda
-    regressione al ciclo successivo verrebbe letta come formulazione sbagliata invece che come
-    puntamento sbagliato. **Sblocca:** la rilettura del test di split e dei `REVIEW` CON-4 sul tema C.
+  - **`First validation` che punta a un `Enabler`, controllata dal validator. — Applicata, R-011
+    (2026-08-04).** Sbloccata dalla prima delle due vie che la voce indicava: il marcatore esplicito
+    `*(Developer outcome)*` nel template. La condizione «una sola osservazione su un solo modello»
+    è caduta con `CC` CON-3 riga B, che porta lo stesso difetto.
+  - **Copertura del desired outcome, confronto termine per termine. — Non applicata, diagnosi decisa
+    (2026-08-04).** La diagnosi alternativa che la voce chiedeva di decidere è quella giusta sulla
+    riga C: `Theme compression`, sede il test di split del § 2, che già la vieta. Sulla riga D invece
+    la diagnosi enumerativa regge, ed è già coperta dalla terza clausola di R-008. Le due righe hanno
+    cause diverse, quindi una sola regola nuova accanto a R-008 avrebbe mancato entrambe. Nessuna
+    regola aggiunta. **Sblocca una regola nuova:** una copertura parziale osservata su un tema che
+    supera il test di split, cioè non riducibile a compressione, su una generazione diversa da `CX`
+    CON-5.
 - **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo) e
   `b0d6dc5` (limitazione alle roadmap ad alto livello) non sono ricostruibili dall'intersezione dei
   due `REVIEW`: il primo non compare in nessuna delle due sezioni `also present`, il secondo non ha
