@@ -1,13 +1,18 @@
 SCENARIO ?= recipe-app
 PLAN ?=
-GRADER ?= codex
-MODEL ?=
-CODEX_MODEL ?=
-CLAUDE_MODEL ?=
-GRADE_TIMEOUT ?= 900
-GRADE ?= $(patsubst %.md,%.$(GRADER).GRADE.json,$(PLAN))
-SCORE ?= $(patsubst %.md,%.$(GRADER).SCORE.json,$(PLAN))
-PROMPT ?= $(patsubst %.md,%.GRADE-PROMPT.md,$(PLAN))
+PLANS ?=
+BEFORE ?=
+AFTER ?=
+PROVIDER ?= both
+CODEX_MODEL ?= gpt-5.6-sol
+CODEX_EFFORT ?= high
+CLAUDE_MODEL ?= claude-opus-5
+CLAUDE_EFFORT ?= high
+TIMEOUT ?= 900
+DRY_RUN ?=
+RESUME ?=
+CONFIRM_SEND ?=
+SKILL_COMMITS ?=
 
 ROOT := ../..
 SCENARIO_DIR := $(SCENARIO)
@@ -19,27 +24,46 @@ SOURCES := \
 	$(SCENARIO_DIR)/sources/concepts.md \
 	$(SCENARIO_DIR)/sources/arch-choices.md \
 	$(SCENARIO_DIR)/sources/tech-choices.md
+RUBRIC := grader-rubric.json
+FIXTURE_MANIFEST ?= fixtures/manifest.json
+CALIBRATION_REPORT ?= $(RESULTS_DIR)/CALIBRATION.json
+
 VALIDATOR := $(ROOT)/skills/plan-slices/scripts/validate_plan.py
 EXPECTATIONS_TOOL := scripts/derive_expectations.py
-GRADER_TOOL := scripts/grade_plan.py
-RUBRIC := grader-rubric.json
-MODEL_ARG := $(if $(strip $(MODEL)),--model "$(MODEL)",)
+ORCHESTRATOR_TOOL := scripts/orchestrate_grading.py
+
+ENABLED_VALUES := 1 true yes
+DRY_RUN_ARG = $(if $(filter $(ENABLED_VALUES),$(DRY_RUN)),--dry-run,)
+RESUME_ARG = $(if $(filter $(ENABLED_VALUES),$(RESUME)),--resume,)
+CONFIRM_SEND_ARG = $(if $(filter $(ENABLED_VALUES),$(CONFIRM_SEND)),--confirm-send,)
+SKILL_COMMIT_ARGS = $(foreach commit,$(SKILL_COMMITS),--candidate-skill-commit "$(commit)")
+COMMON_ARGS = \
+	$(foreach source,$(SOURCES),--source "$(source)") \
+	--reference "$(REFERENCE)" \
+	--rubric "$(RUBRIC)" \
+	--output-dir "$(RESULTS_DIR)" \
+	--codex-model "$(CODEX_MODEL)" \
+	--codex-effort "$(CODEX_EFFORT)" \
+	--claude-model "$(CLAUDE_MODEL)" \
+	--claude-effort "$(CLAUDE_EFFORT)" \
+	--timeout "$(TIMEOUT)" \
+	$(SKILL_COMMIT_ARGS) \
+	$(DRY_RUN_ARG) \
+	$(RESUME_ARG) \
+	$(CONFIRM_SEND_ARG)
 
 .PHONY: help test validate validate-structure expectations-check expectations-generate \
-	grade grade-all grader-prompt grader-score require-plan require-grade
+	grade compare calibrate require-orchestrator require-plan require-plans require-comparison
 
 help:
-	@echo "Plan-slices eval commands (SCENARIO defaults to recipe-app):"
+	@echo "Plan-slices evaluation commands (SCENARIO defaults to recipe-app):"
+	@echo "  make grade PLANS='PLAN-CX-5.md PLAN-CC-5.md' DRY_RUN=1"
+	@echo "  make compare BEFORE=PLAN-CX-5.md AFTER=PLAN-CX-6.md DRY_RUN=1"
+	@echo "  make calibrate DRY_RUN=1"
+	@echo "  Add RESUME=1 to verify and reuse existing artifacts."
+	@echo "  Add CONFIRM_SEND=1 only after reviewing dry-run output."
+	@echo "  make validate PLAN=PLAN-CX-5.md"
 	@echo "  make test"
-	@echo "  make validate PLAN=PLAN-CX-CON-4.md"
-	@echo "  make validate-structure PLAN=PLAN-CX-CON-4.md"
-	@echo "  make expectations-check"
-	@echo "  make expectations-generate"
-	@echo "  make grade PLAN=PLAN-CX-CON-4.md GRADER=codex"
-	@echo "  make grade PLAN=PLAN-CX-CON-4.md GRADER=claude"
-	@echo "  make grade-all PLAN=PLAN-CX-CON-4.md"
-	@echo "  make grader-prompt PLAN=PLAN-CX-CON-4.md"
-	@echo "  make grader-score GRADE=PLAN-CX-CON-4.GRADE.json"
 
 test:
 	cd $(ROOT)/skills/plan-slices/scripts && python3 -m unittest
@@ -58,34 +82,39 @@ expectations-check:
 expectations-generate:
 	python3 $(EXPECTATIONS_TOOL) $(REFERENCE) $(EXPECTATIONS)
 
-grade: require-plan validate-structure
-	python3 $(GRADER_TOOL) run \
-		--provider $(GRADER) \
-		--rubric $(RUBRIC) \
-		--reference $(REFERENCE) \
-		--plan $(RESULTS_DIR)/$(PLAN) \
-		--sources $(SOURCES) \
-		--grade-output $(RESULTS_DIR)/$(GRADE) \
-		--score-output $(RESULTS_DIR)/$(SCORE) \
-		--timeout $(GRADE_TIMEOUT) $(MODEL_ARG)
+grade: require-orchestrator require-plans
+	python3 $(ORCHESTRATOR_TOOL) grade \
+		$(addprefix $(RESULTS_DIR)/,$(PLANS)) \
+		--provider "$(PROVIDER)" \
+		$(COMMON_ARGS)
 
-grade-all: require-plan
-	$(MAKE) grade PLAN=$(PLAN) GRADER=codex MODEL="$(CODEX_MODEL)"
-	$(MAKE) grade PLAN=$(PLAN) GRADER=claude MODEL="$(CLAUDE_MODEL)"
+compare: require-orchestrator require-comparison
+	python3 $(ORCHESTRATOR_TOOL) compare \
+		"$(RESULTS_DIR)/$(BEFORE)" \
+		"$(RESULTS_DIR)/$(AFTER)" \
+		--provider "$(PROVIDER)" \
+		$(COMMON_ARGS)
 
-grader-prompt: require-plan
-	@python3 $(GRADER_TOOL) prompt \
-		--rubric $(RUBRIC) \
-		--reference $(REFERENCE) \
-		--plan $(RESULTS_DIR)/$(PLAN) \
-		--sources $(SOURCES) > $(RESULTS_DIR)/$(PROMPT)
-	@echo "WROTE: $(RESULTS_DIR)/$(PROMPT)"
+calibrate: require-orchestrator
+	python3 $(ORCHESTRATOR_TOOL) calibrate \
+		--manifest "$(FIXTURE_MANIFEST)" \
+		--report-output "$(CALIBRATION_REPORT)" \
+		$(COMMON_ARGS)
 
-grader-score: require-grade
-	python3 $(GRADER_TOOL) score --rubric $(RUBRIC) $(RESULTS_DIR)/$(GRADE)
+require-orchestrator:
+	@test -f "$(ORCHESTRATOR_TOOL)" || { \
+		echo "ERROR: $(ORCHESTRATOR_TOOL) is not implemented yet"; \
+		exit 2; \
+	}
 
 require-plan:
-	@test -n "$(PLAN)" || { echo "usage: make <target> PLAN=<plan.md>"; exit 2; }
+	@test -n "$(PLAN)" || { echo "usage: make validate PLAN=<plan.md>"; exit 2; }
 
-require-grade:
-	@test -n "$(GRADE)" || { echo "usage: make grader-score GRADE=<grade.json>"; exit 2; }
+require-plans:
+	@test -n "$(PLANS)" || { echo "usage: make grade PLANS='<plan.md> [plan.md ...]'"; exit 2; }
+
+require-comparison:
+	@test -n "$(BEFORE)" && test -n "$(AFTER)" || { \
+		echo "usage: make compare BEFORE=<before.md> AFTER=<after.md>"; \
+		exit 2; \
+	}
