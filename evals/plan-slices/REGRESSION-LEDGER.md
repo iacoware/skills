@@ -67,6 +67,16 @@ solo dei due, e tanto basta.
   slice e voce `Open questions` che ne blocca l'accettazione — ma la bullet `Includes` resta
   assertiva. Il piano `CX` non viola il membro: slice 2 e 3 dicono «query generata secondo la
   decisione presa/della spike».
+- **R-002, primo membro — `PLAN-CC-CON-5.md`, slice 2, `Includes`.** Seconda violazione della stessa
+  riga, sul secondo conflitto dichiarato dal brief. «Form condiviso creazione ed edit: titolo,
+  ingredienti e preparazione come testo libero, nessun parsing di quantità e unità» asserisce il
+  percorso manuale mentre `EVALUATION-BRIEF.md` § *Known conflicts* impone di «defer to a resolved
+  interpretation **before asserting the manual path**»: `concepts.md` § *Pipeline di estrazione* fa
+  saltare l'estrazione all'input manuale, `arch-choices.md` § *Estrazione contenuto* gliela fa
+  riusare. Il piano risolve il conflitto di soppiatto, scegliendo il lato `concepts.md` in una voce
+  `LATER` («Derivazione di tag e tempo per le ricette inserite a mano»). `CX` fa quanto richiesto:
+  slice 5 «trattamento di tag e tempo conforme alla decisione del lavoro non-prodotto», con la voce
+  corrispondente in `Non-product work`.
 - **R-008 — `PLAN-CX-CON-5.md`, tabella `Themes`.** Tre voci smentiscono la riga, su entrambi i
   membri. Riga A: la `First validation` è «2. Indicizzazione multilingue osservabile», slice
   annotata `*(Enabler: ricerca semantica)*`, mentre il desired outcome del tema — «Trovare nel
