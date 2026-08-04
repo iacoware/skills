@@ -25,16 +25,18 @@
 # Material uncertainties
 
 What this scenario does not know yet, and the decision each answer changes. A plan is free to place
-these where it wants, but a single `Enabler` whose `Verification` can fail for causes belonging to
-two different rows is validating more than one of them.
+these where it wants. `Subsystem` groups uncertainties that a single slice may validate together:
+two rows of the same subsystem are one question asked twice, while two subsystems in one slice are
+two, and an `Enabler` that spans two subsystems is putting more on the fire than one cold
+implementation session can carry.
 
-| Uncertainty | Decision it changes | Source |
-|---|---|---|
-| Does the chosen Postgres provider sustain a real TCP driver, pooling and migrations across scale-to-zero? | Neon or Supabase, and the driver and connection mode | `sources/arch-choices.md`, “Datastore”; `sources/tech-choices.md`, “Persistenza / ORM” |
-| Is the multilingual embedder's cross-language recall good enough on real recipes? | Replace the model, change the indexed text, or abandon the differentiator and with it the product's reason to exist | `sources/goal.md`, “Differenziatore”; `sources/arch-choices.md`, “Embeddings” |
-| Is the first request after inactivity slow enough to bother a real user? | Keep `suspend` with scale-to-zero or move to an always-warm machine at ~$3/month | `sources/arch-choices.md`, “Hosting” |
-| What is the JSON-LD hit rate on the blogs actually used? | How much weight and cost the LLM fallback carries, and whether it moves earlier or later | `sources/arch-choices.md`, “Estrazione contenuto” |
-| Is a cheap structured-output model accurate enough per recipe, at fractions of a cent? | Which model implements the fallback, or narrowing the cases that invoke it | `sources/arch-choices.md`, “Estrazione contenuto” |
+| ID | Subsystem | Uncertainty | Decision it changes | Source |
+|---|---|---|---|---|
+| U1 | Delivery infrastructure | Does the chosen Postgres provider sustain a real TCP driver, pooling and migrations across scale-to-zero? | Neon or Supabase, and the driver and connection mode | `sources/arch-choices.md`, “Datastore”; `sources/tech-choices.md`, “Persistenza / ORM” |
+| U2 | Delivery infrastructure | Is the first request after inactivity slow enough to bother a real user? | Keep `suspend` with scale-to-zero, move to an always-warm machine at ~$3/month, or — if the target itself fails — reconsider the hosting choice | `sources/arch-choices.md`, “Hosting” |
+| U3 | Semantic engine | Is the multilingual embedder's cross-language recall good enough on real recipes, at the expected scale and cost? | Replace the model, change the indexed text, or abandon the differentiator and with it the product's reason to exist | `sources/goal.md`, “Differenziatore”; `sources/arch-choices.md`, “Embeddings” |
+| U4 | Extraction | What is the JSON-LD hit rate on the blogs actually used? | How much weight and cost the LLM fallback carries, and whether it moves earlier or later | `sources/arch-choices.md`, “Estrazione contenuto” |
+| U5 | Extraction | Is a cheap structured-output model accurate enough per recipe, at fractions of a cent? | Which model implements the fallback, or narrowing the cases that invoke it | `sources/arch-choices.md`, “Estrazione contenuto” |
 
 # Known conflicts
 
