@@ -89,9 +89,11 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
   o `regredita`, e non costa chiamate.
 - **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo),
   `b0d6dc5` (limitazione alle roadmap ad alto livello) e `a06a5cc` (soglia al differimento
-  dell'identità) non nascono da miglioramenti comuni: il primo non compare in nessuna delle due
-  sezioni `also present`, gli altri due sono classificati `unique` da un report e `only in the other
-  report` dall'altro. Sono applicazioni che il filtro di precisione non avrebbe fatto passare, e
-  vanno registrate con la loro origine reale prima di attribuirle al ciclo CON-4.
-- **Modifiche precedenti a `d88328f`.** Restano senza previsione scritta e senza un `REVIEW` da cui
-  ricostruirla: si registrano solo se un ciclo futuro ne solleva una regressione.
+  dell'identità) non sono ricostruibili dall'intersezione dei due `REVIEW`: il primo non compare in
+  nessuna delle due sezioni `also present`, `a06a5cc` corrisponde a un miglioramento presente in un
+  solo report, `b0d6dc5` non ha una corrispondenza verificata. Sono modifiche entrate per giudizio
+  su un difetto osservato — `a06a5cc` cita il proprio nel messaggio di commit — e la loro previsione
+  va ricostruita da lì, non dai `REVIEW`.
+- **Modifiche precedenti a `d88328f`.** Nascono da conversazioni fra umano e agente sui piani
+  generati, precedenti al confronto fra modelli: non esiste un artefatto da cui ricostruire una
+  previsione. Si registrano solo se un ciclo futuro ne solleva una regressione.
