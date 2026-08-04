@@ -57,6 +57,7 @@ Serve a due cose:
 | R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida incertezze su più di un sottosistema: la sua `Verification` non può fallire per cause che, in `Material uncertainties` del brief, appartengono a `Subsystem` diversi. Più voci dello stesso sottosistema sono una incertezza sola, anche quando la risposta invalida la scelta verificata. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito; l'elenco delle incertezze, dei sottosistemi e delle decisioni che cambiano lo pubblica il brief | 2026-08-04 | CON-5 · `CC`+`CX` · brief+piani | tiene |
 | R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento; automatizzabile l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | CON-5 · `CC`+`CX` · piani | regredita su `CX` |
 | R-009 | `a06a5cc` | `giudizio` — messaggio di commit di `a06a5cc`, difetto osservato su un piano graduato | Nessun `Outcome` di una slice `NOW` che precede l'identità promette un utente reale: ogni slice che precede l'identità e consegna un comportamento nomina il proprio pubblico, sviluppatore o tester sull'ambiente non pubblico dichiarato. Se le slice `NOW` che consegnano comportamento a un utente finale prima dell'identità sono più di due, `Ordering criteria` giustifica una volta il differimento residuo nominando l'evidenza che lo richiede. | lettura: il pubblico si legge dagli `Outcome` e la giustificazione dagli `Ordering criteria`, ma decidere se una slice consegna a un utente finale richiede giudizio | 2026-08-04 | CON-5 · `CC`+`CX` · piani | tiene |
+| R-010 | `87150d3` | `giudizio` — correzione di R-002, primo membro, regredita su `CC` in CON-5 | Una scelta che il piano non risolve citando una fonte che seleziona resta aperta anche quando il piano la dichiara in `Open questions` o le assegna una spike: nessuna bullet `Includes` o `Verification` di una slice che quella scelta blocca ne asserisce un lato. | lettura: riconoscere quali slice una scelta aperta blocca richiede il confronto fra la dichiarazione e le bullet | — | — | da verificare |
 
 ### Regressioni rilevate — ciclo CON-5 (2026-08-04)
 
@@ -188,6 +189,25 @@ sbagliato. Stessi due piani, stesso criterio: un'affermazione regge solo se regg
   scatta; `CC` giustifica comunque il differimento negli `Ordering criteria` («nessuna behaviour
   rivolta a utenti reali precede lo slice 5»).
 
+### Correzioni applicate dopo il ciclo CON-5 (2026-08-04)
+
+- **R-010, correzione di R-002 — `87150d3`.** La regola violata esisteva già, nel corpo del passo 1 e
+  nel `Complete when`. Non è stata riscritta per aggiungere un divieto: era autocontraddittoria. Lo
+  stesso periodo usava `close` per l'atto di dichiarare («*Close* every material entry either with an
+  `Open questions` item … or with a spike») e per l'atto di decidere («*Until it closes*, no
+  `Includes` or `Verification` bullet may assert a side»). `CC` ha fatto letteralmente la prima —
+  voce `Open questions` sul conflitto dell'embedding di query, con la slice bloccata — e ne ha
+  dedotto il diritto di asserire nella slice 4. La correzione separa *esporre* da *risolvere*: solo
+  una fonte che seleziona risolve, mentre una domanda pubblicata e una spike pianificata lasciano
+  aperta la voce, perché al momento in cui il piano è scritto nessuna delle due ha prodotto la
+  risposta. Entrambe le sedi restano ammesse, come richiede R-003: cambia solo cosa autorizzano a
+  scrivere nelle slice bloccate.
+  **Da cercare al prossimo ciclo, oltre alla riga.** La correzione nasce da una violazione su un solo
+  modello: `CX` non violava nessuno dei due membri di R-002 e usava già la formulazione condizionale.
+  È il modo tipico in cui `giudizio` applica una regola falsa. Il fallimento da sorvegliare non è il
+  ritorno dell'assertivo ma il suo opposto: piani che rinviano tutto alla decisione pendente e non
+  pubblicano più niente di verificabile. Se compare, il difetto è in R-010, non nei piani.
+
 ## Miglioramenti concordi non arrivati nello skill
 
 Estratti dalle sezioni `Improvements also present in the other report` dei due `REVIEW` CON-4 e
@@ -232,9 +252,9 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 
 ## Da popolare
 
-- **Correzioni per R-002 e R-008.** Il registro prescrive che a una riga `regredita` segua la riga
-  della correzione, e che nessuna delle due si cancelli. Le due righe restano scoperte finché una
-  modifica dello `SKILL.md` non le riapre: la sessione CON-5 misurava, non correggeva.
+- **Correzione per R-008.** Il registro prescrive che a una riga `regredita` segua la riga della
+  correzione, e che nessuna delle due si cancelli. R-002 è coperta da R-010; R-008 resta scoperta,
+  per le ragioni nella voce qui sotto.
 - **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo) e
   `b0d6dc5` (limitazione alle roadmap ad alto livello) non sono ricostruibili dall'intersezione dei
   due `REVIEW`: il primo non compare in nessuna delle due sezioni `also present`, il secondo non ha
