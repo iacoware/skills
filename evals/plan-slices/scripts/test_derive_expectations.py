@@ -22,7 +22,11 @@ class DeriveExpectationsTests(unittest.TestCase):
 ## Machine-readable expectations
 
 ```json
-{"schema_version": 1, "theme_count": 2}
+{"schema_version": 1,
+ "precedence_rules": [{"before": "A", "after": "B"}],
+ "slice_rules": [{"title": "A", "required_patterns": ["x"]}],
+ "section_rules": [{"section": "NOW", "required_patterns": ["x"]}],
+ "horizon_rules": [{"pattern": "x", "horizon": "LATER"}]}
 ```
 """
         with tempfile.TemporaryDirectory() as directory:
@@ -31,7 +35,7 @@ class DeriveExpectationsTests(unittest.TestCase):
 
             derived = json.loads(derive_expectations(reference))
 
-        self.assertEqual(derived["theme_count"], 2)
+        self.assertNotIn("theme_count", derived)
         self.assertEqual(derived["_meta"]["generated_from"], "REFERENCE-PLAN.md")
         self.assertEqual(
             derived["_meta"]["reference_sha256"],
@@ -45,7 +49,11 @@ class DeriveExpectationsTests(unittest.TestCase):
 ## Machine-readable expectations
 
 ```json
-{"schema_version": 1}
+{"schema_version": 1,
+ "precedence_rules": [{"before": "A", "after": "B"}],
+ "slice_rules": [{"title": "A", "required_patterns": ["x"]}],
+ "section_rules": [{"section": "NOW", "required_patterns": ["x"]}],
+ "horizon_rules": [{"pattern": "x", "horizon": "LATER"}]}
 ```
 """
         with tempfile.TemporaryDirectory() as directory:
@@ -65,6 +73,40 @@ class DeriveExpectationsTests(unittest.TestCase):
             reference.write_text("# Reference\n", encoding="utf-8")
 
             with self.assertRaisesRegex(ValueError, "missing"):
+                derive_expectations(reference)
+
+    def test_rejects_missing_hard_constraint_data(self) -> None:
+        reference_text = """\
+# Reference
+
+## Machine-readable expectations
+
+```json
+{"schema_version": 1}
+```
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            reference = Path(directory) / "REFERENCE-PLAN.md"
+            reference.write_text(reference_text, encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "hard constraints"):
+                derive_expectations(reference)
+
+    def test_rejects_preferred_theme_count(self) -> None:
+        reference_text = """\
+# Reference
+
+## Machine-readable expectations
+
+```json
+{"schema_version": 1, "theme_count": 7}
+```
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            reference = Path(directory) / "REFERENCE-PLAN.md"
+            reference.write_text(reference_text, encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "preferred-only"):
                 derive_expectations(reference)
 
 

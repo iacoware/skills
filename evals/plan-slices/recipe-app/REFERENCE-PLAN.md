@@ -2,13 +2,24 @@
 
 ## Scopo e uso
 
-- Definisce temi, slice, ordine e confini attesi per lo scenario `recipe-app`, a partire da `sources/`.
-- È l'unico riferimento semantico per giudicare i piani in `results/`; `EVAL-NOTES.md` conserva soltanto lo storico delle valutazioni.
-- `expectations.json` verrà derivato dagli invarianti solo quando generazioni indipendenti produrranno risultati soddisfacenti e stabili.
+- Classifica vincoli, preferenze, alternative ed esempi per lo scenario `recipe-app`, a partire da `sources/`.
+- Le fonti in `sources/` definiscono la verità fattuale di prodotto e prevalgono sempre sul reference.
+- Il reference interpreta le fonti; `EVAL-NOTES.md` conserva soltanto lo storico delle valutazioni.
+- `expectations.json` è derivato esclusivamente dai vincoli duri meccanicamente verificabili.
 - Non è un piano pubblicato: contiene la motivazione d'ordine per slice, che un piano prodotto dalla skill non deve avere.
-- Un piano non deve coincidere alla lettera. È corretto se copre gli stessi temi, rispetta gli `Invarianti d'ordine` e mantiene i confini dichiarati in `Fuori dalla slice`.
+- Un piano non deve coincidere per titoli, numerazione, numero di temi, ordine preferito o dettaglio d'esempio.
+
+## Classi di autorità
+
+- **HARD CONSTRAINT:** proprietà richiesta dalle fonti, dalla sicurezza o dalla coerenza minima; può causare un difetto grave.
+- **PREFERRED DECOMPOSITION:** scelta raccomandata ma contestabile; si valuta con la rubric, non per corrispondenza esatta.
+- **ACCEPTED ALTERNATIVE:** scelta nota equivalente quando conserva le evidenze dichiarate.
+- **EXAMPLE EVIDENCE:** dimostrazione illustrativa; non crea da sola un requisito.
 
 ## Ordering criteria
+
+**Authority: PREFERRED DECOMPOSITION.** Le regole dure sono ripetute separatamente sotto
+`Hard constraints`; un ordine diverso supportato dalle fonti non è penalizzato per la sola differenza.
 
 - Prima il percorso di consegna minimo, poi le convenzioni di dominio e UI su comportamento reale ma minuscolo, poi il rischio esistenziale.
 - Lo skeleton prova che l'infrastruttura già decisa è connessa e gira; gli adapter usati da una sola slice restano in quella slice.
@@ -21,6 +32,9 @@
 
 ## Themes
 
+**Authority: PREFERRED DECOMPOSITION.** La tabella è una decomposizione consigliata, non impone
+titoli o numero di temi; split e merge source-supported restano giudizi semantici della rubric.
+
 | Theme | Desired outcome | First validation |
 |---|---|---|
 | Ricerca | Descrivo un piatto a parole mie e trovo la ricetta giusta anche se scritta in un'altra lingua | 4. Ricerca semantica cross-lingua |
@@ -32,6 +46,10 @@
 | Condivisione | Famiglia e amici contribuiscono allo stesso ricettario da pari | 12. Invito e collaborazione paritaria |
 
 ## NOW
+
+**Authority: PREFERRED DECOMPOSITION.** `Esito`, `Fuori dalla slice` e `Perché qui` descrivono il
+taglio consigliato. Ogni campo `Evidenza` è **EXAMPLE EVIDENCE**, salvo una proprietà ripetuta sotto
+`Hard constraints`.
 
 Il `NOW` completo è consegnabile a utenti selezionati. Le slice 0–5 servono sviluppatori e revisori
 umani; dalla 6 ogni incremento è utilizzabile da utenti reali. Ogni slice è verticale, verificabile
@@ -136,23 +154,33 @@ e revertibile.
 - **Fuori dalla slice:** nuove capability di prodotto.
 - **Perché qui:** senza questa slice `NOW` non raggiunge mai gli utenti dichiarati e il vincolo di costo non viene mai misurato sul campo.
 
-## Invarianti d'ordine
+## Hard constraints
 
-Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizioni.
+**Authority: HARD CONSTRAINT.** Queste sole regole d'ordine e confine sono normative.
 
-- `0` e `1` sono separati; `1` attraversa database e pipeline di migrazione con operazioni non di dominio, e non contiene entità di dominio, CRUD, autenticazione né tenancy.
-- Un enabler di dominio minuscolo stabilisce persistenza, resolver di scope e shell del ricettario corrente prima dell'indicizzazione; non introduce creazione tramite UI.
-- La pipeline di indicizzazione reale precede immediatamente la slice di ricerca.
-- La ricerca semantica precede ogni slice di acquisizione, foto e condivisione.
-- Il confine di scope è applicato dalla prima slice che persiste dati, tramite un resolver unico dichiarato nei `Cross-functional concerns`.
-- L'identità arriva entro la prima slice destinata a utenti reali e sostituisce lo scope configurato in quel solo punto.
-- Il primo accesso crea automaticamente il primo ricettario; la creazione esplicita di altri ricettari non precede ricerca o inserimento.
-- La form condivisa di inserimento e modifica precede la prima slice di import.
-- Il fallback LLM segue l'import JSON-LD; il testo incollato segue il fallback LLM.
-- Le foto arrivano dopo che l'acquisizione testuale è chiusa e stanno in una sola slice.
+- Repository/CI e walking skeleton sono separati; lo skeleton usa deploy, database reale e migration runner con operazioni non di dominio, senza CRUD, autenticazione o tenancy.
+- La pipeline reale di indicizzazione precede il validatore di ricerca; la ricerca semantica cross-lingua precede l'acquisizione perché è il rischio esistenziale dichiarato.
+- Il confine di scope si applica dalla prima persistenza tramite un resolver unico; l'identità lo sostituisce allo stesso seam prima della prima audience reale.
+- Il primo accesso autenticato crea il primo ricettario in modo idempotente.
+- L'import URL prova prima JSON-LD; l'LLM è recovery automatico dello stesso flusso; il testo incollato è il successivo escape manuale.
+- Output non validi, timeout o fallimenti esterni non producono salvataggi parziali; URL remoti applicano protezione SSRF.
+- `NOW` raggiunge utenti selezionati in produzione, con backup ripristinabile e limiti/allarmi di spesa per LLM ed embedding.
+- La contraddizione sull'embedding della query e le scelte provider/modello restano esplicite e bloccano le slice indicate finché non risolte.
+
+## Preferred ordering and decomposition
+
+**Authority: PREFERRED DECOMPOSITION.** Alternative motivate sono ammesse.
+
+- Un enabler di dominio minuscolo valida persistenza, resolver di scope, shell, UI e test prima dell'indicizzazione.
+- La pipeline di indicizzazione è immediatamente adiacente alla ricerca.
+- Una form condivisa di inserimento e modifica precede il primo import.
+- Le foto arrivano dopo l'acquisizione testuale e hanno un solo owner della pipeline media e della cover.
 - L'invito è l'ultimo tema di prodotto.
 
 ## LATER
+
+**Authority: PREFERRED DECOMPOSITION.** I trigger sono raccomandati; una fonte può sostenere una
+classificazione diversa.
 
 - **Scelta manuale della cover** — *Trigger:* utenti pilota che segnalano la prima foto come rappresentazione sbagliata. *Valore:* rifinitura di un default già spedito.
 - **Scelta di quali foto tenere durante l'import** — *Trigger:* import che portano immagini irrilevanti in modo sistematico. *Valore:* qualità della galleria senza reintrodurre una review obbligatoria.
@@ -166,6 +194,8 @@ Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizi
 
 ## OUT-OF-SCOPE
 
+**Authority: HARD CONSTRAINT.** Sono esclusioni esplicite delle fonti e non lavoro obbligatorio incompleto.
+
 - **Ingredienti strutturati (quantità e unità)** — trade-off accettato in `goal.md`: la ricerca è semantica e chi legge interpreta il testo.
 - **Lista della spesa e scaling delle porzioni** — dipendono dagli ingredienti strutturati.
 - **Review obbligatoria prima del salvataggio** — bloccare l'utente a ogni aggiunta è il costo che il prodotto elimina; la correzione resta disponibile come edit.
@@ -177,6 +207,9 @@ Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizi
 
 ## Cross-functional concerns attesi
 
+**Authority: HARD CONSTRAINT** per scope, validazione, sicurezza, integrità e costo;
+**EXAMPLE EVIDENCE** per la formulazione e il dettaglio operativo illustrato.
+
 - **Scope:** un resolver unico possiede il ricettario corrente; ogni lettura e scrittura è filtrata su di esso e un id fuori scope risponde 404. La slice 6 sostituisce lo scope configurato con la membership autenticata in quell'unico punto.
 - **Validazione ed errori:** ogni input non fidato (HTML remoto, JSON-LD, output LLM, payload di form) decodificato con `Schema`, mai asserito; nessun salvataggio parziale quando la decodifica fallisce.
 - **Operabilità:** timeout e retry espliciti sugli adapter esterni; log strutturato per passo con esito, durata e token; il progresso mostrato all'utente riflette i passi reali e nomina il passo fallito.
@@ -187,6 +220,8 @@ Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizi
 
 ## Decision checkpoints attesi
 
+**Authority: PREFERRED DECOMPOSITION.** Sono checkpoint consigliati, non una precedenza esatta.
+
 - **Dopo la 4:** qualità del ranking cross-lingua, latenza e costo → cambiare modello di embedding, oppure rimettere in discussione la proposta di valore.
 - **Dopo la 8:** hit-rate del JSON-LD sui siti realmente usati → restringere o anticipare il fallback LLM.
 - **Dopo la 9:** costo medio per estrazione → cambiare modello o limitare il fallback ai casi espliciti.
@@ -194,12 +229,18 @@ Un piano con ordine diverso è accettabile solo se rispetta tutte queste condizi
 
 ## Open questions attese
 
+**Authority: HARD CONSTRAINT.** Le fonti non decidono questi punti; una slice bloccata non può
+affermare silenziosamente una scelta.
+
 - **Embedding della query a runtime:** `goal.md:110` e `arch-choices.md:33` lo vietano, mentre `concepts.md:153` richiede `embedding(query)`; blocca implementazione e verifica delle slice 3 e 4.
 - **Provider Postgres:** Neon o Supabase; blocca lo skeleton della slice 1, perché determina driver, modalità di connessione e limiti del free tier.
 - **Modello di embedding:** deve essere multilingue; blocca la pipeline della slice 3.
 - **Modello LLM:** deve supportare output strutturato entro il budget; blocca il fallback della slice 9.
 
 ## Tensioni note con le fonti
+
+**Authority: ACCEPTED ALTERNATIVE.** Le alternative seguenti non sono penalizzate quando conservano
+le condizioni indicate.
 
 Ambiguità o incompletezze delle fonti. Il reference plan non risolve le decisioni elencate in `Open questions attese`; sulle altre tensioni, un piano che sceglie diversamente va giudicato sulla motivazione.
 
@@ -218,105 +259,19 @@ alternative semanticamente valide non esprimibili con questi controlli.
 ```json
 {
   "schema_version": 1,
-  "theme_count": 7,
   "first_validations_resolve": true,
-  "theme_rules": [
-    {
-      "name": "Ricerca|Scoperta semantica",
-      "desired_outcome_patterns": ["lingu|cross"],
-      "first_validation_patterns": ["ricerca semantica"]
-    },
-    {
-      "name": "Consultazione|Lettura",
-      "desired_outcome_patterns": ["apre|legge|contenuto"],
-      "first_validation_patterns": ["lettura|elenco|dettaglio"]
-    },
-    {
-      "name": "Scrittura|Manutenzione",
-      "desired_outcome_patterns": ["salv|scriv|inser", "correg|modific"],
-      "first_validation_patterns": ["manual|scrittura|creazione|correg|modific|edit"]
-    },
-    {
-      "name": "Import|Cattura|Acquisizione",
-      "desired_outcome_patterns": ["link|URL|online"],
-      "first_validation_patterns": ["JSON-LD|strutturat|URL"]
-    },
-    {
-      "name": "Foto|fotograf",
-      "desired_outcome_patterns": ["foto|riconosc"],
-      "first_validation_patterns": ["foto|cover"]
-    },
-    {
-      "name": "Accesso|Identità",
-      "desired_outcome_patterns": ["Google|account|privat"],
-      "first_validation_patterns": ["Google|accesso"]
-    },
-    {
-      "name": "Condivisione|Collaborazione|Ricettario condiviso",
-      "desired_outcome_patterns": ["collabor|contribu|condiv"],
-      "first_validation_patterns": ["invit|collabor"]
-    }
-  ],
   "precedence_rules": [
-    {"before": "Repository", "after": "Walking skeleton|Runtime minimo"},
-    {"before": "Walking skeleton|Runtime minimo", "after": "Contesto del ricettario|shell.*ricettario"},
-    {"before": "Contesto del ricettario|shell.*ricettario", "after": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile"},
-    {"before": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile", "after": "^Ricerca semantica"},
-    {"before": "^Ricerca semantica", "after": "Inserimento manuale|Scrittura.*ricetta|Ricette manuali"},
-    {"before": "Inserimento manuale|Scrittura.*ricetta|Ricette manuali", "after": "JSON-LD|dati strutturati|Import URL strutturato"},
-    {"before": "JSON-LD|dati strutturati|Import URL strutturato", "after": "Fallback.*LLM"},
-    {"before": "Fallback.*LLM", "after": "testo incollato"},
-    {"before": "testo incollato", "after": "Foto"},
-    {"before": "Foto", "after": "Invit|Collaborazione"},
-    {"before": "Invit|Collaborazione", "after": "Rilascio|MVP disponibile"}
-  ],
-  "adjacent_now_titles": [
-    ["Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile", "^Ricerca semantica"]
+    {"before": "Repository", "after": "Walking skeleton|Runtime minimo|Deployed runtime"},
+    {"before": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile|Search engine proof", "after": "^Ricerca semantica|Search and open"}
   ],
   "slice_rules": [
     {
-      "title": "Walking skeleton|Runtime minimo",
-      "required_patterns": ["deploy|distribu", "database|Postgres", "migraz"]
+      "title": "Walking skeleton|Runtime minimo|Deployed runtime",
+      "required_patterns": ["deploy|distribu", "database|datastore|Postgres", "migraz|migration"]
     },
     {
-      "title": "Contesto del ricettario|shell.*ricettario",
-      "required_patterns": ["persist", "resolver|scope", "404", "shell|ricettario"]
-    },
-    {
-      "title": "Pipeline di indicizzazione|Pipeline di embedding|Motore semantico.*verificabile",
-      "required_patterns": ["fixture|corpus", "embedding", "persist|pgvector|HNSW", "ranking|top-k"]
-    },
-    {
-      "title": "^Ricerca semantica",
-      "required_patterns": ["cross-lingu|multiling", "scope|altro ricettario", "senza LLM|nessuna chiamata LLM"]
-    },
-    {
-      "title": "Inserimento manuale|Scrittura.*ricetta|Ricette manuali",
-      "required_patterns": ["crea|inser", "modific|correg", "reindic|ranking"]
-    },
-    {
-      "title": "JSON-LD|dati strutturati|Import URL strutturato",
-      "required_patterns": ["JSON-LD|schema.org", "zero chiamate LLM|senza LLM"]
-    },
-    {
-      "title": "Fallback.*LLM",
-      "required_patterns": ["schema|output", "parzial|nessun salvataggio"]
-    },
-    {
-      "title": "testo incollato",
-      "required_patterns": ["paywall|non leggibile", "senza chiamate HTTP|non.*HTTP"]
-    },
-    {
-      "title": "Foto",
-      "required_patterns": ["storage|R2", "cover|copertina", "fall|limite"]
-    },
-    {
-      "title": "Invit|Collaborazione",
-      "required_patterns": ["idempoten", "scadut|revocat", "modific"]
-    },
-    {
-      "title": "Rilascio|MVP disponibile",
-      "required_patterns": ["produzione", "backup|ripristino", "allarm|tetto di spesa"]
+      "title": "Rilascio|MVP disponibile|Selected-user release|Pilot release",
+      "required_patterns": ["produzione|production", "backup|ripristino", "allarm|tetto di spesa|spend cap"]
     }
   ],
   "section_rules": [
@@ -333,33 +288,31 @@ alternative semanticamente valide non esprimibili con questi controlli.
       ]
     },
     {
-      "section": "Decision checkpoints",
-      "required_patterns": ["ranking|ricerca", "JSON-LD", "LLM", "cold start|utenti pilota"]
-    },
-    {
       "section": "Open questions",
       "required_patterns": [
         "embedding.*query|query.*embedding",
         "Neon|Supabase|provider Postgres",
-        "modello.*embedding|embedding.*modello",
-        "modello.*LLM|LLM.*modello"
+        "modello.*embedding|embedding.*modello|embedding model",
+        "modello.*LLM|LLM.*modello|LLM model"
       ]
     }
   ],
+  "required_patterns": [
+    "cross-lingu|multiling",
+    "JSON-LD|schema.org",
+    "LLM",
+    "testo incollato|testo.*paywall|pasted text",
+    "parzial|nessun salvataggio|no partial",
+    "idempoten",
+    "scadut|revocat|expired|revoked"
+  ],
   "horizon_rules": [
-    {"pattern": "filtri strutturati|ricerca ibrida", "horizon": "LATER"},
-    {"pattern": "cross-ricettario", "horizon": "LATER"},
-    {"pattern": "ricettari aggiuntivi|altri ricettari", "horizon": "LATER"},
-    {"pattern": "ricettari pubblici", "horizon": "LATER"},
-    {"pattern": "gruppo", "horizon": "LATER"},
-    {"pattern": "sempre calda", "horizon": "LATER"},
-    {"pattern": "Passkeys", "horizon": "LATER"},
-    {"pattern": "ingredienti strutturati", "horizon": "OUT-OF-SCOPE"},
-    {"pattern": "lista della spesa", "horizon": "OUT-OF-SCOPE"},
-    {"pattern": "scaling.*porzioni", "horizon": "OUT-OF-SCOPE"},
-    {"pattern": "review obbligatoria", "horizon": "OUT-OF-SCOPE"},
-    {"pattern": "deduplica", "horizon": "OUT-OF-SCOPE"},
-    {"pattern": "ruoli|permessi granulari", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "ingredienti strutturati|structured ingredients", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "lista della spesa|shopping list", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "scaling.*porzioni|portion scaling", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "review obbligatoria|mandatory review", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "deduplica|deduplication", "horizon": "OUT-OF-SCOPE"},
+    {"pattern": "ruoli|permessi granulari|granular roles", "horizon": "OUT-OF-SCOPE"},
     {"pattern": "email.*password|magic link", "horizon": "OUT-OF-SCOPE"},
     {"pattern": "vector DB", "horizon": "OUT-OF-SCOPE"},
     {"pattern": "IaC|Terraform|SST", "horizon": "OUT-OF-SCOPE"}
