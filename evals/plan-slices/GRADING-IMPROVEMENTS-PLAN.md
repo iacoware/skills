@@ -21,9 +21,9 @@ scelto su fixture etichettate.
   stata avviata e si è fermata a 15 unità valide su 36: 6 unità sono fallite perché i grader hanno
   violato il grade contract e 15 non sono state eseguite per fail-fast. Il checkpoint umano sulla
   scala dei verdict resta aperto e ora dipende anche da una decisione su contratto e budget.
-- [ ] **Slice 4 — Un solo addebito:** contratto `primary_criterion` e validazioni principali sono
-  implementati; restano fixture e test di accettazione. È la prossima slice perché congela lo schema
-  grade prima di qualunque run pagata.
+- [x] **Slice 4 — Un solo addebito:** contratto `primary_criterion`, fixture e test di accettazione
+  sono completi e offline. Lo schema grade è congelato a `GRADE_SCHEMA_VERSION = 3` senza modifiche
+  al contratto, quindi le 15 unità assolute già pagate restano riprendibili.
 - [ ] **Slice 5 — Strumento relativo validato:** nuova, non iniziata. Scollegare paired da assoluto,
   eseguire a ordine invertito, comporre altre coppie dalle fixture esistenti e misurare il falso
   cambiamento sui criteri invarianti.
@@ -417,25 +417,35 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
   cinque verdict o semplificare la scala; un cambio incrementa nuovamente la versione rubric. Le
   metriche parziali sono registrate ma non sufficienti a decidere.
 
-### 4. Un solo addebito per difetto — parziale
+### 4. Un solo addebito per difetto — completata
 
 **Modifiche**
 
-- Sostituire `primary_axis` e `criterion_ids` con `primary_criterion`.
-- Aggiungere a ogni difetto `consequence`, `severity`, evidenza candidato ed evidenza controllante.
-- Ogni difetto è referenziato da esattamente un criterio; ogni criterio non-pass ha almeno un
+- [x] Sostituire `primary_axis` e `criterion_ids` con `primary_criterion`.
+- [x] Aggiungere a ogni difetto `consequence`, `severity`, evidenza candidato ed evidenza controllante.
+- [x] Ogni difetto è referenziato da esattamente un criterio; ogni criterio non-pass ha almeno un
   difetto; il verdict del criterio coincide con la severità peggiore dei propri difetti.
-- Derivare l'axis dal criterio; eliminare logica e prompt degli effetti secondari.
-- Tenere separati difetti con conseguenze indipendenti, anche nella stessa area del piano.
+- [x] Derivare l'axis dal criterio; eliminare logica e prompt degli effetti secondari.
+- [x] Tenere separati difetti con conseguenze indipendenti, anche nella stessa area del piano.
 
 **Test**
 
-- Rifiuto di difetti senza criterio, dangling, non referenziati, duplicati o addebitati a più
+- [x] Rifiuto di difetti senza criterio, dangling, non referenziati, duplicati o addebitati a più
   criteri.
-- Backup/spend guardrail mancanti incidono su un solo criterio per root defect.
-- Un merge consultazione/scrittura non può abbassare tre criteri tramite lo stesso defect id.
-- Due difetti realmente distinti sullo stesso criterio restano validi e il peggiore determina il
+- [x] Backup/spend guardrail mancanti incidono su un solo criterio per root defect.
+- [x] Un merge consultazione/scrittura non può abbassare tre criteri tramite lo stesso defect id.
+- [x] Due difetti realmente distinti sullo stesso criterio restano validi e il peggiore determina il
   verdict.
+
+**Esito**
+
+- Lo schema grade è congelato a `GRADE_SCHEMA_VERSION = 3`: le fixture di accettazione e i test hanno
+  confermato il contratto esistente senza richiedere modifiche. Le 15 unità assolute già pagate
+  restano riprendibili.
+- Resta aperta, e appartiene alla slice 7, l'ambiguità fra il testo del prompt e la regola del
+  validator che ha causato tre delle sei risposte scartate: il prompt non vieta esplicitamente di
+  citare un difetto da un criterio diverso dal suo `primary_criterion`. Il chiarimento cambia
+  `prompt_sha256` e va deciso insieme al checkpoint umano sulla scala dei verdict.
 
 ### 5. Strumento relativo validato — non iniziata
 
