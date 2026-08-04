@@ -46,10 +46,14 @@ entry with a reference for every side:
 - **undecided choices:** a provider, model, service, or adapter named without a source that selects
   it. A qualifying adjective — `cheap`, `multilingual`, `managed` — is not a choice.
 
-Do not silently pick a side or reopen a decision that a source declares closed. Close every material
+Do not silently pick a side or reopen a decision that a source declares closed. Expose every material
 entry either with an `Open questions` item naming the slices it blocks, or with a spike before the
-first blocked slice. Until it closes, no `Includes` or `Verification` bullet may assert a side; only
-conditional wording that defers to the pending decision is allowed.
+first blocked slice.
+
+Exposing is not resolving. Only a source that selects resolves an entry; a published question and a
+scheduled spike both leave it open, because neither has produced its answer when the plan is written.
+While an entry is open, no `Includes` or `Verification` bullet of a slice it blocks may assert a
+side: only conditional wording that defers to the pending decision is allowed.
 
 **Proceed when:** every sequencing-relevant statement has applicable classifications and a source;
 unsupported conclusions are assumptions; exclusions have explicit rationale; every material conflict
