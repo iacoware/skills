@@ -22,6 +22,20 @@
 - Fly.io may start suspended or always warm; the former is preferred and the latter is an evidence-triggered operational change (`sources/arch-choices.md`, “Hosting”).
 - Controlled inputs may validate extraction, embeddings, or search before their final user entry point when they traverse the production computation (`sources/goal.md`, “Principi guida”; `sources/concepts.md`, “Pipeline di estrazione”).
 
+# Material uncertainties
+
+What this scenario does not know yet, and the decision each answer changes. A plan is free to place
+these where it wants, but a single `Enabler` whose `Verification` can fail for causes belonging to
+two different rows is validating more than one of them.
+
+| Uncertainty | Decision it changes | Source |
+|---|---|---|
+| Does the chosen Postgres provider sustain a real TCP driver, pooling and migrations across scale-to-zero? | Neon or Supabase, and the driver and connection mode | `sources/arch-choices.md`, “Datastore”; `sources/tech-choices.md`, “Persistenza / ORM” |
+| Is the multilingual embedder's cross-language recall good enough on real recipes? | Replace the model, change the indexed text, or abandon the differentiator and with it the product's reason to exist | `sources/goal.md`, “Differenziatore”; `sources/arch-choices.md`, “Embeddings” |
+| Is the first request after inactivity slow enough to bother a real user? | Keep `suspend` with scale-to-zero or move to an always-warm machine at ~$3/month | `sources/arch-choices.md`, “Hosting” |
+| What is the JSON-LD hit rate on the blogs actually used? | How much weight and cost the LLM fallback carries, and whether it moves earlier or later | `sources/arch-choices.md`, “Estrazione contenuto” |
+| Is a cheap structured-output model accurate enough per recipe, at fractions of a cent? | Which model implements the fallback, or narrowing the cases that invoke it | `sources/arch-choices.md`, “Estrazione contenuto” |
+
 # Known conflicts
 
 - Manual input skips extraction in `sources/concepts.md`, “Pipeline di estrazione”, while `sources/arch-choices.md`, “Estrazione contenuto”, says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path.
