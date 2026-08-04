@@ -149,22 +149,12 @@ R-004 e R-007 diventerebbero controllabili senza toccare il template.
 
 ## Da popolare
 
-- **Prossimo passo — verificare R-002…R-008 su `PLAN-CC-CON-5.md` e `PLAN-CX-CON-5.md`.** I due
-  candidati sono stati generati subito dopo `9aa2586` (commit `515e0a3`, 2026-08-04 11:57): sono il
-  primo ciclo posteriore a tutte e cinque le modifiche e nessuno dei due è stato valutato. Il
-  controllo è offline e non costa chiamate.
-  - Un'affermazione regge solo se regge su **entrambi** i piani. I due candidati vengono da modelli
-    diversi: una violazione su uno solo smentisce comunque la previsione, perché l'affermazione è
-    sullo skill, non sul modello che lo esegue.
-  - Conviene partire dai membri leggibili senza le fonti — il secondo membro di R-002 e di R-004,
-    l'interposizione di temi in R-005, l'unicità del proprietario in R-006, l'esclusione degli
-    `Enabler` in R-008 — e affrontare dopo ciò che richiede il confronto con le fonti: R-003, il
-    primo membro di R-004 e R-007.
-  - Ogni riga controllata riceve la data in `Ultimo controllo` e lo `Stato` `tiene` o `regredita`.
-    Una riga `regredita` resta, con la citazione del punto del piano che l'ha smentita.
-  - Se un'affermazione risulta non decidibile sul piano — non falsa, ma non giudicabile da ciò che il
-    piano pubblica — è la formulazione a essere sbagliata: si riscrive la riga e si annota il motivo,
-    perché è lo stesso difetto già registrato per i miglioramenti confinati nel ragionamento.
+- **R-001, mai controllata.** Nasce da `2c89e7f`, precedente ai cinque commit, e il ciclo CON-5 non
+  l'ha inclusa. Va verificata sugli stessi due piani, con lo stesso criterio: regge solo se regge su
+  entrambi.
+- **Correzioni per R-002, R-006 e R-008.** Il registro prescrive che a una riga `regredita` segua la
+  riga della correzione, e che nessuna delle due si cancelli. Le tre righe restano scoperte finché
+  una modifica dello `SKILL.md` non le riapre: la sessione CON-5 misurava, non correggeva.
 - **Modifiche dei cinque commit senza riga di registro.** `d88328f` (walking skeleton non cavo),
   `b0d6dc5` (limitazione alle roadmap ad alto livello) e `a06a5cc` (soglia al differimento
   dell'identità) non sono ricostruibili dall'intersezione dei due `REVIEW`: il primo non compare in
