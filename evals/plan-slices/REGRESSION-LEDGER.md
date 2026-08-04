@@ -48,7 +48,7 @@ Serve a due cose:
 | R-003 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Decisioni mai prese distinte dalle decisioni prese* ≡ *Explicit handling of undecided choices* | Ogni provider, modello, servizio o adapter esterno nominato da una slice `NOW` è selezionato da una fonte citabile oppure compare in `Open questions` con la slice che blocca; un aggettivo qualificante — `cheap`, `multilingual`, `managed` — non conta come scelta. | lettura: l'inventario delle dipendenze esterne richiede il confronto con le fonti | 2026-08-04 | tiene |
 | R-004 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | Nessuna slice `NOW` consegna un comportamento che le fonti non richiedono; ogni voce `LATER` dichiara un `Promotion trigger` e ogni voce `OUT-OF-SCOPE` una razionale di esclusione. | lettura per il primo membro — lo skill colloca la tracciatura nel ragionamento, non nel piano; il secondo è automatizzabile sulla struttura del template | 2026-08-04 | tiene |
 | R-005 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Continuità del tema* ≡ *Keep a theme and its recovery path contiguous* | Se una slice `NOW` nomina un modo di fallimento nella propria `Verification` e un'altra slice `NOW` ne è il rimedio, nessuna slice di un tema diverso è collocata fra le due. | lettura per l'accoppiamento fallimento→rimedio; l'interposizione di temi è automatizzabile sull'annotazione `*(Theme: X)*` delle slice | 2026-08-04 | tiene |
-| R-006 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | Una pipeline o un adapter condiviso da più percorsi compare negli `Includes` di una sola slice `NOW`, e quella slice segue ogni slice `NOW` che le fornisce input. | lettura per l'identificazione dei produttori; l'unicità del proprietario è automatizzabile in parte (stesso adapter nominato negli `Includes` di due slice) | 2026-08-04 | regredita su `CX` |
+| R-006 | `d977043`, `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | Una pipeline o un adapter condiviso da più percorsi è aperto negli `Includes` di una sola slice `NOW`; le slice successive che lo riusano lo dichiarano tale. Quella slice segue ogni slice `NOW` che le fornisce input, salvo quando valida input controllati che attraversano il calcolo di produzione e il brief dello scenario ammette la validazione anticipata. | lettura per l'identificazione dei produttori; l'unicità del proprietario è automatizzabile in parte (stesso adapter nominato negli `Includes` di due slice) | 2026-08-04 | tiene |
 | R-007 | `d977043` | `intersezione` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | Nessuna slice `Enabler` valida più di una incertezza materiale: la sua `Verification` non può fallire per due cause indipendenti che cambierebbero decisioni diverse. | lettura: il verdetto di split per coppia vive nel ledger non pubblicato, sul piano resta osservabile solo l'esito | 2026-08-04 (tentato) | da verificare — non decidibile |
 | R-008 | `9aa2586` | `intersezione` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, parte «each theme has a first validation» | La `First validation` di ogni tema punta a una slice `NOW` non annotata `Enabler`, il cui `Outcome` copre l'intero desired outcome del tema; l'eccezione vale solo se il desired outcome del tema è dichiaratamente per uno sviluppatore. | validator per l'esistenza del riferimento; automatizzabile l'esclusione degli `Enabler`; lettura per la copertura dell'outcome | 2026-08-04 | regredita su `CX` |
 
@@ -67,15 +67,6 @@ solo dei due, e tanto basta.
   slice e voce `Open questions` che ne blocca l'accettazione — ma la bullet `Includes` resta
   assertiva. Il piano `CX` non viola il membro: slice 2 e 3 dicono «query generata secondo la
   decisione presa/della spike».
-- **R-006 — `PLAN-CX-CON-5.md`, slice 2 `Includes` contro slice 5–8.** La pipeline di embedding
-  sulle scritture apre alla slice 2 («Ricette normalizzate controllate attraversano il percorso reale
-  di embedding … e persistenza pgvector») e riappare negli `Includes` della slice 5 («Embedding
-  rigenerato su creazione e modifica»), della 6 («seguito dall'embedding») e della 7 («Stesso
-  salvataggio immediato, embedding»). Il secondo membro cade in modo indipendente
-  dall'interpretazione di «proprietario»: le slice che forniscono ricette all'indice — 5 manuale, 6
-  URL, 7 incolla, 8 fallback — seguono tutte la slice che apre la pipeline, che quindi non segue i
-  propri produttori. Il piano `CC` ha la forma prevista: produttore alla slice 2, pipeline alla
-  slice 3.
 - **R-008 — `PLAN-CX-CON-5.md`, tabella `Themes`.** Tre voci smentiscono la riga, su entrambi i
   membri. Riga A: la `First validation` è «2. Indicizzazione multilingue osservabile», slice
   annotata `*(Enabler: ricerca semantica)*`, mentre il desired outcome del tema — «Trovare nel
@@ -86,12 +77,22 @@ solo dei due, e tanto basta.
   l'`Outcome` della slice 5, che copre il solo inserimento manuale. Il piano `CC` regge su tutte e
   sei le righe.
 
-### Formulazioni da riscrivere — emerse nel ciclo CON-5
+### Formulazioni riscritte — ciclo CON-5 (2026-08-04)
 
-Righe che il ciclo non ha potuto decidere, o che ha deciso solo scegliendo fra due letture. Restano
-al loro posto: il difetto è nella formulazione, non nel piano, e riscriverle senza un secondo caso
-significherebbe adattarle a questi due candidati.
+Righe che il ciclo non ha potuto decidere, che ha deciso solo scegliendo fra due letture, o che
+contraddicevano l'`EVALUATION-BRIEF.md` dello scenario. In tutti i casi il difetto è nella riga: qui
+resta il motivo, perché la riscrittura non si perda nella storia del file.
 
+- **R-006 — contraddiceva il brief, riscritta, verdetto `tiene`.** Il ciclo aveva registrato una
+  regressione su `PLAN-CX-CON-5.md`: la pipeline di embedding sulle scritture apre alla slice 2
+  («Ricette normalizzate controllate attraversano il percorso reale di embedding … e persistenza
+  pgvector») e i suoi produttori — 5 manuale, 6 URL, 7 incolla, 8 fallback — la seguono tutti, quindi
+  la slice che la apre non segue i propri produttori. Ma `EVALUATION-BRIEF.md` § *Accepted
+  alternatives* ammette esattamente questo: «Controlled inputs may validate extraction, embeddings,
+  or search before their final user entry point when they traverse the production computation». Il
+  secondo membro è stato emendato con quella deroga. Resta osservato, senza valore di regressione,
+  che `CX` nomina l'embedding negli `Includes` di quattro slice (2, 5, 6, 7) senza mai dichiarare
+  quali siano riuso: è la ragione per cui il primo membro ora chiede la dichiarazione esplicita.
 - **R-007 — non decidibile, resta `da verificare`.** Il secondo membro chiede quali *decisioni*
   cambierebbero se la `Verification` di un `Enabler` fallisse, ma il piano pubblica la mappa
   decisione↔slice solo dove esiste un `Decision checkpoint`. Per gli `Enabler` di consegna non ne
