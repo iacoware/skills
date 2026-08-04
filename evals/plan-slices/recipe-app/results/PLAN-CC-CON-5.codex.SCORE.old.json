@@ -1,0 +1,58 @@
+{
+  "rubric_version": 1,
+  "candidate": "recipe-app/results/PLAN-CC-CON-5.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "score": 2,
+      "weight": 15,
+      "weighted_score": 7.5
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "score": 3,
+      "weight": 10,
+      "weighted_score": 7.5
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "score": 2,
+      "weight": 20,
+      "weighted_score": 10.0
+    },
+    {
+      "id": "ordering_risk",
+      "score": 2,
+      "weight": 20,
+      "weighted_score": 10.0
+    },
+    {
+      "id": "slice_content_evidence",
+      "score": 2,
+      "weight": 15,
+      "weighted_score": 7.5
+    },
+    {
+      "id": "horizons",
+      "score": 2,
+      "weight": 10,
+      "weighted_score": 5.0
+    },
+    {
+      "id": "uncertainty_integrity",
+      "score": 2,
+      "weight": 10,
+      "weighted_score": 5.0
+    }
+  ],
+  "raw_total": 52.5,
+  "effective_total": 52.5,
+  "applied_caps": [],
+  "critical_failure_ids": [],
+  "grader": {
+    "provider": "codex",
+    "model": "cli-default",
+    "cli_version": "codex-cli 0.146.0",
+    "prompt_sha256": "61564dafb4dec92a2bc245427b38fdbcf417506b504fa04c7aacd12c6ba21b9d"
+  }
+}

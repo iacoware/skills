@@ -1,0 +1,119 @@
+{
+  "rubric_version": 1,
+  "candidate": "recipe-app/results/PLAN-CX-CON-5.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "score": 1,
+      "evidence": [
+        "Candidate Themes comprime in «C. Acquisizione e correzione» inserimento manuale, consultazione/elenco, modifica, import URL e testo; il reference distingue Consultazione, Scrittura manuale e Import automatico come aree indipendentemente schedulabili.",
+        "Candidate slice 5 include l’elenco, ma nessuna slice possiede esplicitamente apertura e lettura della ricetta; reference Themes/Consultazione e NOW 5 richiedono elenco, dettaglio, ingredienti e preparazione.",
+        "Candidate divide Foto tra slice 9 e 11, con Condivisione in mezzo; reference Invarianti richiede foto in una sola slice e invito come ultimo tema di prodotto."
+      ],
+      "findings": [
+        "Cinque temi sostituiscono i sette confini del reference tramite merge non motivati di capability indipendenti.",
+        "Il tema Consultazione non è soltanto fuso: manca il comportamento verificabile di apertura della ricetta per cucinarla.",
+        "La separazione fra foto importata e foto manuali potrebbe essere valida per failure mode diversi, ma non con pipeline condivisa riaperta dopo un altro tema."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "score": 2,
+      "evidence": [
+        "Candidate A promette ricerca pertinente cross-lingua ma indica come prima validazione «2. Indicizzazione multilingue osservabile», marcata Enabler e destinata agli sviluppatori; reference richiede come primo validatore la slice prodotto Ricerca semantica cross-lingua.",
+        "Candidate C promette input manuale, URL e testo, mentre la prima validazione «5. Inserimento manuale, elenco ed edit» non valida alcun import; reference assegna validatori autonomi a Scrittura manuale, Consultazione e Import automatico.",
+        "Candidate D promette «una cover controllabile», ma la prima validazione 9 prova solo cover automatica; il controllo manuale arriva nella 11.",
+        "Candidate B e E hanno outcome di prodotto e validatori coerenti nelle slice 4 e 10."
+      ],
+      "findings": [
+        "Gli outcome sono formulati in linguaggio di prodotto, ma tre dei cinque primi validatori coprono solo una parte dell’outcome o un enabler tecnico.",
+        "Il differenziatore ha comunque un validatore prodotto NOW nella slice 3, quindi non ricorre missing_differentiator_validator."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "score": 2,
+      "evidence": [
+        "Candidate slice 2 introduce insieme ricette persistite, scope configurato, embedding, HNSW e ranking; reference richiede prima un enabler minuscolo autonomo per persistenza del Cookbook, resolver e shell, senza dipendenza dalla ricerca.",
+        "Candidate slice 4 combina OAuth, creazione, elenco e selezione di più ricettari; reference NOW 6 limita il primo percorso alla creazione automatica del ricettario privato e rinvia la creazione esplicita di altri ricettari.",
+        "Candidate slice 9 e 11 condividono ownership della pipeline foto/R2 e dell’invariante cover, nonostante reference richieda un solo owner per le foto.",
+        "Le slice 3, 5–8 e 10 presentano percorsi verticali con UI o input, dominio, persistenza, failure mode e verifica osservabile."
+      ],
+      "findings": [
+        "La maggioranza delle slice produce risultati distribuibili e verificabili.",
+        "Persistenza/scope non sono isolati prima dell’indicizzazione; la pipeline media è riaperta in due slice non adiacenti.",
+        "Manca una slice verticale proprietaria del dettaglio ricetta."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "score": 1,
+      "evidence": [
+        "Candidate ordina correttamente repository, runtime, pipeline semantica e ricerca, mantenendo 2 e 3 adiacenti e validando presto il differenziatore principale.",
+        "Candidate omette prima della slice 2 il «Contesto del ricettario corrente» richiesto dagli Invarianti: prima persistenza di dominio, resolver e shell devono precedere l’indicizzazione.",
+        "Candidate mette «7. Copia-incolla come fallback» prima di «8. Fallback LLM automatico da URL»; reference impone JSON-LD → fallback LLM URL → testo incollato.",
+        "Candidate apre Foto nella 9, passa a Invito nella 10 e torna a Foto nella 11; reference richiede acquisizione testuale chiusa, un’unica slice foto, poi invito come ultimo tema prodotto.",
+        "Candidate slice 4 anticipa creazione esplicita e cambio di più ricettari; reference rinvia la creazione aggiuntiva e richiede primo ricettario automatico."
+      ],
+      "findings": [
+        "Il rischio esistenziale è anticipato correttamente, ma tre invarianti d’ordine materiali sono violate.",
+        "La motivazione di validare prima il motore LLM tramite testo incollato è comprensibile, ma non soddisfa l’ordine vincolante del reference e ritarda il percorso automatico differenziante.",
+        "Il percorso Foto–Invito–Foto perde breadth-before-depth e rende Invito non ultimo."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "score": 2,
+      "evidence": [
+        "Candidate slice 6 allinea Includes, Verification e Outcome su JSON-LD, SSRF, zero LLM, progress reale e assenza di salvataggi parziali; è ben supportata da goal.md e reference NOW 8.",
+        "Candidate slice 7 collega qualità/costo LLM a testi illeggibili e verifica output malformato, timeout e contenuto non-ricetta senza persistenza incoerente.",
+        "Candidate slice 4 verifica creazione manuale e cambio ricettario, ma non il requisito reference NOW 6 «primo accesso crea automaticamente» né l’idempotenza che evita un secondo ricettario.",
+        "Candidate slice 10 verifica token alterati, ma non token scaduto o revocato richiesti da concepts.md Invitation.expiresAt e reference NOW 12.",
+        "Candidate release 12 misura costi ed errori, ma omette backup con prova di ripristino e tetto/allarme LLM-embedding richiesti da reference NOW 13."
+      ],
+      "findings": [
+        "Le verifiche sono generalmente concrete e includono failure mode, metriche e learning capaci di cambiare decisioni.",
+        "Restano lacune materiali su bootstrap idempotente del ricettario, ciclo di vita inviti, dettaglio ricetta e recovery/guardrail della release.",
+        "Il dettaglio rimane a livello di accettazione, senza degradare in task backlog."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "score": 2,
+      "evidence": [
+        "Candidate NOW 4 include creazione, elenco e cambio di più ricettari; reference LATER assegna «Creazione di ricettari aggiuntivi dall’interfaccia» a un trigger basato su domanda reale.",
+        "Candidate NOW 12 è una release end-to-end per famiglia e amici, con scope, autenticazione, import, ricerca, foto e condivisione, ma non include backup/ripristino e limiti di spesa del reference.",
+        "Candidate LATER assegna trigger ed expected value a tutte le voci, inclusi filtri, cross-ricettario, gruppi, passkeys e macchina calda.",
+        "Cover manuale in NOW 11 è un’alternativa esplicitamente ammessa da Reference plan/Tensioni note, purché resti nel tema Foto.",
+        "Ruoli granulari e IaC estesa sono in LATER anziché OUT-OF-SCOPE; goal.md e arch-choices.md ne consentono una futura rivalutazione, e il candidate fornisce trigger, quindi l’alternativa è supportata."
+      ],
+      "findings": [
+        "Gli orizzonti sono univoci e le voci LATER hanno trigger osservabili.",
+        "NOW anticipa materialmente la gestione di ricettari aggiuntivi senza evidenza NOW e rende la release meno minimale.",
+        "La release è funzionalmente utilizzabile, ma incompleta sul confine operativo sicuro; non abbastanza incoerente da integrare il critical failure."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "score": 4,
+      "evidence": [
+        "Candidate Non-product work espone esplicitamente il conflitto «embedding(query)» contro divieto di embedding runtime, lo colloca prima della slice 2 e ammette anche lo stop; reference Open questions indica che blocca indicizzazione e ricerca.",
+        "Candidate identifica Neon/Supabase prima della slice 1, modello embedding prima della 2 e modello LLM prima della 7, con exit criteria; sono esattamente le decisioni aperte del reference.",
+        "Candidate non sceglie silenziosamente provider o modelli dentro le slice: usa formule come «selezionato dal lavoro non-prodotto» e «secondo la decisione presa».",
+        "Candidate aggiunge correttamente l’incertezza sull’arricchimento manuale prima della slice 5, preservando salvataggio immediato e costo minimo."
+      ],
+      "findings": [
+        "Le decisioni irrisolte, le slice bloccate e gli spike precedenti sono dichiarati con sufficiente precisione.",
+        "L’assenza di una sezione nominale Open questions non è materiale: le stesse questioni restano visibili e sono risolte prima delle slice dipendenti."
+      ],
+      "confidence": "high"
+    }
+  ],
+  "critical_failures": []
+}

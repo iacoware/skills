@@ -1,0 +1,134 @@
+{
+  "rubric_version": 1,
+  "candidate": "recipe-app/results/PLAN-CC-CON-5.md",
+  "axes": [
+    {
+      "id": "theme_boundaries",
+      "score": 2,
+      "evidence": [
+        "Candidate Themes table lists 6 themes: 'A. Ricettario e cattura manuale', 'B. Import automatico dal web', 'C. Ricerca semantica cross-lingua', 'D. Foto delle ricette', 'E. Identità e accesso', 'F. Condivisione del ricettario'",
+        "Candidate theme A outcome: 'Chi conosce una ricetta la scrive e la ritrova in un elenco consultabile' — copre insieme scrittura manuale e consultazione",
+        "Reference Themes: sette temi distinti, con 'Consultazione' (first validation '5. Lettura della ricetta') e 'Scrittura manuale' (first validation '7. Inserimento manuale e modifica') separati",
+        "Reference machine-readable expectations: \"theme_count\": 7 con regole distinte per 'Consultazione|Lettura' e 'Scrittura|Manutenzione'",
+        "Candidate slice 2 'Ricette a mano nel ricettario corrente' include contemporaneamente 'Form condiviso creazione ed edit' e 'Elenco delle ricette del ricettario corrente e pagina di dettaglio'"
+      ],
+      "findings": [
+        "Consultazione (elenco + dettaglio, valore per chi cucina) e scrittura manuale (creazione/correzione) sono aree di valore schedulabili in modo indipendente e nel candidate sono compresse in un unico tema e in un'unica slice, riducendo artificialmente il numero di temi da 7 a 6.",
+        "Gli altri cinque temi (import, foto, accesso, condivisione, ricerca) hanno confini corretti e coerenti con la reference; l'aggregazione dei tre percorsi di import nel tema B è la stessa scelta della reference ed è accettabile.",
+        "Il tema A confonde inoltre l'enabler di dominio (persistenza + resolver di scope) con capability di prodotto, invece di tenerlo come abilitatore separato."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "theme_outcomes_validators",
+      "score": 3,
+      "evidence": [
+        "Candidate: 'C. Ricerca semantica cross-lingua | Si trova una ricetta per significato, anche se scritta in un'altra lingua | 4. Ricerca semantica nel ricettario corrente'",
+        "Candidate: 'E. Identità e accesso | Ogni persona entra con Google e possiede il proprio ricettario | 5. Accesso con Google e ricettario personale'",
+        "Candidate: 'F. Condivisione del ricettario | Famiglia e amici collaborano su uno stesso ricettario | 9. Ricettari condivisi su invito'",
+        "Tutti i first validation citati esistono come slice NOW con titolo corrispondente (slice 2, 4, 5, 6, 9, 10)",
+        "Reference: 'Ogni tema indica la prima slice NOW che ne valida il valore, non solo un enabler tecnico' — es. tema Ricerca → '4. Ricerca semantica cross-lingua'"
+      ],
+      "findings": [
+        "Ogni outcome è espresso in linguaggio di prodotto e ogni primo validatore è una slice NOW di comportamento reale, non un enabler tecnico (l'enabler 3 'Indice semantico' non è usato come first validation).",
+        "Il tema A ha un outcome doppio (scrivere + ritrovare in elenco) che riflette la compressione dei due temi; la slice 2 lo valida per intero, quindi la coerenza interna resta, ma il tema non isola un solo risultato di valore.",
+        "Coerenza reciproca tema/outcome/validatore verificata per tutti i temi."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_cohesion_verticality",
+      "score": 3,
+      "evidence": [
+        "Candidate slice 3: 'generazione dell'embedding dall'unico punto di persistenza della ricetta, su create e su edit'; cross-functional: 'l'embedding è indice derivato, rigenerato a ogni write dall'unico owner della persistenza ricetta'",
+        "Candidate slice 10 raccoglie in una sola slice upload manuale, cover e 'Acquisizione dell'immagine della pagina durante l'import' — pipeline media aperta una sola volta",
+        "Candidate slice 2 Includes: 'Schema e migrazioni per Cookbook e Recipe; risolutore currentCookbook configurato', 'Form condiviso creazione ed edit', 'Elenco delle ricette... e pagina di dettaglio'",
+        "Reference separa gli stessi contenuti in tre slice: '2. Contesto del ricettario corrente (Enabler)', '5. Lettura della ricetta', '7. Inserimento manuale e modifica', con 'Fuori dalla slice: creazione tramite UI, ricette, ricerca, identità'",
+        "Candidate slice 9 Includes: 'Creazione di ricettari aggiuntivi e selettore del ricettario corrente' insieme a Invitation e Membership; reference slice 12 mette 'creazione di ricettari aggiuntivi dall'interfaccia' in 'Fuori dalla slice'"
+      ],
+      "findings": [
+        "Tutte le slice sono verticali e producono un outcome verificabile e revertibile; nessuna layer slice.",
+        "Ownership unico rispettato per le pipeline condivise: reindicizzazione embedding in un solo punto, storage foto in una sola slice, motore di estrazione riusato dai fallback senza duplicazione.",
+        "Difetto materiale: la slice 2 aggrega entità, resolver di scope, form condivisa, elenco e dettaglio — tre risultati distinti della reference in un unico incremento precoce, quando le convenzioni di dominio/UI sono ancora da rivedere.",
+        "Difetto minore: la slice 9 aggiunge la creazione di ricettari aggiuntivi al tema condivisione, capability che la reference tiene fuori dalla slice e in LATER."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ordering_risk",
+      "score": 2,
+      "evidence": [
+        "Candidate order: 0 repo → 1 runtime → 2 ricette a mano → 3 indice semantico → 4 ricerca → 5 accesso Google → 6 JSON-LD → 7 LLM → 8 copia-incolla → 9 invito → 10 foto → 11 rilascio",
+        "Reference invariante: 'Un enabler di dominio minuscolo stabilisce persistenza, resolver di scope e shell del ricettario corrente prima dell'indicizzazione; non introduce creazione tramite UI'",
+        "Reference invariante: 'L'invito è l'ultimo tema di prodotto' e precedence_rules: {'before': 'Foto', 'after': 'Invit|Collaborazione'}",
+        "Reference slice 3 'Perché qui': 'l'input più economico capace di validare il motore rischioso, senza attendere le slice di aggiunta'",
+        "Candidate ordering criteria: 'la ricerca semantica cross-lingua è validata sull'input reale più economico (ricette inserite a mano), prima di qualsiasi approfondimento sull'import'",
+        "Candidate: enabler 3 immediatamente adiacente al validatore 4; 'gli slice 7 e 8 sono i rimedi dichiarati... e lo seguono prima di aprire un altro tema'",
+        "Candidate slice 5 arriva prima di ogni slice destinata a utenti reali: 'fino allo slice 4 lo scope è risolto da currentCookbook configurato... nessuna behaviour rivolta a utenti reali precede lo slice 5'"
+      ],
+      "findings": [
+        "Punti forti: enabler di indicizzazione adiacente alla ricerca; recovery obbligatori (fallback LLM, copia-incolla) chiusi prima di aprire altri temi; identità collocata esattamente al seam in cui il resolver passa da configurato ad autenticato; rilascio in coda.",
+        "Violazione di invariante: al posto dell'enabler di dominio minuscolo, la slice 2 introduce creazione via UI, form condivisa, elenco e dettaglio prima dell'indicizzazione, ritardando il rischio esistenziale dietro una slice di prodotto completa; la motivazione (corpus reale) è dichiarata ma le fonti/reference indicano fixture come input più economico.",
+        "Violazione di invariante: l'invito (slice 9) precede le foto (slice 10) senza motivazione; la reference impone l'invito come ultimo tema di prodotto e il criterio d'ordine del candidate ('lo storage foto apre dopo tutti i percorsi che lo alimentano') non giustifica la posposizione rispetto alla condivisione.",
+        "Il differenziatore resta comunque validato presto (slice 4 di 12) e prima di ogni slice di acquisizione, foto e condivisione."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "slice_content_evidence",
+      "score": 3,
+      "evidence": [
+        "Candidate slice 4 Verification: '\"cena leggera\" o \"pomodoro\" recuperano ricette scritte in un'altra lingua', 'Nessun risultato proviene da un altro ricettario', 'Embedder non raggiungibile produce un messaggio comprensibile', 'Latenza p95 e chiamate per query registrate'",
+        "Candidate slice 7 Verification: 'Un output non conforme allo schema viene rifiutato senza salvare dati inventati e senza lasciare la ricetta a metà', 'Il costo medio per ricetta su un campione reale resta nell'ordine dei centesimi'",
+        "Candidate slice 10 Verification: 'Cambiando copertina la precedente perde il flag, verificato anche con richieste concorrenti', 'Un fallimento dell'upload non impedisce il salvataggio della ricetta'",
+        "Candidate slice 3 Learning/risk: 'Il recall cross-lingua dell'embedder multilingue scelto è il rischio esistenziale del prodotto'",
+        "Candidate slice 11 Verification: 'Un rollback riporta l'app alla versione precedente senza perdita di dati'; nessuna prova di backup/ripristino né tetto di spesa o allarme",
+        "Reference slice 13 Evidenza: 'backup con prova di ripristino; tetto di spesa e allarme su LLM ed embedding'"
+      ],
+      "findings": [
+        "Includes, Verification e Outcome sono coerenti in tutte le slice; le verifiche coprono casi concreti, qualità e modi di fallimento (paywall, schema non conforme, embedder irraggiungibile, upload fallito, concorrenza sulla cover), non la mera esistenza dei dati.",
+        "I learning target sono collegati a decisioni reali e ripresi nei Decision checkpoints (recall cross-lingua, hit-rate JSON-LD, costo LLM, costo per query).",
+        "Lacuna circoscritta nella slice 11: mancano prova di ripristino del backup e tetto di spesa/allarme su LLM ed embedding, richiesti dalla reference per la slice di rilascio; il costo è solo osservato a posteriori.",
+        "Lacuna minore: la slice 4 non verifica esplicitamente l'assenza di chiamate LLM in ricerca, la registra solo come 'numero di chiamate esterne'."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "horizons",
+      "score": 3,
+      "evidence": [
+        "Candidate LATER: filtri strutturati, ricerca ibrida, derivazione tag per ricette manuali, ricerca cross-ricettario, ricettari pubblici, gruppo sopra i ricettari, macchina sempre calda — ognuno con 'Promotion trigger' e 'Expected value' ancorati a evidenza NOW (es. 'la latenza del primo accesso misurata agli slice 1 e 11')",
+        "Candidate OUT-OF-SCOPE: ingredienti strutturati, lista spesa/scaling, review obbligatoria, deduplica, email+password/magic-link, Passkeys, ruoli granulari, vector DB dedicato, IaC con SST o Terraform — tutti con motivazione",
+        "Candidate NOW si chiude con '11. Rilascio a familiari e amici (Release: delivery)' e verifica 'Una persona invitata completa in produzione il percorso login → aggiunta da link → ricerca → apertura ricetta'",
+        "Reference horizon_rules: {'pattern': 'Passkeys', 'horizon': 'LATER'}; reference LATER include anche 'Scelta manuale della cover' e 'Creazione di ricettari aggiuntivi dall'interfaccia'",
+        "Reference 'Tensioni note': 'Un piano che la tiene in NOW non è in errore se la mantiene dentro la slice 11' (cover cambiabile) — candidate la tiene dentro la slice foto"
+      ],
+      "findings": [
+        "Nessun comportamento compare in due orizzonti; NOW è una release minima coerente per l'audience dichiarata, con il seam di identità prima degli utenti reali e la slice di rilascio presente e correttamente etichettata.",
+        "Ogni voce LATER ha trigger di promozione legato a osservazioni NOW; OUT-OF-SCOPE contiene esclusioni motivate, non lavoro obbligatorio incompleto.",
+        "Deviazione: Passkeys collocate in OUT-OF-SCOPE anziché LATER; la motivazione riprende goal.md ('recupero account complesso e supporto Auth.js acerbo') ed è difendibile, ma perde il trigger di promozione previsto dalla reference.",
+        "Deviazione minore: 'creazione di ricettari aggiuntivi' anticipata in NOW (slice 9) invece che in LATER, e la 'scelta di quali foto tenere durante l'import' non è collocata in alcun orizzonte; manca l'esclusione esplicita di Vercel/Cloudflare Workers."
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "uncertainty_integrity",
+      "score": 3,
+      "evidence": [
+        "Candidate Open questions: 'Embedding a runtime sulle query: le sorgenti vietano chiamate a runtime sulle query di ricerca ma descrivono la ricerca come similarità con l'embedding della query. Blocca l'accettazione dello slice 4 finché non si decide fra chiamata per query, cache o pre-calcolo.'",
+        "Candidate slice 4 Learning/risk: 'Le sorgenti si contraddicono sull'ammissibilità di una chiamata di embedding a runtime per query (vedi Open questions): la strumentazione fornisce l'evidenza per decidere cache o pre-calcolo senza anticipare la decisione.'",
+        "Candidate Open questions elencano anche provider Postgres (blocca slice 1), driver e modalità di connessione (slice 1), embedder multilingue (slice 3 e 4), modello LLM (slice 7 e 8)",
+        "Reference 'Open questions attese' richiede esattamente: embedding della query, provider Postgres, modello di embedding, modello LLM, ciascuno con la slice bloccata",
+        "Candidate slice 4 Includes: 'Query embeddata e confrontata in una sola interrogazione Postgres'"
+      ],
+      "findings": [
+        "La contraddizione sull'embedding della query è esposta esplicitamente con entrambi i lati citati e con le slice bloccate nominate: nessuna scelta silenziosa.",
+        "Tutte le decisioni non prese dalle fonti (provider Postgres, embedder, modello LLM) restano aperte con la slice che bloccano, mai risolte dentro una slice; la domanda aggiuntiva su driver/pooling è pertinente perché cambia implementazione e verificabilità.",
+        "Tensione residua: la slice 4 descrive comunque l'implementazione con query embeddata a runtime; il candidate la disinnesca dichiarando che l'accettazione della slice resta bloccata e che la strumentazione serve a decidere, ma il testo di Includes anticipa di fatto un lato senza marcarlo come assunzione provvisoria.",
+        "Le premesse non supportate dalle fonti (es. costo LLM 'nell'ordine dei centesimi') sono formulate come soglie da verificare, non come fatti."
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "critical_failures": []
+}
