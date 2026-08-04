@@ -26,7 +26,7 @@ Use `CONFIRM_SEND=1` only after reviewing a dry run. Use `RESUME=1` to validate 
 artifacts. A material grader disagreement exits `pending-review`; place the requested immutable
 resolution file beside the blind request, then resume.
 
-`calibrate-critical` plans the slice 3 matrix only: 36 absolute provider calls and no paired or
+`calibrate-critical` plans the slice 7 absolute matrix only: 36 absolute provider calls and no paired or
 adjudication units. It does not send without explicit confirmation. Shards are deterministic,
 disjoint, and report-free; `calibrate-critical-report` joins only a complete resumable raw matrix
 and never probes or invokes providers.

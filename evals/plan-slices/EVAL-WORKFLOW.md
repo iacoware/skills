@@ -37,7 +37,7 @@ make calibrate DRY_RUN=1
 Dry runs show every file sent and artifact target without invoking providers. Review this output
 before adding `CONFIRM_SEND=1`.
 
-`calibrate-critical` is the slice 3 checkpoint workload: six `critical_subset` fixtures, three runs
+`calibrate-critical` is the slice 7 absolute-calibration workload: six `critical_subset` fixtures, three runs
 per provider, 36 absolute calls, no paired calls, and no adjudication. Its diagnostic report is
 `CALIBRATION-CRITICAL.v3.json`; the grade/score names remain reusable by full calibration.
 

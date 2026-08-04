@@ -2,7 +2,7 @@
 
 ## Obiettivo
 
-Implementare le sette slice `NOW` di `GRADING-IMPROVEMENTS.md` senza modificare il contenuto degli
+Implementare le otto slice `NOW` di `GRADING-IMPROVEMENTS.md` senza modificare il contenuto degli
 artefatti storici. Gli artefatti v1 e v2 sono archiviati rispettivamente sotto
 `calibration-legacy/raw/` e `calibration-v2/raw/`. Il risultato è evaluator v3: preflight solo
 strutturale, grading semanticamente calibrato, risoluzione auditabile dei disaccordi e scoring
@@ -22,13 +22,29 @@ scelto su fixture etichettate.
   violato il grade contract e 15 non sono state eseguite per fail-fast. Il checkpoint umano sulla
   scala dei verdict resta aperto e ora dipende anche da una decisione su contratto e budget.
 - [ ] **Slice 4 — Un solo addebito:** contratto `primary_criterion` e validazioni principali sono
-  implementati; restano fixture/test di accettazione completi dopo il checkpoint della slice 3.
-- [ ] **Slice 5 — Adjudication:** richiesta cieca, hash e risoluzione assoluta/paired sono parzialmente
+  implementati; restano fixture e test di accettazione. È la prossima slice perché congela lo schema
+  grade prima di qualunque run pagata.
+- [ ] **Slice 5 — Strumento relativo validato:** nuova, non iniziata. Scollegare paired da assoluto,
+  eseguire a ordine invertito, comporre altre coppie dalle fixture esistenti e misurare il falso
+  cambiamento sui criteri invarianti.
+- [ ] **Slice 6 — Adjudication:** richiesta cieca, hash e risoluzione assoluta/paired sono parzialmente
   implementati; restano copertura completa di resume, critical failure paired e test end-to-end.
-- [ ] **Slice 6 — Baseline etichettata:** manifest, nuove fixture, ripetizioni e report metriche sono
-  implementati; mancano golden test completi, run provider e review umana del report.
-- [ ] **Slice 7 — Scoring e rollout:** `scoring.py` espone formula corrente e shadow formula, ma
+- [ ] **Slice 7 — Calibrazione assoluta etichettata:** manifest, nuove fixture, ripetizioni e report
+  metriche sono implementati; mancano golden test completi, run provider e review umana del report.
+  Assorbe le attività empiriche residue della slice 3.
+- [ ] **Slice 8 — Scoring e rollout:** `scoring.py` espone formula corrente e shadow formula, ma
   selezione calibrata, run completa, `CALIBRATION.v3.json` e confronto before/after non sono fatti.
+
+### Riordino del 2026-08-04
+
+Le slice `NOW` sono state riordinate in `GRADING-IMPROVEMENTS.md` dopo la prima raccolta reale. La
+misura relativa diventa Theme D con primo validatore alla slice 5; la misura assoluta diventa Theme E
+e scende alla slice 7. Motivo: la domanda che l'evaluator serve è un before/after, e con agreement
+inter-grader 0.56 sui verdetti assoluti la differenza fra due score è meno affidabile del confronto
+diretto. La ex slice 4 resta al suo posto perché congela lo schema grade prima delle run pagate,
+regola ora esplicita in `Ordering criteria`. Le attività empiriche della slice 3 — tre run per grader,
+accuratezza e ripetibilità — passano alla slice 7; alla slice 3 restano contratto, fixture e test
+offline, che sono completi.
 
 ### Verifiche completate
 
@@ -147,7 +163,7 @@ scratchpad; non pubblicate come `CALIBRATION-CRITICAL.v3.json`.
   non esistono i 72 artefatti GRADE/SCORE prodotti dalle run autorizzate.
 - **Rischio:** finché run e checkpoint restano aperti, la distinzione tra `minor`, `material`,
   `severe` e `absent` è verificata contrattualmente ma non calibrata sul comportamento dei grader;
-  la slice 4 non deve avanzare.
+  le run pagate non devono partire prima che lo schema grade sia congelato.
 - **Rischio — costo delle non-conformità:** ogni grade rifiutato è una chiamata già pagata che non
   produce artefatto. Con l'attuale rigidità del contratto e il fail-fast, completare la matrice costa
   più delle 36 chiamate preventivate. Qualunque rilassamento del contratto o modifica di prompt o
@@ -228,7 +244,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
   restano direttamente in `results/`.
 - [ ] **Run 36 chiamate provider:** avviato il 2026-08-04 con autorizzazione esplicita e subagent
   paralleli su shard disgiunti; interrotto a 15 unità valide. `CALIBRATION-CRITICAL.v3.json` non
-  esiste. Slice 4 non avviata.
+  esiste. Nessuna slice successiva avviata.
 - [x] **Smoke test prima delle 36:** eseguito con `SHARD_COUNT=36`, indici 1 e 4. Entrambi i provider
   hanno accettato lo structured output v3 e gli artefatti sono stati riusati da `RESUME=1` a costo
   nullo.
@@ -251,7 +267,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
 - **Scope approvato:** raccogliere solo i grade assoluti delle sei fixture `boundary-*` marcate
   `critical_subset: true`, con tre ripetizioni indipendenti per Codex e Claude: 6 × 3 × 2 = 36
   chiamate provider.
-- **Scope differito alla slice 6:** le tre fixture non critiche aggiungono 6 chiamate assolute e il
+- **Scope differito alla slice 7:** le tre fixture non critiche aggiungono 6 chiamate assolute e il
   pair aggiunge 6 chiamate paired; per questo `make calibrate` completo produce 48 chiamate, non 36.
 - [x] **Modalità di raccolta implementata:** `make calibrate-critical` filtra il manifest v3
   esistente sul subset critico, esegue solo unità assolute, esclude paired e adjudication e genera
@@ -259,7 +275,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
 - **Riuso:** non creare un manifest alternativo; mantenere hash del manifest, label-set e nomi
   `run-01`…`run-03`. La calibrazione completa potrà riprendere i 36 artefatti solo se versioni,
   input, prompt, CLI, modelli, effort e configurazione restano compatibili con i controlli resume.
-- **Separazione dalla slice 5:** un disaccordo materiale non deve fermare la raccolta; richieste e
+- **Separazione dalla slice 6:** un disaccordo materiale non deve fermare la raccolta; richieste e
   resolution di adjudication saranno prodotte solo dopo che la matrice grezza è completa.
 - [x] **Preflight obbligatorio:** il dry-run completo mostra esattamente 36 chiamate provider, zero
   paired e zero adjudication; quattro shard mostrano 9 chiamate ciascuno, unione completa e nessuna
@@ -274,7 +290,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
   intra-grader sulle tre ripetizioni, agreement inter-grader sul prodotto delle run, precision/recall
   dei critical failure e distribuzione completa dei verdict per fixture.
 - **Checkpoint umano:** esaminare report e disaccordi grezzi; confermare la scala a cinque verdict
-  oppure richiedere una nuova versione della rubric prima di iniziare la slice 4. Le soglie restano
+  oppure richiedere una nuova versione della rubric al checkpoint della slice 7. Le soglie restano
   diagnostiche e non vanno inventate dopo aver visto i risultati.
 - **Autenticazione Claude:** il 2026-08-04 `claude auth status` ha restituito `loggedIn: false` nella
   sandbox dell'agente e `loggedIn: true` fuori sandbox. È un falso negativo dovuto all'isolamento
@@ -397,7 +413,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
   failure senza condizioni/citazioni.
 - [ ] Eseguire almeno tre run per grader sulle fixture di confine. Parziale: 15 unità su 36, nessuna
   fixture con copertura completa, `boundary-severe` e `boundary-safety` senza dati.
-- [ ] Confrontare accuratezza sulle label e ripetibilità. Prima della slice 4 decidere se mantenere i
+- [ ] Confrontare accuratezza sulle label e ripetibilità. Al checkpoint della slice 7 decidere se mantenere i
   cinque verdict o semplificare la scala; un cambio incrementa nuovamente la versione rubric. Le
   metriche parziali sono registrate ma non sufficienti a decidere.
 
@@ -421,7 +437,32 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
 - Due difetti realmente distinti sullo stesso criterio restano validi e il peggiore determina il
   verdict.
 
-### 5. Adjudication assoluta e paired — parziale
+### 5. Strumento relativo validato — non iniziata
+
+**Modifiche**
+
+- Rimuovere da `_paired_prerequisites` la dipendenza delle unità paired dagli artefatti assoluti
+  risolti; `render_comparison_prompt` riceve già solo rubric, fonti, brief e i due candidati, quindi
+  il legame è di provenienza e non semantico. Conservare la registrazione della provenienza dove
+  esiste davvero.
+- Aggiungere l'esecuzione a ordine invertito come unità distinta, con nome artefatto e metadata che
+  registrano quale candidato occupava la posizione A.
+- Comporre nuove coppie nel manifest dalle fixture `boundary-*` esistenti, come già fa
+  `learning-evidence-improvement`, etichettando direzioni attese e `invariant_criteria`.
+- Estendere `calibration_report.py` con tasso di falso cambiamento sui criteri invarianti, stabilità
+  fra i due ordini e agreement inter-grader sulla direzione, ciascuno con numeratore e denominatore.
+- Applicare qui la remediation della slice 3: quarantena delle risposte rifiutate, circuit breaker al
+  posto del fail-fast e regole del prompt enunciate sui campi.
+
+**Test e checkpoint**
+
+- Golden test delle nuove metriche con classi assenti, ordini sbilanciati e provider sbilanciati.
+- Un'unità paired si esegue e riprende senza alcun artefatto assoluto presente.
+- L'inversione dell'ordine produce un target distinto e non collide con l'ordine diretto.
+- Checkpoint: falso cambiamento e stabilità fra ordini decidono se lo strumento relativo basta per
+  giudicare le modifiche alla skill e con quale profondità serve ancora la calibrazione assoluta.
+
+### 6. Adjudication assoluta e paired — parziale
 
 **Modifiche**
 
@@ -449,7 +490,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
 - Nessun provider/mapping compare nella richiesta cieca.
 - Resume copre: agreement automatico, pending umano, resolution completa e paired successivo.
 
-### 6. Baseline di calibrazione etichettata — parziale
+### 7. Calibrazione assoluta etichettata — parziale
 
 **Modifiche**
 
@@ -476,7 +517,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
   arbitrario per indice.
 - Review umana di label e report prima di scegliere lo scoring.
 
-### 7. Formula di scoring calibrata e rollout — non completata
+### 8. Formula di scoring calibrata e rollout — non completata
 
 **Modifiche**
 
@@ -505,9 +546,9 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
 
 ## Strategia di consegna
 
-Ogni slice forma un commit revertibile. Le slice 3, 5, 6 e 7 terminano con il relativo decision
+Ogni slice forma un commit revertibile. Le slice 5, 6, 7 e 8 terminano con il relativo decision
 checkpoint prima di iniziare il contratto successivo. I risultati v3 intermedi restano separati per
-versione/configurazione e non diventano baseline canonica finché la slice 7 non è approvata.
+versione/configurazione e non diventano baseline canonica finché la slice 8 non è approvata.
 
 ## Rischi
 
@@ -523,7 +564,7 @@ versione/configurazione e non diventano baseline canonica finché la slice 7 non
 ## Open questions
 
 - Il checkpoint umano mantiene i cinque verdict o richiede una scala semplificata e una nuova rubric?
-  La decisione blocca la slice 4 e resta non anticipabile: la matrice è ferma a 15 unità su 36 e i
+  La decisione blocca la slice 7 e resta non anticipabile: la matrice è ferma a 15 unità su 36 e i
   due confini alti della scala non hanno alcun dato.
 - Si autorizzano chiamate provider oltre le 36 iniziali? Ne servono almeno 21 per le unità mancanti,
   più un margine per le non-conformità, e ne restano 15 autorizzate.
@@ -531,4 +572,5 @@ versione/configurazione e non diventano baseline canonica finché la slice 7 non
   `primary_criterion` smette di essere un errore fatale? Ogni modifica a contratto, prompt o rubric
   invalida il resume delle 15 unità già pagate.
 - Il fail-fast per shard resta, o una singola unità non conforme viene marcata fallita lasciando
-  proseguire le unità indipendenti dello stesso shard?
+  proseguire le unità indipendenti dello stesso shard? Ora è collocata nella slice 5, che è la prima
+  a spendere chiamate dopo il riordino.
