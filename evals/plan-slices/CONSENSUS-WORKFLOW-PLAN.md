@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta, prossima** — **9 chiamate, autorizzazione** | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| **2 — CON-6** | **aperta, prossima** — **quattro sessioni, 2+2+5 chiamate, autorizzazione per sessione** | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -115,7 +115,7 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 righe multi-affermazione produce verdetti che lo split dovrebbe poi disaggregare a posteriori.
 **Chiamate provider:** **9** — 2 generazione, 2 `improve`,
 2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high`**. Richiede **autorizzazione esplicita** dopo
-il dry-run e il conteggio, per `evals/AGENTS.md`.
+il dry-run e il conteggio, per `evals/AGENTS.md`, **una per sessione** e non una per la fase.
 
 I piani CON-5 **non si riusano**: esistevano già il 2026-08-02 alle 17:03 — `support/AGENT-PLAN-MAP.md`
 § *When each artifact was generated* — mentre `87150d3` è delle 23:11 del 2026-08-04 e `eb926bb` delle
@@ -123,18 +123,63 @@ I piani CON-5 **non si riusano**: esistevano già il 2026-08-02 alle 17:03 — `
 2026-08-04 che questo piano portava prima sono l'ora del commit `515e0a3`, non della generazione: il
 divario è più largo, non più stretto.
 
-- [ ] Generare i due candidati con lo `SKILL.md` corrente e registrarli in
-  `support/AGENT-PLAN-MAP.md`.
-- [ ] `make validate` su entrambi.
-- [ ] Eseguire `improve`, il gate, `review`, `verdetto` e `recidiva` a mano, copiando i prompt da
-  `prompts/`.
+### Quattro sessioni, non una
+
+La fase **non si esegue in una sessione sola**, e non per comodità. Tre vincoli la tagliano da sé:
+
+- **La sessione di regia non può essere una delle nove.** Ogni esecuzione riceve un payload da
+  allowlist; una sessione che ha già letto i piani con i nomi reali, le due assegnazioni alias e il
+  registro non può poi *essere* l'`improve` o il `review` senza rompere cecità e allowlist insieme.
+- **Metà delle esecuzioni non parte da qui.** `CX` è Codex CLI — `support/AGENT-PLAN-MAP.md` — quindi
+  le quattro esecuzioni di quel lato le lancia l'umano altrove e lo stato passa comunque per il
+  filesystem. *Assunzione dichiarata:* CON-6 resta in **sessioni interattive** su entrambi i lati,
+  come CON-1…CON-5; la modalità headless è la Fase 6 ed è un confine di strumento a sé.
+- **Il gate è un punto di decisione che cambia la rotta a metà.** Uno dei tre esiti dice di
+  **fermarsi e ripetere**; una sessione che ha già lanciato `review` ha speso due chiamate su un ramo
+  da abbandonare.
+
+L'autorizzazione di `evals/AGENTS.md` si chiede **per sessione**, con il conteggio di quella
+sessione — 2, 2, 5 — mai una volta sola per nove: un'autorizzazione unica coprirebbe anche il ramo in
+cui S2 dice di fermarsi.
+
+**S1 — generazione. 2 chiamate.**
+
+- [ ] Assegnare `CANDIDATE-A`/`CANDIDATE-B` ai due lati e `REPORT-A`/`REPORT-B` ai due `IMPROVEMENT`
+  che nasceranno. **Le due assegnazioni non devono coincidere.**
+- [ ] Scrivere la riga di `support/AGENT-PLAN-MAP.md` — harness, modalità, modello, effort —
+  **prima** della chiamata. È l'unico momento in cui `gen` si registra senza ricostruirlo.
+- [ ] Generare i due candidati dallo `SKILL.md` corrente e dalle sole fonti.
+- [ ] `make validate PLAN=…` su entrambi.
+
+**S2 — `improve` e gate. 2 chiamate. Finisce con una decisione.**
+
+- [ ] Comporre i payload: candidati rinominati, più `CLAUSE-INDEX.md` e `LEDGER-CLAIMS.md` proiettati
+  **a mano** dalla mappa e dal registro. Il produttore è Fase 5 e scriverlo qui sarebbe iniziarla da
+  un'altra porta. **Verificare entrambe le proiezioni su un campione prima di inviare:** un indice
+  sbagliato scarta al gate ogni voce che nomina una clausola, e il log si leggerebbe come «il modello
+  non sa fare il lavoro» quando è un errore di payload. È il punto più fragile del ciclo.
+- [ ] Eseguire `improve` sui due lati, copiando `prompts/improve.prompt.md`.
+- [ ] `make validate-improvement` su entrambi, e conservare il log degli scarti per voce e campo.
+- [ ] **Scegliere il ramo** fra i tre esiti qui sotto. Il ramo «si corregge il campo e si ripete»
+  torna a S2, non prosegue.
+
+**S3 — `review`, `verdetto`, `recidiva`. 5 chiamate.**
+
+- [ ] I tre payload sono disgiunti e le esecuzioni indipendenti: `review` legge i due `IMPROVEMENT`
+  conformi, `verdetto` i due candidati più le righe attive, `recidiva` i due `IMPROVEMENT` più tutte
+  le righe, dormienti incluse.
+- [ ] Le righe dormienti entrano 1 ciclo su 3; a CON-6 non ce ne sono, e se ce ne fossero si dichiara
+  perché entrano o no.
+
+**S4 — report, applicazione, veto. Zero chiamate.**
+
 - [ ] Scrivere `CONSENSUS-CON-6.REPORT.md` nella forma di `assets/report-template.md`, contatori in
-  testa. È la prima istanza del template: ogni punto in cui non regge si corregge nel template, non
-  nel report.
+  testa. È la prima istanza del template: ogni punto in cui non regge si corregge **nel template**,
+  non nel report.
 - [ ] Applicare le sole voci che il filtro licenzia, una riga di registro per voce, `Commit:
   (pending)`. **Non committare dal workflow.** Leggere i contatori, poi `git diff`, poi decidere.
 - [ ] Correggere `prompts/`, `assets/`, `CONSENSUS-WORKFLOW.md` e `workflow/` dove la procedura non
-  ha retto.
+  ha retto, e annotare ogni scostamento nella sezione che il report ha per questo.
 
 **Verifica — due criteri distinti, ed è il secondo quello che conta:**
 
