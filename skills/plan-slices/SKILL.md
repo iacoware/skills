@@ -17,9 +17,9 @@ building it.
 ## Choose the branch
 
 - **Create:** execute steps 1–5 and satisfy every completion criterion.
-- **Review:** execute steps 1–2, audit against steps 3–5, then report findings.
-- **Split, merge, or reorder:** execute steps 1–2 for the affected scope, apply steps 3–4, then
-  republish through step 5.
+- **Review:** execute steps 1–2, then follow `Review an existing plan`.
+- **Split, merge, or reorder:** execute steps 1–2 for the affected scope, then follow `Split, merge,
+  or reorder an existing plan`.
 
 Modify an existing plan only when requested.
 
@@ -388,3 +388,30 @@ Keep passing verdicts internal. Modify the plan only when requested.
 **Complete when:** every applicable criterion has a pass, fail, or not-applicable verdict; every
 differentiator, material risk, horizon assignment, theme boundary, slice, and ordering constraint is
 traceable to a verdict.
+
+## Split, merge, or reorder an existing plan
+
+Reopen only the affected scope: the named slices, their theme, and any slice whose position depends
+on them. Leave the rest of the plan untouched. An edit is not a rewrite; unrelated churn hides what
+actually moved and costs the reader the ability to review the change.
+
+Justify the edit against the test that owns it — the split and merge tests in step 2, the ordering
+rules in step 4, or a `Decision checkpoints` entry whose evidence has arrived. Size, tidiness, and
+preference are not justifications. When no test supports the requested edit, say so and stop.
+
+Conserve the behaviour set. A split distributes the original outcome across the resulting slices and
+introduces none; a merge yields one primary outcome and one learning target; a reorder changes
+positions only. A behaviour that loses its owner moves to `LATER` with a promotion trigger or to
+`OUT-OF-SCOPE` with a rationale, never disappears.
+
+Apply steps 3–4 to the affected scope, then republish through step 5, validator included. Repair
+every reference the edit invalidates: renumbering `NOW` slices moves the targets of
+`Themes.First validation`, `Decision checkpoints`, `Open questions`, and any `LATER` trigger naming
+a slice. A checkpoint whose evidence triggered this edit records the decision it produced.
+
+**Complete when:** every applicable step-5 criterion still holds; the edit traces to a split test,
+merge test, ordering rule, or checkpoint; each resulting slice has one outcome and one learning
+target and passes the independence tests; the behaviour set changed only through a recorded horizon
+move; every reference to a slice number resolves to the slice it meant; slices outside the affected
+scope are unchanged; any new departure from breadth before depth is stated once under `Ordering
+criteria`.
