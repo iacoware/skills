@@ -700,7 +700,7 @@ comprato il dato di conformità, circa il 68%, con modi di fallimento distinti p
   obbligatorio in rubric, score, resume e report.
 - Rieseguire matrice assoluta e paired completa; pubblicare `CALIBRATION.v3.json` e confronto
   before/after. Non riscrivere score storici.
-- Aggiornare `EVAL-WORKFLOW.md`, `recipe-app/README.md`, Makefile e help con brief, v3,
+- Aggiornare `GRADING-EVAL-WORKFLOW.md`, `recipe-app/README.md`, Makefile e help con brief, v3,
   ripetizioni, pending review, resolve e interpretazione dei resolved.
 
 **Test finali**

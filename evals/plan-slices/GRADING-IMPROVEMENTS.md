@@ -1,6 +1,6 @@
 # Grading di `plan-slices` — Piano di miglioramento
 
-- **Sources:** `EVAL-WORKFLOW.md`, `grader-rubric.json`, evaluator v2, fixture e
+- **Sources:** `GRADING-EVAL-WORKFLOW.md`, `grader-rubric.json`, evaluator v2, fixture e
   artefatti `recipe-app/results/PLAN-CC-CON-5.*.v2.*`; run critica v3 del 2026-08-04 e
   `NOTES.md`.
 - **Current state:** il preflight orchestrato esegue già solo la validazione strutturale; brief,
