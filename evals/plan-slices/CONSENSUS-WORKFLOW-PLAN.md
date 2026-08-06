@@ -34,20 +34,49 @@ Non si ridiscutono all'inizio di ogni sessione.
   `570e929`.
 - [x] Creare `CONSENSUS-WORKFLOW.md` estraendo dal `Riesame del 2026-08-04` obiettivo, diagnosi,
   ciclo, buco e registro, gate e limiti.
-- [ ] In `GRADING-IMPROVEMENTS-PLAN.md`, sostituire la sezione `Riesame del 2026-08-04` con un rimando
-  a `CONSENSUS-WORKFLOW.md` più una sezione `Gate di ripresa` che **conserva** ciò che appartiene al
-  grading: cosa congelare, test nullo, test di sensibilità, pre-registrazione, budget residuo, stop
-  rule e varianza di generazione.
-- [ ] Marcare la sospensione in testa a `GRADING-IMPROVEMENTS-PLAN.md` e sulle slice 3 e 5-8, e
-  annotare che i vincoli nati per proteggere le 15 unità pagate — invalidazione retroattiva del
-  resume, archiviazione sotto prefisso pilota prima di cambiare il prompt — non vincolano più niente.
-- [ ] Creare `evals/plan-slices/README.md`: quale strumento è attivo, quale è sospeso, e la mappa dei
-  tre gruppi di artefatti — grading, consenso, condivisi.
+- [ ] **Sostituire in `GRADING-IMPROVEMENTS-PLAN.md` la sezione `Riesame del 2026-08-04`**, che oggi
+  occupa dalla riga `### Riesame del 2026-08-04 — quale strumento serve davvero` fino a `**Limiti che
+  restano in ogni percorso.** … guarda quali criteri, non quanti.`, esclusa la successiva `### Verifiche
+  completate`. Sostituire l'intervallo per confine dichiarato, non a occhio. Al suo posto tre sezioni:
+  - `### Perché è sospeso` — i numeri della sproporzione al 2026-08-04: `SKILL.md` a 13 commit contro
+    i 33 di `evals/plan-slices`, 3.477 righe di Python, 1.466 di documenti, 26 criteri di rubric,
+    21 chiamate già pagate, e nessun miglioramento allo `SKILL.md` derivato da uno score. La diagnosi
+    completa rimanda a `CONSENSUS-WORKFLOW.md`.
+  - `### Cosa resta congelato` — scala a cinque verdetti e severità del grade contract; matrice di
+    calibrazione e metriche (slice 7); formula di scoring e cap (slice 8); adjudication (slice 6).
+    Il codice resta in git: se il gate viene superato si riprende, altrimenti non è stato mantenuto.
+  - `### Gate di ripresa` — il trigger, cioè una regressione realmente sfuggita al registro, e non
+    l'ipotesi che possa sfuggirne una; poi, **conservati dalla sezione rimossa**, i due test nel loro
+    ordine — test nullo dei falsi positivi e test di sensibilità dei falsi negativi — la
+    pre-registrazione obbligatoria delle coppie, il budget residuo, la stop rule e la nota sulla
+    varianza di generazione.
+- [ ] Aggiornare la citazione che apre `## Stato implementazione — 2026-08-04`: rimanda al `Riesame`
+  come nome del gate, che dopo la sostituzione non esiste più.
+- [ ] Aggiungere un banner di sospensione dopo il titolo di `GRADING-IMPROVEMENTS-PLAN.md`: strumento
+  attivo, data della sospensione, e l'istruzione di leggere prima questo piano. Estendere alla
+  slice 3 il marcatore che oggi copre le sole slice 5-8.
+- [ ] Annotare che i vincoli nati per proteggere le 15 unità pagate non vincolano più niente:
+  `Rischio — invalidazione retroattiva` e `Vincolo operativo se il prompt cambia` nella slice 3, più
+  ogni punto che subordina una modifica di prompt, rubric o contratto alla riprendibilità del resume.
+- [ ] Ripulire le `Open questions` del piano di grading: la prima — se accettare il percorso del
+  `Riesame` — è **decisa** il 2026-08-06; la seconda — quanti cicli valgono come gate — è **nulla**,
+  perché il gate non è più un numero di cicli ma una regressione sfuggita. Le restanti sono dormienti
+  dietro il gate. Aggiungere la conseguenza della rinuncia alle unità pagate: una ripresa
+  ricollezionerebbe da zero, quindi la domanda sulle chiamate residue va riformulata su una matrice
+  intera, non sulle 21 unità mancanti.
+- [ ] Creare `evals/plan-slices/README.md` come punto d'ingresso della directory: quale strumento è
+  attivo e quale sospeso, e la mappa dei tre gruppi di artefatti — **grading** (`GRADING-*.md`,
+  `grader-rubric*.json`, `fixtures/`, `results/calibration-*/`, gli script di grading e i target
+  `grade`/`compare`/`calibrate*`); **consenso** (`CONSENSUS-*.md`, `prompts/`, `support/`,
+  `REGRESSION-LEDGER.md`, `NOTES.md`, `results/PLAN-*` e i report di ciclo); **condivisi** (`sources/`,
+  `EVALUATION-BRIEF.md`, `validate_plan.py` che vive nella skill, `evals/AGENTS.md`, e il runtime che
+  la Fase 3 estrarrà).
 
-**Verifica:** `grep -rn "EVAL-WORKFLOW"` non trova riferimenti al vecchio nome; nessun file di codice
-è stato toccato, quindi `make test` resta quello di prima.
+**Verifica:** `grep -rn "EVAL-WORKFLOW"` non trova riferimenti al vecchio nome; `grep -rn "Riesame del
+2026-08-04"` non trova rimandi orfani; nessun file di codice è stato toccato, quindi `make test` resta
+quello di prima.
 
-**Output:** commit separati per rename, estrazione e README.
+**Output:** commit separati per rename, estrazione dal piano di grading e README.
 
 ## Fase 1 — Prompt e procedura eseguibile
 
