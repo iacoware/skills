@@ -218,7 +218,7 @@ has a valid counterfactual` and wrote this criterion in their place.
 | C-108 | `SKILL.md:243-244` | Horizon dumping | `c001780` | `c001780` | uncovered | — |
 
 **C-106 is a partial restatement.** It names only the unconditional slice, not the choice made by
-placing a behaviour in another horizon — the gap the ledger's *Da popolare* already records as a
+placing a behaviour in another horizon — the gap the ledger's *To populate* already records as a
 pending extension of `R-010`. A voice reformulating `C-019` must re-anchor `C-106` too or the two
 sites drift apart again.
 
@@ -309,9 +309,10 @@ a row.
 | C-181 | `SKILL.md:374-375` | Complete when: only implementation-changing questions remain | `c001780` | `c001780` | uncovered | — |
 
 **C-157 has no row and is the precondition of `R-011`.** `R-011` quantifies over rows of the `Themes`
-table *whose `First validation` resolves* to a slice; the ledger records 17 unresolvable cells in
-`CX` CON-2…CON-4 under *Difetti degli artefatti mai registrati*, explicitly noting the defect is not
-attributable to any existing row. `C-157` is the clause that would carry it.
+table *whose `First validation` resolves* to a slice; `recipe-app/results/CONSENSUS-CON-5.REPORT.md`
+§ *Difetti degli artefatti mai registrati* records 17 unresolvable cells in `CX` CON-2…CON-4,
+explicitly noting the defect is not attributable to any existing row. `C-157` is the clause that
+would carry it.
 
 ### Review an existing plan — `SKILL.md:377-390`
 
@@ -412,10 +413,11 @@ other two are components of a `Commit` cell that no claim of their row resolves 
   it. Candidates: C-071 (never interleave while shared ownership is partial) and C-120 (recovery chain
   before manual escape). **Unresolved.**
 - **`R-015`** — *«le slice successive che lo riusano lo dichiarano tale».* No clause requires a later
-  slice to declare reuse. The ledger says so itself in *Formulazioni riscritte*: the requirement was
-  added to `R-006` after CON-5 *because* `CX` never declared reuse. The row demands something the
-  skill does not. **Unresolved.** It was `R-006`'s first member, second half, and the split gave it
-  its own id precisely so the failure names a row instead of half of one.
+  slice to declare reuse. `recipe-app/results/CONSENSUS-CON-5.REPORT.md` § *Formulazioni riscritte*
+  says so itself: the requirement was added to `R-006` after CON-5 *because* `CX` never declared
+  reuse. The row demands something the skill does not. **Unresolved.** It was `R-006`'s first
+  member, second half, and the split gave it its own id precisely so the failure names a row instead
+  of half of one.
 - **`R-006`, `9aa2586` component** — candidate C-119. Stated by none of the three claims `R-006` was
   split into, so the split left the component where the id stayed rather than attributing it to the
   child whose claim looks closest — C-119 is about ordering and would have pointed at `R-016`.
