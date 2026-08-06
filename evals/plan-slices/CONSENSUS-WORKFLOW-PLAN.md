@@ -151,9 +151,18 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 
 ## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
 
-**Precondizioni:** Fase 0a. **Chiamate provider:** zero. La domanda che bloccava questa fase — cosa
-succede alla riga quando una voce riformula la clausola che la copre — è decisa: vedi *Decisioni già
-prese*, riga superata e riga nuova.
+**Precondizioni:** Fase 0a, **più la mappa clausola → riga prodotta in Fase 1c**. **Chiamate
+provider:** zero.
+
+La domanda che bloccava questa fase — cosa succede alla riga quando una voce riformula la clausola
+che la copre — è decisa: vedi *Decisioni già prese*, ri-ancoraggio automatico e superamento su
+subsunzione.
+
+La dipendenza dalla mappa nasce dalla decisione stessa. Il validator controlla che le righe coprenti
+dichiarate da una voce **coincidano con la mappa**, e senza mappa quel controllo non distingue una
+voce che dichiara `uncovered` per ignoranza da una che lo dichiara con ragione — cioè esattamente il
+caso che la regola dura esiste per intercettare. È l'unico pezzo di 1c che serve a 1a: traduzione,
+split della narrativa e migrazione semantica del registro non entrano.
 
 È il pezzo che decide tutti gli altri, ed è l'unico che è codice. Replica l'architettura che nello
 skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.py`.
@@ -227,8 +236,14 @@ struttura del report.
 
 ## Fase 1c — Registro, mappa e report
 
-**Precondizioni:** Fase 0a. Indipendente da 1a e 1b: può girare in parallelo. **Chiamate provider:**
-zero.
+**Precondizioni:** Fase 0a. **Precede Fase 1a**, che ne consuma la mappa clausola → riga; indipendente
+da 1b. **Chiamate provider:** zero.
+
+La fase porta **due deliverable separabili**, e solo il primo blocca 1a:
+
+- **la mappa clausola → riga**, artefatto nuovo che non tocca il testo del registro. I riferimenti
+  `R-NNN` sono stabili attraverso la traduzione, quindi può essere prodotta prima e da sola;
+- **il registro**: estrazione della narrativa, traduzione, migrazione semantica e riclassificazione.
 
 Un solo attraversamento del confine sul registro: traduzione, split e migrazione semantica nella
 stessa passata. Due passate su testo come la formulazione di `R-002` — già riscritta tre volte — sono
