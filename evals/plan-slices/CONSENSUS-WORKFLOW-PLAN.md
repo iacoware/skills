@@ -163,16 +163,27 @@ skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.
     localizzabile (`PLAN-…-CON-N.md:NN`, oppure `slice N` più il nome del campo) oppure la
     dichiarazione esplicita che quel candidato non manifesta il difetto;
   - `Existing rule that failed to prevent the defect` — clausola di `SKILL.md` con la sua sezione,
-    oppure `none`;
+    **più le righe di registro che la coprono, oppure `uncovered`**, oppure `none` se nessuna
+    clausola è nominata. Le righe dichiarate sono ciò che il workflow **ri-ancora** quando la voce
+    riformula, ed è l'unico modo per rendere meccanicamente rilevabile un caso che oggi è invisibile:
+    `R-002` porta `Commit: d977043` mentre la sua clausola è stata riscritta da `87150d3`, senza
+    nessun link in avanti;
   - `Change to the skill` — sezione precisa e modifica normativa concreta;
   - `Reformulation attempted and discarded, and why` — obbligatorio quando il campo precedente nomina
-    una clausola **e** la voce aggiunge righe;
+    una clausola **e** la voce aggiunge righe. **«La clausola è coperta da una riga del registro» non
+    è una ragione ammissibile**, ed è il vincolo che tiene in piedi la regola dura: le clausole
+    coperte sono le poche già accusate — quattro clausole di corpo portano sei righe su undici — cioè
+    le candidate più probabili alla riformulazione. Ammettere la copertura come esenzione le
+    renderebbe permanentemente non riformulabili e restituirebbe il cricchetto intatto;
   - `Binary test` — nella grammatica delle righe del registro, decidibile su un piano generato;
   - `Cost` — cosa si toglie o si fonde se questa entra.
 - [ ] Creare `scripts/consensus/validate_improvement.py` con i controlli:
   - presenza di ogni campo obbligatorio per voce;
   - **i riferimenti si risolvono**: il file esiste e il numero di riga è nel range. Intercetta le
     citazioni allucinate, che è un rischio reale in un artefatto che nessuno rilegge riga per riga;
+  - **le righe dichiarate coprenti si risolvono** in `REGRESSION-LEDGER.md` e coincidono con la mappa
+    clausola → riga della Fase 1c; una clausola che la mappa dichiara coperta e la voce dichiara
+    `uncovered` è uno scarto;
   - `Binary test` presente e non vuoto, con una grammatica minima.
 - [ ] Implementare lo **scarto per voce**: la voce cade, il documento resta, ogni scarto esce con il
   campo mancante e il motivo in forma leggibile dal report. **Nessuna rigenerazione.**
