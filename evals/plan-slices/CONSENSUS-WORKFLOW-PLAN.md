@@ -31,6 +31,29 @@ Non si ridiscutono all'inizio di ogni sessione.
   rigenera mai. Un errore di trasporto è un ritentativo della *chiamata*, non del documento. Un lato
   a zero voci conformi non blocca il ciclo.
 - **`Origine` ha quattro valori**: `intersezione`, `intersezione-tema`, `giudizio`, `potatura`.
+- **Una voce che riformula una clausola coperta ri-ancora le righe che la coprono; le supersede solo
+  se le subsume.** Due regole, non una, perché **le righe quantificano su un piano generato, non sul
+  testo dello skill** — è il criterio con cui il registro è stato scritto (`0273a73`: *«each stated
+  over a generated plan rather than over the skill text»*). Ne discende che una riformulazione **non
+  falsifica** la riga e non ne rende indecidibile l'affermazione: rompe solo l'attribuzione.
+  - **Automatico — ri-ancoraggio.** La riga prende il commit nuovo in `Commit` e `Misurato su`, e il
+    contatore va a **`non smentita ×0`**: `×k` conta cicli contro un testo, e il testo è cambiato.
+    Nessuna riscrittura dell'affermazione, che resta valida e decidibile.
+  - **Umano, nel veto — superamento.** Solo quando l'affermazione nuova **subsume** quella vecchia i
+    verdetti smettono di essere indipendenti e tenerle entrambe sovrastima l'evidenza: è il caso
+    `R-010` ⊂ `R-002` m1 e `R-011` ⊂ prima clausola di `R-008`. La riga vecchia passa a **`superata
+    da R-NNN`**, che **non è una smentita** ed **esce definitivamente** dall'insieme verificato, a
+    differenza di una dormiente che torna; la nuova eredita la cella `Da sorvegliare` e le due
+    portano `Supersedes` / `Superseded by`. Il file cresce, il costo del `verdetto` no: una entra e
+    una esce. La subsunzione fra due affermazioni non si chiede a un modello — il report pubblica le
+    **coppie candidate**, decide il veto.
+  Le altre due opzioni restano dominate, e la provenienza a posteriori rafforza il verdetto.
+  **Riscrivere l'affermazione sul posto** è churn: l'affermazione non è diventata falsa, solo il testo
+  sotto è cambiato; e dove va davvero riscritta, `k` andrebbe azzerato comunque, quindi è il
+  superamento senza la storia. **Mandare la voce all'elenco umano** dice chi decide, non cosa succede
+  alla riga, e lascia indeterminato il campo del template che la domanda doveva sbloccare; misurato su
+  `87150d3`, che era già un commit umano deciso a mano, l'esito è esattamente lo stato di oggi —
+  `R-002` che punta a `d977043`, testo morto, senza link in avanti.
 - **Una voce vale `intersezione` o `intersezione-tema` solo se entrambi i `REVIEW` la classificano
   condivisa.** Classificazione unilaterale → `giudizio`, e nessuna applicazione automatica.
 - **Il workflow applica al working tree e non committa mai.** Applica solo ciò che il filtro
@@ -128,9 +151,9 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 
 ## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
 
-**Precondizioni:** Fase 0a, **più la domanda aperta in fondo a questo piano**, che determina il campo
-`Reformulation attempted and discarded, and why` e va decisa in una sessione dedicata prima di
-iniziare. **Chiamate provider:** zero.
+**Precondizioni:** Fase 0a. **Chiamate provider:** zero. La domanda che bloccava questa fase — cosa
+succede alla riga quando una voce riformula la clausola che la copre — è decisa: vedi *Decisioni già
+prese*, riga superata e riga nuova.
 
 È il pezzo che decide tutti gli altri, ed è l'unico che è codice. Replica l'architettura che nello
 skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.py`.
@@ -390,46 +413,3 @@ La condizione di sblocco è ora **osservabile**: il report di Fase 1c pubblica l
 condivise da un solo `REVIEW`. Prima la fase diceva «si valuta se due cicli mostrano che la
 classificazione è instabile», ma niente misurava quell'instabilità, quindi la condizione non poteva
 verificarsi.
-
-## Open questions
-
-### Cosa succede alla riga di registro quando una voce riformula la clausola che la riga copre
-
-**Da affrontare in una sessione dedicata, prima della Fase 1a.** Determina cosa il template deve
-chiedere alla voce, quindi non si può rimandare a dopo.
-
-**Il contesto, per una sessione fredda.** La regola dura di `improve` bidirezionale dice: se il campo
-`Regola esistente che non ha impedito il difetto` nomina una clausola di `SKILL.md`, il rimedio di
-default è **riformularla**, non aggiungere righe. La mappa clausola → riga della Fase 1c dice quali
-clausole sono coperte da una riga del registro.
-
-**Il problema.** Riformulare una clausola coperta **rompe la previsione della riga che la copre**. La
-riga afferma qualcosa su un testo che dopo la riformulazione non esiste più nella stessa forma; il
-ciclo successivo la verificherebbe contro una clausola diversa da quella su cui è nata, e il verdetto
-non significherebbe niente. Il registro traccia i **commit**, non le clausole, quindi oggi non se ne
-accorgerebbe nessuno.
-
-**L'esempio esiste già.** `R-010` e `R-011` sono correzioni di `R-002` e `R-008`, ed **entrambe sono
-entrate come regole aggiuntive** — `CONSENSUS-WORKFLOW.md` § *Il cricchetto*: *«perché nessun'altra
-forma era disponibile»*. Con la regola dura in vigore, `R-010` avrebbe dovuto riformulare la clausola
-nominata da `R-002` — e a quel punto `R-002` sarebbe stata una riga che afferma qualcosa su un testo
-riscritto. È il caso concreto su cui provare le opzioni.
-
-**Le tre opzioni, non equivalenti:**
-
-- **(a) Il workflow riscrive anche la riga.** L'applicazione automatica smette di toccare il solo
-  `SKILL.md` e mette le mani nel registro. Rende il veto umano più pesante — il `git diff` da leggere
-  comprende una riformulazione di previsione, che è il tipo di testo che ha richiesto tre riscritture
-  su `R-002`.
-- **(b) Una voce che riformula una clausola coperta non si applica da sé** e passa sempre all'elenco
-  umano. Coerente con il principio di applicare solo ciò che il filtro licenzia, ma rende la regola
-  dura più costosa **proprio dove serve di più**: le clausole coperte sono quelle già accusate almeno
-  una volta, cioè le candidate più probabili alla riformulazione.
-- **(c) La riga vecchia passa a `regredita per riformulazione` e ne nasce una nuova.** Conserva la
-  storia e non chiede a nessuno di riscrivere una previsione. Ma fa crescere il registro a ogni
-  riformulazione, cioè **sposta il cricchetto dallo skill al registro** — e il registro non ha
-  neppure il commit sottrattivo che lo skill ha avuto una volta.
-
-**Cosa serve avere in mano per decidere:** la mappa clausola → riga, o almeno il suo campione su
-`R-002` e `R-008`. Se la mappa mostra che le clausole coperte sono poche, (b) costa poco e vince. Se
-sono molte, (b) svuota la regola dura e la scelta è fra (a) e (c).
