@@ -111,6 +111,76 @@ Cosa è stato deciso mentre si scriveva, e non si legge dagli artefatti:
 **Restano fuori, e sono di altre fasi:** la mappa non registra ancora ciò che CON-6 cambierà (Fase 4)
 e i quattro ancoraggi `unresolved` restano fallimenti registrati, non celle da riempire.
 
+## Fase 1b-i — I quattro prompt
+
+**Precondizioni:** Fase 1a. **Chiamate provider:** zero.
+
+**Fatta il 2026-08-06.** I quattro prompt sono `prompts/improve.prompt.md`, `review.prompt.md`,
+`verdict.prompt.md`, `recidiva.prompt.md`, e **sono il record**: forma, divieti e struttura di output
+stanno lì e qui non si duplicano. `PROMPTS.md` porta in testa la nota che è scratchpad senza valore
+normativo. **Nessuno dei quattro è mai stato eseguito** — è ciò che la Fase 2 misura.
+
+Ogni file ha una **testata non inviata** sopra una riga orizzontale: payload come allowlist, slot che
+il runner riempie, e la ragione delle scelte che il prompt stesso non può portare. Sotto la riga c'è
+solo il testo che va al modello. È la convenzione che la Fase 5 rende, ed è testabile.
+
+Cosa è stato deciso mentre si scriveva, e non si legge dai quattro file:
+
+- **Il payload di `improve` è più grande di quanto l'hub dichiarasse**, e la voce 3 di
+  `CONSENSUS-WORKFLOW.md` § *Il ciclo* è stata corretta di conseguenza. Al brief, alle fonti e ai due
+  candidati si aggiungono `SKILL.md`, un **indice delle clausole** (sede · sezione · righe coprenti,
+  senza il testo delle affermazioni) e le **affermazioni del registro**. Non è generosità: il
+  contratto chiuso in Fase 1a chiede `Covering rows` — che la mappa decide, non la lettura dello
+  skill — e `Merged claim`, che sostituisce righe che vanno lette. Senza l'indice ogni voce che nomina
+  una clausola è uno scarto su un campo che il modello non può indovinare; senza le affermazioni
+  `reach-change` è irraggiungibile e l'assorbimento, unica mossa che toglie una previsione, smette di
+  succedere in silenzio.
+- **Conseguenza dichiarata sulla `recidiva`, non nascosta.** Chi scrive gli `IMPROVEMENT` ha visto le
+  affermazioni del registro, quindi una coppia è un difetto sollevato **nonostante** la riga fosse
+  visibile. Rende una coppia evidenza più forte e uno zero evidenza più debole. Va in `Misurato su` al
+  primo ciclo che lo esercita.
+- **I candidati arrivano rinominati `CANDIDATE-A.md`/`CANDIDATE-B.md`.** I nomi reali portano l'alias
+  del generatore: lasciarli avrebbe reso l'etichetta `Candidate A` decorativa, e la cecità nominale
+  dichiarata in `workflow/CYCLE.md` copre il riconoscimento dello stile, non un'etichetta esplicita.
+  `assets/improvement-template.md` è stato allineato in due punti — `## Inputs` e gli esempi di
+  riferimento — perché citava i nomi reali. Stessa cosa per `REPORT-A`/`REPORT-B` in `review` e
+  `recidiva`, con le due assegnazioni che non devono coincidere.
+- **Il divieto è un'allowlist, non un elenco di file proibiti.** Nominare la mappa alias → generatore
+  per vietarla è dire al modello dove sta la risposta. I prompt elencano ciò che si può leggere e
+  aggiungono «nient'altro, né in questa sessione né in una delegata».
+- **`review` legge i due report e nient'altro.** Il prompt legacy concedeva `SKILL.md` «se serve per
+  chiarire terminologia»; è caduto. La fase decide una cosa sola — su cosa i due concordano — e ogni
+  file in più è un invito a rigiudicare il merito, che il prompt vieta esplicitamente.
+- **Gli id delle voci sono portanti.** `A#N` e `B#N`, ogni id esattamente una volta su cinque sezioni,
+  con `## Out of scope` per le voci sul walking skeleton, che altrimenti sparirebbero rompendo il
+  conteggio. Sono gli id su cui la `recidiva` accoppia e su cui il report di Fase 1c calcola le **voci
+  classificate condivise da un solo `REVIEW`** — la misura di instabilità che sblocca la Fase 7.
+- **`Same remedy` più `Remedy carried by`** sono il separatore fra `intersection` e
+  `intersection-theme`, con la regola che il dettaglio non è una ragione per preferire un lato:
+  esserlo decidibile su un piano generato sì.
+- **`verdetto` ha tre valori, non due.** `holds`, `falsified`, `row-defect`. Il terzo porta una delle
+  tre sole ragioni ammesse, prese da `REGRESSION-LEDGER.md` § *Authority and rewritten formulations*:
+  non decidibile da ciò che il piano pubblica, decidibile solo scegliendo fra due letture, contraddice
+  gli `Accepted alternatives` del brief. Senza il terzo valore il modello tira a indovinare dove il
+  registro prescrive di riscrivere la riga.
+- **Due verdetti per riga, e il modello non aggrega.** «Regge solo se regge su entrambi» è aritmetica
+  del report. La citazione è obbligatoria anche su `holds` — è la sede su cui il verdetto poggia,
+  cioè dove la violazione comparirebbe — perché senza è la lettura che degrada in silenzio.
+- **I payload di `verdetto` e `recidiva` non portano stato né contatori.** Un modello a cui dici che
+  una riga ha superato tre cicli cerca il quarto. Dormienza e conteggi restano decisioni del runner e
+  del report.
+- **`recidiva` accoppia al massimo una riga per voce**, con `Other rows considered` per le altre, e
+  non emette nessun totale. Il divieto è scritto nel prompt: uno scalare nasconde l'instabilità che
+  autorizzerebbe l'inversione a due chiamate.
+
+**Residui dichiarati, e sono di altre fasi:**
+
+- Le tre proiezioni che i payload nominano — indice delle clausole, affermazioni del registro, righe
+  da verificare — **non esistono come file**. La Fase 2 le ricava a mano da `support/clause-row-map.tsv`
+  e da `REGRESSION-LEDGER.md`; la Fase 5 le genera.
+- **`## GENERATE PLAN` non ha successore.** La generazione resta in `PROMPTS.md` fino alla Fase 6, e
+  la nota in testa dichiara l'eccezione invece di lasciare il banner falso.
+
 ## Fase 0d — Split di `CONSENSUS-WORKFLOW.md`
 
 **Precondizioni:** nessuna. **Chiamate provider:** zero. **Non è un confine di strumento:** nessuno

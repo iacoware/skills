@@ -20,8 +20,8 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 0a, 0, 0c, 1a | **chiuse** — `f659c8b`, `f659c8b`, `88a4e9b`, `278edfd` | `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`, solo per sapere *perché* |
 | 0d — split dei documenti | **chiusa** — 2026-08-06 | come sopra |
 | 0b — conversione | aperta, senza dipendenze | i documenti da convertire |
-| **1b-i — prompt** | **aperta, prossima** | `assets/improvement-template.md`, `PROMPTS.md`, `CONSENSUS-WORKFLOW.md` § *Il ciclo*, `workflow/CYCLE.md` |
-| **1b-ii — mappa generatori** | **aperta, indipendente da 1b-i** | `recipe-app/results/PLAN-*`, `git log`, `REGRESSION-LEDGER.md` § *`Measured on`* |
+| 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
+| **1b-ii — mappa generatori** | **aperta, prossima** | `recipe-app/results/PLAN-*`, `git log`, `REGRESSION-LEDGER.md` § *`Measured on`* |
 | 1c — report template | aperta, resta un deliverable | `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, `assets/improvement-template.md` |
 | 2 — CON-6 | aperta, **9 chiamate, autorizzazione** | `prompts/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
@@ -108,63 +108,21 @@ senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare inde
 **Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
 citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
 
-## Fase 1b — I quattro prompt e la mappa dei generatori
+## Fase 1b-ii — Mappa dei generatori e slot `gen`
 
-**Splittata in due sessioni il 2026-08-06**, prima di iniziarla. Non è una divisione per volume: i
-due blocchi hanno contesti disgiunti. Scrivere i prompt chiede il template, `CONSENSUS-WORKFLOW.md` e
-il `PROMPTS.md` legacy; ricostruire chi ha generato i piani CON-1…CON-5 chiede diciotto artefatti e
-la storia di git, che non dicono niente su come si scrive un prompt. **Le due sotto-fasi non
-dipendono l'una dall'altra** e possono andare in qualsiasi ordine; entrambe sono precondizione della
+La Fase 1b era splittata in due sotto-fasi indipendenti; **1b-i è chiusa il 2026-08-06** e la sua
+cronaca sta in `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`. Resta questa, che è l'altra precondizione della
 Fase 2.
-
-### Fase 1b-i — I quattro prompt
-
-**Precondizioni:** Fase 1a. **Chiamate provider:** zero.
-
-I prompt **citano** il template, non lo duplicano.
-
-I quattro stanno in una sessione sola e non si separano ulteriormente: la simmetria cieca è un
-invariante **fra** `improve` e `review` — stesse sezioni, `Report A`/`Report B`, mai «il tuo
-report» — e scriverli in sessioni diverse è il modo tipico di farli divergere. `verdetto` e
-`recidiva` sono più corti e condividono la lettura del registro. Se il budget di una sessione non
-regge, il taglio è dopo `improve`, `review` e la nota a `PROMPTS.md`: sono i due prompt che il ciclo
-usa per primi, e `verdetto` e `recidiva` restano lavoro dichiarato invece che lavoro a metà.
-
-Base di partenza asimmetrica, e va saputo prima di stimare: `improve` e `review` esistono in
-`PROMPTS.md` come `## CREATE IMPROVEMENTS` e `## CREATE REVIEW 2` e si riscrivono — inglese, cecità,
-simmetria; `verdetto` e `recidiva` **non esistono** e nascono da zero.
-
-- [ ] `prompts/improve.prompt.md`: payload cieco simmetrico, un solo documento per valutatore
-  sull'unione dei difetti dei due candidati, divieto esplicito di leggere `support/`, i due campi
-  bidirezionali, l'esclusione del walking skeleton dichiarata come restrizione di scope del ciclo,
-  `EVALUATION-BRIEF.md` al posto di `REFERENCE-PLAN.md` eliminato da `6476f32`.
-- [ ] `prompts/review.prompt.md`: payload **cieco e simmetrico** — i due `IMPROVEMENT` come
-  `Report A`/`Report B`, mai «il tuo report». Sezioni simmetriche: condivisa, unica ad A, unica a B,
-  contraddittoria. Per ogni voce condivisa, il campo che dichiara se i due lati portano **lo stesso
-  rimedio** o solo lo stesso tema — è il dato che separa `intersezione` da `intersezione-tema`.
-- [ ] `prompts/verdict.prompt.md`: per ogni riga attiva, verdetto più **citazione obbligatoria** del
-  punto pubblicato (piano, slice, sezione). Nessun verdetto senza citazione; una citazione che non si
-  risolve è uno scarto. La cella `Da sorvegliare` della riga entra nel prompt come istruzione
-  aggiuntiva per quella riga.
-- [ ] `prompts/recidiva.prompt.md`: una sola chiamata, input i due `IMPROVEMENT` più **tutte** le
-  righe, dormienti incluse. Output l'elenco delle coppie `voce → riga | nessuna`. Nessuno scalare.
-- [ ] Aggiungere in testa a `PROMPTS.md` la nota che è uno scratchpad umano e che la sorgente
-  normativa è `prompts/`. Va in questa sessione e nello stesso commit del primo prompt estratto:
-  finché non c'è, `prompts/` e `PROMPTS.md` sono due sorgenti senza gerarchia dichiarata.
-
-**Verifica:** nessun prompt nomina `REFERENCE-PLAN.md`, `support/`, i path o i nomi dei generatori;
-`review` non contiene la parola «tuo»; i nomi degli artefatti citati coincidono con quelli della
-struttura del report.
-
-**Rischio:** i prompt riscritti non sono mai stati eseguiti. È esattamente ciò che la Fase 2 misura.
-
-### Fase 1b-ii — Mappa dei generatori e slot `gen`
 
 **Precondizioni:** nessuna; indipendente dalla 1b-i. **Chiamate provider:** zero.
 
 I due deliverable sono in ordine, non in parallelo: la mappa è la fonte da cui si riempiono le celle.
 
 - [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
+  Il formato deve portare **due assegnazioni per ciclo**, non una: `CANDIDATE-A`/`CANDIDATE-B` → piano
+  e `REPORT-A`/`REPORT-B` → `IMPROVEMENT`. Sono i nomi con cui i prompt chiusi in 1b-i ricevono gli
+  artefatti, e le due assegnazioni non devono coincidere. Per CON-1…CON-5 non esistono: i payload di
+  allora portavano i nomi reali.
 - [ ] **Riempire lo slot `gen` di `Misurato su` in tutte le righe del registro** dai dati della
   mappa — sono diciassette dopo lo split della Fase 0c. Oggi portano tutte `gen unrecorded`: modello
   ed effort di CON-1…CON-5 non esistono in nessun artefatto, e `CC`/`CX` nominano l'harness, non il
