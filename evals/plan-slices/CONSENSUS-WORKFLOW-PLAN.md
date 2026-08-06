@@ -37,38 +37,24 @@ Non si ridiscutono all'inizio di ogni sessione.
   `CONSENSUS-WORKFLOW.md` restano leggibili finché la Fase 0b non li converte, e la mappa fra i due
   insiemi è dichiarata nelle regole d'uso del registro. Prompt e validator non emettono mai gli
   italiani.
-- **Una voce che riformula una clausola coperta ri-ancora le righe che la coprono; le supersede solo
-  se le subsume.** Due regole, non una, perché **le righe quantificano su un piano generato, non sul
-  testo dello skill** — è il criterio con cui il registro è stato scritto (`0273a73`: *«each stated
-  over a generated plan rather than over the skill text»*). Ne discende che una riformulazione **non
-  falsifica** la riga e non ne rende indecidibile l'affermazione: rompe solo l'attribuzione.
-  - **Automatico — ri-ancoraggio.** La riga prende il commit nuovo in `Commit` e `Misurato su`, e il
-    contatore va a **`non smentita ×0`**: `×k` conta cicli contro un testo, e il testo è cambiato.
-    Nessuna riscrittura dell'affermazione, che resta valida e decidibile.
-    **Vale anche per una riga `regredita`**, e a maggior ragione: la smentita era contro un testo che
-    non esiste più. La riga va a `×0` e la smentita resta scritta nella cella di stato, con il commit
-    contro cui era stata misurata — deciso il 2026-08-06 migrando `R-002` e `R-008`, che erano
-    entrambe in questo caso. Perderla azzererebbe il segnale che il registro dichiara portante: *«la
-    sequenza di regressioni sullo stesso tema è il segnale che la regola è formulata male»*.
-    **Quando la riformulazione tocca un solo membro, `Commit` porta entrambi i commit con il membro
-    che ciascuno possiede**: di `R-002` il secondo membro vive ancora su `d977043`.
-  - **Umano, nel veto — superamento.** Solo quando l'affermazione nuova **subsume** quella vecchia i
-    verdetti smettono di essere indipendenti e tenerle entrambe sovrastima l'evidenza: è il caso
-    `R-010` ⊂ `R-002` m1 e `R-011` ⊂ prima clausola di `R-008`. La riga vecchia passa a **`superata
-    da R-NNN`**, che **non è una smentita** ed **esce definitivamente** dall'insieme verificato, a
-    differenza di una dormiente che torna; la nuova eredita la cella `Da sorvegliare` e le due
-    portano `Supersedes` / `Superseded by`. **Sono una colonna sola, `Supersession`**, deciso il
-    2026-08-06: la relazione ha due versi e nessuna riga ne porta due nello stesso verso, quindi due
-    colonne quasi sempre vuote dicono meno di una. Il file cresce, il costo del `verdetto` no: una
-    entra e una esce. La subsunzione fra due affermazioni non si chiede a un modello — il report
-    pubblica le **coppie candidate**, decide il veto.
-  Le altre due opzioni restano dominate, e la provenienza a posteriori rafforza il verdetto.
-  **Riscrivere l'affermazione sul posto** è churn: l'affermazione non è diventata falsa, solo il testo
-  sotto è cambiato; e dove va davvero riscritta, `k` andrebbe azzerato comunque, quindi è il
-  superamento senza la storia. **Mandare la voce all'elenco umano** dice chi decide, non cosa succede
-  alla riga, e lascia indeterminato il campo del template che la domanda doveva sbloccare; misurato su
-  `87150d3`, che era già un commit umano deciso a mano, l'esito è esattamente lo stato di oggi —
-  `R-002` che punta a `d977043`, testo morto, senza link in avanti.
+- **Una voce che tocca una clausola coperta o ri-ancora la riga, o la assorbe.** Due regole, non una,
+  perché **le righe quantificano su un piano generato, non sul testo dello skill** — è il criterio con
+  cui il registro è stato scritto (`0273a73`: *«each stated over a generated plan rather than over the
+  skill text»*). Ne discende che una riformulazione **non falsifica** la riga: rompe l'attribuzione.
+  - **Cambia il testo, non la portata → ri-ancoraggio, automatico.** La riga resta, prende il commit
+    nuovo, contatore a **`×0`**. Vale anche per una riga regredita, e la smentita resta scritta nella
+    cella di stato con il commit contro cui era stata misurata.
+  - **Cambia la portata → assorbimento.** Una riga sola afferma tutto, `×0`, e l'affermazione che
+    sostituisce esce dal file: git conserva il testo, il registro conserva solo ciò che è ancora
+    previsto. La scrive `improve`, la edita il veto. Due vincoli: si assorbe solo se la fusione resta
+    decidibile in una lettura, e **una riga = una affermazione**, quindi i membri che nessuno rileva
+    restano come riga propria.
+  Regole e vincoli vivono in `REGRESSION-LEDGER.md` § *Re-anchoring and absorption*; qui non si
+  duplicano. **Applicato il 2026-08-06** a `R-002` m1 → `R-010` e alla clausola `Enabler` di `R-008`
+  → `R-011`: erano ancorate alla stessa clausola dopo `87150d3` e `eb926bb`, quindi contavano due
+  volte una sola evidenza. L'assorbimento sostituisce il superamento con `superata da R-NNN`, che
+  teneva in vita una riga fuori dall'insieme verificato per conservarne la storia — che ora sta in una
+  cella.
 - **Una voce vale `intersezione` o `intersezione-tema` solo se entrambi i `REVIEW` la classificano
   condivisa.** Classificazione unilaterale → `giudizio`, e nessuna applicazione automatica.
 - **Il workflow applica al working tree e non committa mai.** Applica solo ciò che il filtro
@@ -123,15 +109,10 @@ L'ambizione di questa fase è stata **ridotta** il 2026-08-06: la versione prece
 riscrivere internamente `GRADING-IMPROVEMENTS-PLAN.md` (52 KB). Con il grading abbandonato quella è
 manutenzione di un documento morto e non si fa.
 
-- [x] Rinominare `EVAL-WORKFLOW.md` in `GRADING-EVAL-WORKFLOW.md` e seguire i riferimenti — commit
-  `570e929`.
-- [x] Creare `CONSENSUS-WORKFLOW.md` estraendo dal `Riesame del 2026-08-04` obiettivo, diagnosi,
-  ciclo, buco e registro, gate e limiti.
-- [x] Riscrivere `CONSENSUS-WORKFLOW.md` sull'esito della sessione di grilling del 2026-08-06:
-  obiettivo asimmetrico, stato dell'evidenza, rischio di non-conformità, cricchetto misurato,
-  confini di strumento, lapide del grading.
-- [x] Seconda riscrittura, grilling del 2026-08-06: separazione delle due tesi, quattro fasi,
-  contratto template + validator, `intersezione-tema`, dormienza, `review` cieco, applica-e-veta.
+Fatto il 2026-08-06: rinomina di `EVAL-WORKFLOW.md` in `GRADING-EVAL-WORKFLOW.md` (`570e929`) e
+`CONSENSUS-WORKFLOW.md`, creato e riscritto due volte sull'esito delle sessioni di grilling. Il
+documento è il record; qui restano i due residui.
+
 - [ ] **Banner in testa a `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-IMPROVEMENTS.md` e
   `GRADING-EVAL-WORKFLOW.md`:** «Abbandonato il 2026-08-06. Documento non mantenuto, conservato per
   la storia. Lo strumento attivo è `CONSENSUS-WORKFLOW.md`.» Nient'altro: **il corpo di quei
@@ -145,9 +126,8 @@ manutenzione di un documento morto e non si fa.
   - **archiviato** — `GRADING-*.md`, `grader-rubric*.json`, `fixtures/`, `results/calibration-*/`,
     gli script di grading e i target `grade`/`compare`/`calibrate*`.
 
-**Verifica:** `grep -rn "EVAL-WORKFLOW"` non trova riferimenti al vecchio nome; i tre documenti di
-grading aprono con il banner; nessun file di codice è stato toccato, quindi `make test` resta quello
-di prima.
+**Verifica:** i tre documenti di grading aprono con il banner; nessun file di codice è stato toccato,
+quindi `make test` resta quello di prima.
 
 **Output:** un commit per il banner, uno per il README.
 
@@ -168,12 +148,12 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 
 ## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
 
-**Precondizioni:** Fase 0a, **più la mappa clausola → riga prodotta in Fase 1c**. **Chiamate
-provider:** zero.
+**Precondizioni:** Fase 0a; la mappa clausola → riga che questa fase consuma **esiste dal
+2026-08-06**, quindi 1a non è più bloccata. **Chiamate provider:** zero.
 
 La domanda che bloccava questa fase — cosa succede alla riga quando una voce riformula la clausola
-che la copre — è decisa: vedi *Decisioni già prese*, ri-ancoraggio automatico e superamento su
-subsunzione.
+che la copre — è decisa: vedi *Decisioni già prese*, ri-ancoraggio automatico se cambia il testo,
+assorbimento se cambia la portata.
 
 La dipendenza dalla mappa nasce dalla decisione stessa. Il validator controlla che le righe coprenti
 dichiarate da una voce **coincidano con la mappa**, e senza mappa quel controllo non distingue una
@@ -182,19 +162,27 @@ caso che la regola dura esiste per intercettare. È l'unico pezzo di 1c che serv
 split della narrativa e migrazione semantica del registro non entrano.
 
 È il pezzo che decide tutti gli altri, ed è l'unico che è codice. Replica l'architettura che nello
-skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.py`.
+skill ha retto cinque cicli: `skills/plan-slices/assets/plan-template.md` +
+`skills/plan-slices/scripts/validate_plan.py`. **Gli omonimi dello strumento stanno altrove:**
+`evals/plan-slices/assets/` e `evals/plan-slices/scripts/consensus/`. Due `assets/` e due `scripts/`
+sono una trappola per una sessione fredda, quindi qui i path sono pieni.
 
-- [ ] Creare `assets/improvement-template.md` **in inglese**, con i campi obbligatori per voce:
+- [ ] Creare `evals/plan-slices/assets/improvement-template.md` **in inglese**, con i campi
+  obbligatori per voce:
   - `Evidence — candidate A` e `Evidence — candidate B`, **due celle separate**: un riferimento
     localizzabile (`PLAN-…-CON-N.md:NN`, oppure `slice N` più il nome del campo) oppure la
     dichiarazione esplicita che quel candidato non manifesta il difetto;
   - `Existing rule that failed to prevent the defect` — clausola di `SKILL.md` con la sua sezione,
     **più le righe di registro che la coprono, oppure `uncovered`**, oppure `none` se nessuna
-    clausola è nominata. Le righe dichiarate sono ciò che il workflow **ri-ancora** quando la voce
-    riformula, ed è l'unico modo per rendere meccanicamente rilevabile un caso che oggi è invisibile:
-    `R-002` porta `Commit: d977043` mentre la sua clausola è stata riscritta da `87150d3`, senza
-    nessun link in avanti;
+    clausola è nominata. Le righe dichiarate sono ciò che il workflow **ri-ancora**, o ciò che la
+    voce deve **assorbire**, ed è l'unico modo per rendere meccanicamente rilevabile un caso che
+    prima era invisibile: `R-002` portava `Commit: d977043` mentre la sua clausola era stata
+    riscritta da `87150d3`, senza nessun link in avanti;
   - `Change to the skill` — sezione precisa e modifica normativa concreta;
+  - `Merged claim` — obbligatorio quando la voce **cambia la portata** di una regola coperta: la riga
+    unica che sostituisce le righe dichiarate, nella grammatica di `Binary test`. È l'assorbimento, e
+    il template è il posto dove `improve` lo scrive. Assente quando la voce riformula soltanto: lì
+    il ri-ancoraggio è automatico e non c'è niente da scrivere;
   - `Reformulation attempted and discarded, and why` — obbligatorio quando il campo precedente nomina
     una clausola **e** la voce aggiunge righe. **«La clausola è coperta da una riga del registro» non
     è una ragione ammissibile**, ed è il vincolo che tiene in piedi la regola dura: le clausole
@@ -210,7 +198,10 @@ skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.
   - **le righe dichiarate coprenti si risolvono** in `REGRESSION-LEDGER.md` e coincidono con la mappa
     clausola → riga della Fase 1c; una clausola che la mappa dichiara coperta e la voce dichiara
     `uncovered` è uno scarto;
-  - `Binary test` presente e non vuoto, con una grammatica minima.
+  - `Binary test` presente e non vuoto, con una grammatica minima;
+  - `Merged claim`, quando c'è, sta nella stessa grammatica e la voce dichiara almeno una riga
+    coprente: una fusione che non nomina cosa fonde non è verificabile. Che la fusione resti
+    decidibile in una lettura non lo decide il validator — è lettura, e sta nel veto.
 - [ ] **Dare alla mappa il formato che il validator consuma: dati separati dalla prosa.** La Fase 1c
   consegna `support/CLAUSE-ROW-MAP.md`, 205 clausole in tabelle markdown più un centinaio di righe di
   prosa. Il validator non deve parsare markdown: estrarre i record — id, sede, commit d'introduzione,
@@ -228,10 +219,10 @@ skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.
   - **L'ancoraggio non è rigenerabile** e si mantiene a mano: per nove righe su undici è un'inferenza,
     e i quattro `unresolved` sono fallimenti registrati, non celle da riempire.
   - **Riparare i tre riferimenti che la migrazione del registro ha reso stali**, già che il file si
-    riapre qui: `CLAUSE-ROW-MAP.md:302` e `:381` puntano a *Difetti degli artefatti mai registrati* e
-    *Formulazioni riscritte*, che ora vivono in `CONSENSUS-CON-5.REPORT.md`; `:210` punta a *Da
-    popolare*, ora *To populate*. La Fase 1c non poteva toccarli senza attraversare due volte lo
-    stesso confine.
+    riapre qui: la nota di `C-157` e quella su `R-006` m1 negli *Unresolved anchors* rimandano a
+    *Difetti degli artefatti mai registrati* e *Formulazioni riscritte*, che ora vivono in
+    `CONSENSUS-CON-5.REPORT.md`; la nota di `C-106` rimanda a *Da popolare*, ora *To populate*. La
+    Fase 1c non poteva toccarli senza attraversare due volte lo stesso confine.
 - [ ] Implementare lo **scarto per voce**: la voce cade, il documento resta, ogni scarto esce con il
   campo mancante e il motivo in forma leggibile dal report. **Nessuna rigenerazione.**
 - [ ] Test del validator su artefatti reali: `PLAN-CC-CON-4.IMPROVEMENT.md` deve produrre voci
@@ -278,94 +269,26 @@ struttura del report.
 
 ## Fase 1c — Registro, mappa e report
 
-**Precondizioni:** Fase 0a. **Precede Fase 1a**, che ne consuma la mappa clausola → riga; indipendente
-da 1b. **Chiamate provider:** zero.
+**Precondizioni:** Fase 0a. Indipendente da 1a e 1b: la mappa che 1a consuma è già consegnata.
+**Chiamate provider:** zero.
 
-La fase porta **tre deliverable separabili**, e solo il primo blocca 1a:
+**Due deliverable su tre sono fatti** il 2026-08-06, in un solo attraversamento del confine:
 
-- **la mappa clausola → riga**, artefatto nuovo che non tocca il testo del registro. I riferimenti
-  `R-NNN` sono stabili attraverso la traduzione, quindi può essere prodotta prima e da sola —
-  **fatta** il 2026-08-06, `support/CLAUSE-ROW-MAP.md`, 205 clausole;
-- **il registro**: estrazione della narrativa, traduzione, migrazione semantica e riclassificazione —
-  **fatto** il 2026-08-06, insieme a `recipe-app/results/CONSENSUS-CON-5.REPORT.md`;
-- **la struttura del report di ciclo**, in fondo a questa fase. **Ancora aperta.** Il report CON-5
-  non la definisce e non la segue: CON-5 è un ciclo parziale, quindi i contatori che non hanno un
-  valore portano `n/a — partial cycle` invece di uno zero che si leggerebbe come misura.
+- **la mappa clausola → riga** — `support/CLAUSE-ROW-MAP.md`: 205 clausole normative, 40 coperte
+  (20%), di cui 20 restatement, 165 scoperte. Dichiara per ogni voce come l'ancoraggio è stato
+  ottenuto — `declared`, `reconstructed`, `unresolved` — più regola di conteggio, divergenze di blame
+  e verifica del campione. Quattro ancoraggi restano `unresolved` e li decide la Fase 4;
+- **il registro** — estrazione della narrativa in `recipe-app/results/CONSENSUS-CON-5.REPORT.md`,
+  traduzione, migrazione semantica, riclassificazione a `intersection-theme`, ri-ancoraggio di
+  `R-002` e `R-008`, e i due assorbimenti del 2026-08-06. Le regole d'uso del registro sono il
+  record: non si riassumono qui.
 
-Un solo attraversamento del confine sul registro: traduzione, split e migrazione semantica nella
-stessa passata. Due passate su testo come la formulazione di `R-002` — già riscritta tre volte — sono
-più pericolose di una, perché la seconda ha meno contesto della prima.
+Resta il terzo.
 
-- [x] **Estrarre la narrativa di ciclo** dal registro: il 62% del file, riletto dal `verdetto` a ogni
-  ciclo senza servire. Va in `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, creato retroattivamente
-  come contenitore. Righe **73–310** della versione italiana a `f99449c`; la stima 63–301 di questo
-  piano era di una revisione precedente del registro. **Non si traduce**: è il record di ciò che
-  CON-5 ha deciso, scritto in italiano il 2026-08-04, e tradurre un record lo falsifica. Solo la
-  cornice del report nasce in inglese, e lo dichiara.
-- [x] **Eccezione obbligatoria:** le note *«Da cercare al prossimo ciclo, oltre alla riga»* di `R-010`
-  e `R-011` non sono narrativa, sono istruzioni per il verdetto successivo. Diventano una cella
-  **`Da sorvegliare`** della riga.
-- [x] **Tradurre** il registro in inglese.
-- [x] **Migrare la semantica**: `tiene` → `non smentita ×k`; stato `dormiente` a `×3`; **stato
-  `superata da R-NNN`**, che non conta come smentita e toglie la riga dall'insieme verificato in via
-  definitiva; colonna `Misurato su` estesa a modello ed effort; `Origine: potatura`; cella `Da
-  sorvegliare`; celle **`Supersedes` / `Superseded by`**; cella `Commit` che ammette `(pending)`.
-  - **`Misurato su` ha cinque slot, non quattro**, deciso il 2026-08-06:
-    `ciclo · piani · strumenti · gen <modello e effort per lato> · verdict <strumento>`. Il quinto
-    serve perché i verdetti CON-5 vengono da **lettura umana offline**, non da una chiamata: senza lo
-    slot quel fatto sparisce al primo ciclo automatizzato, ed è esattamente il tipo di cosa che la
-    colonna esiste per non far sparire. Fase 5 lo emette.
-  - **`to verify` e `non smentita ×0` restano due stati distinti.** Il primo dice che nessun ciclo ha
-    girato contro la riga — `R-010`, `R-011`; il secondo che dei cicli hanno girato e nessuno conta
-    come test, per provenienza o per ri-ancoraggio. Al `verdetto` la differenza cambia cosa si sta
-    guardando.
-- [x] **Nessuna riga parte da `×1`.** La versione precedente di questa fase prescriveva `×1 misurate
-  sul solo CON-5`; è sbagliato, perché il registro è stato popolato **a posteriori** — vedi
-  `CONSENSUS-WORKFLOW.md` § *Lo stato dell'evidenza*. Serve una cella **`Provenienza`** con tre
-  valori, e il `k` iniziale discende da quella:
-  - **`ex-ante`** — riga scritta nello stesso minuto del commit che verifica: `R-010`, `R-011`.
-    Previsioni vere, entrambe ancora `da verificare`, quindi **`×0`**.
-  - **`ricostruita`** — riga scritta a ritroso su un commit già fatto, ma non toccata durante la
-    misura: `R-001`, `R-004`, `R-005`, `R-008`, `R-009` e il primo membro di `R-002`. CON-5 è un test
-    valido, quindi **`×1`**.
-  - **`ricostruita e ritarata`** — riga riscritta fra le 22:20 e le 22:41 del 2026-08-04, cioè dopo
-    che i verdetti CON-5 delle 22:02 avevano mostrato cosa dicevano i piani: `R-002` secondo membro,
-    `R-003`, `R-006`, `R-007`. Per queste CON-5 **non è un test** — la riga è stata adattata al piano
-    che avrebbe dovuto falsificarla, e per `R-007` anche il brief, nello stesso minuto. Partono da
-    **`×0`**: il primo test vero è CON-6.
-- [x] **Ri-ancorare retroattivamente le due righe che hanno subito una riformulazione.** `87150d3` ha
-  riscritto in loco la clausola di `R-002` (`SKILL.md:50-57`, `+7/-3`) ed `eb926bb` quella di `R-008`
-  (`SKILL.md:92-96`, `+4/-2`). Le due righe prendono il commit nuovo in `Commit` e `Misurato su`; le
-  affermazioni **non si toccano**, perché quantificano sul piano e restano decidibili. Attenzione al
-  perimetro: di `R-002` la riformulazione tocca il **solo primo membro**, mentre il secondo vive su
-  `SKILL.md:51`, intatta da `d977043` — righe e clausole non sono 1:1 in nessuno dei due versi.
-  Il **superamento** delle due coppie (`R-010` ⊂ `R-002` m1, `R-011` ⊂ prima clausola di `R-008`) è
-  una decisione umana e va posta come tale, non applicata in migrazione: `R-002` m2 sopravvive
-  comunque al superamento di m1, quindi `R-002` non può uscire intera.
-- [x] **Annotare la sovrapposizione dei verdetti.** `R-010` è un sottocaso di `R-002` m1 e `R-011`
-  della prima clausola di `R-008`: i loro verdetti non sono indipendenti, e contarli come due
-  osservazioni sovrastima l'evidenza. `R-008` lo dice già in prosa nella cella `Verifica`.
-- [x] **Riclassificare `R-002`…`R-008` da `intersezione` a `intersezione-tema`** e annotare che sono
-  state prodotte con prompt diversi da quelli di `prompts/` e con un lato non conforme.
-- [x] **Mappa clausola → riga di registro**, con le clausole scoperte marcate come tali. Spostata qui
-  da Fase 4 il 2026-08-06: senza la mappa il campo `Regola esistente che non ha impedito il difetto`
-  non ha contropartita al momento di decidere, e il default resta aggiungere una regola nuova — cioè
-  il cricchetto sopravvive al meccanismo costruito per fermarlo. La mappa produce anche l'elenco delle
-  clausole **senza riga**, che sono quelle riformulabili senza rompere una previsione.
-  Campione già misurato il 2026-08-06 su `R-002`, `R-008`, `R-010` e `R-011`, perimetro § 1, § 2 e il
-  `Complete when` di § 5, unità contata «frase o bullet che impone un obbligo, un divieto o un permesso
-  condizionato»: **37 clausole, 9 coperte, 28 scoperte (≈76%)**. Le 9 coperte sono in realtà **4
-  clausole di corpo** più 5 loro restatement nei gate, e su quelle 4 atterrano **6 righe su 11**. Fra
-  le scoperte c'è il **test di split del § 2** (`SKILL.md:80-82`), che il registro nomina come sede
-  della diagnosi della riga C di CON-5 senza avergli mai dato una riga. La mappa completa parte da qui.
-  **Ogni voce della mappa dichiara come l'ancoraggio è stato ottenuto**, `dichiarato` o `ricostruito`.
-  Per nove righe su undici la clausola non è mai stata registrata: la riga è nata su un commit, non su
-  un testo, e l'ancoraggio lo sta inferendo la mappa. Nel campione l'ancoraggio regge intatto
-  esattamente sulle due righe `ex-ante` — `R-010`, `R-011` — e va alla deriva esattamente sulle due
-  ricostruite, `R-002` e `R-008`. Un ancoraggio `ricostruito` può anche **non risolversi**: la mappa
-  registra il fallimento invece di scegliere la clausola più somigliante.
-- [ ] **Struttura di `recipe-app/results/CONSENSUS-CON-N.REPORT.md`** — unico deliverable residuo
-  di questa fase — con i **contatori in testa**:
+- [ ] **`evals/plan-slices/assets/report-template.md`**, in inglese: la struttura di
+  `recipe-app/results/CONSENSUS-CON-N.REPORT.md`. Sta in `assets/` accanto a
+  `improvement-template.md`, non dentro `CONSENSUS-WORKFLOW.md`, perché il join `report` della Fase 5
+  lo rende come rende gli altri template. **Contatori in testa:**
 
   ```
   SKILL.md   417 → 451   (+34)
@@ -374,7 +297,7 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
     aggiunte             5   ← ognuna con la ragione della riformulazione scartata
   righe di registro nuove 5   (2 intersezione, 1 intersezione-tema, 2 giudizio)
   righe ri-ancorate       0   (contatore riportato a ×0)
-  coppie candidate al superamento 0
+  affermazioni assorbite  0
   righe attive           11 → 16
   voci scartate dal gate  3   (per campo mancante)
   verdetti scartati       0   (citazione non risolta)
@@ -382,21 +305,23 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
   ```
 
   `righe attive N → M` è per il registro ciò che `0 riformulazioni su 5 aggiunte` è per lo skill: il
-  contatore che morde sull'accumulo invece che sul merito. Una riformulazione ri-ancora e non aggiunge
-  nulla; un superamento lascia il numero invariato — una entra e una esce — quindi una crescita di
-  `righe attive` accusa sempre e solo le aggiunte. `coppie candidate al superamento` è ciò che il veto
-  deve guardare: sono le sovrapposizioni fra affermazioni, cioè i verdetti che smetterebbero di essere
-  indipendenti.
+  contatore che morde sull'accumulo invece che sul merito. Ri-ancoraggio e assorbimento non aggiungono
+  righe — l'assorbimento anzi ne toglie una se il membro assorbito era tutta la riga — quindi una
+  crescita di `righe attive` accusa sempre e solo le aggiunte. `affermazioni assorbite` è ciò che il
+  veto deve leggere per primo: è l'unico contatore che dice che una previsione è **uscita** dal file,
+  e ogni assorbimento va riletto perché la fusione può aver allargato ciò che la riga afferma.
 
   Poi: esito del validator strutturale; voci applicate con id, hunk e origine; **voci classificate
   condivise da un solo `REVIEW`** — la misura di instabilità che sblocca la Fase 7 e che oggi nessuno
   produce; elenco dei punti che richiedono lettura umana; log degli scarti; coppie di recidiva;
   verdetti con le loro citazioni.
 
-**Verifica:** il registro contiene solo tabella, regole d'uso e backlog vivo; nessuna riga di
-narrativa di ciclo; ogni riga ha `Misurato su` in tutti e cinque gli slot, con `unrecorded` dove il
-dato non esiste e mai una cella muta; la mappa copre tutte e undici le righe e dichiara quante
-clausole di `SKILL.md` restano scoperte.
+  Il report CON-5 è già un'istanza parziale della struttura, non un modello: è un ciclo parziale,
+  quindi i contatori senza valore portano `n/a — partial cycle` invece di uno zero che si leggerebbe
+  come misura. Il template dichiara quella convenzione.
+
+**Verifica:** il template rende ogni contatore derivabile dagli artefatti del ciclo senza una
+chiamata, e il report CON-5 riscritto nella sua forma non perde nessuno dei dati che porta oggi.
 
 ## Fase 2 — Ciclo CON-6 manuale
 
@@ -528,6 +453,14 @@ e `CONFIRM_SEND`.
 - [ ] **L'applicazione è codice:** una voce licenziata dal filtro produce un hunk di `SKILL.md` e una
   riga di registro con lo stesso id e `Commit: (pending)`. **Nessun commit.** Un target
   `make consensus-reject ID=…` toglie una voce sola, hunk e riga insieme.
+- [ ] **Ri-ancoraggio e assorbimento sono codice, con confini diversi.** Una voce che riformula
+  ri-ancora da sé le righe che dichiara coprenti: commit nuovo, `×0`, nessuna riscrittura. Una voce
+  con `Merged claim` **non si applica da sé**: emette la riga fusa, l'`Absorbs` con le regressioni
+  assorbite, e il diff che toglie le affermazioni sostituite — e passa all'elenco umano, perché è
+  l'unica mossa del ciclo che fa **uscire** una previsione dal registro.
+- [ ] **Emettere `Misurato su` in tutti e cinque gli slot**, quinto incluso: `verdict <strumento>`.
+  Esiste perché i verdetti CON-5 vengono da lettura umana offline, e senza lo slot quel fatto sparisce
+  al primo ciclo automatizzato — cioè esattamente ciò che la colonna esiste per non far sparire.
 - [ ] Il join `report` è deterministico: nessuna chiamata, solo composizione degli artefatti prodotti.
   I contatori sono composizione; la **recidiva no** — è la fase 7, ed è per questo che esiste come
   fase invece che come calcolo del report.
