@@ -1,5 +1,8 @@
 # Plan-slices evaluator v3 workflow
 
+> **Abandoned on 2026-08-06.** Unmaintained document, kept for history. The active tool is
+> `CONSENSUS-WORKFLOW.md`.
+
 ## Active contracts
 
 - `grader-rubric.v3.json`: verdict semantics, criteria, critical-failure triggers, and selected current scoring strategy.

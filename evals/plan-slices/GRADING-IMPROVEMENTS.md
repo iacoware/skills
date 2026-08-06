@@ -1,5 +1,8 @@
 # Grading di `plan-slices` — Piano di miglioramento
 
+> **Abandoned on 2026-08-06.** Unmaintained document, kept for history. The active tool is
+> `CONSENSUS-WORKFLOW.md`.
+
 - **Sources:** `GRADING-EVAL-WORKFLOW.md`, `grader-rubric.json`, evaluator v2, fixture e
   artefatti `recipe-app/results/PLAN-CC-CON-5.*.v2.*`; run critica v3 del 2026-08-04 e
   `NOTES.md`.

@@ -1,5 +1,8 @@
 # Grading di `plan-slices` — Piano di implementazione
 
+> **Abandoned on 2026-08-06.** Unmaintained document, kept for history. The active tool is
+> `CONSENSUS-WORKFLOW.md`.
+
 ## Obiettivo
 
 Implementare le otto slice `NOW` di `GRADING-IMPROVEMENTS.md` senza modificare il contenuto degli
