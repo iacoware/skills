@@ -8,7 +8,33 @@ Il grading system — `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-EVAL-WORKFLOW.md`
 Non è un prerequisito di niente qui e non torna. Resta in git; la lapide è in fondo.
 
 Dal 2026-08-06 la lingua del progetto è l'**inglese**. Il registro è già migrato; questo documento è
-ancora in italiano e migra nella Fase 0b. Ogni artefatto nuovo nasce in inglese.
+ancora in italiano e migra nella Fase 0b. Vedi *La lingua del progetto*.
+
+## La lingua del progetto
+
+**Ogni artefatto nuovo nasce in inglese**: prompt, template, validator, report, righe di registro,
+messaggi di commit. Vale da qui in avanti, senza eccezione per la fase in cui l'artefatto nasce.
+
+I documenti umani ancora in italiano — questo, `CONSENSUS-WORKFLOW-PLAN.md`, `NOTES.md`,
+`PROMPTS.md` — sono un arretrato, non un'eccezione: li converte la Fase 0b, che non blocca niente.
+
+**Due esclusioni sono permanenti** e non scadono con la Fase 0b:
+
+- **`recipe-app/sources/`.** Convertirle è un **nuovo scenario**, non una traduzione. Invaliderebbe i
+  cinque piani generati da quelle fonti, le righe di registro misurate su di essi e le citazioni di
+  `EVALUATION-BRIEF.md`, che puntano a titoli di sezione italiani (`sources/goal.md`, «Vincoli e
+  scala»).
+- **Gli artefatti storici** — `PLAN-*`, `*.IMPROVEMENT.md`, `*.REVIEW.md` e i report già prodotti.
+  Sono il record di ciò che è stato generato: tradurli è falsificarlo.
+
+Già in inglese, niente da fare: `EVALUATION-BRIEF.md` — i titoli di sezione italiani che contiene
+sono **puntatori alle fonti**, non prosa da tradurre, e tradurli romperebbe il puntamento — e
+`skills/plan-slices/SKILL.md`.
+
+Le citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, ovunque
+compaiano, perché sono prove.
+
+Il punto d'ingresso della directory, `README.md`, porta la stessa regola e le stesse esclusioni.
 
 ## L'obiettivo
 

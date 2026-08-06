@@ -85,21 +85,12 @@ Non si ridiscutono all'inizio di ogni sessione.
 
 **Precondizioni:** nessuna. **Chiamate provider:** zero. **Va per prima.**
 
-Solo la decisione e la regola. La conversione dei documenti esistenti è Fase 0b e non blocca niente;
-separarle è ciò che evita di scrivere in italiano tutto ciò che nasce dalla Fase 0 in poi.
+**Fatta il 2026-08-06.** La regola, le due esclusioni permanenti con la loro ragione e la nota su
+`EVALUATION-BRIEF.md` e `SKILL.md` vivono in `CONSENSUS-WORKFLOW.md` § *La lingua del progetto* e in
+`evals/plan-slices/README.md` § *Language*. I due documenti sono il record; qui non si duplicano.
 
-- [ ] Dichiarare in `CONSENSUS-WORKFLOW.md` e in `evals/plan-slices/README.md` che **ogni artefatto
-  nuovo nasce in inglese**: prompt, template, validator, report, righe di registro, commit.
-- [ ] Dichiarare le **due esclusioni permanenti**, con la ragione:
-  - `recipe-app/sources/` — convertirle è un **nuovo scenario**, non una traduzione. Invaliderebbe i
-    cinque piani, le righe misurate su di essi e le citazioni del brief, che puntano a titoli di
-    sezione italiani (`sources/goal.md`, "Vincoli e scala").
-  - `PLAN-*`, `*.IMPROVEMENT.md`, `*.REVIEW.md` e i report già prodotti — sono il record di ciò che è
-    stato generato. Tradurli è falsificarlo.
-- [ ] Registrare che `EVALUATION-BRIEF.md` è già in inglese e che i titoli di sezione italiani che
-  contiene sono **puntatori alle fonti**, non prosa da tradurre. `SKILL.md` è già in inglese.
-
-**Verifica:** la regola e le due esclusioni sono scritte in entrambi i documenti.
+La conversione dei documenti esistenti è Fase 0b e non blocca niente; separarle è ciò che evita di
+scrivere in italiano tutto ciò che nasce dalla Fase 0 in poi.
 
 ## Fase 0 — Separazione dei due strumenti
 
@@ -110,26 +101,14 @@ riscrivere internamente `GRADING-IMPROVEMENTS-PLAN.md` (52 KB). Con il grading a
 manutenzione di un documento morto e non si fa.
 
 Fatto il 2026-08-06: rinomina di `EVAL-WORKFLOW.md` in `GRADING-EVAL-WORKFLOW.md` (`570e929`) e
-`CONSENSUS-WORKFLOW.md`, creato e riscritto due volte sull'esito delle sessioni di grilling. Il
-documento è il record; qui restano i due residui.
+`CONSENSUS-WORKFLOW.md`, creato e riscritto due volte sull'esito delle sessioni di grilling.
 
-- [ ] **Banner in testa a `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-IMPROVEMENTS.md` e
-  `GRADING-EVAL-WORKFLOW.md`:** «Abbandonato il 2026-08-06. Documento non mantenuto, conservato per
-  la storia. Lo strumento attivo è `CONSENSUS-WORKFLOW.md`.» Nient'altro: **il corpo di quei
-  documenti non si tocca**.
-- [ ] Creare `evals/plan-slices/README.md` **in inglese** come punto d'ingresso della directory, con
-  **due** gruppi di artefatti:
-  - **attivo** — `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `prompts/`, `assets/`,
-    `support/`, `REGRESSION-LEDGER.md`, `NOTES.md`, `recipe-app/sources/`,
-    `recipe-app/EVALUATION-BRIEF.md`, `recipe-app/results/PLAN-*` e i report di ciclo,
-    `validate_plan.py` che vive nella skill, `evals/AGENTS.md`, il target `validate`;
-  - **archiviato** — `GRADING-*.md`, `grader-rubric*.json`, `fixtures/`, `results/calibration-*/`,
-    gli script di grading e i target `grade`/`compare`/`calibrate*`.
-
-**Verifica:** i tre documenti di grading aprono con il banner; nessun file di codice è stato toccato,
-quindi `make test` resta quello di prima.
-
-**Output:** un commit per il banner, uno per il README.
+**Chiusa il 2026-08-06.** I due residui sono stati fatti insieme alla Fase 0a: il banner di
+abbandono in testa a `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-IMPROVEMENTS.md` e
+`GRADING-EVAL-WORKFLOW.md`, corpo non toccato; e `evals/plan-slices/README.md`, in inglese, con i
+gruppi *Active* e *Archived*. Il banner è **in inglese** anche nei due documenti italiani: è testo
+nuovo, quindi cade sotto la regola della Fase 0a, e una lapide uniforme sui tre vale più
+dell'allineamento alla lingua del documento ospite.
 
 ## Fase 0b — Conversione dei documenti umani
 
