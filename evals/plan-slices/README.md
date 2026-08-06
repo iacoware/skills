@@ -40,9 +40,9 @@ appear, because they are evidence.
 | `CONSENSUS-WORKFLOW-PLAN.md` | The work left to do, one cold session per phase. |
 | `REGRESSION-LEDGER.md` | Falsifiable claims implied by applied changes, with state `not refuted ×k`. |
 | `prompts/` | Normative source of the four phase prompts. Created in Phase 1b. |
-| `assets/` | `improvement-template.md` (Phase 1a) and `report-template.md` (Phase 1c). |
-| `support/` | `CLAUSE-ROW-MAP.md` and `AGENT-PLAN-MAP.md`. **Excluded from every payload.** |
-| `scripts/consensus/` | Cycle code: validator, provider invocation, orchestrator. Phases 1a, 3, 5. |
+| `assets/improvement-template.md` | The conformance contract an `IMPROVEMENT` entry fills. Phase 1a. |
+| `support/` | `CLAUSE-ROW-MAP.md` with its extracted `clause-row-map.tsv`, and `AGENT-PLAN-MAP.md`. **Excluded from every payload.** |
+| `scripts/consensus/` | Cycle code. `validate_improvement.py` and `extract_clause_map.py` exist; provider invocation and orchestrator are Phases 3 and 5. |
 | `NOTES.md` | Observations from running the evals, each self-contained. |
 | `PROMPTS.md` | Human scratchpad, no normative value once `prompts/` exists. |
 | `recipe-app/sources/` | The only inputs a candidate plan is generated from. |
@@ -51,10 +51,11 @@ appear, because they are evidence.
 | `recipe-app/results/CONSENSUS-CON-*.REPORT.md` | Cycle reports. |
 | `../../skills/plan-slices/scripts/validate_plan.py` | Structural validator. Lives in the skill, not here. |
 | `../AGENTS.md` | Authorization rules for provider runs. |
-| `make validate PLAN=…` | The one Makefile target the cycle uses. |
+| `make validate PLAN=…` | Structural check of a candidate plan. |
+| `make validate-improvement IMPROVEMENT=…` | The conformance gate, entry by entry. |
+| `make clause-map` | Regenerate `support/clause-row-map.tsv` from `CLAUSE-ROW-MAP.md`. |
 
-`prompts/`, `assets/` and `scripts/consensus/` do not exist yet; the phase that creates each is
-named above.
+`prompts/` does not exist yet: Phase 1b creates it. `assets/report-template.md` is Phase 1c.
 
 `recipe-app/README.md` and `recipe-app/EVAL-NOTES.md` predate the split and still describe grading
 artifacts. They are scenario documentation, not grading documents, and are corrected when the

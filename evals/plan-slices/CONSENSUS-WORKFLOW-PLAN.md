@@ -161,92 +161,67 @@ allora. Nella mappa restano per la stessa ragione le note che raccontano l'assor
 
 ## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
 
-**Precondizioni:** Fasi 0a e 0c. La mappa clausola → riga che questa fase consuma **esiste dal
-2026-08-06**, quindi 1a non è più bloccata dalla sua assenza; è la Fase 0c a doverla precedere,
-perché ne cambia gli id. **Chiamate provider:** zero.
+**Precondizioni:** Fasi 0a e 0c. **Chiamate provider:** zero.
 
-La domanda che bloccava questa fase — cosa succede alla riga quando una voce riformula la clausola
-che la copre — è decisa: vedi *Decisioni già prese*, ri-ancoraggio automatico se cambia il testo,
-assorbimento se cambia la portata.
+**Fatta il 2026-08-06.** Il contratto è
+`evals/plan-slices/assets/improvement-template.md` più
+`evals/plan-slices/scripts/consensus/validate_improvement.py`, con
+`extract_clause_map.py` che proietta la mappa nei record che il validator legge. I documenti sono il
+record: il template dichiara la forma, la mappa dichiara la separazione dati/prosa in
+§ *Where the records live*, e qui non si duplicano.
 
-La dipendenza dalla mappa nasce dalla decisione stessa. Il validator controlla che le righe coprenti
-dichiarate da una voce **coincidano con la mappa**, e senza mappa quel controllo non distingue una
-voce che dichiara `uncovered` per ignoranza da una che lo dichiara con ragione — cioè esattamente il
-caso che la regola dura esiste per intercettare. È l'unico pezzo di 1c che serve a 1a: traduzione,
-split della narrativa e migrazione semantica del registro non entrano.
+Cosa è stato deciso mentre si scriveva, perché le fasi seguenti ci si appoggiano:
 
-È il pezzo che decide tutti gli altri, ed è l'unico che è codice. Replica l'architettura che nello
-skill ha retto cinque cicli: `skills/plan-slices/assets/plan-template.md` +
-`skills/plan-slices/scripts/validate_plan.py`. **Gli omonimi dello strumento stanno altrove:**
-`evals/plan-slices/assets/` e `evals/plan-slices/scripts/consensus/`. Due `assets/` e due `scripts/`
-sono una trappola per una sessione fredda, quindi qui i path sono pieni.
+- **Un campo in più: `Remedy`, con tre valori — `reformulation`, `reach-change`, `addition`.** Senza
+  di esso la condizionalità degli altri due campi non è decidibile da uno strumento: `Merged claim`
+  serve «quando la voce cambia la portata» e la riformulazione scartata «quando la voce aggiunge
+  righe», e nessuna delle due condizioni si legge dal testo dei campi presenti. Dichiarata dalla
+  voce, la condizionalità diventa forma: `Merged claim` obbligatorio e solo con `reach-change`,
+  riformulazione scartata obbligatoria e solo con `addition` accanto a una clausola nominata. È
+  anche il campo che la Fase 5 legge per sapere se una voce si applica da sé.
+- **Il commit dell'ultima riscrittura non è rigenerabile, e si verifica invece di riscriverlo.** Una
+  clausola è una frase e una riga ne porta spesso due — `SKILL.md:43` porta `C-013` e l'inizio di
+  `C-014` — quindi ogni derivazione basata sullo span attribuisce a una clausola la riscrittura della
+  vicina: riprodotto in sede, dà 27 divergenze su 205 e sono esattamente le divergenze di blame che
+  la mappa registra. Lo script emette la sede, emette `site_last` accanto a `last` invece che al suo
+  posto, e verifica l'unico invariante che git può decidere: `last` non può essere più recente
+  dell'ultima modifica al testo che circonda la clausola. **Le 205 clausole lo rispettano.**
+- **`intersezione` fra template e validator sui riferimenti:** la forma `slice N più il nome del
+  campo` si risolve contro il candidato dichiarato in `## Inputs`, non solo contro una sintassi. Una
+  slice inesistente o un campo che quella slice non ha sono scarti, come una riga fuori range.
+- **Il gate legge le voci anche fuori da `## Entries`.** Un documento che numera le voci altrove
+  deve comunque un log degli scarti per voce: «nessun `## Entries`» e «nessuna voce» sono due fatti
+  diversi, e collassarli avrebbe reso invisibile proprio l'asimmetria di CON-4.
+- **I tre riferimenti stali della mappa sono riparati**, già che il file si riapriva qui: le note di
+  `C-157` e di `R-015` rimandano ora a `recipe-app/results/CONSENSUS-CON-5.REPORT.md` con la sezione
+  nominata, e quella di `C-106` a *To populate*.
+- **Codice di uscita:** una voce scartata non è un errore. Lo script esce con 1 solo quando il
+  documento non è leggibile come insieme di voci; un lato a zero voci conformi esce con 0, coerente
+  con «un lato a zero voci conformi non blocca il ciclo».
 
-- [ ] Creare `evals/plan-slices/assets/improvement-template.md` **in inglese**, con i campi
-  obbligatori per voce:
-  - `Evidence — candidate A` e `Evidence — candidate B`, **due celle separate**: un riferimento
-    localizzabile (`PLAN-…-CON-N.md:NN`, oppure `slice N` più il nome del campo) oppure la
-    dichiarazione esplicita che quel candidato non manifesta il difetto;
-  - `Existing rule that failed to prevent the defect` — clausola di `SKILL.md` con la sua sezione,
-    **più le righe di registro che la coprono, oppure `uncovered`**, oppure `none` se nessuna
-    clausola è nominata. Le righe dichiarate sono ciò che il workflow **ri-ancora**, o ciò che la
-    voce deve **assorbire**, ed è l'unico modo per rendere meccanicamente rilevabile un caso che
-    prima era invisibile: `R-002` portava `Commit: d977043` mentre la sua clausola era stata
-    riscritta da `87150d3`, senza nessun link in avanti;
-  - `Change to the skill` — sezione precisa e modifica normativa concreta;
-  - `Merged claim` — obbligatorio quando la voce **cambia la portata** di una regola coperta: la riga
-    unica che sostituisce le righe dichiarate, nella grammatica di `Binary test`. È l'assorbimento, e
-    il template è il posto dove `improve` lo scrive. Assente quando la voce riformula soltanto: lì
-    il ri-ancoraggio è automatico e non c'è niente da scrivere;
-  - `Reformulation attempted and discarded, and why` — obbligatorio quando il campo precedente nomina
-    una clausola **e** la voce aggiunge righe. **«La clausola è coperta da una riga del registro» non
-    è una ragione ammissibile**, ed è il vincolo che tiene in piedi la regola dura: le clausole
-    coperte sono le poche già accusate — venti clausole di corpo su 205 portano tutto il registro —
-    cioè le candidate più probabili alla riformulazione. Ammettere la copertura come esenzione le
-    renderebbe permanentemente non riformulabili e restituirebbe il cricchetto intatto;
-  - `Binary test` — nella grammatica delle righe del registro, decidibile su un piano generato;
-  - `Cost` — cosa si toglie o si fonde se questa entra.
-- [ ] Creare `scripts/consensus/validate_improvement.py` con i controlli:
-  - presenza di ogni campo obbligatorio per voce;
-  - **i riferimenti si risolvono**: il file esiste e il numero di riga è nel range. Intercetta le
-    citazioni allucinate, che è un rischio reale in un artefatto che nessuno rilegge riga per riga;
-  - **le righe dichiarate coprenti si risolvono** in `REGRESSION-LEDGER.md` e coincidono con la mappa
-    clausola → riga della Fase 1c; una clausola che la mappa dichiara coperta e la voce dichiara
-    `uncovered` è uno scarto;
-  - `Binary test` presente e non vuoto, con una grammatica minima;
-  - `Merged claim`, quando c'è, sta nella stessa grammatica e la voce dichiara almeno una riga
-    coprente: una fusione che non nomina cosa fonde non è verificabile. Che la fusione resti
-    decidibile in una lettura non lo decide il validator — è lettura, e sta nel veto.
-- [ ] **Dare alla mappa il formato che il validator consuma: dati separati dalla prosa.** La Fase 1c
-  consegna `support/CLAUSE-ROW-MAP.md`, 205 clausole in tabelle markdown più un centinaio di righe di
-  prosa. Il validator non deve parsare markdown: estrarre i record — id, sede, commit d'introduzione,
-  commit dell'ultima riscrittura, righe coprenti, ancoraggio — in un file tabellare sotto `support/`,
-  e lasciare nel `.md` regola di conteggio, ancoraggi irrisolti, ancoraggi che risolvono sul brief,
-  verifica del campione e divergenze di blame, che nessuno script legge. Il taglio è **dati contro
-  prosa, non per sezione di `SKILL.md`**: le due interrogazioni sono «quali righe coprono questa
-  clausola» e «quali clausole sono scoperte», e nessuna delle due è per sezione. Da fare qui e non in
-  1c, perché il formato lo detta il consumatore e il consumatore è questo validator.
-  - **Sede e commit sono rigenerabili da git**, quindi li emette lo script invece di fidarsi delle
-    celle scritte a mano. Il commit dell'ultima riscrittura è quello che ha cambiato il **testo** della
-    clausola, **non `git blame` della riga**: le 16 divergenze in fondo alla mappa sono righe
-    rimandate a capo da una modifica vicina, e un ri-ancoraggio dedotto dal blame azzererebbe `×k` su
-    righe che nessuno ha toccato.
-  - **L'ancoraggio non è rigenerabile** e si mantiene a mano: per tredici righe su diciassette è
-    un'inferenza,
-    e i quattro `unresolved` sono fallimenti registrati, non celle da riempire.
-  - **Riparare i tre riferimenti che la migrazione del registro ha reso stali**, già che il file si
-    riapre qui: la nota di `C-157` e quella su `R-006` m1 negli *Unresolved anchors* rimandano a
-    *Difetti degli artefatti mai registrati* e *Formulazioni riscritte*, che ora vivono in
-    `CONSENSUS-CON-5.REPORT.md`; la nota di `C-106` rimanda a *Da popolare*, ora *To populate*. La
-    Fase 1c non poteva toccarli senza attraversare due volte lo stesso confine.
-- [ ] Implementare lo **scarto per voce**: la voce cade, il documento resta, ogni scarto esce con il
-  campo mancante e il motivo in forma leggibile dal report. **Nessuna rigenerazione.**
-- [ ] Test del validator su artefatti reali: `PLAN-CC-CON-4.IMPROVEMENT.md` deve produrre voci
-  parzialmente conformi, `PLAN-CX-CON-4.IMPROVEMENT.md` deve produrre **zero** voci conformi. Sono la
-  fixture negativa che il progetto già possiede.
+**Verificato sui due artefatti di CON-4, con l'asimmetria attesa:** `PLAN-CC-CON-4.IMPROVEMENT.md`
+dà **10 voci, 0 conformi**, ognuna con l'elenco dei campi mancanti; `PLAN-CX-CON-4.IMPROVEMENT.md`
+dà **0 voci**, perché non ne contiene nessuna. È la stessa misura della tabella di
+`CONSENSUS-WORKFLOW.md` § *Il contratto di conformità* — «sezione per miglioramento: sì, 10 |
+nessuna: 8 bullet» — ottenuta ora da uno strumento. Precisazione sul senso di «parzialmente
+conformi»: nessuna voce di `CC` supera il contratto, perché il documento di CON-4 non ha nessuno dei
+campi nuovi; la conformità parziale sta nell'essere leggibile **come voce**, cioè nel produrre uno
+scarto diagnosticabile invece di sparire.
 
-**Verifica:** `make test` verde; il validator sui due artefatti di CON-4 dà l'asimmetria attesa; il
-residuo dichiarato è che il validator verifica **che** il riferimento esista, non che **sostenga**
-l'affermazione — stessa spaccatura `validator`/`lettura` delle righe del registro.
+`make test` verde: 80 test sotto `evals/plan-slices/scripts`, 28 dei quali sul contratto.
+
+**Residui dichiarati, tutti della stessa spaccatura `validator`/`lettura` delle righe del registro:**
+
+- il validator verifica **che** un riferimento esista, non che **sostenga** l'affermazione;
+- verifica che una fusione sia scritta nella grammatica delle righe, non che resti **decidibile in
+  una lettura**;
+- verifica che una riformulazione scartata sia stata scritta, non che la ragione sia **ammissibile**.
+  Il divieto — «la clausola è coperta da una riga del registro» non è una ragione — vive nel
+  template e sta al veto. La forma lo rende costoso da violare: il campo chiede la riformulazione
+  *effettivamente scritta*, e una dichiarazione di copertura non riempie quella cella.
+
+Restano fuori, e sono di altre fasi: la mappa non registra ancora ciò che CON-6 cambierà (Fase 4) e
+i quattro ancoraggi `unresolved` restano fallimenti registrati, non celle da riempire.
 
 ## Fase 1b — I quattro prompt
 
