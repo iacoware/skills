@@ -22,6 +22,7 @@ italiano che la Fase 0b converte e che non blocca niente.
 | eseguire un passo del ciclo | questo file |
 | scrivere o correggere un prompt, applicare le voci, attraversare un confine | `workflow/CYCLE.md` |
 | il gate del passo 4, la forma delle voci, gli scarti | `workflow/CONFORMANCE.md` + `assets/improvement-template.md` |
+| il passo 9, i contatori, cosa il veto legge per primo | `assets/report-template.md` |
 | i passi 6 e 7, dormienza, verdetti falsificati | `workflow/LEDGER.md` + `REGRESSION-LEDGER.md` § *How to use* |
 | sapere **perché** una decisione è stata presa così | `workflow/RATIONALE.md` |
 | sapere **quanto** lo strumento ha già dimostrato, e cosa non copre | `workflow/EVIDENCE.md` |
@@ -103,7 +104,9 @@ ragionamento per esteso, con la varianza misurata su CON-5, sta in `workflow/RAT
    voci classificate condivise da **entrambi** i `REVIEW`. Una voce = **un hunk di `SKILL.md` + una
    riga di registro**, stesso id. Le righe nascono con `Commit SKILL.md: (pending)`. **Il workflow
    non committa mai.** Cosa è automatico e cosa no: `workflow/CYCLE.md`.
-9. **Report.** `recipe-app/results/CONSENSUS-CON-N.REPORT.md`, con i contatori **in testa**.
+9. **Report.** `recipe-app/results/CONSENSUS-CON-N.REPORT.md`, nella forma di
+   `assets/report-template.md`, con i contatori **in testa**. È composizione degli artefatti del
+   ciclo: nessuna chiamata.
 10. **Veto umano.** Si leggono i contatori, poi `git diff`. Si rifiuta il batch, o una voce per id.
     Ciò che sopravvive lo committa l'umano.
 
