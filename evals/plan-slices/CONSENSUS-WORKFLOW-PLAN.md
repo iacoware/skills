@@ -48,7 +48,10 @@ Non si ridiscutono all'inizio di ogni sessione.
     sostituisce esce dal file: git conserva il testo, il registro conserva solo ciò che è ancora
     previsto. La scrive `improve`, la edita il veto. Due vincoli: si assorbe solo se la fusione resta
     decidibile in una lettura, e **una riga = una affermazione**, quindi i membri che nessuno rileva
-    restano come riga propria.
+    restano come riga propria. Dal 2026-08-06 il secondo vincolo è **regola di scrittura di ogni
+    riga**, promossa dalla Fase 0c, che ha splittato le quattro righe multi-affermazione
+    preesistenti: nessuna riga ha più membri, e il vincolo resta come regola di ciò che accade a una
+    riga che una voce futura riportasse a più affermazioni.
   Regole e vincoli vivono in `REGRESSION-LEDGER.md` § *Re-anchoring and absorption*; qui non si
   duplicano. **Applicato il 2026-08-06** a `R-002` m1 → `R-010` e alla clausola `Enabler` di `R-008`
   → `R-011`: erano ancorate alla stessa clausola dopo `87150d3` e `eb926bb`, quindi contavano due
@@ -74,7 +77,7 @@ Non si ridiscutono all'inizio di ogni sessione.
   confine di strumento isolato in **CON-7**: cambiarlo in CON-6 confonderebbe la variabile testata —
   la specificità degli `IMPROVEMENT` — con una scelta di costo indipendente.
 - **La revisione di `EVALUATION-BRIEF.md` sta dopo CON-6**, per la stessa ragione: è l'autorità contro
-  cui si decidono sette righe su undici.
+  cui si decidono quattordici righe su diciassette.
 - **L'inglese è la lingua del progetto dal 2026-08-06.** Le fonti in `recipe-app/sources/` e gli
   artefatti storici — `PLAN-*`, `IMPROVEMENT`, `REVIEW`, report — **non si convertono mai**.
 - Un confine di strumento **si attraversa una volta sola, deliberatamente, e si registra.**
@@ -127,63 +130,34 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 
 ## Fase 0c — Una riga, una affermazione
 
-**Precondizioni:** nessuna. **Chiamate provider:** zero. **Va prima della Fase 1a e prima della Fase
-2.** La lettera non implica parentela con 0b: 0b può slittare indefinitamente, questa no.
+**Precondizioni:** nessuna. **Chiamate provider:** zero. **Andava prima della Fase 1a e della Fase
+2.**
 
-Il vincolo **una riga = una affermazione** esiste dal 2026-08-06, ma solo dentro
-`REGRESSION-LEDGER.md` § *Re-anchoring and absorption*, come **secondo vincolo dell'assorbimento**, e
-applicato ai soli `R-010` e `R-011`. Le righe preesistenti non sono mai state riviste, e quattro ne
-portano più d'una: `R-001` (identità dopo il differenziatore **e** giunzione dichiarata), `R-004`
-(ammissione in `NOW`, `Promotion trigger`, motivazione di esclusione), `R-006` (apertura in una sola
-slice, dichiarazione di riuso, ordinamento dopo i produttori), `R-009` (divieto sugli `Outcome`
-pre-identità **e** soglia oltre le due slice). Il formato le istituzionalizza: § *Commit `SKILL.md`*
-prevede che una cella nomini i **membri** ancorati a commit diversi, ed è perché `R-005` e `R-006`
-portano due commit.
+**Fatta il 2026-08-06.** La regola sta in `REGRESSION-LEDGER.md` § *How to use*, accanto a «binary
+and falsifiable» e a «quantify over a generated plan»; la meccanica dello split — eredità del
+contatore, id, `Absorbs`, commit non attribuiti — in § *Splitting a row that carries several claims*.
+Registro e `support/CLAUSE-ROW-MAP.md` sono il record; qui non si duplicano.
 
-**Perché prima della Fase 1a e non in Fase 4.** 1a congela il formato dati della mappa clausola →
-riga sugli id delle righe, e il validator verifica che le righe dichiarate coprenti **coincidano con
-la mappa**: splittare dopo vuol dire rigenerare quel file e rifare i test, e 1a riapre la mappa
-comunque per riparare i tre riferimenti stali — l'attraversamento singolo si perde. La ragione dura è
-però la Fase 2: CON-6 emette verdetti e contatori **per riga**, e una riga smentita su **un** membro
-non porta `×k` per gli altri. Splittare dopo un ciclo significa **disaggregare un verdetto ex-post**,
-cioè ricostruire previsioni a posteriori — il difetto che il registro dichiara di sé in `0273a73`, e
-che ha già prodotto le «rows C and D» di `R-008`.
+Cosa ha prodotto, perché le fasi seguenti ci si appoggiano:
 
-- [ ] Promuovere **one row, one claim** da vincolo dell'assorbimento a **regola di scrittura**, in
-  § *How to use* accanto a «binary and falsifiable» e a «quantify over a generated plan». Lì è dove
-  vale per ogni riga; dov'è oggi vale per una mossa sola.
-- [ ] **Splittare le quattro righe.** Ogni figlio eredita `Origine`, `Provenienza`, `Verifica`,
-  `Misurato su`, `Ultima verifica` e il **contatore del padre**: il ciclo che non ha smentito la riga
-  non ha smentito nessuno dei membri, quindi ripartire da `to verify` cancellerebbe una misura
-  realmente ottenuta. Dove il padre è smentito su un membro solo, il figlio smentito prende lo stato
-  `regressed` e gli altri il contatore.
-- [ ] **Id: il primo membro conserva l'id della riga, i successivi prendono id nuovi in coda.** Un id
-  non si riusa mai. La storia strutturale sta nella colonna `Absorbs`, che accetta anche
-  `Split from R-NNN mK (data)`: una colonna sola per «questa riga non ha sempre avuto questa forma»
-  costa meno di una dodicesima colonna, e le due mosse sono inverse l'una dell'altra.
-- [ ] Aggiornare `support/CLAUSE-ROW-MAP.md`: gli ancoraggi oggi sono espressi **per membro** — e i
-  quattro `unresolved` che la Fase 4 deve decidere sono tutti e quattro in quella forma. Dopo lo
-  split sono per riga, restano quattro, e la Fase 4 li nomina per id.
-- [ ] Riparare in § *To populate* il rimando alla «**third clause** of `R-008`»: dopo l'assorbimento
-  del 2026-08-06 quella riga ha una clausola sola, e il riferimento non risolve.
-- [ ] Ritoccare § *Re-anchoring and absorption*: il secondo vincolo — «una riga con più membri si
-  assorbe membro per membro» — diventa residuale quando nessuna riga ha più membri. Resta come regola
-  di ciò che accade a una riga che una voce futura riportasse a più affermazioni; non si cancella.
-- [ ] Aggiornare i conteggi che citano **undici righe**: `Active rows` in fondo al registro,
-  `CONSENSUS-WORKFLOW.md` §§ *L'obiettivo*, *Lo stato dell'evidenza*, *Limiti che restano*, e le
-  *Decisioni già prese* e la Fase 2b di questo piano — «sette righe su undici citano il brief»,
-  «cinque righe su undici a `×1`».
+- **Le quattro righe multi-affermazione sono diventate dieci.** `R-001` → `R-001` + `R-012`; `R-004`
+  → `R-004` + `R-013` + `R-014`; `R-006` → `R-006` + `R-015` + `R-016`; `R-009` → `R-009` + `R-017`.
+  Il primo membro conserva l'id, i successivi lo prendono in coda, ogni figlio eredita il contatore
+  del padre e porta la sua provenienza in `Absorbs`. **Righe attive 11 → 17, senza una previsione in
+  più**, e il registro lo dichiara perché il report legge `righe attive N → M` come misura di
+  accumulo.
+- **I quattro ancoraggi `unresolved` restano quattro**, ma solo due erano affermazioni: sono ora le
+  righe `R-001` e `R-015`, e la Fase 4 le nomina per id. Gli altri due sono la componente `9aa2586`
+  della cella `Commit` di `R-005` e di `R-006` — commit che nessuna affermazione rivendica, quindi lo
+  split non li ha attribuiti a un figlio e li ha lasciati dove l'id è rimasto.
+- **Il formato non prevede più membri.** § *Commit `SKILL.md`* diceva che una cella nomina i membri
+  ancorati a commit diversi; ora una seconda voce in `Commit` significa solo un commit il cui testo
+  la mappa non identifica. Il vincolo dell'assorbimento «una riga con più membri si assorbe membro per
+  membro» resta come regola residuale, per una riga che una voce futura riportasse a più affermazioni.
 
-**Vincolo che regge la fase: lo split non aggiunge previsioni.** Il conteggio delle righe attive
-cresce senza che cresca di una clausola la superficie coperta — `support/CLAUSE-ROW-MAP.md` conta
-clausole coperte, non righe — e i contatori si ereditano invece di ripartire. Va **dichiarato nel
-registro**, perché il report legge `righe attive N → M` come misura di accumulo, e un salto da 11 a
-15 senza quella nota si leggerebbe come quattro nuove regole entrate nello skill.
-
-**Verifica:** nessuna riga del registro contiene due affermazioni falsificabili separatamente; ogni
-figlio porta il contatore del padre e la sua provenienza in `Absorbs`; la mappa non esprime più
-nessun ancoraggio per membro; `Active rows` coincide con il conteggio reale e i documenti non citano
-più «undici».
+**Residuo dichiarato:** gli artefatti storici — `CONSENSUS-CON-5.REPORT.md` in testa — continuano a
+nominare i membri nella forma pre-split. Non si toccano: sono il record di ciò che è stato misurato
+allora. Nella mappa restano per la stessa ragione le note che raccontano l'assorbimento di `R-002` m1.
 
 ## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
 
@@ -226,8 +200,8 @@ sono una trappola per una sessione fredda, quindi qui i path sono pieni.
   - `Reformulation attempted and discarded, and why` — obbligatorio quando il campo precedente nomina
     una clausola **e** la voce aggiunge righe. **«La clausola è coperta da una riga del registro» non
     è una ragione ammissibile**, ed è il vincolo che tiene in piedi la regola dura: le clausole
-    coperte sono le poche già accusate — quattro clausole di corpo portano sei righe su undici — cioè
-    le candidate più probabili alla riformulazione. Ammettere la copertura come esenzione le
+    coperte sono le poche già accusate — venti clausole di corpo su 205 portano tutto il registro —
+    cioè le candidate più probabili alla riformulazione. Ammettere la copertura come esenzione le
     renderebbe permanentemente non riformulabili e restituirebbe il cricchetto intatto;
   - `Binary test` — nella grammatica delle righe del registro, decidibile su un piano generato;
   - `Cost` — cosa si toglie o si fonde se questa entra.
@@ -256,7 +230,8 @@ sono una trappola per una sessione fredda, quindi qui i path sono pieni.
     clausola, **non `git blame` della riga**: le 16 divergenze in fondo alla mappa sono righe
     rimandate a capo da una modifica vicina, e un ri-ancoraggio dedotto dal blame azzererebbe `×k` su
     righe che nessuno ha toccato.
-  - **L'ancoraggio non è rigenerabile** e si mantiene a mano: per nove righe su undici è un'inferenza,
+  - **L'ancoraggio non è rigenerabile** e si mantiene a mano: per tredici righe su diciassette è
+    un'inferenza,
     e i quattro `unresolved` sono fallimenti registrati, non celle da riempire.
   - **Riparare i tre riferimenti che la migrazione del registro ha reso stali**, già che il file si
     riapre qui: la nota di `C-157` e quella su `R-006` m1 negli *Unresolved anchors* rimandano a
@@ -297,9 +272,10 @@ I prompt **citano** il template, non lo duplicano.
   normativa è `prompts/`.
 - [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
 - [ ] **Riempire lo slot `gen` di `Misurato su` in tutte le righe del registro** dai dati della
-  mappa — sono undici fino alla Fase 0c, che le splitta. Oggi portano tutte `gen unrecorded`: modello ed effort di CON-1…CON-5 non esistono in nessun
-  artefatto, e `CC`/`CX` nominano l'harness, non il modello. Se la mappa non riesce a ricostruirli, le
-  celle restano `unrecorded` e lo si dichiara una volta invece di lasciarlo sembrare una svista.
+  mappa — sono diciassette dopo lo split della Fase 0c. Oggi portano tutte `gen unrecorded`: modello
+  ed effort di CON-1…CON-5 non esistono in nessun artefatto, e `CC`/`CX` nominano l'harness, non il
+  modello. Se la mappa non riesce a ricostruirli, le celle restano `unrecorded` e lo si dichiara una
+  volta invece di lasciarlo sembrare una svista.
 
 **Verifica:** nessun prompt nomina `REFERENCE-PLAN.md`, `support/`, i path o i nomi dei generatori;
 `review` non contiene la parola «tuo»; i nomi degli artefatti citati coincidono con quelli della
@@ -338,7 +314,7 @@ Resta il terzo.
   righe di registro nuove 5   (2 intersezione, 1 intersezione-tema, 2 giudizio)
   righe ri-ancorate       0   (contatore riportato a ×0)
   affermazioni assorbite  0
-  righe attive           11 → 16
+  righe attive           17 → 22
   voci scartate dal gate  3   (per campo mancante)
   verdetti scartati       0   (citazione non risolta)
   recidiva                2 coppie su 9 voci
@@ -416,7 +392,8 @@ Fasi 2b, 4 e 5.
 **Precondizioni:** Fase 2. **Chiamate provider:** zero; si verifica su CON-7.
 
 Dopo CON-6, mai prima: `EVALUATION-BRIEF.md` è l'autorità contro cui si decidono sette righe su
-undici, e toccarlo prima del ciclo che verifica per la prima volta `R-010` e `R-011` aggiungerebbe un
+diciassette — sono le righe che lo portano in `Misurato su` — e toccarlo prima del ciclo che verifica
+per la prima volta `R-010` e `R-011` aggiungerebbe un
 confine al verdetto.
 
 - [ ] Verificare duplicazioni. Il file è 51 righe e già asciutto; il candidato reale non è ridondanza
@@ -468,15 +445,16 @@ branch`, `Review an existing plan`, `Split, merge, or reorder an existing plan` 
   esistente si riscrive e la previsione resta; scoperta → nasce una riga `Origine: potatura` con
   l'affermazione «la rimozione di X non fa ricomparire il difetto Y». Nessuna rimozione senza una
   delle due.
-- [ ] **Decidere i quattro ancoraggi `unresolved`** che la mappa registra come fallimenti: `R-001` m1,
-  la componente `9aa2586` di `R-005`, la seconda metà di `R-006` m1 e la componente `9aa2586` di
-  `R-006`. Dopo la Fase 0c non sono più membri ma **righe proprie**: gli id si leggono dalla mappa,
-  e restano quattro. Per ciascuno una sola delle due mosse: lo skill acquista la clausola che la riga
-  presuppone, oppure la riga si riscrive per smettere di pretendere ciò che lo skill non dice. È
-  lavoro di questa fase perché è la stessa decisione della potatura letta al contrario — lì si toglie
-  testo coperto da una riga, qui c'è una riga che copre testo inesistente. Il caso netto è `R-006` m1:
-  il requisito è stato aggiunto alla riga dopo CON-5 **perché** `CX` non dichiarava il riuso, quindi
-  un verdetto contro quel membro sembra una regressione dello skill senza esserlo.
+- [ ] **Decidere i quattro ancoraggi `unresolved`** che la mappa registra come fallimenti. Dopo la
+  Fase 0c due sono **righe intere** e si nominano per id — `R-001` e `R-015` — e due sono componenti
+  `9aa2586` delle celle `Commit` di `R-005` e `R-006`, commit di cui nessuna affermazione rivendica
+  una clausola. Per ciascuno una sola delle due mosse: lo skill acquista la clausola che la riga
+  presuppone, oppure la riga si riscrive per smettere di pretendere ciò che lo skill non dice — per i
+  due commit, la terza è toglierli dalla cella. È lavoro di questa fase perché è la stessa decisione
+  della potatura letta al contrario — lì si toglie testo coperto da una riga, qui c'è una riga che
+  copre testo inesistente. Il caso netto è `R-015`: il requisito è stato aggiunto a `R-006` dopo CON-5
+  **perché** `CX` non dichiarava il riuso, quindi un verdetto contro quella riga sembra una
+  regressione dello skill senza esserlo.
 - [ ] Registrare il confine di strumento in `Misurato su` per tutte le righe attive.
 
 **Verifica:** **CON-7**. La fase non si chiude quando lo `SKILL.md` è più corto: si chiude quando

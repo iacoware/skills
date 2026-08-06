@@ -48,8 +48,9 @@ l'errore della stesura precedente, e rendeva irrisolvibili le domande aperte del
 - **`REGRESSION-LEDGER.md` rileva il peggioramento, ex-post, sulle dimensioni che copre.** Ogni
   modifica applicata implica una previsione falsificabile; il registro la conserva e il ciclo la
   ricontrolla. È l'unico rilevatore in servizio. Che le sue righe siano falsificabili non è
-  un'ipotesi: due lo sono state. Che la copertura sia parziale nemmeno — undici righe contro 417 di
-  skill.
+  un'ipotesi: due lo sono state. Che la copertura sia parziale nemmeno — diciassette righe contro 417
+  righe di skill, e le diciassette coprono le stesse clausole delle undici da cui vengono: lo split
+  del 2026-08-06 ha separato affermazioni, non aggiunto previsioni.
 - **L'intersezione fra `improve` e `review` previene il peggioramento, ex-ante, su una classe sola:
   le regole false.** Non guarda mai la modifica del giro precedente. È un generatore di proposte con
   un filtro di precisione sulle proposte. Che il filtro sia preciso è **un'ipotesi non ancora
@@ -160,8 +161,8 @@ Va letto prima di fidarsi di qualunque affermazione di questo documento sulla bo
 Quindi lo strumento non è «già esistente e da formalizzare»: **CON-6 è la sua prima esecuzione nella
 forma documentata**, e vale per il registro quanto per il filtro. Il corpus del registro è in parte
 validato — due falsificazioni reali su piani reali; la sua **disciplina** — la riga scritta dall'umano
-che applica, nel momento in cui applica — è stata eseguita due volte su undici. Il criterio con cui
-giudicare CON-6 non è che produca tutti gli artefatti previsti, ma
+che applica, nel momento in cui applica — è stata eseguita due volte su diciassette. Il criterio con
+cui giudicare CON-6 non è che produca tutti gli artefatti previsti, ma
 che i due `IMPROVEMENT` abbiano **specificità comparabile**, cioè che l'intersezione sia letterale e
 non una mappatura generico → operativo. Il contratto di conformità rende quella proprietà una forma
 da riempire invece che un giudizio da emettere.
@@ -313,7 +314,7 @@ l'effort**. I confini noti:
   ciclo che deve testare la specificità degli `IMPROVEMENT` avrebbe confuso la variabile testata con
   una scelta di costo indipendente.
 - **CON-6 → CON-7, brief.** La revisione di `EVALUATION-BRIEF.md` sta dopo CON-6 per la stessa
-  ragione: è l'autorità contro cui si decidono sette righe su undici.
+  ragione: è l'autorità contro cui si decidono quattordici righe su diciassette.
 - **Dopo la fase di modularizzazione e pruning.** Spostare testo dello skill in file caricati
   on-demand cambia ciò che il modello ha in contesto al momento di generare. Non è un refactor neutro:
   è un cambio di strumento al pari degli altri.
@@ -475,8 +476,8 @@ obbligatoria: una riga per modifica applicata, con id, commit dello skill, origi
 verificabile, modo di verifica, ultimo controllo, artefatti e strumenti su cui è stato prodotto il
 verdetto, cosa sorvegliare oltre all'affermazione, ed esito.
 
-**L'obbligo è dichiarato, non ancora esercitato.** Nove righe su undici sono ricostruzioni scritte a
-ritroso su commit già fatti; vedi § *Lo stato dell'evidenza*. La conseguenza operativa è che le
+**L'obbligo è dichiarato, non ancora esercitato.** Quindici righe su diciassette sono ricostruzioni
+scritte a ritroso su commit già fatti; vedi § *Lo stato dell'evidenza*. La conseguenza operativa è che le
 affermazioni **quantificano su un piano generato, non sul testo dello skill** — è il criterio con cui
 sono state scritte, e ha due effetti opposti. Buono: riformulare una clausola **non falsifica** la
 riga che la copre, perché la riga non afferma niente sul testo della clausola. Cattivo: l'unico
@@ -493,6 +494,17 @@ in una cella invece che in una riga. Regole e vincoli stanno in `REGRESSION-LEDG
 `R-010` e sulla clausola `Enabler` di `R-008` → `R-011`, che erano ancorate alla stessa clausola e
 contavano due volte la stessa evidenza.
 
+**Una riga = una affermazione**, ed è la regola di scrittura di ogni riga dal 2026-08-06, non solo un
+vincolo dell'assorbimento. Una riga che ne porta due non può portare un contatore: smentita su un
+membro, `×k` resterebbe scritto per gli altri, e disaggregare dopo un ciclo vuol dire ricostruire
+previsioni a posteriori. Le quattro righe scritte prima della regola — `R-001`, `R-004`, `R-006`,
+`R-009` — sono state splittate lo stesso giorno, una riga per affermazione, con il primo membro che
+conserva l'id e gli altri che ne prendono di nuovi in coda; ogni figlio eredita il contatore del
+padre. **Da undici a diciassette righe senza una previsione in più:** la superficie coperta non si
+muove di una clausola, e un report non deve leggere `righe attive 11 → 17` come sei regole nuove
+entrate nello skill. Lo split è la mossa inversa dell'assorbimento e sta nella stessa colonna,
+`Absorbs`.
+
 Lo stesso registro copre anche le regressioni **non previste**, senza un secondo artefatto: se il
 piano di miglioramento del ciclo N solleva un difetto che il ciclo N-2 aveva chiuso, quella è una
 regressione. È la fase `recidiva` a produrre quell'accoppiamento; prima era dichiarata nel registro e
@@ -500,10 +512,11 @@ non la faceva nessuno.
 
 **La falsificabilità sta nella formulazione della riga, non nell'automazione.** Automatizzare il
 `verdetto` non rende falsificabile ciò che non lo era: serve a garantire che il controllo **avvenga**
-ogni ciclo e che ogni verdetto citi il punto del piano che lo regge. Delle undici righe attuali solo
-R-011, e metà di R-008, sono decidibili dal validator strutturale — il controllo esiste già in
-`skills/plan-slices/scripts/validate_plan.py`. Le altre richiedono il confronto con il brief, cioè un
-giudizio.
+ogni ciclo e che ogni verdetto citi il punto del piano che lo regge. Delle diciassette righe attuali
+solo R-011, e metà di R-008, sono decidibili dal validator strutturale con un controllo che esiste già in
+`skills/plan-slices/scripts/validate_plan.py`. R-013 e R-014 sono automatizzabili sulla struttura del
+template ma il controllo non è scritto: il validator verifica solo che le sezioni `LATER` e
+`OUT-OF-SCOPE` portino una lista. Le altre richiedono il confronto con il brief, cioè un giudizio.
 
 ### Dormienza
 
@@ -632,10 +645,10 @@ convergenza del ciclo di consenso.
 - **Un solo scenario.** Tutto gira su `recipe-app`. Limite accettato, non risolto — ma la ragione
   scritta prima era sbagliata: un secondo scenario **non «raddoppia il costo di ogni ciclo»**. Richiede
   un secondo `EVALUATION-BRIEF.md`, che è lavoro umano sostanziale e non replicabile, più la
-  riderivazione delle righe che ne dipendono. Sette righe su undici citano il brief — `Known
-  conflicts`, `Accepted alternatives`, `Authority`, `Hard constraints`, `Material uncertainties` — e
-  non sono decidibili senza. La ragione vecchia faceva sembrare la decisione più facile da invertire di
-  quanto sia.
+  riderivazione delle righe che ne dipendono. Quattordici righe su diciassette portano il brief in
+  `Misurato su` — `Known conflicts`, `Accepted alternatives`, `Authority`, `Hard constraints`,
+  `Material uncertainties` — e non sono decidibili senza. La ragione vecchia faceva sembrare la
+  decisione più facile da invertire di quanto sia.
 - **Il salto dal difetto alla regola non è controllato.** Ogni difetto osservato è scenario-bound; ogni
   regola scritta nello `SKILL.md` non lo è. La generalizzazione avviene dentro `improve`, senza
   artefatto e senza rilettura. È lì che nasce l'overfitting, non nel fatto che lo scenario sia uno.
@@ -643,8 +656,8 @@ convergenza del ciclo di consenso.
   before/after singolo confonde l'effetto della modifica con la variabilità di una generazione, e il
   disaccordo fra i due lati su `R-002` e `R-008` mostra che la varianza è già visibile a questa scala.
   È il limite da cui discende la semantica `non smentita ×k`.
-- **`non smentita` non è conferma.** Cinque righe su undici hanno questo stato a `×1`, e sono proprio
-  quelle che autorizzerebbero a smettere di guardare una regola.
+- **`non smentita` non è conferma.** Otto righe su diciassette hanno questo stato a `×1`, e sono
+  proprio quelle che autorizzerebbero a smettere di guardare una regola.
 - **La falsificazione è solida, la diagnosi no.** Un controesempio su un piano falsifica la riga senza
   ambiguità. Ma dedurne *quale* clausola correggere è dove la varianza rientra: `R-010` nasce da una
   violazione su un solo modello, e la sua stessa nota lo dichiara — *«è il modo tipico in cui
