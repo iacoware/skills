@@ -11,43 +11,79 @@ Lo strumento e la sua ragione stanno in `CONSENSUS-WORKFLOW.md`; qui c'è solo i
 
 Non si ridiscutono all'inizio di ogni sessione.
 
-- Il ciclo attivo si chiama **consenso**; `review` resta il nome della sola fase 5 e dei suoi
-  artefatti.
-- Il grading system è **abbandonato dal 2026-08-06**, non sospeso: non è sostenibile per il ritmo di
-  evoluzione di uno skill e non è preciso al livello a cui servirebbe. Non torna. Il codice resta in
-  git e non è mantenuto. **Non si spende tempo a curarne i documenti interni.**
-- Dal ciclo CON-6 il payload di `improve` è **cieco e simmetrico**: entrambi i modelli valutano
-  entrambi i candidati senza sapere quale hanno generato.
-- Il ciclo è un **falsificatore, non un confermatore**. Lo stato del registro è `non smentita ×k`,
-  non `tiene`. Non si aumenta il numero di generazioni per lato: la leva è il tempo, non il campione.
+- L'obiettivo si regge su **due meccanismi disgiunti**: il registro rileva il peggioramento ex-post
+  sulle dimensioni che copre; l'intersezione `improve` + `review` previene ex-ante l'ingresso di
+  regole false. Una falsificazione dell'ipotesi sull'intersezione **non fa cadere l'obiettivo**.
+- Il ciclo attivo si chiama **consenso**. Le fasi sono **quattro**: `improve`, `review`, `verdetto`,
+  `recidiva`. `ledger` indica solo il registro, mai una fase.
+- Il grading system è **abbandonato dal 2026-08-06**, non sospeso. Non torna. Il codice resta in git e
+  non è mantenuto. **Non si spende tempo a curarne i documenti interni.**
+- Dal ciclo CON-6 i payload di `improve` **e di `review`** sono **ciechi e simmetrici**.
+- Il ciclo è un **falsificatore, non un confermatore**. Lo stato del registro è `non smentita ×k`.
+  Non si aumenta il numero di generazioni per lato: la leva è il tempo, non il campione.
 - **`improve` è bidirezionale**, con i campi `Regola esistente che non ha impedito il difetto` e
   `Costo`, e con la regola dura: se una clausola esistente è nominata, il rimedio di default è
   riformularla, e aggiungere righe richiede una ragione scritta.
-- Un `IMPROVEMENT` non conforme al contratto del prompt si **rigenera** prima di `review`. Blocco
-  duro, non warning.
-- La fase `ledger` entra nel ciclo automatizzato **insieme** a `improve` e `review`, non dopo.
+- **Il contratto di conformità è un template più un validator**, non prosa dentro un prompt: un
+  contratto in prosa è ciò che entrambi i lati hanno ignorato in CON-4. La specificità è una **forma**
+  che il generico non riempie, non un giudizio con una soglia. **Niente soglie.**
+- Una voce non conforme si **scarta e si registra**, con **un solo tentativo**. Il documento non si
+  rigenera mai. Un errore di trasporto è un ritentativo della *chiamata*, non del documento. Un lato
+  a zero voci conformi non blocca il ciclo.
+- **`Origine` ha quattro valori**: `intersezione`, `intersezione-tema`, `giudizio`, `potatura`.
+- **Una voce vale `intersezione` o `intersezione-tema` solo se entrambi i `REVIEW` la classificano
+  condivisa.** Classificazione unilaterale → `giudizio`, e nessuna applicazione automatica.
+- **Il workflow applica al working tree e non committa mai.** Applica solo ciò che il filtro
+  licenzia. Una voce = un hunk di `SKILL.md` + una riga di registro, stesso id, riga con
+  `Commit: (pending)`. Il veto umano legge i **contatori in testa al report**, poi `git diff`.
+- **`recidiva` è una chiamata sola**, modello fisso `claude-opus-5`, e produce l'**elenco delle
+  coppie** `voce improve → riga | nessuna`, non uno scalare. Controargomento ed eventi di inversione
+  sono in `CONSENSUS-WORKFLOW.md` § *Perché `recidiva` è una sola chiamata*.
+- **Dormienza a `non smentita ×3`**, verifica 1 ciclo su 3, risveglio immediato da `recidiva`.
+  Sostituisce il pensionamento, che era rinviato senza trigger osservabile.
 - I prompt escono da `PROMPTS.md` e diventano l'unica sorgente sotto `prompts/`; `PROMPTS.md` resta
   scratchpad umano senza valore normativo.
 - `support/AGENT-PLAN-MAP.md` tiene la mappa alias → piano → generatore ed è escluso da ogni payload.
 - `CON-N` resta il contatore di ciclo negli artefatti; non si rinominano artefatti storici. **CON-5
-  non si riusa** nonostante sia un ciclo parziale: nove righe del registro e due citazioni testuali lo
-  referenziano. Il prossimo ciclo è **CON-6**.
-- **Modelli ed effort:** `gpt-5.6-sol` e `claude-opus-5`, entrambi a **`medium`**. È un confine di
-  strumento rispetto a `high`, e va nella colonna `Misurato su`.
-- La decisione su cosa applicare allo `SKILL.md` resta umana in ogni fase.
-- **Le 15 unità di calibrazione già pagate non vanno conservate**, e più in generale nessun vincolo
-  nato per proteggerle vincola più niente. I 30 file sono tracciati in git.
-- **Pensionamento delle righe del registro: rinviato** il 2026-08-06. Il costo della fase `ledger`
-  cresce in modo monotono; si affronta quando il contatore di recidiva lo rende visibile.
+  non si riusa.** Il prossimo ciclo è **CON-6**.
+- **Modelli ed effort: `gpt-5.6-sol` e `claude-opus-5`, entrambi a `high` in CON-6.** `medium` è un
+  confine di strumento isolato in **CON-7**: cambiarlo in CON-6 confonderebbe la variabile testata —
+  la specificità degli `IMPROVEMENT` — con una scelta di costo indipendente.
+- **La revisione di `EVALUATION-BRIEF.md` sta dopo CON-6**, per la stessa ragione: è l'autorità contro
+  cui si decidono sette righe su undici.
+- **L'inglese è la lingua del progetto dal 2026-08-06.** Le fonti in `recipe-app/sources/` e gli
+  artefatti storici — `PLAN-*`, `IMPROVEMENT`, `REVIEW`, report — **non si convertono mai**.
+- Un confine di strumento **si attraversa una volta sola, deliberatamente, e si registra.**
+- La decisione su cosa applicare allo `SKILL.md` resta umana in ogni fase, in forma di veto.
+- **Le 15 unità di calibrazione già pagate non vanno conservate.** I 30 file sono tracciati in git.
+
+## Fase 0a — L'inglese è la lingua del progetto
+
+**Precondizioni:** nessuna. **Chiamate provider:** zero. **Va per prima.**
+
+Solo la decisione e la regola. La conversione dei documenti esistenti è Fase 0b e non blocca niente;
+separarle è ciò che evita di scrivere in italiano tutto ciò che nasce dalla Fase 0 in poi.
+
+- [ ] Dichiarare in `CONSENSUS-WORKFLOW.md` e in `evals/plan-slices/README.md` che **ogni artefatto
+  nuovo nasce in inglese**: prompt, template, validator, report, righe di registro, commit.
+- [ ] Dichiarare le **due esclusioni permanenti**, con la ragione:
+  - `recipe-app/sources/` — convertirle è un **nuovo scenario**, non una traduzione. Invaliderebbe i
+    cinque piani, le righe misurate su di essi e le citazioni del brief, che puntano a titoli di
+    sezione italiani (`sources/goal.md`, "Vincoli e scala").
+  - `PLAN-*`, `*.IMPROVEMENT.md`, `*.REVIEW.md` e i report già prodotti — sono il record di ciò che è
+    stato generato. Tradurli è falsificarlo.
+- [ ] Registrare che `EVALUATION-BRIEF.md` è già in inglese e che i titoli di sezione italiani che
+  contiene sono **puntatori alle fonti**, non prosa da tradurre. `SKILL.md` è già in inglese.
+
+**Verifica:** la regola e le due esclusioni sono scritte in entrambi i documenti.
 
 ## Fase 0 — Separazione dei due strumenti
 
-**Precondizioni:** nessuna. **Chiamate provider:** zero.
+**Precondizioni:** Fase 0a. **Chiamate provider:** zero.
 
 L'ambizione di questa fase è stata **ridotta** il 2026-08-06: la versione precedente prescriveva di
-riscrivere internamente `GRADING-IMPROVEMENTS-PLAN.md` (52 KB) in tre sezioni curate, conservando i
-due test, la pre-registrazione delle coppie, il budget residuo e la stop rule. Con il grading
-abbandonato quella è manutenzione di un documento morto e non si fa.
+riscrivere internamente `GRADING-IMPROVEMENTS-PLAN.md` (52 KB). Con il grading abbandonato quella è
+manutenzione di un documento morto e non si fa.
 
 - [x] Rinominare `EVAL-WORKFLOW.md` in `GRADING-EVAL-WORKFLOW.md` e seguire i riferimenti — commit
   `570e929`.
@@ -56,20 +92,20 @@ abbandonato quella è manutenzione di un documento morto e non si fa.
 - [x] Riscrivere `CONSENSUS-WORKFLOW.md` sull'esito della sessione di grilling del 2026-08-06:
   obiettivo asimmetrico, stato dell'evidenza, rischio di non-conformità, cricchetto misurato,
   confini di strumento, lapide del grading.
+- [x] Seconda riscrittura, grilling del 2026-08-06: separazione delle due tesi, quattro fasi,
+  contratto template + validator, `intersezione-tema`, dormienza, `review` cieco, applica-e-veta.
 - [ ] **Banner in testa a `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-IMPROVEMENTS.md` e
   `GRADING-EVAL-WORKFLOW.md`:** «Abbandonato il 2026-08-06. Documento non mantenuto, conservato per
   la storia. Lo strumento attivo è `CONSENSUS-WORKFLOW.md`.» Nient'altro: **il corpo di quei
-  documenti non si tocca**, incluse le loro `Open questions` e i riferimenti interni al `Riesame del
-  2026-08-04`, che restano leggibili come documento storico.
-- [ ] Creare `evals/plan-slices/README.md` come punto d'ingresso della directory, con **due** gruppi
-  di artefatti invece di tre:
-  - **attivo** — `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `prompts/`, `support/`,
-    `REGRESSION-LEDGER.md`, `NOTES.md`, `recipe-app/sources/`, `recipe-app/EVALUATION-BRIEF.md`,
-    `recipe-app/results/PLAN-*` e i report di ciclo, `validate_plan.py` che vive nella skill,
-    `evals/AGENTS.md`, il target `validate`;
+  documenti non si tocca**.
+- [ ] Creare `evals/plan-slices/README.md` **in inglese** come punto d'ingresso della directory, con
+  **due** gruppi di artefatti:
+  - **attivo** — `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `prompts/`, `assets/`,
+    `support/`, `REGRESSION-LEDGER.md`, `NOTES.md`, `recipe-app/sources/`,
+    `recipe-app/EVALUATION-BRIEF.md`, `recipe-app/results/PLAN-*` e i report di ciclo,
+    `validate_plan.py` che vive nella skill, `evals/AGENTS.md`, il target `validate`;
   - **archiviato** — `GRADING-*.md`, `grader-rubric*.json`, `fixtures/`, `results/calibration-*/`,
-    gli script di grading e i target `grade`/`compare`/`calibrate*`. Non mantenuti, non prerequisito
-    di niente.
+    gli script di grading e i target `grade`/`compare`/`calibrate*`.
 
 **Verifica:** `grep -rn "EVAL-WORKFLOW"` non trova riferimenti al vecchio nome; i tre documenti di
 grading aprono con il banner; nessun file di codice è stato toccato, quindi `make test` resta quello
@@ -77,77 +113,196 @@ di prima.
 
 **Output:** un commit per il banner, uno per il README.
 
-## Fase 1 — Prompt e procedura eseguibile
+## Fase 0b — Conversione dei documenti umani
 
-**Precondizioni:** Fase 0. **Chiamate provider:** zero.
+**Precondizioni:** Fase 0a. **Chiamate provider:** zero. **Nessuna fase dipende da questa.**
 
-- [ ] Creare `prompts/improve.prompt.md` estraendo da `PROMPTS.md` § *CREATE IMPROVEMENTS* e
-  riscrivendolo su: `EVALUATION-BRIEF.md` al posto di `REFERENCE-PLAN.md`, eliminato da `6476f32`;
-  payload cieco simmetrico; un solo documento per valutatore sull'unione dei difetti dei due
-  candidati; divieto esplicito di leggere `support/`; **i due campi bidirezionali** `Regola esistente
-  che non ha impedito il difetto` e `Costo`; l'esclusione del walking skeleton, che oggi vive solo
-  nel prompt e va dichiarata come restrizione di scope del ciclo.
-- [ ] **Specificare il contratto di conformità in modo controllabile**: la lista esatta dei campi
-  obbligatori per voce, e la regola che un documento privo di un campo si rigenera. Il contratto va
-  scritto una volta e citato dal prompt, non duplicato.
-- [ ] Creare `prompts/review.prompt.md` da § *CREATE REVIEW 2*, adattato ai nuovi nomi degli
-  artefatti e con il campo aggiuntivo, per ogni voce condivisa, **quale dei due lati porta la
-  formulazione operativa**. È il dato su cui si decide se la voce vale `intersezione` o `giudizio`.
-- [ ] Creare `prompts/ledger.prompt.md`: per ogni riga di `REGRESSION-LEDGER.md`, verdetto più
-  **citazione obbligatoria** del punto pubblicato (piano, slice, sezione) nella forma già usata dalle
-  righe del ciclo CON-5. Nessun verdetto senza citazione.
+Documenti che nessun modello legge durante un ciclo. La conversione è lavoro bruto senza rischio e
+senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare indefinitamente.
+
+- [ ] `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `NOTES.md`, `PROMPTS.md`.
+- [ ] Non toccare i documenti di grading: sono archivio.
+
+**Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
+citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
+
+## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
+
+**Precondizioni:** Fase 0a, **più la domanda aperta in fondo a questo piano**, che determina il campo
+`Reformulation attempted and discarded, and why` e va decisa in una sessione dedicata prima di
+iniziare. **Chiamate provider:** zero.
+
+È il pezzo che decide tutti gli altri, ed è l'unico che è codice. Replica l'architettura che nello
+skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.py`.
+
+- [ ] Creare `assets/improvement-template.md` **in inglese**, con i campi obbligatori per voce:
+  - `Evidence — candidate A` e `Evidence — candidate B`, **due celle separate**: un riferimento
+    localizzabile (`PLAN-…-CON-N.md:NN`, oppure `slice N` più il nome del campo) oppure la
+    dichiarazione esplicita che quel candidato non manifesta il difetto;
+  - `Existing rule that failed to prevent the defect` — clausola di `SKILL.md` con la sua sezione,
+    oppure `none`;
+  - `Change to the skill` — sezione precisa e modifica normativa concreta;
+  - `Reformulation attempted and discarded, and why` — obbligatorio quando il campo precedente nomina
+    una clausola **e** la voce aggiunge righe;
+  - `Binary test` — nella grammatica delle righe del registro, decidibile su un piano generato;
+  - `Cost` — cosa si toglie o si fonde se questa entra.
+- [ ] Creare `scripts/consensus/validate_improvement.py` con i controlli:
+  - presenza di ogni campo obbligatorio per voce;
+  - **i riferimenti si risolvono**: il file esiste e il numero di riga è nel range. Intercetta le
+    citazioni allucinate, che è un rischio reale in un artefatto che nessuno rilegge riga per riga;
+  - `Binary test` presente e non vuoto, con una grammatica minima.
+- [ ] Implementare lo **scarto per voce**: la voce cade, il documento resta, ogni scarto esce con il
+  campo mancante e il motivo in forma leggibile dal report. **Nessuna rigenerazione.**
+- [ ] Test del validator su artefatti reali: `PLAN-CC-CON-4.IMPROVEMENT.md` deve produrre voci
+  parzialmente conformi, `PLAN-CX-CON-4.IMPROVEMENT.md` deve produrre **zero** voci conformi. Sono la
+  fixture negativa che il progetto già possiede.
+
+**Verifica:** `make test` verde; il validator sui due artefatti di CON-4 dà l'asimmetria attesa; il
+residuo dichiarato è che il validator verifica **che** il riferimento esista, non che **sostenga**
+l'affermazione — stessa spaccatura `validator`/`lettura` delle righe del registro.
+
+## Fase 1b — I quattro prompt
+
+**Precondizioni:** Fase 1a. **Chiamate provider:** zero.
+
+I prompt **citano** il template, non lo duplicano.
+
+- [ ] `prompts/improve.prompt.md`: payload cieco simmetrico, un solo documento per valutatore
+  sull'unione dei difetti dei due candidati, divieto esplicito di leggere `support/`, i due campi
+  bidirezionali, l'esclusione del walking skeleton dichiarata come restrizione di scope del ciclo,
+  `EVALUATION-BRIEF.md` al posto di `REFERENCE-PLAN.md` eliminato da `6476f32`.
+- [ ] `prompts/review.prompt.md`: payload **cieco e simmetrico** — i due `IMPROVEMENT` come
+  `Report A`/`Report B`, mai «il tuo report». Sezioni simmetriche: condivisa, unica ad A, unica a B,
+  contraddittoria. Per ogni voce condivisa, il campo che dichiara se i due lati portano **lo stesso
+  rimedio** o solo lo stesso tema — è il dato che separa `intersezione` da `intersezione-tema`.
+- [ ] `prompts/verdict.prompt.md`: per ogni riga attiva, verdetto più **citazione obbligatoria** del
+  punto pubblicato (piano, slice, sezione). Nessun verdetto senza citazione; una citazione che non si
+  risolve è uno scarto. La cella `Da sorvegliare` della riga entra nel prompt come istruzione
+  aggiuntiva per quella riga.
+- [ ] `prompts/recidiva.prompt.md`: una sola chiamata, input i due `IMPROVEMENT` più **tutte** le
+  righe, dormienti incluse. Output l'elenco delle coppie `voce → riga | nessuna`. Nessuno scalare.
 - [ ] Aggiungere in testa a `PROMPTS.md` la nota che è uno scratchpad umano e che la sorgente
   normativa è `prompts/`.
 - [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
-- [ ] **Migrare `REGRESSION-LEDGER.md` alla nuova semantica**: stato `tiene` → `non smentita ×k` (le
-  righe attuali partono da `×1`, misurate sul solo CON-5); colonna `Misurato su` estesa a modello ed
-  effort; nuova `Origine: potatura`; annotare sulle righe `R-002`…`R-007` che l'origine `intersezione`
-  è stata prodotta con prompt diversi da quelli di `prompts/` e con un lato non conforme.
-- [ ] Rendere eseguibile la sezione *Il ciclo* di `CONSENSUS-WORKFLOW.md`: comandi esatti, nomi degli
-  artefatti attesi, ordine, e cosa fare quando le due fasi `improve` divergono.
-- [ ] Decidere e documentare la struttura di `recipe-app/results/CONSENSUS-CON-N.REPORT.md`: esito del
-  validator, esito del gate di conformità, intersezione e disaccordi con il lato operativo di ogni
-  voce condivisa, verdetti del registro, **i tre contatori** (righe di `SKILL.md`, difetti distinti,
-  recidiva), elenco dei punti che richiedono lettura umana.
 
-**Verifica:** i tre prompt non nominano `REFERENCE-PLAN.md`, `support/`, né i path o i nomi dei
-generatori; i nomi degli artefatti citati coincidono con quelli della struttura del report; il
-contratto di conformità elenca campi verificabili senza giudizio.
+**Verifica:** nessun prompt nomina `REFERENCE-PLAN.md`, `support/`, i path o i nomi dei generatori;
+`review` non contiene la parola «tuo»; i nomi degli artefatti citati coincidono con quelli della
+struttura del report.
 
 **Rischio:** i prompt riscritti non sono mai stati eseguiti. È esattamente ciò che la Fase 2 misura.
 
+## Fase 1c — Registro, mappa e report
+
+**Precondizioni:** Fase 0a. Indipendente da 1a e 1b: può girare in parallelo. **Chiamate provider:**
+zero.
+
+Un solo attraversamento del confine sul registro: traduzione, split e migrazione semantica nella
+stessa passata. Due passate su testo come la formulazione di `R-002` — già riscritta tre volte — sono
+più pericolose di una, perché la seconda ha meno contesto della prima.
+
+- [ ] **Estrarre la narrativa di ciclo** dal registro: righe 63–301 della versione italiana, il 62%
+  del file, rilette dal `verdetto` a ogni ciclo senza servire. Vanno in
+  `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, creato retroattivamente come contenitore.
+- [ ] **Eccezione obbligatoria:** le note *«Da cercare al prossimo ciclo, oltre alla riga»* di `R-010`
+  e `R-011` non sono narrativa, sono istruzioni per il verdetto successivo. Diventano una cella
+  **`Da sorvegliare`** della riga.
+- [ ] **Tradurre** il registro in inglese.
+- [ ] **Migrare la semantica**: `tiene` → `non smentita ×k`, righe attuali a `×1` misurate sul solo
+  CON-5; stato `dormiente` a `×3`; colonna `Misurato su` estesa a modello ed effort; `Origine:
+  potatura`; cella `Da sorvegliare`; cella `Commit` che ammette `(pending)`.
+- [ ] **Riclassificare `R-002`…`R-008` da `intersezione` a `intersezione-tema`** e annotare che sono
+  state prodotte con prompt diversi da quelli di `prompts/` e con un lato non conforme.
+- [ ] **Mappa clausola → riga di registro**, con le clausole scoperte marcate come tali. Spostata qui
+  da Fase 4 il 2026-08-06: senza la mappa il campo `Regola esistente che non ha impedito il difetto`
+  non ha contropartita al momento di decidere, e il default resta aggiungere una regola nuova — cioè
+  il cricchetto sopravvive al meccanismo costruito per fermarlo. La mappa produce anche l'elenco delle
+  clausole **senza riga**, che sono quelle riformulabili senza rompere una previsione.
+- [ ] **Struttura di `recipe-app/results/CONSENSUS-CON-N.REPORT.md`**, con i **contatori in testa**:
+
+  ```
+  SKILL.md   417 → 451   (+34)
+  voci applicate         5
+    riformulazioni       0
+    aggiunte             5   ← ognuna con la ragione della riformulazione scartata
+  righe di registro nuove 5   (2 intersezione, 1 intersezione-tema, 2 giudizio)
+  voci scartate dal gate  3   (per campo mancante)
+  verdetti scartati       0   (citazione non risolta)
+  recidiva                2 coppie su 9 voci
+  ```
+
+  Poi: esito del validator strutturale; voci applicate con id, hunk e origine; **voci classificate
+  condivise da un solo `REVIEW`** — la misura di instabilità che sblocca la Fase 7 e che oggi nessuno
+  produce; elenco dei punti che richiedono lettura umana; log degli scarti; coppie di recidiva;
+  verdetti con le loro citazioni.
+
+**Verifica:** il registro contiene solo tabella, regole d'uso e backlog vivo; nessuna riga di
+narrativa di ciclo; ogni riga ha `Misurato su` completo; la mappa copre tutte e undici le righe e
+dichiara quante clausole di `SKILL.md` restano scoperte.
+
 ## Fase 2 — Ciclo CON-6 manuale
 
-**Precondizioni:** Fase 1. **Chiamate provider:** **6** — due per `improve`, `review` e `ledger` —
-più **2 di generazione**. Richiede **autorizzazione esplicita** dopo il dry-run e il conteggio, per
-`evals/AGENTS.md`.
+**Precondizioni:** Fasi 1a, 1b, 1c. **Chiamate provider:** **9** — 2 generazione, 2 `improve`,
+2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high`**. Richiede **autorizzazione esplicita** dopo
+il dry-run e il conteggio, per `evals/AGENTS.md`.
 
 I piani CON-5 **non si riusano**: sono delle 11:57 del 2026-08-04, mentre `87150d3` è delle 23:11 e
-`eb926bb` delle 23:30. Precedono entrambi i commit, quindi non possono verificare `R-010` e `R-011` —
-le due righe ancora `da verificare`, ed entrambe correzioni di regressioni già occorse.
+`eb926bb` delle 23:30. Precedono entrambi i commit, quindi non possono verificare `R-010` e `R-011`.
 
 - [ ] Generare i due candidati con lo `SKILL.md` corrente e registrarli in
   `support/AGENT-PLAN-MAP.md`.
 - [ ] `make validate` su entrambi.
-- [ ] Eseguire `improve`, il gate di conformità, `review` e `ledger` a mano, copiando i prompt da
+- [ ] Eseguire `improve`, il gate, `review`, `verdetto` e `recidiva` a mano, copiando i prompt da
   `prompts/`.
-- [ ] Scrivere `recipe-app/results/CONSENSUS-CON-6.REPORT.md` nella struttura decisa in Fase 1,
-  contatori inclusi.
-- [ ] Applicare allo `SKILL.md` ciò che si decide di applicare, una riga di registro per modifica,
-  rispettando la regola dura di `improve` bidirezionale.
-- [ ] Correggere `prompts/` e `CONSENSUS-WORKFLOW.md` dove la procedura documentata non ha retto.
+- [ ] Scrivere `CONSENSUS-CON-6.REPORT.md` nella struttura di Fase 1c, contatori in testa.
+- [ ] Applicare le sole voci che il filtro licenzia, una riga di registro per voce, `Commit:
+  (pending)`. **Non committare dal workflow.** Leggere i contatori, poi `git diff`, poi decidere.
+- [ ] Correggere `prompts/`, `assets/` e `CONSENSUS-WORKFLOW.md` dove la procedura non ha retto.
 
 **Verifica — due criteri distinti, ed è il secondo quello che conta:**
 
 1. *Completamento.* Il ciclo si chiude producendo tutti gli artefatti previsti senza intervento non
    documentato. Ogni scostamento è annotato.
-2. *Validità della tesi.* I due `IMPROVEMENT` hanno **specificità comparabile**, cioè l'intersezione
-   è letterale e non una mappatura generico → operativo. È il primo test dell'ipotesi di *Lo stato
-   dell'evidenza*; se fallisce, il filtro di consenso non ha la proprietà che gli si attribuisce, e
-   automatizzarlo sarebbe automatizzare un'illusione. Vedi `Open questions`.
+2. *Validità della tesi.* I due `IMPROVEMENT` hanno **specificità comparabile**, misurata in modo
+   descrittivo: quante voci sopravvivono al gate per lato. Nessuna soglia — un ciclo non emette un
+   verdetto su un'ipotesi, coerentemente con `non smentita ×k`.
 
-**Output:** il ciclo eseguito, la procedura corretta, e il primo dato sulla tesi. È il gate della
-Fase 4 e della Fase 5.
+**Cosa si fa in ciascuno dei tre esiti — deciso prima di eseguire:**
+
+- **Un lato a ~0 voci operative.** Decide il log degli scarti. Scarti concentrati **tutti sullo stesso
+  campo** → il template è scritto male, si corregge quel campo e si ripete. Scarti **sparsi** → il
+  modello non sa fare il lavoro, l'ipotesi prende una smentita `×1`, la Fase 5 non parte e si decide a
+  CON-7.
+- **Entrambi operativi, voci condivise con lo stesso rimedio.** `Origine: intersezione`, applicazione
+  automatica.
+- **Entrambi operativi, stesso tema e rimedi diversi.** `Origine: intersezione-tema`: il tema porta
+  l'evidenza d'intersezione, la formulazione viene dal lato che la fornisce ed è decisa dall'umano.
+  Non è una ritirata: è la classificazione per voce di ciò che è già successo in CON-4, e mantiene
+  `review` portante — è la fase che separa questo esito dal precedente.
+
+**Fuori dal tavolo per CON-6:** cambiare uno dei due modelli. È un confine di strumento e renderebbe
+il ciclo non interpretabile, per la stessa ragione per cui l'effort resta a `high`.
+
+**Output:** il ciclo eseguito, la procedura corretta, e il primo dato sulla tesi. È il gate delle
+Fasi 2b, 4 e 5.
+
+## Fase 2b — Revisione del brief
+
+**Precondizioni:** Fase 2. **Chiamate provider:** zero; si verifica su CON-7.
+
+Dopo CON-6, mai prima: `EVALUATION-BRIEF.md` è l'autorità contro cui si decidono sette righe su
+undici, e toccarlo prima del ciclo che verifica per la prima volta `R-010` e `R-011` aggiungerebbe un
+confine al verdetto.
+
+- [ ] Verificare duplicazioni. Il file è 51 righe e già asciutto; il candidato reale non è ridondanza
+  di token ma una **separazione di responsabilità sporca**: `Known conflicts`, secondo bullet,
+  riscrive quasi verbatim la regola di `R-002` (*«no `Includes` or `Verification` bullet may assert
+  either side»*), cioè mette una regola di scrittura del piano dentro il documento che descrive lo
+  scenario. Il brief dovrebbe dichiarare il conflitto, non come si scrive il piano.
+- [ ] Modularizzare solo se la lettura lo giustifica; non inseguire token che non ci sono.
+- [ ] Registrare il confine in `Misurato su` per tutte le righe che citano il brief.
+
+**Verifica:** CON-7. Le righe che citano il brief non cambiano verdetto per effetto della revisione;
+se cambiano, il brief ha cambiato significato e la revisione va rifatta.
 
 ## Fase 3 — Riorganizzazione del codice
 
@@ -158,39 +313,30 @@ L'ambizione di questa fase è stata **ridotta** il 2026-08-06: `scripts/runtime/
 il codice *condiviso fra i due strumenti*. Con un solo strumento in servizio non c'è niente da
 condividere.
 
-- [ ] Spostare in `scripts/consensus/` **solo** ciò che il ciclo di consenso userà davvero:
-  invocazione provider, hashing, scrittura atomica e resume, estratti da `grader_runtime.py` e
-  `orchestrator_artifacts.py`.
-- [ ] Lasciare il resto del grading dov'è, come archivio, con i suoi test e i suoi target. Non si
-  riorganizza codice non mantenuto.
+- [ ] Spostare in `scripts/consensus/` **solo** ciò che il ciclo userà davvero: invocazione provider,
+  hashing, scrittura atomica e resume, estratti da `grader_runtime.py` e `orchestrator_artifacts.py`.
+  `validate_improvement.py` ci vive già dalla Fase 1a.
+- [ ] Lasciare il resto del grading dov'è, come archivio, con i suoi test e i suoi target.
 - [ ] Aggiornare import, test, `Makefile` e documentazione di ciò che è stato spostato.
 
 **Verifica:** `make test` verde; nessun artefatto sotto `recipe-app/results/` modificato.
 
-La riprendibilità delle 15 unità di calibrazione **non è un vincolo di questa fase**.
-
 ## Fase 4 — Modularizzazione e pruning dello skill
 
-**Precondizioni:** Fase 2. **Chiamate provider:** zero per la fase; la verifica costa un ciclo
-(CON-7).
+**Precondizioni:** Fase 2, e la mappa prodotta in Fase 1c. **Chiamate provider:** zero per la fase; la
+verifica costa un ciclo (CON-7).
 
 Va **dopo CON-6**, non prima. Potare prima significa scegliere cosa togliere in base a quanto una
 clausola sembra ridondante leggendola, che è esattamente il tipo di giudizio che il ciclo esiste per
 non fare. E anticipare la sola modularizzazione «tanto è neutra» è falso: sposta ciò che il modello ha
-in contesto al momento di generare, quindi sposterebbe il confine di strumento **prima** del ciclo che
-deve decidere `R-010` e `R-011`.
+in contesto al momento di generare.
 
 Stato di partenza: `SKILL.md` monolitico a **417 righe**, con tre rami d'ingresso — `Choose the
 branch`, `Review an existing plan`, `Split, merge, or reorder an existing plan` — che caricano tutte e
 417 comunque. La disclosure progressiva esiste già, ma solo per `assets/plan-template.md` e
 `scripts/validate_plan.py`.
 
-- [ ] **Precondizione non negoziabile: la mappa clausola → riga di registro**, con le clausole
-  scoperte marcate come tali. Undici righe coprono 417 righe di skill, e il registro traccia i
-  **commit**, non le clausole: dopo 18 commit di riscritture non è dato per scontato che la clausola
-  introdotta da `d977043` esista ancora nella forma che la riga afferma. La mappa è anche l'output
-  più utile della fase, indipendentemente da quanto si pota: dice quale parte dello skill non è
-  sostenuta da nessuna previsione mai verificata.
+- [ ] Aggiornare la mappa clausola → riga prodotta in Fase 1c con ciò che CON-6 ha cambiato.
 - [ ] Modularizzare per ramo d'ingresso, così che un ramo non caricato non occupi contesto.
 - [ ] Potare e fondere. **Ogni rimozione è coperta o scoperta:** coperta → la riga di registro
   esistente si riscrive e la previsione resta; scoperta → nasce una riga `Origine: potatura` con
@@ -203,21 +349,26 @@ CON-7 non ha smentito le righe di potatura.
 
 ## Fase 5 — Orchestratore del ciclo
 
-**Precondizioni:** Fasi 2 e 3. **Chiamate provider:** 6 per ciclo, dietro dry-run e `CONFIRM_SEND`.
+**Precondizioni:** Fasi 2 e 3. **Chiamate provider:** 7 per ciclo dopo la generazione, dietro dry-run
+e `CONFIRM_SEND`.
 
 - [ ] `scripts/consensus/` con il comando che rende i prompt da `prompts/`, compone i payload ciechi
-  da una allowlist esplicita, invoca i due provider e scrive gli artefatti.
-- [ ] Target `make consensus N=… PHASE=improve|review|ledger|report`, con `DRY_RUN`, `RESUME`,
-  `CONFIRM_SEND` e registrazione degli hash, del modello e dell'effort.
-- [ ] **Il gate di conformità è codice, non giudizio**: un `IMPROVEMENT` privo di un campo
-  obbligatorio fallisce la fase e va rigenerato prima che `review` possa partire.
-- [ ] Il join `report` è deterministico: nessuna chiamata, solo composizione degli artefatti prodotti,
-  contatori inclusi.
+  da una allowlist esplicita, invoca i provider e scrive gli artefatti.
+- [ ] Target `make consensus N=… PHASE=improve|review|verdict|recidiva|report`, con `DRY_RUN`,
+  `RESUME`, `CONFIRM_SEND` e registrazione degli hash, del modello e dell'effort.
+- [ ] **Il gate di conformità è `validate_improvement.py`**, invocato dalla fase: le voci non conformi
+  cadono e finiscono nel log degli scarti, `review` parte comunque.
+- [ ] **L'applicazione è codice:** una voce licenziata dal filtro produce un hunk di `SKILL.md` e una
+  riga di registro con lo stesso id e `Commit: (pending)`. **Nessun commit.** Un target
+  `make consensus-reject ID=…` toglie una voce sola, hunk e riga insieme.
+- [ ] Il join `report` è deterministico: nessuna chiamata, solo composizione degli artefatti prodotti.
+  I contatori sono composizione; la **recidiva no** — è la fase 7, ed è per questo che esiste come
+  fase invece che come calcolo del report.
 - [ ] Test che nessun path sotto `support/` compaia in un prompt renderizzato.
-- [ ] Test che il dry-run mostri esattamente due chiamate per fase e i target attesi.
+- [ ] Test che il dry-run mostri esattamente le esecuzioni attese per fase e i target attesi.
 
-**Verifica:** dry-run di tutte e quattro le fasi; un ciclo completo eseguito e ripreso con `RESUME=1`
-senza nuove chiamate; confronto degli artefatti con quelli prodotti a mano nella Fase 2.
+**Verifica:** dry-run di tutte le fasi; un ciclo completo eseguito e ripreso con `RESUME=1` senza
+nuove chiamate; confronto degli artefatti con quelli prodotti a mano nella Fase 2.
 
 ## Fase 6 — Generazione automatizzata
 
@@ -232,21 +383,53 @@ senza nuove chiamate; confronto degli artefatti con quelli prodotti a mano nella
 
 **Precondizioni:** almeno due cicli completi in Fase 5. **Da decidere dopo, non ora.**
 
-Far produrre alla fase `review` un output strutturato minimo — id, titolo, categoria, lato operativo —
-così che l'intersezione la calcoli il codice invece del modello, e il disaccordo sulla
-classificazione diventi visibile. Si valuta solo se due cicli mostrano che la classificazione fatta
-dai modelli è instabile.
+Far produrre alla fase `review` un output strutturato minimo — id, titolo, categoria, lato che porta
+il rimedio — così che l'intersezione la calcoli il codice invece del modello.
+
+La condizione di sblocco è ora **osservabile**: il report di Fase 1c pubblica le voci classificate
+condivise da un solo `REVIEW`. Prima la fase diceva «si valuta se due cicli mostrano che la
+classificazione è instabile», ma niente misurava quell'instabilità, quindi la condizione non poteva
+verificarsi.
 
 ## Open questions
 
-- **Come si decide che due `IMPROVEMENT` hanno «specificità comparabile»?** È il criterio 2 della
-  verifica di Fase 2, cioè il test dell'ipotesi portante, e oggi è formulato come giudizio. Serve
-  almeno una regola grossolana e dichiarata prima di eseguire CON-6 — per esempio: una voce è
-  operativa se cita un punto specifico di un candidato **e** enuncia un test binario. Deciderla
-  *dopo* aver visto gli artefatti significa sceglierla per farla tornare.
-- **Cosa si fa se CON-6 falsifica l'ipotesi**, cioè se i due lati restano asimmetrici anche con il
-  gate di conformità? Le opzioni non sono equivalenti e cambiano tutto il piano a valle: (a) alzare
-  la specificità richiesta nel prompt e ripetere, pagando un altro ciclo; (b) accettare che il
-  consenso certifichi solo il **tema** e che ogni formulazione entri sempre come `giudizio`, il che
-  rende `review` molto meno utile e ne mette in discussione le due chiamate; (c) cambiare uno dei due
-  modelli. Va decisa **prima** di eseguire, altrimenti la si decide sotto l'influenza del risultato.
+### Cosa succede alla riga di registro quando una voce riformula la clausola che la riga copre
+
+**Da affrontare in una sessione dedicata, prima della Fase 1a.** Determina cosa il template deve
+chiedere alla voce, quindi non si può rimandare a dopo.
+
+**Il contesto, per una sessione fredda.** La regola dura di `improve` bidirezionale dice: se il campo
+`Regola esistente che non ha impedito il difetto` nomina una clausola di `SKILL.md`, il rimedio di
+default è **riformularla**, non aggiungere righe. La mappa clausola → riga della Fase 1c dice quali
+clausole sono coperte da una riga del registro.
+
+**Il problema.** Riformulare una clausola coperta **rompe la previsione della riga che la copre**. La
+riga afferma qualcosa su un testo che dopo la riformulazione non esiste più nella stessa forma; il
+ciclo successivo la verificherebbe contro una clausola diversa da quella su cui è nata, e il verdetto
+non significherebbe niente. Il registro traccia i **commit**, non le clausole, quindi oggi non se ne
+accorgerebbe nessuno.
+
+**L'esempio esiste già.** `R-010` e `R-011` sono correzioni di `R-002` e `R-008`, ed **entrambe sono
+entrate come regole aggiuntive** — `CONSENSUS-WORKFLOW.md` § *Il cricchetto*: *«perché nessun'altra
+forma era disponibile»*. Con la regola dura in vigore, `R-010` avrebbe dovuto riformulare la clausola
+nominata da `R-002` — e a quel punto `R-002` sarebbe stata una riga che afferma qualcosa su un testo
+riscritto. È il caso concreto su cui provare le opzioni.
+
+**Le tre opzioni, non equivalenti:**
+
+- **(a) Il workflow riscrive anche la riga.** L'applicazione automatica smette di toccare il solo
+  `SKILL.md` e mette le mani nel registro. Rende il veto umano più pesante — il `git diff` da leggere
+  comprende una riformulazione di previsione, che è il tipo di testo che ha richiesto tre riscritture
+  su `R-002`.
+- **(b) Una voce che riformula una clausola coperta non si applica da sé** e passa sempre all'elenco
+  umano. Coerente con il principio di applicare solo ciò che il filtro licenzia, ma rende la regola
+  dura più costosa **proprio dove serve di più**: le clausole coperte sono quelle già accusate almeno
+  una volta, cioè le candidate più probabili alla riformulazione.
+- **(c) La riga vecchia passa a `regredita per riformulazione` e ne nasce una nuova.** Conserva la
+  storia e non chiede a nessuno di riscrivere una previsione. Ma fa crescere il registro a ogni
+  riformulazione, cioè **sposta il cricchetto dallo skill al registro** — e il registro non ha
+  neppure il commit sottrattivo che lo skill ha avuto una volta.
+
+**Cosa serve avere in mano per decidere:** la mappa clausola → riga, o almeno il suo campione su
+`R-002` e `R-008`. Se la mappa mostra che le clausole coperte sono poche, (b) costa poco e vince. Se
+sono molte, (b) svuota la regola dura e la scelta è fra (a) e (c).
