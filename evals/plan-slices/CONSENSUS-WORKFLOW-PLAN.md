@@ -142,14 +142,37 @@ L'autorizzazione di `evals/AGENTS.md` si chiede **per sessione**, con il contegg
 sessione — 2, 2, 5 — mai una volta sola per nove: un'autorizzazione unica coprirebbe anche il ramo in
 cui S2 dice di fermarsi.
 
-**S1 — generazione. 2 chiamate.**
+**S1 — generazione. 2 chiamate.** In corso dal 2026-08-07: preparazione fatta, generazione in mano
+all'umano, chiusura da fare in una sessione fredda.
 
-- [ ] Assegnare `CANDIDATE-A`/`CANDIDATE-B` ai due lati e `REPORT-A`/`REPORT-B` ai due `IMPROVEMENT`
-  che nasceranno. **Le due assegnazioni non devono coincidere.**
-- [ ] Scrivere la riga di `support/AGENT-PLAN-MAP.md` — harness, modalità, modello, effort —
+- [x] Assegnare `CANDIDATE-A`/`CANDIDATE-B` ai due lati e `REPORT-A`/`REPORT-B` ai due `IMPROVEMENT`
+  che nasceranno. **Le due assegnazioni non devono coincidere.** `CANDIDATE-A` = `CX`,
+  `CANDIDATE-B` = `CC`, `REPORT-A` = `CC`, `REPORT-B` = `CX`.
+- [x] Scrivere la riga di `support/AGENT-PLAN-MAP.md` — harness, modalità, modello, effort —
   **prima** della chiamata. È l'unico momento in cui `gen` si registra senza ricostruirlo.
-- [ ] Generare i due candidati dallo `SKILL.md` corrente e dalle sole fonti.
-- [ ] `make validate PLAN=…` su entrambi.
+- [x] Correggere il prompt di generazione, che non attivava più lo skill: da `3658187`
+  `disable-model-invocation: true` e `allow_implicit_invocation: false`, quindi senza `/plan-slices`
+  e `$plan-slices` i candidati nascevano **senza lo skill**. I due prompt da inviare sono in
+  `PROMPTS.md` § `GENERATE PLAN`, il confine in `workflow/CYCLE.md`.
+- [ ] Generare i due candidati dallo `SKILL.md` corrente — `28b5460` — e dalle sole fonti. Le due
+  sessioni le lancia l'umano, una per lato, nuove e senza altro contesto.
+- [ ] `make validate PLAN=PLAN-CC-CON-6.md` e `PLAN=PLAN-CX-CON-6.md`.
+
+**Ripresa di S1 in sessione fredda** — cosa fare quando i due file esistono, senza rileggere altro
+oltre a questo blocco:
+
+1. `make validate` su entrambi. Un piano che non passa si rigenera con lo stesso prompt: è un difetto
+   strutturale, non una voce da registrare.
+2. Verificare che nessuno dei due citi un piano precedente o un artefatto sotto `results/`.
+   L'allowlist del prompt è scritta, non imposta: una citazione significa candidato contaminato, da
+   rigenerare in una sessione nuova.
+3. Verificare che i due piani siano **in inglese** — è il primo ciclo in cui lo sono, ed è la
+   conseguenza attesa del prompt in inglese, non un caso.
+4. Se modello o effort reali divergono da `claude-opus-5` · `high` e `gpt-5.6-sol` · `high`,
+   correggere le due righe CON-6 di `support/AGENT-PLAN-MAP.md`: sono `declared`, e una riga
+   `declared` sbagliata è peggio di `unrecorded`.
+5. Chiudere le due caselle qui sopra, annotare gli scostamenti per il report S4, e fermarsi. S2 è una
+   sessione a sé e chiede la propria autorizzazione — 2 chiamate.
 
 **S2 — `improve` e gate. 2 chiamate. Finisce con una decisione.**
 
