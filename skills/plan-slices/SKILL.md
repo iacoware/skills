@@ -10,7 +10,7 @@ Produce a multi-session delivery map, not an implementation plan or task backlog
 as an independently schedulable outcome; do not decompose slices into implementation tasks.
 
 Plan for early validated learning, short feedback loops, and cheap reprioritization. Treat a
-result as user-useful when it helps either an end user or a developer test the real product while
+result as valuable when it helps either an end user or a developer test the real product while
 building it.
 
 ## Choose the branch
@@ -127,9 +127,9 @@ pass the independence tests; hard dependencies are limited to outcomes no contro
 verify; greenfield prerequisites are present and separate. Keep this map in reasoning, not in the
 published plan.
 
-## 3. Cut user-useful vertical slices
+## 3. Cut valuable vertical slices
 
-Give each slice one primary user-useful outcome and one learning target. End users and developers
+Give each slice one primary valuable outcome and one learning target. End users and developers
 testing the product both count as users.
 
 Make each slice:
@@ -208,7 +208,7 @@ Every material claim under `Learning / risk` must map to an observation in `Veri
 that data exists does not demonstrate its quality, usability, latency, or cost.
 
 Classify risk spikes, migrations, and operational work separately when they cannot produce a
-user-useful vertical result.
+valuable vertical result.
 
 **Proceed when:** every slice has one outcome and learning target; every enabler passes all enabler
 tests and validates no more than one material uncertainty; every split warning is resolved by
@@ -366,7 +366,7 @@ python3 <skill-dir>/scripts/validate_plan.py path/to/plan.md
 Fix every structural failure.
 
 **Complete when:** the validator passes; themes trace to first validators; `NOW` is a coherent
-user-useful release; enablers are vertical and adjacent to their product outcome; `LATER` is
+valuable release; enablers are vertical and adjacent to their product outcome; `LATER` is
 evidence-dependent; the slice order respects every hard dependency; every source behaviour has one
 horizon; no slice asserts a side of a listed conflict or undecided choice; every external
 dependency invoked in `NOW` has a selecting source or an `Open questions` entry, and every published

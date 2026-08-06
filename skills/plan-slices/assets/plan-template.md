@@ -77,7 +77,7 @@ developer; it is the only case in which `First validation` may name an `Enabler`
 
 **Outcome**
 
-- [One user-useful behaviour.]
+- [One valuable behaviour.]
 
 **[Additional annotation]**
 

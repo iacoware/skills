@@ -1,4 +1,4 @@
 interface:
   display_name: "Plan Delivery Slices"
-  short_description: "Plan user-useful vertical delivery slices"
+  short_description: "Plan value-first, risk-first vertical delivery slices"
   default_prompt: "Use $plan-slices to create a risk-first delivery plan with NOW, LATER, and OUT-OF-SCOPE horizons."
