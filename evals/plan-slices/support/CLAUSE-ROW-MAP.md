@@ -5,8 +5,11 @@ attached to, and which clauses no row covers. Produced for Fase 1c, first delive
 Fase 1a, where `validate_improvement.py` checks that the covering rows an `IMPROVEMENT` entry
 declares coincide with this map. Fase 4 updates it with whatever CON-6 changes.
 
-The map does not touch the ledger. `R-NNN` references are stable across the ledger's translation and
-semantic migration, so this file survives them.
+The map does not touch the ledger. `R-NNN` references survived the ledger's translation and semantic
+migration unchanged; the **2026-08-06 split** — *one row, one claim* applied to the four rows that
+carried more than one — is the one ledger move that did change them, and this file was updated with
+it. Anchorings are stated **per row** here: where an anchor concerned one member of a pre-split row,
+either the member is now a row of its own or the anchor is recorded against the row that kept the id.
 
 **Measured on:** `SKILL.md` at `28b5460`, 417 lines, whole file. Commit attribution from
 `git blame` plus the diff of each of the 19 commits that ever touched the file.
@@ -49,7 +52,8 @@ conditional permission. Consequences:
     the pairing is recorded, not inferred. True for `R-010` and `R-011` only.
   - `reconstructed` — the row was written backwards onto a commit already made. The clause was never
     recorded: the row is anchored to a commit, not to a text, and this map is inferring the pairing.
-    Nine rows out of eleven are in this state.
+    Thirteen rows out of seventeen are in this state; the other four are the two `declared` and the
+    two `unresolved`.
   - `unresolved` — the anchor does not resolve. Recorded as a failure instead of resolved by picking
     the most similar clause.
   - `—` for uncovered clauses.
@@ -206,7 +210,7 @@ has a valid counterfactual` and wrote this criterion in their place.
 | C-100 | `SKILL.md:226-227` | Oversized walking skeleton | `c001780` | `c001780` | uncovered | — |
 | C-101 | `SKILL.md:228-230` | Hollow walking skeleton | `d88328f` | `d88328f` | uncovered | — |
 | C-102 | `SKILL.md:231-232` | Fake verticality | `c001780` | `c001780` | uncovered | — |
-| C-103 | `SKILL.md:233-234` | Premature or split shared pipeline | `d977043` | `d977043` | R-006 (r) | reconstructed |
+| C-103 | `SKILL.md:233-234` | Premature or split shared pipeline | `d977043` | `d977043` | R-006 (r), R-016 (r) | reconstructed |
 | C-104 | `SKILL.md:235` | Theme compression | `c001780` | `c001780` | **uncovered** | — |
 | C-105 | `SKILL.md:236` | Atomization | `c001780` | `c001780` | uncovered | — |
 | C-106 | `SKILL.md:237-238` | Silent contradiction | `745192f` | `d977043` | R-010 (r, partial) | **declared** |
@@ -227,11 +231,11 @@ a row.
 |---|---|---|---|---|---|---|
 | C-109 | `SKILL.md:248` | Assign every behaviour to exactly one horizon | `c001780` | `c001780` | uncovered | — |
 | C-110 | `SKILL.md:250-251` | `NOW` is the smallest coherent release including the value hypothesis, material risk validation, and safe-operation baseline | `c001780` | `c001780` | uncovered | — |
-| C-111 | `SKILL.md:252-253` | `LATER` depends on `NOW` evidence; record its promotion trigger | `c001780` | `c001780` | R-004 (m2) | reconstructed |
-| C-112 | `SKILL.md:254` | `OUT-OF-SCOPE` records its rationale; do not plan implementation | `c001780` | `c001780` | R-004 (m2) | reconstructed |
-| C-113 | `SKILL.md:256-257` | Admission test: `NOW` requires a source that asks for the behaviour, `LATER` a trigger, `OUT-OF-SCOPE` a declared exclusion | `d977043` | `d977043` | R-004 (m1) | reconstructed |
+| C-111 | `SKILL.md:252-253` | `LATER` depends on `NOW` evidence; record its promotion trigger | `c001780` | `c001780` | R-013 | reconstructed |
+| C-112 | `SKILL.md:254` | `OUT-OF-SCOPE` records its rationale; do not plan implementation | `c001780` | `c001780` | R-014 | reconstructed |
+| C-113 | `SKILL.md:256-257` | Admission test: `NOW` requires a source that asks for the behaviour, `LATER` a trigger, `OUT-OF-SCOPE` a declared exclusion | `d977043` | `d977043` | R-004 | reconstructed |
 | C-114 | `SKILL.md:257-258` | Trace each `NOW` slice to the requesting statement in reasoning, not in the published plan | `d977043` | `d977043` | uncovered | — |
-| C-115 | `SKILL.md:258-259` | A capability merely compatible or convenient was never requested: it belongs in `LATER` with its trigger | `d977043` | `d977043` | R-004 (m1) | reconstructed |
+| C-115 | `SKILL.md:258-259` | A capability merely compatible or convenient was never requested: it belongs in `LATER` with its trigger | `d977043` | `d977043` | R-004 | reconstructed |
 | C-116 | `SKILL.md:261-268` | Respect hard dependencies, then order `NOW` by the six listed factors | `c001780` | `c001780` | uncovered | — |
 | C-117 | `SKILL.md:270` | Use the cheapest real input capable of validating a risky engine | `c001780` | `c001780` | uncovered | — |
 | C-118 | `SKILL.md:270-271` | Do not front-load commodity work for reuse alone | `c001780` | `c001780` | uncovered | — |
@@ -241,13 +245,13 @@ a row.
 | C-122 | `SKILL.md:278-280` | Depart from breadth only for a differentiator, material risk, required recovery, or higher frequency, stated once under `Ordering criteria` | `745192f` | `745192f` | uncovered | — |
 | C-123 | `SKILL.md:282-284` | Required recovery outranks breadth: deliver the remedy of a named failure mode before opening a different theme | `d977043` | `d977043` | R-005 | reconstructed |
 | C-124 | `SKILL.md:283-284` | A remedy the sources declare a fallback of a delivered path closes that path and is not optional depth | `d977043` | `d977043` | uncovered | — |
-| C-125 | `SKILL.md:284-286` | A slice that opens a pipeline or adapter shared by several paths follows every `NOW` slice that feeds it, and owns it alone | `d977043` | `d977043` | R-006 (m1, m2) | reconstructed |
-| C-126 | `SKILL.md:288-289` | Ship the tenancy, ownership, or scope boundary with the first slice that persists data; a single named resolver owns the current scope | `2c89e7f` | `2c89e7f` | R-001 (m2) | reconstructed |
-| C-127 | `SKILL.md:289-291` | A later slice may replace a configured scope with an authenticated one at one seam; state that seam under `Cross-functional concerns` | `2c89e7f` | `2c89e7f` | R-001 (m2) | reconstructed |
+| C-125 | `SKILL.md:284-286` | A slice that opens a pipeline or adapter shared by several paths follows every `NOW` slice that feeds it, and owns it alone | `d977043` | `d977043` | R-006, R-016 | reconstructed |
+| C-126 | `SKILL.md:288-289` | Ship the tenancy, ownership, or scope boundary with the first slice that persists data; a single named resolver owns the current scope | `2c89e7f` | `2c89e7f` | R-012 | reconstructed |
+| C-127 | `SKILL.md:289-291` | A later slice may replace a configured scope with an authenticated one at one seam; state that seam under `Cross-functional concerns` | `2c89e7f` | `2c89e7f` | R-012 | reconstructed |
 | C-128 | `SKILL.md:291-292` | Never defer the boundary itself, and never defer identity when no such seam exists | `2c89e7f` | `2c89e7f` | uncovered | — |
-| C-129 | `SKILL.md:294-295` | Once the evidence that justified deferring identity exists, deliver identity before further user-facing slices | `745192f` | `745192f` | uncovered — candidate for `R-001` m1, see *Unresolved anchors* | — |
-| C-130 | `SKILL.md:295-297` | Past the second `NOW` slice delivering to an end user, justify the remaining deferral once under `Ordering criteria` | `a06a5cc` | `a06a5cc` | R-009 (m2) | reconstructed |
-| C-131 | `SKILL.md:297-299` | Every `NOW` slice preceding identity states its own audience | `a06a5cc` | `a06a5cc` | R-009 (m1) | reconstructed |
+| C-129 | `SKILL.md:294-295` | Once the evidence that justified deferring identity exists, deliver identity before further user-facing slices | `745192f` | `745192f` | uncovered — candidate for `R-001`, see *Unresolved anchors* | — |
+| C-130 | `SKILL.md:295-297` | Past the second `NOW` slice delivering to an end user, justify the remaining deferral once under `Ordering criteria` | `a06a5cc` | `a06a5cc` | R-017 | reconstructed |
+| C-131 | `SKILL.md:297-299` | Every `NOW` slice preceding identity states its own audience | `a06a5cc` | `a06a5cc` | R-009 | reconstructed |
 | C-132 | `SKILL.md:301-302` | When `NOW` targets selected end users, end it with the smallest release slice usable in its intended environment | `745192f` | `745192f` | uncovered | — |
 | C-133 | `SKILL.md:302-303` | Tag it `(Release: delivery)`, not `Enabler`, and include only source-backed operational readiness | `745192f` | `745192f` | uncovered | — |
 | C-134 | `SKILL.md:303-304` | When `NOW` ends at developer validation, state that audience and environment explicitly | `745192f` | `745192f` | uncovered | — |
@@ -255,9 +259,9 @@ a row.
 | C-136 | `SKILL.md:309-310` | Add checkpoints only where evidence can cancel, promote, reorder, split, or change unfinished work | `c001780` | `c001780` | uncovered | — |
 | C-137 | `SKILL.md:312` | Gate: every differentiator and material risk has a first validator | `c001780` | `c001780` | uncovered | — |
 | C-138 | `SKILL.md:312-313` | Gate: all horizon assignments are exclusive and pass the admission test | `c001780` | `d977043` | R-004 (r) | reconstructed |
-| C-139 | `SKILL.md:313` | Gate: every `LATER` item has a trigger | `c001780` | `c001780` | R-004 (r) | reconstructed |
+| C-139 | `SKILL.md:313` | Gate: every `LATER` item has a trigger | `c001780` | `c001780` | R-013 (r) | reconstructed |
 | C-140 | `SKILL.md:313-314` | Gate: every named failure mode whose remedy is in `NOW` gets it before a different theme starts | `d977043` | `d977043` | R-005 (r) | reconstructed |
-| C-141 | `SKILL.md:315` | Gate: every shared pipeline follows its producers | `d977043` | `d977043` | R-006 (r) | reconstructed |
+| C-141 | `SKILL.md:315` | Gate: every shared pipeline follows its producers | `d977043` | `d977043` | R-016 (r) | reconstructed |
 | C-142 | `SKILL.md:315-316` | Gate: every slice preceding identity names an audience compatible with a configured scope | `a06a5cc` | `a06a5cc` | R-009 (r) | reconstructed |
 | C-143 | `SKILL.md:316` | Gate: order respects dependencies and delivery maturity | `c001780` | `c001780` | uncovered | — |
 | C-144 | `SKILL.md:316-317` | Gate: checkpoints name evidence and the decisions they can change | `c001780` | `c001780` | uncovered | — |
@@ -267,7 +271,7 @@ a row.
 | ID | Site | Clause | In | Last | Rows | Anchoring |
 |---|---|---|---|---|---|---|
 | C-145 | `SKILL.md:321` | Before publication, complete an unpublished ledger | `9aa2586` | `9aa2586` | uncovered | — |
-| C-146 | `SKILL.md:323` | Ledger: every source behaviour to its theme, horizon, and owning slice or explicit exclusion | `9aa2586` | `9aa2586` | R-004 (r) | reconstructed |
+| C-146 | `SKILL.md:323` | Ledger: every source behaviour to its theme, horizon, and owning slice or explicit exclusion | `9aa2586` | `9aa2586` | R-004 (r), R-014 (r) | reconstructed |
 | C-147 | `SKILL.md:324` | Ledger: every theme to its complete product outcome and first product validator | `9aa2586` | `9aa2586` | R-008 (r) | reconstructed |
 | C-148 | `SKILL.md:325` | Ledger: every shared adapter and invariant to one complete owner | `9aa2586` | `9aa2586` | R-006 (r) | reconstructed |
 | C-149 | `SKILL.md:326` | Ledger: every named failure to its recovery and required position | `9aa2586` | `9aa2586` | R-005 (r) | reconstructed |
@@ -296,7 +300,7 @@ a row.
 | C-172 | `SKILL.md:369` | Complete when: themes trace to first validators | `c001780` | `c001780` | R-008 (r) | reconstructed |
 | C-173 | `SKILL.md:369-370` | Complete when: `NOW` is a coherent valuable release | `c001780` | `e0049d9` | uncovered | — |
 | C-174 | `SKILL.md:370` | Complete when: enablers are vertical and adjacent to their product outcome | `c001780` | `c001780` | uncovered | — |
-| C-175 | `SKILL.md:370-371` | Complete when: `LATER` is evidence-dependent | `c001780` | `c001780` | R-004 (r) | reconstructed |
+| C-175 | `SKILL.md:370-371` | Complete when: `LATER` is evidence-dependent | `c001780` | `c001780` | R-013 (r) | reconstructed |
 | C-176 | `SKILL.md:371` | Complete when: the slice order respects every hard dependency | `fb1ec51` | `fb1ec51` | uncovered | — |
 | C-177 | `SKILL.md:371-372` | Complete when: every source behaviour has one horizon | `c001780` | `c001780` | R-004 (r) | reconstructed |
 | C-178 | `SKILL.md:372` | Complete when: no slice asserts a side of a listed conflict or undecided choice | `d977043` | `d977043` | R-010 (r) | **declared** |
@@ -323,7 +327,7 @@ attributable to any existing row. `C-157` is the clause that would carry it.
 ### Split, merge, or reorder an existing plan — `SKILL.md:392-417`
 
 Introduced whole by `28b5460` on 2026-08-06, after the last ledger row was written. Every clause is
-uncovered, and none of the eleven rows can be read as quantifying over this branch.
+uncovered, and none of the seventeen rows can be read as quantifying over this branch.
 
 | ID | Site | Clause | In | Last | Rows | Anchoring |
 |---|---|---|---|---|---|---|
@@ -348,24 +352,38 @@ uncovered, and none of the eleven rows can be read as quantifying over this bran
 
 ## Row index
 
-All eleven rows, read from the row side. Neither direction is 1:1 — `R-004` covers nine clauses,
-`C-017` is covered by two rows. No clause changed its covered/uncovered status in the 2026-08-06
-absorption, so the totals below are unaffected: the coverage moved between rows, not onto or off the
-skill.
+All seventeen rows, read from the row side. Neither direction is 1:1 — `R-004` covers five clauses,
+`C-017` is covered by two rows. Neither the 2026-08-06 absorption nor the 2026-08-06 split changed
+any clause's covered/uncovered status, so the totals below are unaffected by both: the coverage
+moved between rows, not onto or off the skill.
 
 | Row | `Commit` cell | Body clauses | Restatements | Anchoring | Note |
 |---|---|---|---|---|---|
-| R-001 | `2c89e7f` | C-126, C-127 (m2) | — | m2 reconstructed; **m1 unresolved** | m1 has no clause: see below |
+| R-001 | `2c89e7f` | — | — | **unresolved** | no clause places identity relative to the differentiator: see below |
 | R-002 | `d977043` | C-017 | C-023, C-150, C-179 | reconstructed | m1 absorbed into `R-010` on 2026-08-06, and C-019, C-106 and C-178 with it |
 | R-003 | `d977043` | C-014, C-015, C-017 | C-023, C-150, C-179 | reconstructed | one disjunct anchored outside `SKILL.md` |
-| R-004 | `d977043` | C-111, C-112, C-113, C-115 | C-138, C-139, C-146, C-175, C-177 | reconstructed | m2's clauses predate the row's commit (`c001780`) |
+| R-004 | `d977043` | C-113, C-115 | C-138, C-146, C-177 | reconstructed | split on 2026-08-06; keeps the `NOW` admission claim |
 | R-005 | `d977043`, `9aa2586` | C-123 | C-140, C-149 | reconstructed; **`9aa2586` component unresolved** | |
-| R-006 | `d977043`, `9aa2586` | C-125 | C-096, C-103, C-141, C-148 | reconstructed; **m1 second half and `9aa2586` component unresolved** | |
+| R-006 | `d977043`, `9aa2586` | C-125 | C-096, C-103, C-148 | reconstructed; **`9aa2586` component unresolved** | split on 2026-08-06; keeps the single-opening claim and, by rule, the unattributed commit |
 | R-007 | `d977043` | C-075, C-094 | — | reconstructed | operative criterion (`Subsystem`) lives in the brief, not in `SKILL.md` |
 | R-008 | `9aa2586` | C-033 (coverage), C-036 | C-147, C-172 | reconstructed | the enabler clause absorbed into `R-011` on 2026-08-06, and C-034 with it |
-| R-009 | `a06a5cc` | C-130, C-131 | C-142 | reconstructed | reconstructed from the commit message, which names the observed defect |
+| R-009 | `a06a5cc` | C-131 | C-142 | reconstructed | split on 2026-08-06; keeps the audience claim. Reconstructed from the commit message, which names the observed defect |
 | R-010 | `87150d3` | C-018, C-019 | C-023 (partial), C-106 (partial), C-178 | **declared**; absorbed limb reconstructed | absorbed `R-002` m1 on 2026-08-06 |
 | R-011 | `eb926bb` | C-034, C-035, C-033 (not an enabler) | — | **declared**; absorbed clause reconstructed | absorbed `R-008`'s enabler clause on 2026-08-06; presupposes C-157, which has no row |
+| R-012 | `2c89e7f` | C-126, C-127 | — | reconstructed | from `R-001` m2 |
+| R-013 | `d977043` | C-111 | C-139, C-175 | reconstructed | from `R-004` m2; its body clause predates the row's commit (`c001780`) |
+| R-014 | `d977043` | C-112 | C-146 | reconstructed | from `R-004` m3; same, `c001780` |
+| R-015 | `d977043` | — | — | **unresolved** | from `R-006` m1, second half; no clause requires a later slice to declare reuse |
+| R-016 | `d977043` | C-125 | C-103, C-141 | reconstructed | from `R-006` m2; its exception is anchored outside `SKILL.md` |
+| R-017 | `a06a5cc` | C-130 | — | reconstructed | from `R-009` m2 |
+
+**How the parents' clauses were distributed.** Each body clause states one of the parent's claims and
+went to that child. Restatements were distributed by which claim they repeat: `C-139` and `C-175` say
+`LATER` and go to `R-013`, `C-141` says *follows its producers* and goes to `R-016`, `C-138` and
+`C-177` restate horizon admission and stay with `R-004`. Two clauses restate more than one child and
+are listed under both: **C-103** (*Premature or split shared pipeline* — premature is ordering,
+split is ownership) and **C-146** (the unpublished ledger's mapping to an *owning slice or explicit
+exclusion*). No clause gained or lost a covering row overall.
 
 The pattern the plan predicted held on the whole file, not only on the sample: **the anchor was
 intact exactly on the two `ex-ante` rows and drifted exactly on the reconstructed ones.** `R-010` and
@@ -378,35 +396,44 @@ identified at all.
 
 ## Unresolved anchors
 
-Rows with at least one member that does not resolve to a clause of `SKILL.md`. Recorded as failures.
-The most similar clause is named as a **candidate** and explicitly not adopted.
+Anchors that do not resolve to a clause of `SKILL.md`. Recorded as failures. The most similar clause
+is named as a **candidate** and explicitly not adopted.
 
-- **`R-001`, first member** — *«Il piano colloca l'identità dopo il differenziatore».* `2c89e7f`, the
-  row's commit, introduced C-107, C-126, C-127 and C-128; none of them orders identity relative to the
+Four, unchanged in number by the 2026-08-06 split. Two are now whole rows and are named by id; the
+other two are components of a `Commit` cell that no claim of their row resolves to.
+
+- **`R-001`** — *«Il piano colloca l'identità dopo il differenziatore».* `2c89e7f`, the row's commit,
+  introduced C-107, C-126, C-127 and C-128; none of them orders identity relative to the
   differentiator. Candidates: C-116 (ordering factor 2, `c001780`) and C-129 (`745192f`). Both predate
-  the row's commit and neither states the member. **Unresolved.**
+  the row's commit and neither states the claim. **Unresolved.** Before the split this was the row's
+  first member; the second member, which does resolve, is now `R-012`.
 - **`R-005`, `9aa2586` component** — the assertion is about interposition of a foreign theme between a
   named failure and its remedy, which is C-123 (`d977043`). No clause introduced by `9aa2586` states
   it. Candidates: C-071 (never interleave while shared ownership is partial) and C-120 (recovery chain
   before manual escape). **Unresolved.**
-- **`R-006`, first member, second half** — *«le slice successive che lo riusano lo dichiarano tale».*
-  No clause requires a later slice to declare reuse. The ledger says so itself in *Formulazioni
-  riscritte*: the requirement was added to the row after CON-5 *because* `CX` never declared reuse.
-  The row demands something the skill does not. **Unresolved.**
-- **`R-006`, `9aa2586` component** — candidate C-119. Not stated by either member. **Unresolved.**
+- **`R-015`** — *«le slice successive che lo riusano lo dichiarano tale».* No clause requires a later
+  slice to declare reuse. The ledger says so itself in *Formulazioni riscritte*: the requirement was
+  added to `R-006` after CON-5 *because* `CX` never declared reuse. The row demands something the
+  skill does not. **Unresolved.** It was `R-006`'s first member, second half, and the split gave it
+  its own id precisely so the failure names a row instead of half of one.
+- **`R-006`, `9aa2586` component** — candidate C-119. Stated by none of the three claims `R-006` was
+  split into, so the split left the component where the id stayed rather than attributing it to the
+  child whose claim looks closest — C-119 is about ordering and would have pointed at `R-016`.
+  **Unresolved.**
 
 ## Anchors that resolve outside `SKILL.md`
 
-Distinct failure mode from the above: the member resolves, but to `EVALUATION-BRIEF.md`. These rows
+Distinct failure mode from the above: the anchor resolves, but to `EVALUATION-BRIEF.md`. These rows
 cannot be re-anchored by a skill reformulation, and a `verdetto` on them crosses an authority the
 `Misurato su` cell must name.
 
 - **`R-003`, second disjunct** — *«presa dal piano fra le alternative che il brief dichiara
   accettabili»* → brief § `Accepted alternatives`. `SKILL.md` states the opposite at C-016: the plan
   must not pick a side. Added when the row was re-tuned on 2026-08-04.
-- **`R-006`, second member's exception** — *«salvo quando valida input controllati che attraversano il
-  calcolo di produzione e il brief dello scenario ammette la validazione anticipata»* → brief
-  § `Accepted alternatives`, verbatim per the ledger.
+- **`R-016`'s exception** — *«salvo quando valida input controllati che attraversano il calcolo di
+  produzione e il brief dello scenario ammette la validazione anticipata»* → brief
+  § `Accepted alternatives`, verbatim per the ledger. It was `R-006`'s second member until the
+  2026-08-06 split.
 - **`R-007`, operative criterion** — *«appartengono a `Subsystem` diversi»* → brief
   § `Material uncertainties`. `SKILL.md` says `one material uncertainty` (C-075, C-094) and never
   mentions subsystems. The row was re-tuned onto the subsystem cut at 22:41 on 2026-08-04, in the same
@@ -446,6 +473,10 @@ The uncovered clauses are the ones reformulable without breaking a prediction �
 consumes for pruning.
 
 ## Verification of the 2026-08-06 sample
+
+Row counts in this section are against the **eleven pre-split rows**, the ledger as it stood when the
+sample was taken. The split that followed later the same day renamed nothing here: it turned members
+into rows, and the comparison is a record of a check, not a live count.
 
 The plan records, § Fase 1c, map bullet: perimeter § 1, § 2 and the `Complete when` of § 5;
 **37 clauses, 9 covered, 28 uncovered (≈76%)**; the 9 are **4 body clauses plus 5 restatements**; on
