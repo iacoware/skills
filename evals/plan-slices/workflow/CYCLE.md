@@ -74,6 +74,15 @@ l'effort**. I confini noti:
 - **CON-5 → CON-6.** Payload cieco e simmetrico su `improve` **e** `review`; contratto di conformità
   con template e validator; `improve` bidirezionale; registro tradotto in inglese e migrato alla
   semantica `non smentita ×k` con la narrativa di ciclo estratta.
+- **CON-5 → CON-6, generazione.** Il prompt di generazione cambia in tre punti, dichiarati insieme
+  perché li porta la stessa chiamata. **Invocazione esplicita** — `/plan-slices` su Claude Code,
+  `$plan-slices` su Codex: da `3658187` lo skill ha `disable-model-invocation: true` e
+  `allow_implicit_invocation: false`, quindi il prompt di CON-1…CON-5, che si affidava all'attivazione
+  implicita, avrebbe generato piani **senza lo skill**. Non è una scelta: è un confine che il commit
+  ha già attraversato e che il prompt non aveva ancora seguito. **Inglese**, di conseguenza i piani
+  nascono in inglese per la prima volta, perché lo skill scrive nella lingua della richiesta.
+  **Allowlist scritta** — solo `recipe-app/sources/`, come nei quattro prompt normativi: un piano
+  generato dopo aver letto `PLAN-*-CON-5.md` sarebbe contaminato senza che nulla lo dichiari.
 - **CON-6 → CON-7, effort.** I due modelli passano da `high` a `medium`. `high` è l'unica
   configurazione mai esercitata contro provider reali, e resta ferma in CON-6: cambiarla nello stesso
   ciclo che deve testare la specificità degli `IMPROVEMENT` avrebbe confuso la variabile testata con
