@@ -1,7 +1,8 @@
 ---
 name: plan-slices
-description: Create, review, split, merge, and reorder high-level delivery roadmaps for greenfield products and major capabilities. Use only when the user requests high-level planning for work too large to complete within one implementation session or context window, involving multiple independently valuable vertical slices, delivery horizons, or product themes. Do not use for implementation plans, execution plans, task breakdowns, issue generation, splitting one delivery slice into tasks, isolated fixes, or routine refactors; use the agent's ordinary planning tools for those.
+description: High-level planning for greenfield products and major capabilities — create, review, split, merge, and reorder delivery roadmaps into value-first, risk-first vertical slices.
 license: MIT
+disable-model-invocation: true
 ---
 
 # Plan Delivery Slices
