@@ -241,9 +241,36 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
   e `R-011` non sono narrativa, sono istruzioni per il verdetto successivo. Diventano una cella
   **`Da sorvegliare`** della riga.
 - [ ] **Tradurre** il registro in inglese.
-- [ ] **Migrare la semantica**: `tiene` → `non smentita ×k`, righe attuali a `×1` misurate sul solo
-  CON-5; stato `dormiente` a `×3`; colonna `Misurato su` estesa a modello ed effort; `Origine:
-  potatura`; cella `Da sorvegliare`; cella `Commit` che ammette `(pending)`.
+- [ ] **Migrare la semantica**: `tiene` → `non smentita ×k`; stato `dormiente` a `×3`; **stato
+  `superata da R-NNN`**, che non conta come smentita e toglie la riga dall'insieme verificato in via
+  definitiva; colonna `Misurato su` estesa a modello ed effort; `Origine: potatura`; cella `Da
+  sorvegliare`; celle **`Supersedes` / `Superseded by`**; cella `Commit` che ammette `(pending)`.
+- [ ] **Nessuna riga parte da `×1`.** La versione precedente di questa fase prescriveva `×1 misurate
+  sul solo CON-5`; è sbagliato, perché il registro è stato popolato **a posteriori** — vedi
+  `CONSENSUS-WORKFLOW.md` § *Lo stato dell'evidenza*. Serve una cella **`Provenienza`** con tre
+  valori, e il `k` iniziale discende da quella:
+  - **`ex-ante`** — riga scritta nello stesso minuto del commit che verifica: `R-010`, `R-011`.
+    Previsioni vere, entrambe ancora `da verificare`, quindi **`×0`**.
+  - **`ricostruita`** — riga scritta a ritroso su un commit già fatto, ma non toccata durante la
+    misura: `R-001`, `R-004`, `R-005`, `R-008`, `R-009` e il primo membro di `R-002`. CON-5 è un test
+    valido, quindi **`×1`**.
+  - **`ricostruita e ritarata`** — riga riscritta fra le 22:20 e le 22:41 del 2026-08-04, cioè dopo
+    che i verdetti CON-5 delle 22:02 avevano mostrato cosa dicevano i piani: `R-002` secondo membro,
+    `R-003`, `R-006`, `R-007`. Per queste CON-5 **non è un test** — la riga è stata adattata al piano
+    che avrebbe dovuto falsificarla, e per `R-007` anche il brief, nello stesso minuto. Partono da
+    **`×0`**: il primo test vero è CON-6.
+- [ ] **Ri-ancorare retroattivamente le due righe che hanno subito una riformulazione.** `87150d3` ha
+  riscritto in loco la clausola di `R-002` (`SKILL.md:50-57`, `+7/-3`) ed `eb926bb` quella di `R-008`
+  (`SKILL.md:92-96`, `+4/-2`). Le due righe prendono il commit nuovo in `Commit` e `Misurato su`; le
+  affermazioni **non si toccano**, perché quantificano sul piano e restano decidibili. Attenzione al
+  perimetro: di `R-002` la riformulazione tocca il **solo primo membro**, mentre il secondo vive su
+  `SKILL.md:51`, intatta da `d977043` — righe e clausole non sono 1:1 in nessuno dei due versi.
+  Il **superamento** delle due coppie (`R-010` ⊂ `R-002` m1, `R-011` ⊂ prima clausola di `R-008`) è
+  una decisione umana e va posta come tale, non applicata in migrazione: `R-002` m2 sopravvive
+  comunque al superamento di m1, quindi `R-002` non può uscire intera.
+- [ ] **Annotare la sovrapposizione dei verdetti.** `R-010` è un sottocaso di `R-002` m1 e `R-011`
+  della prima clausola di `R-008`: i loro verdetti non sono indipendenti, e contarli come due
+  osservazioni sovrastima l'evidenza. `R-008` lo dice già in prosa nella cella `Verifica`.
 - [ ] **Riclassificare `R-002`…`R-008` da `intersezione` a `intersezione-tema`** e annotare che sono
   state prodotte con prompt diversi da quelli di `prompts/` e con un lato non conforme.
 - [ ] **Mappa clausola → riga di registro**, con le clausole scoperte marcate come tali. Spostata qui
@@ -251,6 +278,18 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
   non ha contropartita al momento di decidere, e il default resta aggiungere una regola nuova — cioè
   il cricchetto sopravvive al meccanismo costruito per fermarlo. La mappa produce anche l'elenco delle
   clausole **senza riga**, che sono quelle riformulabili senza rompere una previsione.
+  Campione già misurato il 2026-08-06 su `R-002`, `R-008`, `R-010` e `R-011`, perimetro § 1, § 2 e il
+  `Complete when` di § 5, unità contata «frase o bullet che impone un obbligo, un divieto o un permesso
+  condizionato»: **37 clausole, 9 coperte, 28 scoperte (≈76%)**. Le 9 coperte sono in realtà **4
+  clausole di corpo** più 5 loro restatement nei gate, e su quelle 4 atterrano **6 righe su 11**. Fra
+  le scoperte c'è il **test di split del § 2** (`SKILL.md:80-82`), che il registro nomina come sede
+  della diagnosi della riga C di CON-5 senza avergli mai dato una riga. La mappa completa parte da qui.
+  **Ogni voce della mappa dichiara come l'ancoraggio è stato ottenuto**, `dichiarato` o `ricostruito`.
+  Per nove righe su undici la clausola non è mai stata registrata: la riga è nata su un commit, non su
+  un testo, e l'ancoraggio lo sta inferendo la mappa. Nel campione l'ancoraggio regge intatto
+  esattamente sulle due righe `ex-ante` — `R-010`, `R-011` — e va alla deriva esattamente sulle due
+  ricostruite, `R-002` e `R-008`. Un ancoraggio `ricostruito` può anche **non risolversi**: la mappa
+  registra il fallimento invece di scegliere la clausola più somigliante.
 - [ ] **Struttura di `recipe-app/results/CONSENSUS-CON-N.REPORT.md`**, con i **contatori in testa**:
 
   ```
@@ -259,10 +298,20 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
     riformulazioni       0
     aggiunte             5   ← ognuna con la ragione della riformulazione scartata
   righe di registro nuove 5   (2 intersezione, 1 intersezione-tema, 2 giudizio)
+  righe ri-ancorate       0   (contatore riportato a ×0)
+  coppie candidate al superamento 0
+  righe attive           11 → 16
   voci scartate dal gate  3   (per campo mancante)
   verdetti scartati       0   (citazione non risolta)
   recidiva                2 coppie su 9 voci
   ```
+
+  `righe attive N → M` è per il registro ciò che `0 riformulazioni su 5 aggiunte` è per lo skill: il
+  contatore che morde sull'accumulo invece che sul merito. Una riformulazione ri-ancora e non aggiunge
+  nulla; un superamento lascia il numero invariato — una entra e una esce — quindi una crescita di
+  `righe attive` accusa sempre e solo le aggiunte. `coppie candidate al superamento` è ciò che il veto
+  deve guardare: sono le sovrapposizioni fra affermazioni, cioè i verdetti che smetterebbero di essere
+  indipendenti.
 
   Poi: esito del validator strutturale; voci applicate con id, hunk e origine; **voci classificate
   condivise da un solo `REVIEW`** — la misura di instabilità che sblocca la Fase 7 e che oggi nessuno
