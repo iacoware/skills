@@ -113,7 +113,6 @@ Where a row's members are anchored to different commits, the cell names each wit
 | `not falsified ×k` | `k` consecutive cycles have failed to falsify it on **either** plan. `×0` here means cycles have run but none of them counts as a test — see `Provenance` and *Re-anchoring* |
 | `regressed on <side> (date)` | a cycle disproved it |
 | `dormant` | reached `×3`; verified 1 cycle in 3 instead of every cycle |
-| `superseded by R-NNN` | a newer row subsumes it |
 
 `not falsified` is not confirmation. A claim holds only if it holds on both plans: **1 violation out
 of 2** falsifies, **0 out of 2** are needed to survive a cycle. The second is absence of a
@@ -128,22 +127,36 @@ rewritten again.
 deleted, and it becomes active again immediately if `recidiva` raises it. Dormancy replaces
 retirement, which was deferred with no observable trigger.
 
-### Re-anchoring and supersession
+### Re-anchoring and absorption
 
-When an `IMPROVEMENT` entry reformulates a clause a row covers, two distinct rules apply. They are
-two and not one because the claims quantify over a generated plan, not over the skill text: a
+When an `IMPROVEMENT` entry touches a clause a row covers, one of two things happens. They are two
+rules and not one because the claims quantify over a generated plan, not over the skill text: a
 reformulation therefore **does not falsify** the row and does not make its claim undecidable — it
 breaks the attribution only.
 
-- **Re-anchoring — automatic.** The row takes the new commit in `Commit` and records the boundary in
-  `Measured on`, and the counter goes to **`not falsified ×0`**: `×k` counts cycles against a text,
-  and the text changed. The claim is not rewritten; it stays valid and decidable.
-- **Supersession — human, in the veto.** Only when the new claim **subsumes** the old one do the
-  verdicts stop being independent, and keeping both overstates the evidence. The old row goes to
-  **`superseded by R-NNN`**, which is **not** a disproof and leaves the verified set for good —
-  unlike a dormant row, which comes back. The new row inherits the old row's `Watch for` cell and
-  the two carry `Supersedes` / `Superseded by` in the `Supersession` column. Subsumption between two
-  claims is never asked of a model: the report publishes the **candidate pairs**, the veto decides.
+- **Re-anchoring — automatic.** The clause changes wording, the rule keeps its reach. The row stays,
+  takes the new commit in `Commit` and records the boundary in `Measured on`, and the counter goes to
+  **`not falsified ×0`**: `×k` counts cycles against a text, and the text changed. The claim is not
+  rewritten; it stays valid and decidable.
+- **Absorption — written by `improve`, edited in the veto.** The rule changes reach: extended,
+  restricted, or corrected. Then **one row states all of it**, and the claim it replaces leaves the
+  file. The surviving row starts at **`×0`** and carries `Absorbs R-NNN …` naming the absorbed
+  claim's regressions. The signal this ledger declares load-bearing — *a sequence of regressions on
+  the same theme means the rule is worded badly* — therefore survives the merge as a cell instead of
+  as a row. Git keeps the old wording; the ledger keeps only what is still predicted.
+
+Two constraints on absorption, both load-bearing:
+
+- **Absorb only if the merged claim stays decidable on a generated plan in one reading.** Two claims
+  that cross rather than nest can merge into something broader and vaguer, and a vaguer claim is less
+  falsifiable — the opposite of what this file is for. Where the merge would blur, the two rows stay
+  and the overlap is declared in `Absorbs`.
+- **One row, one claim.** A row with several members is absorbed member by member. The members no
+  new claim takes over stay, as their own row. Dropping a whole row because one member was absorbed
+  deletes a live prediction.
+
+An absorbing row goes to `not falsified ×0`, never to `to verify`, as soon as a cycle has run
+against any absorbed limb: cycles have run, and none of them tested the merged wording.
 
 ### Authority and rewritten formulations
 
@@ -160,21 +173,29 @@ breaks the attribution only.
 
 ## The ledger
 
-| ID | Commit `SKILL.md` | Origin | Provenance | Falsifiable claim | Verification | Watch for | Last check | Measured on | Supersession | State |
+| ID | Commit `SKILL.md` | Origin | Provenance | Falsifiable claim | Verification | Watch for | Last check | Measured on | Absorbs | State |
 |---|---|---|---|---|---|---|---|---|---|---|
 | R-001 | `2c89e7f` | `judgement` — `NOTES.md` § *Confine di scope vs identità* | reconstructed | The plan places identity after the differentiator **and** declares under `Cross-functional concerns` the single seam from which the current scope resolves. | reading, partly automatable | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | — | not falsified ×1 |
-| R-002 | `d977043` (m2), `87150d3` (m1) | `intersection-theme` — `REVIEW` CON-4 § *Sweep sistematico delle contraddizioni* ≡ *Explicit handling of source contradictions* | reconstructed (m1); reconstructed and re-tuned (m2) | No `Includes` or `Verification` bullet asserts in non-conditional form one side of a conflict between the sources — those listed under `Known conflicts` in the brief, plus those demonstrable by citing two sources in disagreement — and every choice the plan declares open names the `NOW` slices it blocks, in whatever section it declares it. | reading for m1; m2 is automatable on the open-choices section, whatever its title (every entry cites at least one existing `NOW` slice number) | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading — m1 measured against `d977043`, re-anchored to `87150d3` on 2026-08-06 | candidate: `R-010` ⊂ m1 — human decision, not applied | not falsified ×0 — re-anchored 2026-08-06; regressed on `CC` in CON-5 against `d977043` |
+| R-002 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Sweep sistematico delle contraddizioni* ≡ *Explicit handling of source contradictions* | reconstructed and re-tuned | Every choice the plan declares open names the `NOW` slices it blocks, in whatever section it declares it. | validator-automatable on the open-choices section, whatever its title: every entry cites at least one existing `NOW` slice number | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | first member absorbed into `R-010` on 2026-08-06 | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
 | R-003 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Decisioni mai prese distinte dalle decisioni prese* ≡ *Explicit handling of undecided choices* | reconstructed and re-tuned | No `NOW` slice depends on an external choice — provider, model, service, or adapter — that is not made by a citable source, or made by the plan among the alternatives the brief declares acceptable, or declared open together with the slice it blocks, in whatever section it declares it; a qualifying adjective — `cheap`, `multilingual`, `managed` — does not count as a choice. | reading: the inventory of external dependencies requires comparison with the sources and with the brief's `Accepted alternatives` | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | — | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
 | R-004 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | reconstructed | No `NOW` slice delivers a behaviour the sources do not request; every `LATER` entry states a `Promotion trigger` and every `OUT-OF-SCOPE` entry an exclusion rationale. | reading for m1 — the skill places the tracing in reasoning, not in the plan; m2 is automatable on the template's structure | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | — | not falsified ×1 |
 | R-005 | `d977043`, `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Continuità del tema* ≡ *Keep a theme and its recovery path contiguous* | reconstructed | If a `NOW` slice names a failure mode in its own `Verification` and another `NOW` slice is its remedy, no slice of a different theme is placed between the two. | reading for the failure→remedy coupling; theme interposition is automatable on the slices' `*(Theme: X)*` annotation | — | 2026-08-04 | CON-5 · `CC`+`CX` · plans · gen unrecorded · verdict offline reading | — | not falsified ×1 |
 | R-006 | `d977043`, `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | reconstructed and re-tuned | A pipeline or adapter shared by several paths is opened in the `Includes` of a single `NOW` slice; later slices that reuse it declare it as reuse. That slice follows every `NOW` slice that feeds it input, except when it validates controlled inputs that traverse the production computation and the scenario's brief admits early validation. | reading for identifying the producers; single ownership is partly automatable (same adapter named in the `Includes` of two slices) | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | — | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
 | R-007 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | reconstructed and re-tuned | No `Enabler` slice validates uncertainties across more than one subsystem: its `Verification` cannot fail for causes that, in the brief's `Material uncertainties`, belong to different `Subsystem`s. Several entries of the same subsystem are one uncertainty, even when the answer invalidates the choice being verified. | reading: the per-pair split verdict lives in the unpublished ledger, only the outcome stays observable on the plan; the list of uncertainties, subsystems, and decisions that change is published by the brief | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading — the brief's `Material uncertainties` table was rewritten at 22:41 on 2026-08-04, in the same minute as this row | — | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts, together with the brief; CON-6 is its first test |
-| R-008 | `9aa2586`, `eb926bb` (`Enabler` clause and its exception) | `intersection-theme` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, part «each theme has a first validation» | reconstructed | Every theme's `First validation` points to a `NOW` slice not annotated `Enabler`, whose `Outcome` covers the theme's entire desired outcome; the exception holds only if the theme's desired outcome is declaredly for a developer. | validator for the existence of the reference and, since `R-011`, for excluding `Enabler`s; reading for outcome coverage | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading — the `Enabler` clause measured against `9aa2586`, re-anchored to `eb926bb` on 2026-08-06 | candidate: `R-011` ⊂ the `Enabler` clause — human decision, not applied | not falsified ×0 — re-anchored 2026-08-06; regressed on `CX` in CON-5 against `9aa2586` |
+| R-008 | `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, part «each theme has a first validation» | reconstructed | Every theme's `First validation` points to a slice whose `Outcome` covers the theme's entire desired outcome. | validator for the existence of the reference; reading for outcome coverage | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | `Enabler` clause and its exception absorbed into `R-011` on 2026-08-06 | regressed on `CX` in CON-5 (2026-08-04) against `9aa2586` — rows C and D of that regression; row A left with the absorption |
 | R-009 | `a06a5cc` | `judgement` — commit message of `a06a5cc`, defect observed on a graded plan | reconstructed | No `Outcome` of a `NOW` slice preceding identity promises a real user: every slice that precedes identity and delivers a behaviour names its own audience, developer or tester on the declared non-public environment. If more than two `NOW` slices deliver behaviour to an end user before identity, `Ordering criteria` justifies the residual deferral once, naming the evidence that requires it. | reading: the audience is read from the `Outcome`s and the justification from `Ordering criteria`, but deciding whether a slice delivers to an end user requires judgement | — | 2026-08-04 | CON-5 · `CC`+`CX` · plans · gen unrecorded · verdict offline reading | — | not falsified ×1 |
-| R-010 | `87150d3` | `judgement` — correction of `R-002`, first member, regressed on `CC` in CON-5 | ex-ante | A choice the plan does not resolve by citing a selecting source stays open even when the plan declares it under `Open questions` or assigns it a spike: no `Includes` or `Verification` bullet of a slice that choice blocks asserts a side of it. | reading: recognizing which slices an open choice blocks requires comparing the declaration with the bullets | The correction comes from a violation on one model only: `CX` violated neither member of `R-002` and already used conditional wording. That is the typical way `judgement` applies a false rule. The failure to watch for is not the return of assertive wording but its opposite: plans that defer everything to the pending decision and publish nothing verifiable any more. If it appears, the defect is in `R-010`, not in the plans. | — | — | candidate: ⊂ `R-002` m1 — human decision, not applied | to verify — no cycle has run against it, so ×0 |
-| R-011 | `eb926bb` | `judgement` — correction of `R-008`, `Enabler` clause, regressed on `CX` in CON-5 | ex-ante | No row of the `Themes` table whose `First validation` resolves to a slice annotated `*(Enabler: …)*` omits the `*(Developer outcome)*` marker in its `Desired outcome` cell. | validator: the check crosses two facts the plan already publishes, the slice number resolved by the cell and the title tag of that slice | The marker is declarative: a plan can attach it to a desired outcome that is not a developer's. The validator cannot know, and that residue stays `reading` inside `R-008`. The failure to watch for is the marker attached to get past the check, not its absence. | — | — | candidate: ⊂ the first clause of `R-008` — human decision, not applied | to verify — no cycle has run against it, so ×0 |
+| R-010 | `87150d3` | `judgement` — correction of `R-002`, first member, regressed on `CC` in CON-5 | ex-ante (own limb); reconstructed (absorbed limb) | No `Includes` or `Verification` bullet asserts in non-conditional form one side of an unresolved choice. Unresolved covers a conflict between the sources — those listed under `Known conflicts` in the brief, plus those demonstrable by citing two sources in disagreement — and, in the slices that choice blocks, any other choice the plan does not resolve by citing a selecting source. Declaring the choice under `Open questions` or assigning it a spike does not resolve it. | reading: recognizing which slices an open choice blocks requires comparing the declaration with the bullets | The correction comes from a violation on one model only: `CX` violated neither member of `R-002` and already used conditional wording. That is the typical way `judgement` applies a false rule. The failure to watch for is not the return of assertive wording but its opposite: plans that defer everything to the pending decision and publish nothing verifiable any more. If it appears, the defect is in `R-010`, not in the plans. | — | merged wording untested; the absorbed limb: CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | `R-002` first member (2026-08-06) — that limb regressed on `CC` in CON-5 against `d977043` | not falsified ×0 — merged on 2026-08-06; the absorbed limb was falsified in CON-5, the own limb has never been tested |
+| R-011 | `eb926bb` | `judgement` — correction of `R-008`, `Enabler` clause, regressed on `CX` in CON-5 | ex-ante (own claim); reconstructed (absorbed clause) | Every row of the `Themes` table has its `First validation` resolve to a `NOW` slice not annotated `*(Enabler: …)*`, unless its `Desired outcome` cell carries the `*(Developer outcome)*` marker. | validator: the check crosses two facts the plan already publishes, the slice number resolved by the cell and the title tag of that slice | The marker is declarative: a plan can attach it to a desired outcome that is not a developer's. The validator cannot know, and that residue is `reading`. The failure to watch for is the marker attached to get past the check, not its absence. | — | merged wording untested; the absorbed clause: CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | `R-008`'s `Enabler` clause and its exception (2026-08-06) — that clause regressed on `CX` in CON-5 against `9aa2586`, row A | not falsified ×0 — merged on 2026-08-06; the absorbed clause was falsified in CON-5, the own wording has never been tested |
 
-Active rows: **11**. Dormant: **0**. Superseded: **0**.
+Active rows: **11**. Dormant: **0**.
+
+**Two absorptions applied on 2026-08-06, by hand.** `R-010` absorbed the first member of `R-002`,
+`R-011` the `Enabler` clause of `R-008` and its exception; both pairs anchored on the same clause
+after `87150d3` and `eb926bb` rewrote it, so keeping them apart counted one piece of evidence twice.
+The rule says `improve` writes the merged claim and the veto edits it — here there was no `improve`
+run to write it, and the merge is human. The remaining members stayed as their own rows and kept
+their own history: `R-002` its open-choices requirement, `R-008` the outcome-coverage requirement
+with rows C and D of its CON-5 regression. The row count is unchanged: nothing entered, nothing left.
 
 ## Agreed improvements that never reached the skill
 
@@ -220,10 +241,10 @@ indirect consequence. If the ledger were a separate artifact versioned next to t
 
 ## To populate
 
-- **Correction for `R-008`, partial.** `R-002` is covered by `R-010`; `R-008` is covered by `R-011`
-  on the `Enabler` clause only, that is on row A of the regression. Row C — whose site is the § 2
-  split test, not `R-008` — and row D, which `R-008` already forbids and which no tool can decide in
-  place of a reading, stay uncovered. The three diagnoses are in
+- **Correction for the CON-5 regression of `R-008`, partial.** Row A left with the absorption into
+  `R-011`. Rows C and D stay with `R-008` and stay uncorrected: row C's site is the § 2 split test,
+  not `R-008`, and row D is already forbidden by the outcome-coverage claim, which no tool can decide
+  in place of a reading. The three diagnoses are in
   `recipe-app/results/CONSENSUS-CON-5.REPORT.md` § *Diagnosi decise dopo il ciclo CON-5*.
 - **Corrections deferred pending a second cycle.** Three proposals born from the same two
   regressions were written and not applied, because each extends a perimeter or adds a constraint on
