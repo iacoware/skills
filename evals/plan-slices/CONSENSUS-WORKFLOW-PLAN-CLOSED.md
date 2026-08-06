@@ -173,13 +173,33 @@ Cosa è stato deciso mentre si scriveva, e non si legge dai quattro file:
   non emette nessun totale. Il divieto è scritto nel prompt: uno scalare nasconde l'instabilità che
   autorizzerebbe l'inversione a due chiamate.
 
+**I due prompt sostituiti sono stati cancellati il 2026-08-07**, non lasciati sotto una nota di
+supersessione. La prima stesura li aveva tenuti perché `workflow/CONFORMANCE.md` e
+`CONSENSUS-WORKFLOW.md` li citavano come prova. L'argomento è caduto su un fatto già scritto nel
+piano: **la Fase 0b prevede di tradurre `PROMPTS.md` in inglese**, e un documento che il piano si
+impegna a riscrivere non è il record di niente — è la ragione per cui `recipe-app/results/` non si
+tocca mai. Verificato invece di assunto: `be3daac` aveva già potato quel file di 193 righe poche ore
+dopo l'arrivo degli artefatti CON-4, e nessuno l'ha letto come una perdita.
+
+Quindi le due sezioni sono uscite dal working tree e **i due riferimenti in ingresso sono stati
+riancorati a git** — `472233d:PROMPTS.md`, che porta il testo esattamente come CON-4 lo ha ricevuto,
+byte per byte. Nessun fatto è stato spostato in `prompts/`: ciò che le due sezioni portavano di vivo
+era già nei quattro prompt, e il resto — selezione del suffisso numerico, identità del proprio piano,
+il reference plan cancellato, il contratto in prosa — è ciò che la riscrittura esiste per disfare.
+
+Un solo residuo era vivo e non stava in nessuno dei due posti: **quante deleghe fa un'esecuzione.**
+La qualifica dell'unità in `CONSENSUS-WORKFLOW.md` la deduceva dai prompt legacy, che delegavano a
+due sub-agent ciascuno. I quattro nuovi non prescrivono nessuna delega, quindi il numero lo decide
+l'harness; il vincolo che regge è ora scritto in tutti e quattro — una sessione delegata legge la
+stessa allowlist e niente altro — e la tabella conta esecuzioni, che la Fase 5 riporta in chiamate.
+
 **Residui dichiarati, e sono di altre fasi:**
 
 - Le tre proiezioni che i payload nominano — indice delle clausole, affermazioni del registro, righe
   da verificare — **non esistono come file**. La Fase 2 le ricava a mano da `support/clause-row-map.tsv`
   e da `REGRESSION-LEDGER.md`; la Fase 5 le genera.
-- **`## GENERATE PLAN` non ha successore.** La generazione resta in `PROMPTS.md` fino alla Fase 6, e
-  la nota in testa dichiara l'eccezione invece di lasciare il banner falso.
+- **`## GENERATE PLAN` non ha successore.** È l'unica cosa rimasta in `PROMPTS.md`: la Fase 6 la
+  prende e il file sparisce con lei.
 
 ## Fase 0d — Split di `CONSENSUS-WORKFLOW.md`
 

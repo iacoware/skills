@@ -14,9 +14,10 @@ fallimento del grading system — risposta sintatticamente valida ma non conform
 rigido, sei scarti su diciannove — qui non esiste. **L'affermazione è ritirata: la premessa e la
 conclusione sono entrambe false.**
 
-Un contratto c'era già, descritto in prosa in `PROMPTS.md` § *CREATE IMPROVEMENTS*: titolo,
-`## Inputs`, una sezione per miglioramento con otto campi obbligatori e `## Verifica finale`.
-Nell'unica esecuzione mai fatta:
+Un contratto c'era già, descritto in prosa nel prompt di CON-4 — `472233d:PROMPTS.md`
+§ *CREATE IMPROVEMENTS*, rimosso dal working tree il 2026-08-07 quando `prompts/improve.prompt.md`
+lo ha sostituito: titolo, `## Inputs`, una sezione per miglioramento con otto campi obbligatori e
+`## Verifica finale`. Nell'unica esecuzione mai fatta:
 
 | | `CC` | `CX` |
 |---|---|---|

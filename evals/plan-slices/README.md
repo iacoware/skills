@@ -52,7 +52,7 @@ appear, because they are evidence.
 | `support/` | `CLAUSE-ROW-MAP.md` with its extracted `clause-row-map.tsv`, and `AGENT-PLAN-MAP.md`. **Excluded from every payload.** |
 | `scripts/consensus/` | Cycle code. `validate_improvement.py` and `extract_clause_map.py` exist; provider invocation and orchestrator are Phases 3 and 5. |
 | `NOTES.md` | Observations from running the evals, each self-contained. |
-| `PROMPTS.md` | Human scratchpad, no normative value once `prompts/` exists. |
+| `PROMPTS.md` | Human scratchpad, nothing normative. Only the generation prompt is left; Phase 6 takes it and the file goes. |
 | `recipe-app/sources/` | The only inputs a candidate plan is generated from. |
 | `recipe-app/EVALUATION-BRIEF.md` | Authority classes, hard constraints, accepted alternatives, known conflicts. |
 | `recipe-app/results/PLAN-*.md` | Candidate plans and their `IMPROVEMENT` / `REVIEW` artifacts. |

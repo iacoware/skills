@@ -121,4 +121,10 @@ Esecuzioni per ciclo:
 Qualifica obbligatoria dell'unità: in **Fase 2** un'esecuzione è una sessione agentica che può
 delegare internamente; in **Fase 5** ogni delega è una chiamata contata dal dry-run, ed è quel numero
 che `evals/AGENTS.md` chiede di autorizzare. Dire «sei chiamate a ciclo» senza qualificare l'unità era
-falso in entrambi i regimi: i prompt di `PROMPTS.md` delegano già a due sub-agent ciascuno.
+falso in entrambi i regimi: i prompt di CON-1…CON-5 — `472233d:PROMPTS.md`, rimossi dal working tree
+il 2026-08-07 — delegavano a due sub-agent ciascuno.
+
+I quattro prompt sotto `prompts/` **non prescrivono nessuna delega**: quante ne fa un'esecuzione lo
+decide l'harness. Il vincolo che vale in entrambi i regimi è uno solo ed è scritto nei prompt — una
+sessione delegata legge la stessa allowlist e niente altro. Il conteggio della tabella è quindi in
+esecuzioni; la Fase 5 lo riporta in chiamate.
