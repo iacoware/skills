@@ -241,3 +241,46 @@ Cosa è stato deciso mentre si eseguiva:
 **Conseguenza sulla Fase 0b:** la conversione in inglese diventa incrementale, un file per volta,
 invece di un blocco da 707 righe. Ed è la ragione dell'ordine: split prima, traduzione poi. Fatti
 insieme, il diff non avrebbe distinto gli spostamenti dalle riscritture.
+
+## Fase 1b-ii — Mappa dei generatori e slot `gen`
+
+**Precondizioni:** nessuna; era indipendente dalla 1b-i. **Chiamate provider:** zero.
+
+**Fatta il 2026-08-07.** Il record è `support/AGENT-PLAN-MAP.md`: quattordici artefatti, il formato
+per i cicli futuri, e la dichiarazione di ciò che non si è ricostruito. Qui non si duplica.
+
+Cosa è stato deciso mentre si eseguiva:
+
+- **Modello ed effort di CON-1…CON-5 sono `unrecorded` e restano tali.** Non è una casella vuota: è
+  il valore vero. Cercati negli artefatti, nel prompt di generazione superstite, in ogni artefatto di
+  grading sotto `results/calibration-*`, nei messaggi dei cinque commit e in
+  `GRADING-IMPROVEMENTS-PLAN.md`. Il grading registra `grader.requested_model` e `grader.effort` — del
+  **grader**; i v1 scrivono `"model": "cli-default"`, che nomina il default della CLI al momento della
+  run e non si risolve all'indietro; nessun campo nomina il generatore del candidato, che compare come
+  path e senza hash. **Copiare i default di grading — `gpt-5.6-sol`/`high`, `claude-opus-5`/`high` —
+  era la tentazione da rifiutare:** avrebbe messo un numero plausibile nell'unica colonna che esiste
+  per dire come un verdetto è stato ottenuto davvero. Le diciassette celle del registro restano
+  `gen unrecorded` e la ragione è dichiarata una volta, in § *`Measured on`*, che punta alla mappa. La
+  voce che il registro teneva in *To populate* è caduta: non è più un lavoro da fare.
+- **Harness e modalità invece si ricostruiscono, e la mappa li porta.** `CC` è Claude Code, `CX` è
+  Codex; nessun documento lo dichiarava, e le quattro evidenze che concordano stanno nella mappa. La
+  modalità è **sessione interattiva**, non chiamata headless — è il confine che la Fase 6 già si
+  impegna a registrare. Da qui la distinzione che il file impone: `CC`/`CX` nominano l'harness, e una
+  cella `Misurato su` che li porta non dice **niente** sul modello. Era la confusione da chiudere.
+- **Due assegnazioni per ciclo, e non devono coincidere.** La ragione scritta è che se il lato che
+  tiene `CANDIDATE-A` tiene anche `REPORT-A`, chi rompe la cecità in una fase la rompe nell'altra
+  gratis, e le due fasi smettono di fallire indipendentemente. La cecità resta nominale: lo scopo non
+  è renderla a tenuta, è impedire che una falla ne diventi due.
+- **`1e466f4` non è un rename, ed è il ritrovamento che cambia la tabella.** Il commit — messaggio
+  *renaming* — cancella due generazioni `CX` pre-ristrutturazione, ne rinumera una terza e ne aggiunge
+  quattro nuove. Confronto degli hash dei blob: l'attuale `PLAN-CX-CON-2.md` è il blob aggiunto il
+  2026-07-31 alle 17:08 sotto il nome `PLAN-CX-CON-4.md`. Letta senza il confronto, la sua storia git
+  lo data al 2026-08-01: un ciclo intero di scarto. Da lì la regola che la mappa dichiara — **`CON-N`
+  è il ciclo, non l'ordinale di run del lato** — e il fatto che due generazioni `CX` esistano nella
+  storia e in nessun ciclo.
+- **I piani CON-5 esistevano il 2026-08-02 alle 17:03, non il 2026-08-04 alle 11:57.** `f00d75d`
+  committa i loro `SCORE` v1, che li hanno graduati. Le 11:57 sono l'ora di `515e0a3`, cioè del
+  commit dei piani. La correzione **rafforza** l'argomento della Fase 2 per cui i piani CON-5 non si
+  riusano, e il piano è stato corretto di conseguenza. Il limite dichiarato: i metadata v1 non portano
+  hash del candidato, quindi il vincolo è sull'**esistenza**, non sull'identità del testo committato
+  due giorni dopo.

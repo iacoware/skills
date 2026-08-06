@@ -21,8 +21,8 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 0d — split dei documenti | **chiusa** — 2026-08-06 | come sopra |
 | 0b — conversione | aperta, senza dipendenze | i documenti da convertire |
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
-| **1b-ii — mappa generatori** | **aperta, prossima** | `recipe-app/results/PLAN-*`, `git log`, `REGRESSION-LEDGER.md` § *`Measured on`* |
-| 1c — report template | aperta, resta un deliverable | `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, `assets/improvement-template.md` |
+| 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
+| **1c — report template** | **aperta, prossima** — resta un deliverable | `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, `assets/improvement-template.md` |
 | 2 — CON-6 | aperta, **9 chiamate, autorizzazione** | `prompts/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
@@ -108,31 +108,6 @@ senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare inde
 
 **Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
 citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
-
-## Fase 1b-ii — Mappa dei generatori e slot `gen`
-
-La Fase 1b era splittata in due sotto-fasi indipendenti; **1b-i è chiusa il 2026-08-06** e la sua
-cronaca sta in `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`. Resta questa, che è l'altra precondizione della
-Fase 2.
-
-**Precondizioni:** nessuna; indipendente dalla 1b-i. **Chiamate provider:** zero.
-
-I due deliverable sono in ordine, non in parallelo: la mappa è la fonte da cui si riempiono le celle.
-
-- [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
-  Il formato deve portare **due assegnazioni per ciclo**, non una: `CANDIDATE-A`/`CANDIDATE-B` → piano
-  e `REPORT-A`/`REPORT-B` → `IMPROVEMENT`. Sono i nomi con cui i prompt chiusi in 1b-i ricevono gli
-  artefatti, e le due assegnazioni non devono coincidere. Per CON-1…CON-5 non esistono: i payload di
-  allora portavano i nomi reali.
-- [ ] **Riempire lo slot `gen` di `Misurato su` in tutte le righe del registro** dai dati della
-  mappa — sono diciassette dopo lo split della Fase 0c. Oggi portano tutte `gen unrecorded`: modello
-  ed effort di CON-1…CON-5 non esistono in nessun artefatto, e `CC`/`CX` nominano l'harness, non il
-  modello. Se la mappa non riesce a ricostruirli, le celle restano `unrecorded` e lo si dichiara una
-  volta invece di lasciarlo sembrare una svista.
-
-**Verifica:** ogni riga del registro porta uno slot `gen` risolto o `unrecorded` con la ragione
-dichiarata una volta sola; la mappa nomina un generatore per ogni `PLAN-*` sotto
-`recipe-app/results/`; il file resta escluso da ogni payload.
 
 ## Fase 1c — Registro, mappa e report
 
