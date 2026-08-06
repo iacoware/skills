@@ -2,10 +2,11 @@
 
 ## Inputs
 
-- **Candidate A:** `PLAN-[…]-CON-[N].md`
-- **Candidate B:** `PLAN-[…]-CON-[N].md`
+- **Candidate A:** `CANDIDATE-A.md`
+- **Candidate B:** `CANDIDATE-B.md`
 
-[The two candidates are labelled A and B and nothing else. Neither is yours.]
+[The two candidates are labelled A and B and nothing else. Neither is yours. They reach the payload
+under these names because their real ones carry the generator's alias.]
 
 ## Entries
 
@@ -15,13 +16,13 @@
 
 **Evidence — candidate A**
 
-- `PLAN-[…]-CON-[N].md:[NN]` — [what the cited text shows]
+- `CANDIDATE-A.md:[NN]` — [what the cited text shows]
 
 **Evidence — candidate B**
 
 - `not manifested` — [what candidate B does instead, at the place the defect would appear]
 
-[Each cell holds either a locatable reference — `PLAN-…-CON-N.md:NN`, `PLAN-…-CON-N.md:NN-MM`, or
+[Each cell holds either a locatable reference — `CANDIDATE-A.md:NN`, `CANDIDATE-B.md:NN-MM`, or
 `slice N Includes` naming a slice and one of its fields — or the literal `not manifested` followed by
 what that candidate does instead. A defect no candidate manifests is not a defect this cycle
 observed.]

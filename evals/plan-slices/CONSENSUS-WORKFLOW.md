@@ -81,9 +81,12 @@ ragionamento per esteso, con la varianza misurata su CON-5, sta in `workflow/RAT
    `recipe-app/results/PLAN-CC-CON-N.md` e `recipe-app/results/PLAN-CX-CON-N.md`.
 2. **Validazione strutturale.** `make validate PLAN=…` su entrambi. Il validator non esprime giudizi
    semantici.
-3. **`improve`.** Ogni modello riceve un payload cieco — `EVALUATION-BRIEF.md`, le fonti e i due
-   candidati come `Candidate A`/`Candidate B` — e produce un piano di miglioramento dello skill sui
-   difetti osservati in **entrambi** i candidati, nella forma di `assets/improvement-template.md`.
+3. **`improve`.** Ogni modello riceve un payload cieco — `SKILL.md`, `EVALUATION-BRIEF.md`, le fonti,
+   i due candidati **rinominati** `CANDIDATE-A.md`/`CANDIDATE-B.md`, l'indice delle clausole e le
+   affermazioni del registro — e produce un piano di miglioramento dello skill sui difetti osservati
+   in **entrambi** i candidati, nella forma di `assets/improvement-template.md`. Le ultime due voci
+   sono ciò che il contratto chiede per `Covering rows` e `Merged claim`, e la loro conseguenza sulla
+   `recidiva` è dichiarata in `prompts/improve.prompt.md`.
 4. **Gate di conformità.** `validate_improvement.py`. Una voce priva di un campo obbligatorio, o con
    un riferimento che non si risolve, viene **scartata e registrata**. Nessuna rigenerazione. Vedi
    `workflow/CONFORMANCE.md`.
