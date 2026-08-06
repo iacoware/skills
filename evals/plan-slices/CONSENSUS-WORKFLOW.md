@@ -409,6 +409,42 @@ e l'ipotesi prende una smentita `×1`.
 Lo scarto registrato è il rimedio al degrado silenzioso, che è il difetto storico: un warning su un
 artefatto che nessuno ha guardato per due cicli è esattamente ciò che è già successo.
 
+**Codice di uscita.** Una voce scartata **non è un errore**. Lo script esce con `1` solo quando il
+documento non è leggibile come insieme di voci; un lato a zero voci conformi esce con `0`, coerente
+con «un lato a zero voci conformi non blocca il ciclo». E il gate legge le voci **anche fuori da
+`## Entries`**: un documento che le numera altrove deve comunque un log degli scarti per voce, perché
+«nessun `## Entries`» e «nessuna voce» sono due fatti diversi e collassarli avrebbe reso invisibile
+proprio l'asimmetria di CON-4.
+
+### Cosa il gate ha misurato su CON-4
+
+La tabella qui sopra è lettura umana del 2026-08-06. Lo stesso dato ottenuto dallo strumento, quando
+la Fase 1a lo ha consegnato:
+
+| | voci lette | conformi |
+|---|---|---|
+| `PLAN-CC-CON-4.IMPROVEMENT.md` | **10** | **0**, ognuna con l'elenco dei campi mancanti |
+| `PLAN-CX-CON-4.IMPROVEMENT.md` | **0** | — non ne contiene nessuna |
+
+L'asimmetria attesa è riprodotta da uno strumento invece che da una lettura. Precisazione sul senso
+di «parzialmente conformi» nella riga *Otto campi obbligatori*: **nessuna** voce di `CC` supera il
+contratto, perché il documento di CON-4 non ha nessuno dei campi nuovi. La conformità parziale sta
+nell'essere leggibile **come voce**, cioè nel produrre uno scarto diagnosticabile invece di sparire.
+
+### Cosa il gate non misura
+
+Tre residui, tutti sulla stessa spaccatura `validator`/`lettura` lungo cui si dividono le righe del
+registro. Sono la parte che resta al veto umano, e sono debito dichiarato, non svista:
+
+- il validator verifica **che** un riferimento esista, non che **sostenga** l'affermazione;
+- verifica che una fusione sia scritta nella grammatica delle righe, non che resti **decidibile in
+  una lettura**;
+- verifica che una riformulazione scartata sia stata scritta, non che la ragione sia **ammissibile**.
+  Il divieto — «la clausola è coperta da una riga del registro» non è una ragione — vive in
+  `assets/improvement-template.md` e sta al veto. La forma lo rende costoso da violare: il campo
+  chiede la riformulazione *effettivamente scritta*, e una dichiarazione di copertura non riempie
+  quella cella.
+
 ## Il cricchetto
 
 Il ciclo **genera** miglioramenti e non **verifica** miglioramenti. Ogni giro produce una lista
