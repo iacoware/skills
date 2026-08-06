@@ -199,8 +199,11 @@ righe multi-affermazione produce verdetti che lo split dovrebbe poi disaggregare
 2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high`**. Richiede **autorizzazione esplicita** dopo
 il dry-run e il conteggio, per `evals/AGENTS.md`.
 
-I piani CON-5 **non si riusano**: sono delle 11:57 del 2026-08-04, mentre `87150d3` è delle 23:11 e
-`eb926bb` delle 23:30. Precedono entrambi i commit, quindi non possono verificare `R-010` e `R-011`.
+I piani CON-5 **non si riusano**: esistevano già il 2026-08-02 alle 17:03 — `support/AGENT-PLAN-MAP.md`
+§ *When each artifact was generated* — mentre `87150d3` è delle 23:11 del 2026-08-04 e `eb926bb` delle
+23:30. Precedono entrambi i commit, quindi non possono verificare `R-010` e `R-011`. Le 11:57 del
+2026-08-04 che questo piano portava prima sono l'ora del commit `515e0a3`, non della generazione: il
+divario è più largo, non più stretto.
 
 - [ ] Generare i due candidati con lo `SKILL.md` corrente e registrarli in
   `support/AGENT-PLAN-MAP.md`.
