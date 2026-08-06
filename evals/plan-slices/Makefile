@@ -32,7 +32,10 @@ CALIBRATION_REPORT ?= $(V3_RESULTS_DIR)/CALIBRATION.v3.json
 CRITICAL_CALIBRATION_REPORT ?= $(V3_RESULTS_DIR)/CALIBRATION-CRITICAL.v3.json
 
 VALIDATOR := $(ROOT)/skills/plan-slices/scripts/validate_plan.py
+IMPROVEMENT_VALIDATOR := scripts/consensus/validate_improvement.py
+CLAUSE_MAP_TOOL := scripts/consensus/extract_clause_map.py
 ORCHESTRATOR_TOOL := scripts/orchestrate_grading.py
+IMPROVEMENT ?=
 
 ENABLED_VALUES := 1 true yes
 DRY_RUN_ARG = $(if $(filter $(ENABLED_VALUES),$(DRY_RUN)),--dry-run,)
@@ -54,9 +57,9 @@ COMMON_ARGS = \
 	$(RESUME_ARG) \
 	$(CONFIRM_SEND_ARG)
 
-.PHONY: help test validate \
+.PHONY: help test validate validate-improvement clause-map \
 	grade compare calibrate calibrate-critical calibrate-critical-report \
-	require-orchestrator require-plan require-plans require-comparison
+	require-orchestrator require-plan require-plans require-comparison require-improvement
 
 help:
 	@echo "Plan-slices evaluation commands (SCENARIO defaults to recipe-app):"
@@ -69,6 +72,8 @@ help:
 	@echo "  Add RESUME=1 to verify and reuse existing artifacts."
 	@echo "  Add CONFIRM_SEND=1 only after reviewing dry-run output."
 	@echo "  make validate PLAN=PLAN-CX-5.md"
+	@echo "  make validate-improvement IMPROVEMENT=PLAN-CC-CON-6.IMPROVEMENT.md"
+	@echo "  make clause-map  # regenerate support/clause-row-map.tsv from the map"
 	@echo "  make test"
 
 test:
@@ -77,6 +82,12 @@ test:
 
 validate: require-plan
 	python3 $(VALIDATOR) $(RESULTS_DIR)/$(PLAN)
+
+validate-improvement: require-improvement
+	python3 $(IMPROVEMENT_VALIDATOR) $(RESULTS_DIR)/$(IMPROVEMENT)
+
+clause-map:
+	python3 $(CLAUSE_MAP_TOOL)
 
 grade: require-orchestrator require-plans
 	python3 $(ORCHESTRATOR_TOOL) grade \
@@ -123,6 +134,12 @@ require-orchestrator:
 
 require-plan:
 	@test -n "$(PLAN)" || { echo "usage: make validate PLAN=<plan.md>"; exit 2; }
+
+require-improvement:
+	@test -n "$(IMPROVEMENT)" || { \
+		echo "usage: make validate-improvement IMPROVEMENT=<plan.IMPROVEMENT.md>"; \
+		exit 2; \
+	}
 
 require-plans:
 	@test -n "$(PLANS)" || { echo "usage: make grade PLANS='<plan.md> [plan.md ...]'"; exit 2; }
