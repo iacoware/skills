@@ -31,6 +31,12 @@ Non si ridiscutono all'inizio di ogni sessione.
   rigenera mai. Un errore di trasporto è un ritentativo della *chiamata*, non del documento. Un lato
   a zero voci conformi non blocca il ciclo.
 - **`Origine` ha quattro valori**: `intersezione`, `intersezione-tema`, `giudizio`, `potatura`.
+  **I nomi canonici sono inglesi** dal 2026-08-06, perché li scrivono il registro migrato, i prompt e
+  il validator: `intersection`, `intersection-theme`, `judgement`, `pruning`. Stessa cosa per
+  `Verifica`: `validator` e `reading`. I termini italiani di questo piano e di
+  `CONSENSUS-WORKFLOW.md` restano leggibili finché la Fase 0b non li converte, e la mappa fra i due
+  insiemi è dichiarata nelle regole d'uso del registro. Prompt e validator non emettono mai gli
+  italiani.
 - **Una voce che riformula una clausola coperta ri-ancora le righe che la coprono; le supersede solo
   se le subsume.** Due regole, non una, perché **le righe quantificano su un piano generato, non sul
   testo dello skill** — è il criterio con cui il registro è stato scritto (`0273a73`: *«each stated
@@ -39,14 +45,23 @@ Non si ridiscutono all'inizio di ogni sessione.
   - **Automatico — ri-ancoraggio.** La riga prende il commit nuovo in `Commit` e `Misurato su`, e il
     contatore va a **`non smentita ×0`**: `×k` conta cicli contro un testo, e il testo è cambiato.
     Nessuna riscrittura dell'affermazione, che resta valida e decidibile.
+    **Vale anche per una riga `regredita`**, e a maggior ragione: la smentita era contro un testo che
+    non esiste più. La riga va a `×0` e la smentita resta scritta nella cella di stato, con il commit
+    contro cui era stata misurata — deciso il 2026-08-06 migrando `R-002` e `R-008`, che erano
+    entrambe in questo caso. Perderla azzererebbe il segnale che il registro dichiara portante: *«la
+    sequenza di regressioni sullo stesso tema è il segnale che la regola è formulata male»*.
+    **Quando la riformulazione tocca un solo membro, `Commit` porta entrambi i commit con il membro
+    che ciascuno possiede**: di `R-002` il secondo membro vive ancora su `d977043`.
   - **Umano, nel veto — superamento.** Solo quando l'affermazione nuova **subsume** quella vecchia i
     verdetti smettono di essere indipendenti e tenerle entrambe sovrastima l'evidenza: è il caso
     `R-010` ⊂ `R-002` m1 e `R-011` ⊂ prima clausola di `R-008`. La riga vecchia passa a **`superata
     da R-NNN`**, che **non è una smentita** ed **esce definitivamente** dall'insieme verificato, a
     differenza di una dormiente che torna; la nuova eredita la cella `Da sorvegliare` e le due
-    portano `Supersedes` / `Superseded by`. Il file cresce, il costo del `verdetto` no: una entra e
-    una esce. La subsunzione fra due affermazioni non si chiede a un modello — il report pubblica le
-    **coppie candidate**, decide il veto.
+    portano `Supersedes` / `Superseded by`. **Sono una colonna sola, `Supersession`**, deciso il
+    2026-08-06: la relazione ha due versi e nessuna riga ne porta due nello stesso verso, quindi due
+    colonne quasi sempre vuote dicono meno di una. Il file cresce, il costo del `verdetto` no: una
+    entra e una esce. La subsunzione fra due affermazioni non si chiede a un modello — il report
+    pubblica le **coppie candidate**, decide il veto.
   Le altre due opzioni restano dominate, e la provenienza a posteriori rafforza il verdetto.
   **Riscrivere l'affermazione sul posto** è churn: l'affermazione non è diventata falsa, solo il testo
   sotto è cambiato; e dove va davvero riscritta, `k` andrebbe azzerato comunque, quindi è il
@@ -145,6 +160,8 @@ senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare inde
 
 - [ ] `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `NOTES.md`, `PROMPTS.md`.
 - [ ] Non toccare i documenti di grading: sono archivio.
+- [ ] Riparare `CONSENSUS-WORKFLOW.md:128`, che rimanda a *Formulazioni riscritte* del registro: la
+  sezione è in `recipe-app/results/CONSENSUS-CON-5.REPORT.md` dalla Fase 1c.
 
 **Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
 citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
@@ -210,6 +227,11 @@ skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.
     righe che nessuno ha toccato.
   - **L'ancoraggio non è rigenerabile** e si mantiene a mano: per nove righe su undici è un'inferenza,
     e i quattro `unresolved` sono fallimenti registrati, non celle da riempire.
+  - **Riparare i tre riferimenti che la migrazione del registro ha reso stali**, già che il file si
+    riapre qui: `CLAUSE-ROW-MAP.md:302` e `:381` puntano a *Difetti degli artefatti mai registrati* e
+    *Formulazioni riscritte*, che ora vivono in `CONSENSUS-CON-5.REPORT.md`; `:210` punta a *Da
+    popolare*, ora *To populate*. La Fase 1c non poteva toccarli senza attraversare due volte lo
+    stesso confine.
 - [ ] Implementare lo **scarto per voce**: la voce cade, il documento resta, ogni scarto esce con il
   campo mancante e il motivo in forma leggibile dal report. **Nessuna rigenerazione.**
 - [ ] Test del validator su artefatti reali: `PLAN-CC-CON-4.IMPROVEMENT.md` deve produrre voci
@@ -243,6 +265,10 @@ I prompt **citano** il template, non lo duplicano.
 - [ ] Aggiungere in testa a `PROMPTS.md` la nota che è uno scratchpad umano e che la sorgente
   normativa è `prompts/`.
 - [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
+- [ ] **Riempire lo slot `gen` di `Misurato su` nelle undici righe del registro** dai dati della
+  mappa. Oggi portano tutte `gen unrecorded`: modello ed effort di CON-1…CON-5 non esistono in nessun
+  artefatto, e `CC`/`CX` nominano l'harness, non il modello. Se la mappa non riesce a ricostruirli, le
+  celle restano `unrecorded` e lo si dichiara una volta invece di lasciarlo sembrare una svista.
 
 **Verifica:** nessun prompt nomina `REFERENCE-PLAN.md`, `support/`, i path o i nomi dei generatori;
 `review` non contiene la parola «tuo»; i nomi degli artefatti citati coincidono con quelli della
@@ -255,28 +281,45 @@ struttura del report.
 **Precondizioni:** Fase 0a. **Precede Fase 1a**, che ne consuma la mappa clausola → riga; indipendente
 da 1b. **Chiamate provider:** zero.
 
-La fase porta **due deliverable separabili**, e solo il primo blocca 1a:
+La fase porta **tre deliverable separabili**, e solo il primo blocca 1a:
 
 - **la mappa clausola → riga**, artefatto nuovo che non tocca il testo del registro. I riferimenti
-  `R-NNN` sono stabili attraverso la traduzione, quindi può essere prodotta prima e da sola;
-- **il registro**: estrazione della narrativa, traduzione, migrazione semantica e riclassificazione.
+  `R-NNN` sono stabili attraverso la traduzione, quindi può essere prodotta prima e da sola —
+  **fatta** il 2026-08-06, `support/CLAUSE-ROW-MAP.md`, 205 clausole;
+- **il registro**: estrazione della narrativa, traduzione, migrazione semantica e riclassificazione —
+  **fatto** il 2026-08-06, insieme a `recipe-app/results/CONSENSUS-CON-5.REPORT.md`;
+- **la struttura del report di ciclo**, in fondo a questa fase. **Ancora aperta.** Il report CON-5
+  non la definisce e non la segue: CON-5 è un ciclo parziale, quindi i contatori che non hanno un
+  valore portano `n/a — partial cycle` invece di uno zero che si leggerebbe come misura.
 
 Un solo attraversamento del confine sul registro: traduzione, split e migrazione semantica nella
 stessa passata. Due passate su testo come la formulazione di `R-002` — già riscritta tre volte — sono
 più pericolose di una, perché la seconda ha meno contesto della prima.
 
-- [ ] **Estrarre la narrativa di ciclo** dal registro: righe 63–301 della versione italiana, il 62%
-  del file, rilette dal `verdetto` a ogni ciclo senza servire. Vanno in
-  `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, creato retroattivamente come contenitore.
-- [ ] **Eccezione obbligatoria:** le note *«Da cercare al prossimo ciclo, oltre alla riga»* di `R-010`
+- [x] **Estrarre la narrativa di ciclo** dal registro: il 62% del file, riletto dal `verdetto` a ogni
+  ciclo senza servire. Va in `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, creato retroattivamente
+  come contenitore. Righe **73–310** della versione italiana a `f99449c`; la stima 63–301 di questo
+  piano era di una revisione precedente del registro. **Non si traduce**: è il record di ciò che
+  CON-5 ha deciso, scritto in italiano il 2026-08-04, e tradurre un record lo falsifica. Solo la
+  cornice del report nasce in inglese, e lo dichiara.
+- [x] **Eccezione obbligatoria:** le note *«Da cercare al prossimo ciclo, oltre alla riga»* di `R-010`
   e `R-011` non sono narrativa, sono istruzioni per il verdetto successivo. Diventano una cella
   **`Da sorvegliare`** della riga.
-- [ ] **Tradurre** il registro in inglese.
-- [ ] **Migrare la semantica**: `tiene` → `non smentita ×k`; stato `dormiente` a `×3`; **stato
+- [x] **Tradurre** il registro in inglese.
+- [x] **Migrare la semantica**: `tiene` → `non smentita ×k`; stato `dormiente` a `×3`; **stato
   `superata da R-NNN`**, che non conta come smentita e toglie la riga dall'insieme verificato in via
   definitiva; colonna `Misurato su` estesa a modello ed effort; `Origine: potatura`; cella `Da
   sorvegliare`; celle **`Supersedes` / `Superseded by`**; cella `Commit` che ammette `(pending)`.
-- [ ] **Nessuna riga parte da `×1`.** La versione precedente di questa fase prescriveva `×1 misurate
+  - **`Misurato su` ha cinque slot, non quattro**, deciso il 2026-08-06:
+    `ciclo · piani · strumenti · gen <modello e effort per lato> · verdict <strumento>`. Il quinto
+    serve perché i verdetti CON-5 vengono da **lettura umana offline**, non da una chiamata: senza lo
+    slot quel fatto sparisce al primo ciclo automatizzato, ed è esattamente il tipo di cosa che la
+    colonna esiste per non far sparire. Fase 5 lo emette.
+  - **`to verify` e `non smentita ×0` restano due stati distinti.** Il primo dice che nessun ciclo ha
+    girato contro la riga — `R-010`, `R-011`; il secondo che dei cicli hanno girato e nessuno conta
+    come test, per provenienza o per ri-ancoraggio. Al `verdetto` la differenza cambia cosa si sta
+    guardando.
+- [x] **Nessuna riga parte da `×1`.** La versione precedente di questa fase prescriveva `×1 misurate
   sul solo CON-5`; è sbagliato, perché il registro è stato popolato **a posteriori** — vedi
   `CONSENSUS-WORKFLOW.md` § *Lo stato dell'evidenza*. Serve una cella **`Provenienza`** con tre
   valori, e il `k` iniziale discende da quella:
@@ -290,7 +333,7 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
     `R-003`, `R-006`, `R-007`. Per queste CON-5 **non è un test** — la riga è stata adattata al piano
     che avrebbe dovuto falsificarla, e per `R-007` anche il brief, nello stesso minuto. Partono da
     **`×0`**: il primo test vero è CON-6.
-- [ ] **Ri-ancorare retroattivamente le due righe che hanno subito una riformulazione.** `87150d3` ha
+- [x] **Ri-ancorare retroattivamente le due righe che hanno subito una riformulazione.** `87150d3` ha
   riscritto in loco la clausola di `R-002` (`SKILL.md:50-57`, `+7/-3`) ed `eb926bb` quella di `R-008`
   (`SKILL.md:92-96`, `+4/-2`). Le due righe prendono il commit nuovo in `Commit` e `Misurato su`; le
   affermazioni **non si toccano**, perché quantificano sul piano e restano decidibili. Attenzione al
@@ -299,12 +342,12 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
   Il **superamento** delle due coppie (`R-010` ⊂ `R-002` m1, `R-011` ⊂ prima clausola di `R-008`) è
   una decisione umana e va posta come tale, non applicata in migrazione: `R-002` m2 sopravvive
   comunque al superamento di m1, quindi `R-002` non può uscire intera.
-- [ ] **Annotare la sovrapposizione dei verdetti.** `R-010` è un sottocaso di `R-002` m1 e `R-011`
+- [x] **Annotare la sovrapposizione dei verdetti.** `R-010` è un sottocaso di `R-002` m1 e `R-011`
   della prima clausola di `R-008`: i loro verdetti non sono indipendenti, e contarli come due
   osservazioni sovrastima l'evidenza. `R-008` lo dice già in prosa nella cella `Verifica`.
-- [ ] **Riclassificare `R-002`…`R-008` da `intersezione` a `intersezione-tema`** e annotare che sono
+- [x] **Riclassificare `R-002`…`R-008` da `intersezione` a `intersezione-tema`** e annotare che sono
   state prodotte con prompt diversi da quelli di `prompts/` e con un lato non conforme.
-- [ ] **Mappa clausola → riga di registro**, con le clausole scoperte marcate come tali. Spostata qui
+- [x] **Mappa clausola → riga di registro**, con le clausole scoperte marcate come tali. Spostata qui
   da Fase 4 il 2026-08-06: senza la mappa il campo `Regola esistente che non ha impedito il difetto`
   non ha contropartita al momento di decidere, e il default resta aggiungere una regola nuova — cioè
   il cricchetto sopravvive al meccanismo costruito per fermarlo. La mappa produce anche l'elenco delle
@@ -321,7 +364,8 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
   esattamente sulle due righe `ex-ante` — `R-010`, `R-011` — e va alla deriva esattamente sulle due
   ricostruite, `R-002` e `R-008`. Un ancoraggio `ricostruito` può anche **non risolversi**: la mappa
   registra il fallimento invece di scegliere la clausola più somigliante.
-- [ ] **Struttura di `recipe-app/results/CONSENSUS-CON-N.REPORT.md`**, con i **contatori in testa**:
+- [ ] **Struttura di `recipe-app/results/CONSENSUS-CON-N.REPORT.md`** — unico deliverable residuo
+  di questa fase — con i **contatori in testa**:
 
   ```
   SKILL.md   417 → 451   (+34)
@@ -350,8 +394,9 @@ più pericolose di una, perché la seconda ha meno contesto della prima.
   verdetti con le loro citazioni.
 
 **Verifica:** il registro contiene solo tabella, regole d'uso e backlog vivo; nessuna riga di
-narrativa di ciclo; ogni riga ha `Misurato su` completo; la mappa copre tutte e undici le righe e
-dichiara quante clausole di `SKILL.md` restano scoperte.
+narrativa di ciclo; ogni riga ha `Misurato su` in tutti e cinque gli slot, con `unrecorded` dove il
+dato non esiste e mai una cella muta; la mappa copre tutte e undici le righe e dichiara quante
+clausole di `SKILL.md` restano scoperte.
 
 ## Fase 2 — Ciclo CON-6 manuale
 
@@ -456,10 +501,18 @@ branch`, `Review an existing plan`, `Split, merge, or reorder an existing plan` 
   esistente si riscrive e la previsione resta; scoperta → nasce una riga `Origine: potatura` con
   l'affermazione «la rimozione di X non fa ricomparire il difetto Y». Nessuna rimozione senza una
   delle due.
+- [ ] **Decidere i quattro ancoraggi `unresolved`** che la mappa registra come fallimenti: `R-001` m1,
+  la componente `9aa2586` di `R-005`, la seconda metà di `R-006` m1 e la componente `9aa2586` di
+  `R-006`. Per ciascuno una sola delle due mosse: lo skill acquista la clausola che la riga
+  presuppone, oppure la riga si riscrive per smettere di pretendere ciò che lo skill non dice. È
+  lavoro di questa fase perché è la stessa decisione della potatura letta al contrario — lì si toglie
+  testo coperto da una riga, qui c'è una riga che copre testo inesistente. Il caso netto è `R-006` m1:
+  il requisito è stato aggiunto alla riga dopo CON-5 **perché** `CX` non dichiarava il riuso, quindi
+  un verdetto contro quel membro sembra una regressione dello skill senza esserlo.
 - [ ] Registrare il confine di strumento in `Misurato su` per tutte le righe attive.
 
 **Verifica:** **CON-7**. La fase non si chiude quando lo `SKILL.md` è più corto: si chiude quando
-CON-7 non ha smentito le righe di potatura.
+CON-7 non ha smentito le righe di potatura, e nessuna riga attiva ha un ancoraggio `unresolved`.
 
 ## Fase 5 — Orchestratore del ciclo
 
