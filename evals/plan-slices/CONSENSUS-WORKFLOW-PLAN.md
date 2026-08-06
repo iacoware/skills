@@ -194,6 +194,22 @@ skill ha retto cinque cicli: `assets/plan-template.md` + `scripts/validate_plan.
     clausola → riga della Fase 1c; una clausola che la mappa dichiara coperta e la voce dichiara
     `uncovered` è uno scarto;
   - `Binary test` presente e non vuoto, con una grammatica minima.
+- [ ] **Dare alla mappa il formato che il validator consuma: dati separati dalla prosa.** La Fase 1c
+  consegna `support/CLAUSE-ROW-MAP.md`, 205 clausole in tabelle markdown più un centinaio di righe di
+  prosa. Il validator non deve parsare markdown: estrarre i record — id, sede, commit d'introduzione,
+  commit dell'ultima riscrittura, righe coprenti, ancoraggio — in un file tabellare sotto `support/`,
+  e lasciare nel `.md` regola di conteggio, ancoraggi irrisolti, ancoraggi che risolvono sul brief,
+  verifica del campione e divergenze di blame, che nessuno script legge. Il taglio è **dati contro
+  prosa, non per sezione di `SKILL.md`**: le due interrogazioni sono «quali righe coprono questa
+  clausola» e «quali clausole sono scoperte», e nessuna delle due è per sezione. Da fare qui e non in
+  1c, perché il formato lo detta il consumatore e il consumatore è questo validator.
+  - **Sede e commit sono rigenerabili da git**, quindi li emette lo script invece di fidarsi delle
+    celle scritte a mano. Il commit dell'ultima riscrittura è quello che ha cambiato il **testo** della
+    clausola, **non `git blame` della riga**: le 16 divergenze in fondo alla mappa sono righe
+    rimandate a capo da una modifica vicina, e un ri-ancoraggio dedotto dal blame azzererebbe `×k` su
+    righe che nessuno ha toccato.
+  - **L'ancoraggio non è rigenerabile** e si mantiene a mano: per nove righe su undici è un'inferenza,
+    e i quattro `unresolved` sono fallimenti registrati, non celle da riempire.
 - [ ] Implementare lo **scarto per voce**: la voce cade, il documento resta, ogni scarto esce con il
   campo mancante e il motivo in forma leggibile dal report. **Nessuna rigenerazione.**
 - [ ] Test del validator su artefatti reali: `PLAN-CC-CON-4.IMPROVEMENT.md` deve produrre voci
