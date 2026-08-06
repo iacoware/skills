@@ -88,7 +88,7 @@ cycle · plans · tools · gen <model and effort per side> · verdict <instrumen
 - **tools** are `plans` when the generated artifacts suffice, plus `sources`, `brief` and
   `validator` when needed.
 - **gen** is the model and effort that generated each candidate. For CON-1…CON-5 this was never
-  recorded — the cell says `gen unrecorded` and `support/AGENT-PLAN-MAP.md` (Fase 1b) is what will
+  recorded — the cell says `gen unrecorded` and `support/AGENT-PLAN-MAP.md` (Fase 1b-ii) is what will
   carry it. `CC`/`CX` name the harness, not the model.
 - **verdict** is the instrument that produced the verdict. CON-5 was a partial cycle: its verdicts
   come from offline human reading, not from a `verdetto` call.
@@ -329,7 +329,7 @@ indirect consequence. If the ledger were a separate artifact versioned next to t
   like a skill regression without being one.
 - **Model and effort of CON-1…CON-5.** Every `Measured on` cell carries `gen unrecorded`: which
   model and which effort generated `CC` and `CX` was never recorded. `support/AGENT-PLAN-MAP.md`
-  (Fase 1b) is the artifact that will carry it; the cells are filled from there when it exists.
+  (Fase 1b-ii) is the artifact that will carry it; the cells are filled from there when it exists.
 - **Changes of the five commits with no ledger row.** `d88328f` (non-hollow walking skeleton) and
   `b0d6dc5` (restriction to high-level roadmaps) are not reconstructable from the intersection of
   the two `REVIEW`s: the first appears in neither `also present` section, the second has no verified

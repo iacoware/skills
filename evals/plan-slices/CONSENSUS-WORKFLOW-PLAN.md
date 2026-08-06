@@ -223,11 +223,31 @@ scarto diagnosticabile invece di sparire.
 Restano fuori, e sono di altre fasi: la mappa non registra ancora ciò che CON-6 cambierà (Fase 4) e
 i quattro ancoraggi `unresolved` restano fallimenti registrati, non celle da riempire.
 
-## Fase 1b — I quattro prompt
+## Fase 1b — I quattro prompt e la mappa dei generatori
+
+**Splittata in due sessioni il 2026-08-06**, prima di iniziarla. Non è una divisione per volume: i
+due blocchi hanno contesti disgiunti. Scrivere i prompt chiede il template, `CONSENSUS-WORKFLOW.md` e
+il `PROMPTS.md` legacy; ricostruire chi ha generato i piani CON-1…CON-5 chiede diciotto artefatti e
+la storia di git, che non dicono niente su come si scrive un prompt. **Le due sotto-fasi non
+dipendono l'una dall'altra** e possono andare in qualsiasi ordine; entrambe sono precondizione della
+Fase 2.
+
+### Fase 1b-i — I quattro prompt
 
 **Precondizioni:** Fase 1a. **Chiamate provider:** zero.
 
 I prompt **citano** il template, non lo duplicano.
+
+I quattro stanno in una sessione sola e non si separano ulteriormente: la simmetria cieca è un
+invariante **fra** `improve` e `review` — stesse sezioni, `Report A`/`Report B`, mai «il tuo
+report» — e scriverli in sessioni diverse è il modo tipico di farli divergere. `verdetto` e
+`recidiva` sono più corti e condividono la lettura del registro. Se il budget di una sessione non
+regge, il taglio è dopo `improve`, `review` e la nota a `PROMPTS.md`: sono i due prompt che il ciclo
+usa per primi, e `verdetto` e `recidiva` restano lavoro dichiarato invece che lavoro a metà.
+
+Base di partenza asimmetrica, e va saputo prima di stimare: `improve` e `review` esistono in
+`PROMPTS.md` come `## CREATE IMPROVEMENTS` e `## CREATE REVIEW 2` e si riscrivono — inglese, cecità,
+simmetria; `verdetto` e `recidiva` **non esistono** e nascono da zero.
 
 - [ ] `prompts/improve.prompt.md`: payload cieco simmetrico, un solo documento per valutatore
   sull'unione dei difetti dei due candidati, divieto esplicito di leggere `support/`, i due campi
@@ -244,13 +264,8 @@ I prompt **citano** il template, non lo duplicano.
 - [ ] `prompts/recidiva.prompt.md`: una sola chiamata, input i due `IMPROVEMENT` più **tutte** le
   righe, dormienti incluse. Output l'elenco delle coppie `voce → riga | nessuna`. Nessuno scalare.
 - [ ] Aggiungere in testa a `PROMPTS.md` la nota che è uno scratchpad umano e che la sorgente
-  normativa è `prompts/`.
-- [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
-- [ ] **Riempire lo slot `gen` di `Misurato su` in tutte le righe del registro** dai dati della
-  mappa — sono diciassette dopo lo split della Fase 0c. Oggi portano tutte `gen unrecorded`: modello
-  ed effort di CON-1…CON-5 non esistono in nessun artefatto, e `CC`/`CX` nominano l'harness, non il
-  modello. Se la mappa non riesce a ricostruirli, le celle restano `unrecorded` e lo si dichiara una
-  volta invece di lasciarlo sembrare una svista.
+  normativa è `prompts/`. Va in questa sessione e nello stesso commit del primo prompt estratto:
+  finché non c'è, `prompts/` e `PROMPTS.md` sono due sorgenti senza gerarchia dichiarata.
 
 **Verifica:** nessun prompt nomina `REFERENCE-PLAN.md`, `support/`, i path o i nomi dei generatori;
 `review` non contiene la parola «tuo»; i nomi degli artefatti citati coincidono con quelli della
@@ -258,9 +273,27 @@ struttura del report.
 
 **Rischio:** i prompt riscritti non sono mai stati eseguiti. È esattamente ciò che la Fase 2 misura.
 
+### Fase 1b-ii — Mappa dei generatori e slot `gen`
+
+**Precondizioni:** nessuna; indipendente dalla 1b-i. **Chiamate provider:** zero.
+
+I due deliverable sono in ordine, non in parallelo: la mappa è la fonte da cui si riempiono le celle.
+
+- [ ] Creare `support/AGENT-PLAN-MAP.md` con le righe di CON-1…CON-5 e il formato per i cicli futuri.
+- [ ] **Riempire lo slot `gen` di `Misurato su` in tutte le righe del registro** dai dati della
+  mappa — sono diciassette dopo lo split della Fase 0c. Oggi portano tutte `gen unrecorded`: modello
+  ed effort di CON-1…CON-5 non esistono in nessun artefatto, e `CC`/`CX` nominano l'harness, non il
+  modello. Se la mappa non riesce a ricostruirli, le celle restano `unrecorded` e lo si dichiara una
+  volta invece di lasciarlo sembrare una svista.
+
+**Verifica:** ogni riga del registro porta uno slot `gen` risolto o `unrecorded` con la ragione
+dichiarata una volta sola; la mappa nomina un generatore per ogni `PLAN-*` sotto
+`recipe-app/results/`; il file resta escluso da ogni payload.
+
 ## Fase 1c — Registro, mappa e report
 
-**Precondizioni:** Fase 0a. Indipendente da 1a e 1b: la mappa che 1a consuma è già consegnata.
+**Precondizioni:** Fase 0a. Indipendente da 1a e da 1b-i/1b-ii: la mappa che 1a consuma è già
+consegnata.
 **Chiamate provider:** zero.
 
 **Due deliverable su tre sono fatti** il 2026-08-06, in un solo attraversamento del confine:
@@ -316,7 +349,7 @@ chiamata, e il report CON-5 riscritto nella sua forma non perde nessuno dei dati
 
 ## Fase 2 — Ciclo CON-6 manuale
 
-**Precondizioni:** Fasi 0c, 1a, 1b, 1c. `0c` è esplicita e non solo transitiva: un ciclo eseguito su
+**Precondizioni:** Fasi 0c, 1a, 1b-i, 1b-ii, 1c. `0c` è esplicita e non solo transitiva: un ciclo eseguito su
 righe multi-affermazione produce verdetti che lo split dovrebbe poi disaggregare a posteriori.
 **Chiamate provider:** **9** — 2 generazione, 2 `improve`,
 2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high`**. Richiede **autorizzazione esplicita** dopo

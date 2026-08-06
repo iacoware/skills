@@ -644,7 +644,10 @@ sola parte del sistema che ha retto cinque cicli senza degradare.
 - **Fase 0c — una riga, una affermazione.** Split delle quattro righe multi-affermazione, prima che
   1a congeli gli id nella mappa e prima che CON-6 misuri per riga. Zero chiamate.
 - **Fase 1a — contratto.** Template e validator degli `IMPROVEMENT`. Zero chiamate.
-- **Fase 1b — prompt.** I quattro prompt sotto `prompts/`, che citano il template invece di duplicarlo.
+- **Fase 1b-i — prompt.** I quattro prompt sotto `prompts/`, che citano il template invece di
+  duplicarlo. Zero chiamate.
+- **Fase 1b-ii — mappa dei generatori.** `support/AGENT-PLAN-MAP.md` e lo slot `gen` delle righe del
+  registro. Indipendente da 1b-i. Zero chiamate.
 - **Fase 1c — registro e mappa.** Traduzione, split della narrativa, migrazione semantica,
   riclassificazione, mappa clausola → riga, struttura del report.
 - **Fase 2 — CON-6 manuale.** Nove esecuzioni, effort `high`.

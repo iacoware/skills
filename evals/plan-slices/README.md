@@ -37,9 +37,10 @@ appear, because they are evidence.
 | Path | Role |
 |---|---|
 | `CONSENSUS-WORKFLOW.md` | The tool and why it exists. Read this first. |
-| `CONSENSUS-WORKFLOW-PLAN.md` | The work left to do, one cold session per phase. |
+| `CONSENSUS-WORKFLOW-PLAN.md` | The work left to do, one cold session per phase. Opens with a routing table. |
+| `CONSENSUS-WORKFLOW-PLAN-CLOSED.md` | Closed phases, kept for *why* a decision was taken. No session needs it to work. |
 | `REGRESSION-LEDGER.md` | Falsifiable claims implied by applied changes, with state `not refuted ×k`. |
-| `prompts/` | Normative source of the four phase prompts. Created in Phase 1b. |
+| `prompts/` | Normative source of the four phase prompts. Created in Phase 1b-i. |
 | `assets/improvement-template.md` | The conformance contract an `IMPROVEMENT` entry fills. Phase 1a. |
 | `support/` | `CLAUSE-ROW-MAP.md` with its extracted `clause-row-map.tsv`, and `AGENT-PLAN-MAP.md`. **Excluded from every payload.** |
 | `scripts/consensus/` | Cycle code. `validate_improvement.py` and `extract_clause_map.py` exist; provider invocation and orchestrator are Phases 3 and 5. |
