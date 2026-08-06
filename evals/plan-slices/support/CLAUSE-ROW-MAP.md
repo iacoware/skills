@@ -14,6 +14,34 @@ either the member is now a row of its own or the anchor is recorded against the 
 **Measured on:** `SKILL.md` at `28b5460`, 417 lines, whole file. Commit attribution from
 `git blame` plus the diff of each of the 19 commits that ever touched the file.
 
+## Where the records live
+
+No script parses this file. `scripts/consensus/extract_clause_map.py` projects the tables of *The
+map* into **`support/clause-row-map.tsv`**, and that is the only form `validate_improvement.py`
+reads — one record per clause, columns `id`, `sites`, `section`, `clause`, `rows`, `anchoring`,
+`in`, `last`, `site_last`. Regenerate it with `make clause-map` after any edit to the tables. The
+two interrogations it answers are *which rows cover this clause* and *which clauses are uncovered*;
+neither is per section of `SKILL.md`, which is why the split is data against prose rather than by
+section.
+
+Everything below *Row index* stays here: counting rule, unresolved anchors, anchors resolving on the
+brief, sample verification and blame divergences are read by people, not by tools.
+
+What the extraction regenerates and what it carries over:
+
+- **`sites`** are checked against `SKILL.md` at `HEAD`; a span past the end of the file stops the
+  extraction.
+- **`site_last`** is computed — the newest commit that changed any text inside the clause's span.
+  It is what `git blame` says, one clause at a time, and it is emitted next to `last` rather than
+  in place of it.
+- **`last`** is carried from the tables. It cannot be derived at this granularity: a clause is a
+  sentence and a line often carries two, so `SKILL.md:43` holds `C-013` and the opening of `C-014`
+  and any span-based derivation gives `C-013` the rewrite of its neighbour. That is what the
+  divergences at the end of this file record, and a re-anchoring deduced from them would reset `×k`
+  on rows nobody touched. What the tool does check is that `last` is `site_last` or older: a clause
+  cannot have been rewritten after the last change to the text around it. All 205 pass.
+- **`in`**, **`rows`** and **`anchoring`** are inferences of this map and are carried over verbatim.
+
 ## What a clause is here
 
 One entry per **normative sentence**: a sentence that imposes an obligation, a prohibition, or a
