@@ -22,8 +22,8 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 0b — conversione | aperta, senza dipendenze | i documenti da convertire |
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
-| **1c — report template** | **aperta, prossima** — resta un deliverable | `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, `assets/improvement-template.md` |
-| 2 — CON-6 | aperta, **9 chiamate, autorizzazione** | `prompts/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
+| **2 — CON-6** | **aperta, prossima** — **9 chiamate, autorizzazione** | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -109,63 +109,6 @@ senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare inde
 **Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
 citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
 
-## Fase 1c — Registro, mappa e report
-
-**Precondizioni:** Fase 0a. Indipendente da 1a e da 1b-i/1b-ii: la mappa che 1a consuma è già
-consegnata.
-**Chiamate provider:** zero.
-
-**Due deliverable su tre sono fatti** il 2026-08-06, in un solo attraversamento del confine:
-
-- **la mappa clausola → riga** — `support/CLAUSE-ROW-MAP.md`: 205 clausole normative, 40 coperte
-  (20%), di cui 20 restatement, 165 scoperte. Dichiara per ogni voce come l'ancoraggio è stato
-  ottenuto — `declared`, `reconstructed`, `unresolved` — più regola di conteggio, divergenze di blame
-  e verifica del campione. Quattro ancoraggi restano `unresolved` e li decide la Fase 4;
-- **il registro** — estrazione della narrativa in `recipe-app/results/CONSENSUS-CON-5.REPORT.md`,
-  traduzione, migrazione semantica, riclassificazione a `intersection-theme`, ri-ancoraggio di
-  `R-002` e `R-008`, e i due assorbimenti del 2026-08-06. Le regole d'uso del registro sono il
-  record: non si riassumono qui.
-
-Resta il terzo.
-
-- [ ] **`evals/plan-slices/assets/report-template.md`**, in inglese: la struttura di
-  `recipe-app/results/CONSENSUS-CON-N.REPORT.md`. Sta in `assets/` accanto a
-  `improvement-template.md`, non dentro `CONSENSUS-WORKFLOW.md`, perché il join `report` della Fase 5
-  lo rende come rende gli altri template. **Contatori in testa:**
-
-  ```
-  SKILL.md   417 → 451   (+34)
-  voci applicate         5
-    riformulazioni       0
-    aggiunte             5   ← ognuna con la ragione della riformulazione scartata
-  righe di registro nuove 5   (2 intersezione, 1 intersezione-tema, 2 giudizio)
-  righe ri-ancorate       0   (contatore riportato a ×0)
-  affermazioni assorbite  0
-  righe attive           17 → 22
-  voci scartate dal gate  3   (per campo mancante)
-  verdetti scartati       0   (citazione non risolta)
-  recidiva                2 coppie su 9 voci
-  ```
-
-  `righe attive N → M` è per il registro ciò che `0 riformulazioni su 5 aggiunte` è per lo skill: il
-  contatore che morde sull'accumulo invece che sul merito. Ri-ancoraggio e assorbimento non aggiungono
-  righe — l'assorbimento anzi ne toglie una se il membro assorbito era tutta la riga — quindi una
-  crescita di `righe attive` accusa sempre e solo le aggiunte. `affermazioni assorbite` è ciò che il
-  veto deve leggere per primo: è l'unico contatore che dice che una previsione è **uscita** dal file,
-  e ogni assorbimento va riletto perché la fusione può aver allargato ciò che la riga afferma.
-
-  Poi: esito del validator strutturale; voci applicate con id, hunk e origine; **voci classificate
-  condivise da un solo `REVIEW`** — la misura di instabilità che sblocca la Fase 7 e che oggi nessuno
-  produce; elenco dei punti che richiedono lettura umana; log degli scarti; coppie di recidiva;
-  verdetti con le loro citazioni.
-
-  Il report CON-5 è già un'istanza parziale della struttura, non un modello: è un ciclo parziale,
-  quindi i contatori senza valore portano `n/a — partial cycle` invece di uno zero che si leggerebbe
-  come misura. Il template dichiara quella convenzione.
-
-**Verifica:** il template rende ogni contatore derivabile dagli artefatti del ciclo senza una
-chiamata, e il report CON-5 riscritto nella sua forma non perde nessuno dei dati che porta oggi.
-
 ## Fase 2 — Ciclo CON-6 manuale
 
 **Precondizioni:** Fasi 0c, 1a, 1b-i, 1b-ii, 1c. `0c` è esplicita e non solo transitiva: un ciclo eseguito su
@@ -185,7 +128,9 @@ divario è più largo, non più stretto.
 - [ ] `make validate` su entrambi.
 - [ ] Eseguire `improve`, il gate, `review`, `verdetto` e `recidiva` a mano, copiando i prompt da
   `prompts/`.
-- [ ] Scrivere `CONSENSUS-CON-6.REPORT.md` nella struttura di Fase 1c, contatori in testa.
+- [ ] Scrivere `CONSENSUS-CON-6.REPORT.md` nella forma di `assets/report-template.md`, contatori in
+  testa. È la prima istanza del template: ogni punto in cui non regge si corregge nel template, non
+  nel report.
 - [ ] Applicare le sole voci che il filtro licenzia, una riga di registro per voce, `Commit:
   (pending)`. **Non committare dal workflow.** Leggere i contatori, poi `git diff`, poi decidere.
 - [ ] Correggere `prompts/`, `assets/`, `CONSENSUS-WORKFLOW.md` e `workflow/` dove la procedura non
@@ -338,7 +283,7 @@ nuove chiamate; confronto degli artefatti con quelli prodotti a mano nella Fase 
 Far produrre alla fase `review` un output strutturato minimo — id, titolo, categoria, lato che porta
 il rimedio — così che l'intersezione la calcoli il codice invece del modello.
 
-La condizione di sblocco è ora **osservabile**: il report di Fase 1c pubblica le voci classificate
-condivise da un solo `REVIEW`. Prima la fase diceva «si valuta se due cicli mostrano che la
+La condizione di sblocco è ora **osservabile**: ogni report pubblica le voci classificate condivise
+da un solo `REVIEW` — sezione *Classification instability* di `assets/report-template.md`. Prima la fase diceva «si valuta se due cicli mostrano che la
 classificazione è instabile», ma niente misurava quell'instabilità, quindi la condizione non poteva
 verificarsi.

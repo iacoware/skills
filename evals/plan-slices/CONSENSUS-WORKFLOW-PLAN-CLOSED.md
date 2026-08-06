@@ -284,3 +284,50 @@ Cosa è stato deciso mentre si eseguiva:
   riusano, e il piano è stato corretto di conseguenza. Il limite dichiarato: i metadata v1 non portano
   hash del candidato, quindi il vincolo è sull'**esistenza**, non sull'identità del testo committato
   due giorni dopo.
+
+## Fase 1c — Registro, mappa e report
+
+**Precondizioni:** Fase 0a. **Chiamate provider:** zero.
+
+Tre deliverable, due chiusi il **2026-08-06** e il terzo il **2026-08-07**:
+
+- **la mappa clausola → riga** — `support/CLAUSE-ROW-MAP.md`: 205 clausole normative, 40 coperte
+  (20%), di cui 20 restatement, 165 scoperte, con `declared`/`reconstructed`/`unresolved` per ogni
+  ancoraggio. I quattro `unresolved` restano e li decide la Fase 4;
+- **il registro** — narrativa estratta in `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, traduzione,
+  migrazione a `non smentita ×k`, riclassificazione a `intersection-theme`, ri-ancoraggio di `R-002`
+  e `R-008` e i due assorbimenti;
+- **il template del report** — `assets/report-template.md`, in inglese, accanto a
+  `improvement-template.md` perché il join `report` della Fase 5 lo renderà come rende gli altri.
+
+Cosa è stato deciso mentre si scriveva il terzo:
+
+- **I sotto-contatori dei rimedi sono tre, non due.** Lo schizzo del piano aveva `riformulazioni` e
+  `aggiunte`; `improvement-template.md` ammette **`reformulation`, `reach-change`, `addition`**.
+  Con due, i sotto-contatori non sommano a `entries applied` e sparisce proprio la `reach-change`,
+  che è l'unica voce capace di produrre un assorbimento — cioè di far **uscire** una previsione dal
+  registro, il contatore che il veto legge per primo. Il template dichiara la somma come invariante:
+  se non torna, una voce si è persa fra il gate e l'applicazione.
+- **Le etichette dicono `discarded`, non `rejected`.** È la parola del validator (`DISCARD`), del log
+  degli scarti e di `workflow/CONFORMANCE.md`. Il report CON-5 scrive `rejected`: nessun dato cambia,
+  ma strumento e report smettono di nominare la stessa cosa in due modi.
+- **Tre sezioni nascono dalla verifica su CON-5, non dallo schizzo.** La verifica chiedeva che CON-5
+  riletto nella forma nuova non perdesse dati; tre pezzi non avevano casa. *What produced the
+  verdicts* — senza cui «CON-5 non è prova che il rilevatore giri da solo» sparisce, mentre lo slot
+  `verdict` di `Misurato su` registra solo lo strumento, non la conseguenza. *Consequences carried
+  into the ledger*, che ingloba ri-ancoraggi, assorbimenti e split e aggiunge *Other consequences*
+  per ciò che il ciclo scrive in una riga senza che un contatore lo mostri. *Artifact defects with no
+  row*, per i difetti reali che nessuna riga dichiarava chiusi e che quindi non sono regressioni.
+- **`Deviations from the procedure` è la quarta sezione aggiunta.** La verifica di Fase 2 chiede che
+  ogni scostamento sia annotato e non diceva dove: `«none»` è un'affermazione sulla procedura, il
+  silenzio no.
+- **La tabella di derivazione dei contatori sta nel template e non si copia nell'istanza.** La
+  verifica chiedeva che ogni contatore fosse derivabile dagli artefatti senza una chiamata: scritta,
+  è controllabile; sottintesa, è asserita.
+- **I nomi `PLAN-*-CON-N.VERDICTS.md` e `CONSENSUS-CON-N.RECIDIVA.md` sono fissati qui**, per la
+  prima volta. Nessun ciclo li ha prodotti e i prompt lasciano il path allo slot `{{output}}`; la
+  Fase 5 li congela nell'orchestratore. `IMPROVEMENT` e `REVIEW` seguono la convenzione di CON-4.
+- **CON-5 non è stato riscritto.** La verifica è stata eseguita per mappatura, sezione per sezione:
+  ogni contenuto del report attuale ha una casa nel template, e le tre sezioni che mancavano sono
+  state aggiunte al template invece che tagliate dal report. Ricucire un record sotto intestazioni
+  nuove sposta testo senza aggiungere un dato, e la narrativa italiana di CON-5 è prova.
