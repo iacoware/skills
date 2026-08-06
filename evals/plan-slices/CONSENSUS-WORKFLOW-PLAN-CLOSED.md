@@ -16,8 +16,9 @@ Lingua: italiano come il piano da cui è estratto. La Fase 0b lo converte insiem
 **Precondizioni:** nessuna. **Chiamate provider:** zero. **Andava per prima.**
 
 **Fatta il 2026-08-06.** La regola, le due esclusioni permanenti con la loro ragione e la nota su
-`EVALUATION-BRIEF.md` e `SKILL.md` vivono in `CONSENSUS-WORKFLOW.md` § *La lingua del progetto* e in
-`README.md` § *Language*. I due documenti sono il record; qui non si duplicano.
+`EVALUATION-BRIEF.md` e `SKILL.md` vivono in `README.md` § *Language*, che è il record; qui non si
+duplicano. La copia italiana che `CONSENSUS-WORKFLOW.md` ne portava è stata ridotta a un puntatore
+nella Fase 0d.
 
 La conversione dei documenti esistenti è Fase 0b e non blocca niente; separarle è ciò che evita di
 scrivere in italiano tutto ciò che nasce dalla Fase 0 in poi.
@@ -80,8 +81,8 @@ l'assorbimento di `R-002` m1.
 `scripts/consensus/validate_improvement.py`, con `scripts/consensus/extract_clause_map.py` che
 proietta la mappa nei record che il validator legge. I documenti sono il record: il template dichiara
 la forma, la mappa dichiara la separazione dati/prosa in § *Where the records live*, e la misura del
-gate su CON-4, il codice di uscita e i tre residui stanno in `CONSENSUS-WORKFLOW.md` § *Il contratto
-di conformità*. Qui non si duplicano.
+gate su CON-4, il codice di uscita e i tre residui stanno in `workflow/CONFORMANCE.md`. Qui non si
+duplicano.
 
 Cosa è stato deciso mentre si scriveva, e non si legge dagli artefatti:
 
@@ -109,3 +110,44 @@ Cosa è stato deciso mentre si scriveva, e non si legge dagli artefatti:
 
 **Restano fuori, e sono di altre fasi:** la mappa non registra ancora ciò che CON-6 cambierà (Fase 4)
 e i quattro ancoraggi `unresolved` restano fallimenti registrati, non celle da riempire.
+
+## Fase 0d — Split di `CONSENSUS-WORKFLOW.md`
+
+**Precondizioni:** nessuna. **Chiamate provider:** zero. **Non è un confine di strumento:** nessuno
+di questi documenti entra in un payload, che si compone da allowlist — brief, fonti, candidati.
+
+**Fatta il 2026-08-06.** Il documento era **707 righe** rilette a ogni sessione fredda per lavorare su
+fasi che ne usano un quinto ciascuna. Ora l'hub è **121 righe** — procedura, vocabolario, tabella di
+rotta — e il resto sta in `workflow/`: `CYCLE.md` 91, `CONFORMANCE.md` 130, `LEDGER.md` 126,
+`RATIONALE.md` 157, `EVIDENCE.md` 104. Una sessione 1b-i legge 212 righe invece di 707.
+
+Cosa è stato deciso mentre si eseguiva:
+
+- **Due sezioni sono state cancellate, non spostate**, perché erano duplicati già divergenti.
+  § *La lingua del progetto* ripeteva in italiano `README.md` § *Language*, che è il record dichiarato;
+  § *Stato dell'automazione* ripeteva l'elenco delle fasi del piano e portava già la Fase 1c come una
+  voce sola quando il piano ne registrava due deliverable su tre consegnati, e la Fase 3 senza
+  l'ambizione ridotta. Restano due puntatori.
+- **Il taglio è per consumatore, non per argomento.** `CYCLE.md`, `CONFORMANCE.md` e `LEDGER.md` sono
+  i tre file che una fase apre per **fare**; `RATIONALE.md` e `EVIDENCE.md` non servono a nessuna fase
+  e si aprono per sapere perché una decisione poggia su cosa. `EVIDENCE.md` è isolato anche per una
+  seconda ragione: è l'unico blocco che ogni ciclo riscrive, e mescolato alla prosa normativa rendeva
+  invisibile quale parte del documento è misura e quale è regola.
+- **Cade l'invariante «autoconsistente: si legge in una sessione nuova senza altro contesto».** Lo
+  sostituisce la tabella *Cosa aprire* dell'hub, cioè la stessa forma della *Rotta* del piano, che
+  regge già. Il rischio dichiarato: una tabella di rotta sbagliata è una sessione che decide senza
+  sapere perché — lo stesso modo di fallimento che il registro chiama *«porta con nessuno alla
+  maniglia»*.
+- **Solo spostamenti, salvo tre punti.** Le due cancellazioni qui sopra; la compressione di
+  § *L'obiettivo* in *Cosa decide, e con quale errore*, con l'originale conservato in `RATIONALE.md`;
+  e la lapide del grading fusa in `RATIONALE.md` § *Perché il grading system è abbandonato*, che il
+  testo stesso indicava come sede delle sue due ragioni.
+- **Otto riferimenti in ingresso puntavano per titolo di sezione** e sono stati corretti nello stesso
+  passaggio, incluso quello del report CON-5: un artefatto storico non si traduce e non si riscrive,
+  ma un puntatore stale si ripara, come già fatto sui tre della mappa in Fase 1a. Con l'occasione è
+  caduto il residuo di Fase 0b su `CONSENSUS-WORKFLOW.md:128`, che rimandava a *Formulazioni
+  riscritte* del registro invece che del report CON-5.
+
+**Conseguenza sulla Fase 0b:** la conversione in inglese diventa incrementale, un file per volta,
+invece di un blocco da 707 righe. Ed è la ragione dell'ordine: split prima, traduzione poi. Fatti
+insieme, il diff non avrebbe distinto gli spostamenti dalle riscritture.

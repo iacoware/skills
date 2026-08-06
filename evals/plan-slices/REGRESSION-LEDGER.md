@@ -63,7 +63,7 @@ now under `prompts/`.
 ### `Provenance` and the initial `k`
 
 How the row itself came to exist. **No row starts at `×1` by default**: the ledger was populated
-retroactively — see `CONSENSUS-WORKFLOW.md` § *Lo stato dell'evidenza* — so the initial counter
+retroactively — see `workflow/EVIDENCE.md` — so the initial counter
 descends from this cell.
 
 | Value | Meaning | Initial `k` |

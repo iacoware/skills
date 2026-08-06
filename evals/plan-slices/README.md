@@ -3,7 +3,8 @@
 Two tools have lived in this directory. Only one is in service.
 
 - **Consensus cycle — active.** Decides whether a change to `skills/plan-slices/SKILL.md` made the
-  skill worse. Entry point: `CONSENSUS-WORKFLOW.md`, which is self-contained.
+  skill worse. Entry point: `CONSENSUS-WORKFLOW.md`, which carries the procedure and routes to
+  `workflow/` for everything else.
 - **Grading system — abandoned on 2026-08-06.** Not suspended, not behind a gate. The code and its
   documents stay in git and are recoverable from history; they are not maintained.
 
@@ -12,9 +13,10 @@ Two tools have lived in this directory. Only one is in service.
 English is the project language as of 2026-08-06. **Every new artifact is born in English**:
 prompts, templates, validators, reports, ledger rows, commit messages.
 
-Human documents still written in Italian — `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`,
-`NOTES.md`, `PROMPTS.md` — are a backlog, not an exception. Phase 0b converts them and blocks
-nothing. `REGRESSION-LEDGER.md` is already migrated.
+Human documents still written in Italian — `CONSENSUS-WORKFLOW.md`, `workflow/`,
+`CONSENSUS-WORKFLOW-PLAN.md`, `NOTES.md`, `PROMPTS.md` — are a backlog, not an exception. Phase 0b
+converts them, one file at a time since Phase 0d split them, and blocks nothing.
+`REGRESSION-LEDGER.md` is already migrated.
 
 **Two exclusions are permanent** and do not expire with Phase 0b:
 
@@ -36,7 +38,12 @@ appear, because they are evidence.
 
 | Path | Role |
 |---|---|
-| `CONSENSUS-WORKFLOW.md` | The tool and why it exists. Read this first. |
+| `CONSENSUS-WORKFLOW.md` | The tool: the ten steps, the vocabulary, and a routing table. Read this first. |
+| `workflow/CYCLE.md` | Detailed rules of the cycle steps: what applies itself, bidirectional `improve`, blindness, tool boundaries. |
+| `workflow/CONFORMANCE.md` | The step-4 gate: why it exists, the form it imposes, discards, what it does not measure. |
+| `workflow/LEDGER.md` | The ledger mechanism: dormancy, why `recidiva` is one call, what to do when a verdict falsifies a row. |
+| `workflow/RATIONALE.md` | Why the decisions were taken this way. No phase needs it to work. |
+| `workflow/EVIDENCE.md` | What the tool has actually measured, and the limits that remain. The one file every cycle updates. |
 | `CONSENSUS-WORKFLOW-PLAN.md` | The work left to do, one cold session per phase. Opens with a routing table. |
 | `CONSENSUS-WORKFLOW-PLAN-CLOSED.md` | Closed phases, kept for *why* a decision was taken. No session needs it to work. |
 | `REGRESSION-LEDGER.md` | Falsifiable claims implied by applied changes, with state `not refuted ×k`. |

@@ -39,7 +39,7 @@ structural validator            n/a — not run on the two candidates as part of
 Reading of the counters, for the record: the cycle applied **two reformulations and zero
 additions**, which is the shape `improve` bidirezionale was later built to make reachable from
 inside the workflow. The skill still grew by 6 lines — a reformulation is not free — and the ledger
-grew by 2 rows on 9. `CONSENSUS-WORKFLOW.md` § *Il cricchetto* draws the consequence: what entered as
+grew by 2 rows on 9. `workflow/RATIONALE.md` § *Il cricchetto* draws the consequence: what entered as
 an addition was the ledger row, not the rule.
 
 Line counts verified against git: `87150d3^` 383, `87150d3` 387 (`+7/-3`), `eb926bb` 389 (`+4/-2`).

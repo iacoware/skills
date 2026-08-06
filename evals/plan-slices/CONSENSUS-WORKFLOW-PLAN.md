@@ -18,8 +18,9 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | Fase | Stato | Oltre a questo file, apri |
 |---|---|---|
 | 0a, 0, 0c, 1a | **chiuse** — `f659c8b`, `f659c8b`, `88a4e9b`, `278edfd` | `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`, solo per sapere *perché* |
+| 0d — split dei documenti | **chiusa** — 2026-08-06 | come sopra |
 | 0b — conversione | aperta, senza dipendenze | i documenti da convertire |
-| **1b-i — prompt** | **aperta, prossima** | `assets/improvement-template.md`, `PROMPTS.md`, `CONSENSUS-WORKFLOW.md` §§ *Il ciclo*, *Cecità e simmetria* |
+| **1b-i — prompt** | **aperta, prossima** | `assets/improvement-template.md`, `PROMPTS.md`, `CONSENSUS-WORKFLOW.md` § *Il ciclo*, `workflow/CYCLE.md` |
 | **1b-ii — mappa generatori** | **aperta, indipendente da 1b-i** | `recipe-app/results/PLAN-*`, `git log`, `REGRESSION-LEDGER.md` § *`Measured on`* |
 | 1c — report template | aperta, resta un deliverable | `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, `assets/improvement-template.md` |
 | 2 — CON-6 | aperta, **9 chiamate, autorizzazione** | `prompts/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
@@ -48,13 +49,13 @@ Non si ridiscutono all'inizio di ogni sessione.
   che il generico non riempie, non un giudizio con una soglia. **Niente soglie.** Una voce non
   conforme si **scarta e si registra**, con **un solo tentativo**, e un lato a zero voci conformi non
   blocca il ciclo. Forma, scarto, codice di uscita e cosa il gate *non* misura stanno in
-  `CONSENSUS-WORKFLOW.md` § *Il contratto di conformità* e in `assets/improvement-template.md`; qui
-  non si duplicano.
+  `workflow/CONFORMANCE.md` e in `assets/improvement-template.md`; qui non si duplicano.
 - **`Origine` ha quattro valori**: `intersezione`, `intersezione-tema`, `giudizio`, `potatura`.
   **I nomi canonici sono inglesi** dal 2026-08-06, perché li scrivono il registro migrato, i prompt e
   il validator: `intersection`, `intersection-theme`, `judgement`, `pruning`. Stessa cosa per
-  `Verifica`: `validator` e `reading`. I termini italiani di questo piano e di
-  `CONSENSUS-WORKFLOW.md` restano leggibili finché la Fase 0b non li converte, e la mappa fra i due
+  `Verifica`: `validator` e `reading`. I termini italiani di questo piano, di
+  `CONSENSUS-WORKFLOW.md` e di `workflow/` restano leggibili finché la Fase 0b non li converte, e la
+  mappa fra i due
   insiemi è dichiarata nelle regole d'uso del registro. Prompt e validator non emettono mai gli
   italiani.
 - **Una voce che tocca una clausola coperta o ri-ancora la riga, o la assorbe** — due regole, non
@@ -73,7 +74,7 @@ Non si ridiscutono all'inizio di ogni sessione.
   `Commit: (pending)`. Il veto umano legge i **contatori in testa al report**, poi `git diff`.
 - **`recidiva` è una chiamata sola**, modello fisso `claude-opus-5`, e produce l'**elenco delle
   coppie** `voce improve → riga | nessuna`, non uno scalare. Controargomento ed eventi di inversione
-  sono in `CONSENSUS-WORKFLOW.md` § *Perché `recidiva` è una sola chiamata*.
+  sono in `workflow/LEDGER.md` § *Perché `recidiva` è una sola chiamata*.
 - **Dormienza a `non smentita ×3`**, verifica 1 ciclo su 3, risveglio immediato da `recidiva`.
   Sostituisce il pensionamento, che era rinviato senza trigger osservabile.
 - I prompt escono da `PROMPTS.md` e diventano l'unica sorgente sotto `prompts/`; `PROMPTS.md` resta
@@ -99,11 +100,10 @@ Non si ridiscutono all'inizio di ogni sessione.
 Documenti che nessun modello legge durante un ciclo. La conversione è lavoro bruto senza rischio e
 senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare indefinitamente.
 
-- [ ] `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`,
-  `NOTES.md`, `PROMPTS.md`.
+- [ ] `CONSENSUS-WORKFLOW.md`, i cinque file di `workflow/`, `CONSENSUS-WORKFLOW-PLAN.md`,
+  `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`, `NOTES.md`, `PROMPTS.md`. Dopo la Fase 0d sono unità
+  indipendenti: si converte un file per volta, senza attraversare tutto il documento.
 - [ ] Non toccare i documenti di grading: sono archivio.
-- [ ] Riparare `CONSENSUS-WORKFLOW.md:128`, che rimanda a *Formulazioni riscritte* del registro: la
-  sezione è in `recipe-app/results/CONSENSUS-CON-5.REPORT.md` dalla Fase 1c.
 
 **Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
 citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
@@ -251,7 +251,8 @@ I piani CON-5 **non si riusano**: sono delle 11:57 del 2026-08-04, mentre `87150
 - [ ] Scrivere `CONSENSUS-CON-6.REPORT.md` nella struttura di Fase 1c, contatori in testa.
 - [ ] Applicare le sole voci che il filtro licenzia, una riga di registro per voce, `Commit:
   (pending)`. **Non committare dal workflow.** Leggere i contatori, poi `git diff`, poi decidere.
-- [ ] Correggere `prompts/`, `assets/` e `CONSENSUS-WORKFLOW.md` dove la procedura non ha retto.
+- [ ] Correggere `prompts/`, `assets/`, `CONSENSUS-WORKFLOW.md` e `workflow/` dove la procedura non
+  ha retto.
 
 **Verifica — due criteri distinti, ed è il secondo quello che conta:**
 
