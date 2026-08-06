@@ -56,8 +56,10 @@ simmetria* records as the CON-5 → CON-6 boundary.
 
 ## The map
 
-`Attribution` is how the harness was decided. All fourteen are `reconstructed`; the evidence is
-below. Model and effort are `unrecorded` throughout, once, for the reason stated in its own section.
+`Attribution` is how the harness was decided. The fourteen CON-1…CON-5 rows are `reconstructed`; the
+evidence is below, and their model and effort are `unrecorded`, once, for the reason stated in its
+own section. The CON-6 rows are `declared`: written before the calls, which is the whole point of the
+column.
 
 | Cycle | Artifact | Role | Harness | Mode | Model · effort | Alias | Attribution |
 |---|---|---|---|---|---|---|---|
@@ -75,9 +77,28 @@ below. Model and effort are `unrecorded` throughout, once, for the reason stated
 | CON-4 | `PLAN-CX-CON-4.REVIEW.md` | `review` output | `CX` — Codex CLI | interactive session | unrecorded | — | reconstructed |
 | CON-5 | `PLAN-CC-CON-5.md` | candidate | `CC` — Claude Code CLI | interactive session | unrecorded | — | reconstructed |
 | CON-5 | `PLAN-CX-CON-5.md` | candidate | `CX` — Codex CLI | interactive session | unrecorded | — | reconstructed |
+| CON-6 | `PLAN-CC-CON-6.md` | candidate | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `high` | `CANDIDATE-B` | declared |
+| CON-6 | `PLAN-CX-CON-6.md` | candidate | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `high` | `CANDIDATE-A` | declared |
 
 CON-5 is a partial cycle: it stopped at generation, so it has no `IMPROVEMENT` and no `REVIEW`, and
 its verdicts come from offline human reading.
+
+### CON-6, decided at S1 before the two generation calls
+
+- **`SKILL.md` is `28b5460`**, the working tree clean at that commit. The installed copy under
+  `~/.agents/skills/plan-slices/` is byte-identical to it, checked with `diff -r`; the candidates are
+  therefore generated against the committed text and not against a stale install.
+- **`REPORT-A` is `CC`, `REPORT-B` is `CX`** — decided here, at S1, with the candidate assignment, so
+  that the two do not coincide: `CC` holds `CANDIDATE-B` and `REPORT-A`. The two `IMPROVEMENT` rows
+  join the table at S2, before the `improve` calls; the assignment they will carry is this one and is
+  not re-decided there.
+- **Both sides are invoked explicitly**: `/plan-slices` on Claude Code, `$plan-slices` on Codex. Since
+  `3658187` the skill carries `disable-model-invocation: true` and `allow_implicit_invocation: false`,
+  so the CON-1…CON-5 generation prompt would have produced plans generated **without the skill**. The
+  boundary is recorded in `../workflow/CYCLE.md` § *Confini di strumento*.
+- **The plans are in English**, the first cycle in which they are: `SKILL.md` writes content in the
+  language of the request, and the request is now in English per `../README.md` § *Language*. Same
+  boundary.
 
 ### How the harness was reconstructed
 
