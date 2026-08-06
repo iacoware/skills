@@ -86,18 +86,23 @@ conditional permission. Consequences:
 | C-014 | `SKILL.md:43-48` | Sweep the sources for conflicts and undecided choices, listing each entry with a reference for every side | `d977043` | `d977043` | R-003 | reconstructed |
 | C-015 | `SKILL.md:47-48` | A qualifying adjective — `cheap`, `multilingual`, `managed` — is not a choice | `d977043` | `d977043` | R-003 | reconstructed |
 | C-016 | `SKILL.md:50` | Do not silently pick a side or reopen a decision that a source declares closed | `745192f` | `d977043` | uncovered | — |
-| C-017 | `SKILL.md:50-52` | Expose every material entry with an `Open questions` item naming the slices it blocks, or a spike before the first blocked slice | `745192f` | `87150d3` | R-002 (m2), R-003 | reconstructed |
+| C-017 | `SKILL.md:50-52` | Expose every material entry with an `Open questions` item naming the slices it blocks, or a spike before the first blocked slice | `745192f` | `87150d3` | R-002, R-003 | reconstructed |
 | C-018 | `SKILL.md:54-55` | Exposing is not resolving; only a source that selects resolves an entry | `87150d3` | `87150d3` | R-010 | **declared** |
-| C-019 | `SKILL.md:56-57` | While an entry is open, no `Includes` or `Verification` bullet of a slice it blocks may assert a side | `d977043` | `87150d3` | R-002 (m1), R-010 | R-002 reconstructed; R-010 **declared** |
+| C-019 | `SKILL.md:56-57` | While an entry is open, no `Includes` or `Verification` bullet of a slice it blocks may assert a side | `d977043` | `87150d3` | R-010 | **declared**; the absorbed `R-002` m1 was anchored here by reconstruction |
 | C-020 | `SKILL.md:59-60` | Gate: every sequencing-relevant statement has applicable classifications and a source | `c001780` | `c001780` | uncovered | — |
 | C-021 | `SKILL.md:60` | Gate: unsupported conclusions are assumptions | `c001780` | `c001780` | uncovered | — |
 | C-022 | `SKILL.md:60` | Gate: exclusions have explicit rationale | `c001780` | `c001780` | uncovered | — |
-| C-023 | `SKILL.md:60-61` | Gate: every material conflict and undecided choice is resolved, exposed with the slices it blocks, or assigned to a spike | `745192f` | `d977043` | R-002 (r), R-003 (r) | reconstructed |
+| C-023 | `SKILL.md:60-61` | Gate: every material conflict and undecided choice is resolved, exposed with the slices it blocks, or assigned to a spike | `745192f` | `d977043` | R-002 (r), R-010 (r), R-003 (r) | reconstructed |
 
 `87150d3` rewrote `SKILL.md:50-57` (`+7/-3`, verified against the diff). It hit **C-017** (`Close` →
 `Expose`), **C-019** (rewritten), and introduced **C-018**. It did not hit the second member of
 `R-002`, which quantifies over `SKILL.md:51` — the `naming the slices it blocks` requirement, intact
 since `d977043`. Confirms the plan's *«di `R-002` la riformulazione tocca il solo primo membro»*.
+
+**That asymmetry is what the 2026-08-06 absorption acted on.** `R-002` m1 and `R-010` both landed on
+`C-019` after `87150d3` rewrote it, so `R-010` absorbed m1 and now carries the clause alone; `R-002`
+kept its second member and stayed on `C-017`. Sites that restate both members — `C-023`, `C-178` —
+now name the two rows separately.
 
 ### § 2 Map themes, outcomes, and dependencies — `SKILL.md:63-129`
 
@@ -112,8 +117,8 @@ since `d977043`. Confirms the plan's *«di `R-002` la riformulazione tocca il so
 | C-030 | `SKILL.md:80-82` | Split test: split when either capability can be cancelled, deferred, or reordered without invalidating the other's evidence; a shared entity, form, pipeline, or implementation is not a sufficient reason to merge | `745192f` | `745192f` | **uncovered** | — |
 | C-031 | `SKILL.md:83-85` | Merge test: merge when the capabilities share interaction, invariant, and learning target and neither produces useful feedback alone | `745192f` | `745192f` | uncovered | — |
 | C-032 | `SKILL.md:87-89` | Give every theme one desired outcome in product language | `c001780` | `c001780` | uncovered | — |
-| C-033 | `SKILL.md:87`, `SKILL.md:90` | Give every theme its first `NOW` product slice that validates the complete desired outcome | `c001780` | `9aa2586` | R-008 | reconstructed |
-| C-034 | `SKILL.md:92-93` | An enabler may precede that validator but cannot substitute for it unless the theme's desired outcome is itself for a developer | `9aa2586` | `eb926bb` | R-008 | reconstructed |
+| C-033 | `SKILL.md:87`, `SKILL.md:90` | Give every theme its first `NOW` product slice that validates the complete desired outcome | `c001780` | `9aa2586` | R-008 (coverage), R-011 (not an enabler) | reconstructed |
+| C-034 | `SKILL.md:92-93` | An enabler may precede that validator but cannot substitute for it unless the theme's desired outcome is itself for a developer | `9aa2586` | `eb926bb` | R-011 | **declared**; the absorbed `R-008` clause was anchored here by reconstruction |
 | C-035 | `SKILL.md:93-95` | A theme claiming that exception appends `*(Developer outcome)*` to its desired outcome in the published table | `eb926bb` | `eb926bb` | R-011 | **declared** |
 | C-036 | `SKILL.md:95-96` | A slice that validates only one capability inside a broader theme outcome is not that theme's first validator | `9aa2586` | `9aa2586` | R-008 | reconstructed |
 | C-037 | `SKILL.md:98-99` | Identify hard dependencies only: a predecessor is hard when no controlled input or narrower real precursor can make the outcome verifiable | `c001780` | `fb1ec51` | uncovered | — |
@@ -135,9 +140,11 @@ since `d977043`. Confirms the plan's *«di `R-002` la riformulazione tocca il so
 | C-053 | `SKILL.md:128-129` | Keep this map in reasoning, not in the published plan | `fb1ec51` | `fb1ec51` | uncovered | — |
 
 `eb926bb` rewrote `SKILL.md:92-96` (`+4/-2`, verified against the diff). The split of that sentence
-into **C-034** and **C-035** is deliberate: the two obligations are semicolon-joined in one sentence
-but were introduced by different commits and carry different rows, `R-008` reconstructed and `R-011`
-declared. Collapsing them would hide exactly the difference the map exists to show. **C-051** is a
+into **C-034** and **C-035** stays: the two obligations are semicolon-joined in one sentence but were
+introduced by different commits, and the map records introduction. They now carry the same row —
+`R-011` absorbed `R-008`'s enabler clause on 2026-08-06, exactly because both had landed here — and
+the anchoring cells keep the difference the map exists to show, `declared` against the absorbed
+`reconstructed`. **C-051** is a
 replacement, not a reformulation: `fb1ec51` deleted `every predecessor is classified; every hard edge
 has a valid counterfactual` and wrote this criterion in their place.
 
@@ -202,7 +209,7 @@ has a valid counterfactual` and wrote this criterion in their place.
 | C-103 | `SKILL.md:233-234` | Premature or split shared pipeline | `d977043` | `d977043` | R-006 (r) | reconstructed |
 | C-104 | `SKILL.md:235` | Theme compression | `c001780` | `c001780` | **uncovered** | — |
 | C-105 | `SKILL.md:236` | Atomization | `c001780` | `c001780` | uncovered | — |
-| C-106 | `SKILL.md:237-238` | Silent contradiction | `745192f` | `d977043` | R-002 (m1, r, partial), R-010 (r, partial) | R-002 reconstructed; R-010 **declared** |
+| C-106 | `SKILL.md:237-238` | Silent contradiction | `745192f` | `d977043` | R-010 (r, partial) | **declared** |
 | C-107 | `SKILL.md:239-242` | Deferred safety, with the declared-seam exemption | `c001780` | `2c89e7f` | uncovered | — |
 | C-108 | `SKILL.md:243-244` | Horizon dumping | `c001780` | `c001780` | uncovered | — |
 
@@ -264,7 +271,7 @@ a row.
 | C-147 | `SKILL.md:324` | Ledger: every theme to its complete product outcome and first product validator | `9aa2586` | `9aa2586` | R-008 (r) | reconstructed |
 | C-148 | `SKILL.md:325` | Ledger: every shared adapter and invariant to one complete owner | `9aa2586` | `9aa2586` | R-006 (r) | reconstructed |
 | C-149 | `SKILL.md:326` | Ledger: every named failure to its recovery and required position | `9aa2586` | `9aa2586` | R-005 (r) | reconstructed |
-| C-150 | `SKILL.md:327` | Ledger: every unresolved decision to blocked slices and its prior spike or open question | `9aa2586` | `9aa2586` | R-002 (m2, r), R-003 (r) | reconstructed |
+| C-150 | `SKILL.md:327` | Ledger: every unresolved decision to blocked slices and its prior spike or open question | `9aa2586` | `9aa2586` | R-002 (r), R-003 (r) | reconstructed |
 | C-151 | `SKILL.md:328` | Ledger: every adjacent slice pair to its split/merge verdict | `9aa2586` | `9aa2586` | uncovered | — |
 | C-152 | `SKILL.md:330-331` | Reject the draft when a mapping is missing, conflicting, duplicated incompatibly, or partial | `9aa2586` | `9aa2586` | uncovered | — |
 | C-153 | `SKILL.md:331-332` | Keep the ledger in reasoning, not the published plan | `9aa2586` | `9aa2586` | uncovered | — |
@@ -292,8 +299,8 @@ a row.
 | C-175 | `SKILL.md:370-371` | Complete when: `LATER` is evidence-dependent | `c001780` | `c001780` | R-004 (r) | reconstructed |
 | C-176 | `SKILL.md:371` | Complete when: the slice order respects every hard dependency | `fb1ec51` | `fb1ec51` | uncovered | — |
 | C-177 | `SKILL.md:371-372` | Complete when: every source behaviour has one horizon | `c001780` | `c001780` | R-004 (r) | reconstructed |
-| C-178 | `SKILL.md:372` | Complete when: no slice asserts a side of a listed conflict or undecided choice | `d977043` | `d977043` | R-002 (m1, r), R-010 (r) | R-002 reconstructed; R-010 **declared** |
-| C-179 | `SKILL.md:372-374` | Complete when: every external dependency invoked in `NOW` has a selecting source or an `Open questions` entry, and every published question names the slices it blocks | `d977043` | `d977043` | R-003 (r), R-002 (m2, r) | reconstructed |
+| C-178 | `SKILL.md:372` | Complete when: no slice asserts a side of a listed conflict or undecided choice | `d977043` | `d977043` | R-010 (r) | **declared** |
+| C-179 | `SKILL.md:372-374` | Complete when: every external dependency invoked in `NOW` has a selecting source or an `Open questions` entry, and every published question names the slices it blocks | `d977043` | `d977043` | R-003 (r), R-002 (r) | reconstructed |
 | C-180 | `SKILL.md:374` | Complete when: end-user `NOW` reaches its intended environment | `745192f` | `745192f` | uncovered | — |
 | C-181 | `SKILL.md:374-375` | Complete when: only implementation-changing questions remain | `c001780` | `c001780` | uncovered | — |
 
@@ -342,27 +349,32 @@ uncovered, and none of the eleven rows can be read as quantifying over this bran
 ## Row index
 
 All eleven rows, read from the row side. Neither direction is 1:1 — `R-004` covers nine clauses,
-`C-019` is covered by two rows.
+`C-017` is covered by two rows. No clause changed its covered/uncovered status in the 2026-08-06
+absorption, so the totals below are unaffected: the coverage moved between rows, not onto or off the
+skill.
 
 | Row | `Commit` cell | Body clauses | Restatements | Anchoring | Note |
 |---|---|---|---|---|---|
 | R-001 | `2c89e7f` | C-126, C-127 (m2) | — | m2 reconstructed; **m1 unresolved** | m1 has no clause: see below |
-| R-002 | `d977043` | C-019 (m1), C-017 (m2) | C-023, C-106 (partial), C-150, C-178, C-179 | reconstructed | m1's clause rewritten by `87150d3`; the row still names `d977043` |
+| R-002 | `d977043` | C-017 | C-023, C-150, C-179 | reconstructed | m1 absorbed into `R-010` on 2026-08-06, and C-019, C-106 and C-178 with it |
 | R-003 | `d977043` | C-014, C-015, C-017 | C-023, C-150, C-179 | reconstructed | one disjunct anchored outside `SKILL.md` |
 | R-004 | `d977043` | C-111, C-112, C-113, C-115 | C-138, C-139, C-146, C-175, C-177 | reconstructed | m2's clauses predate the row's commit (`c001780`) |
 | R-005 | `d977043`, `9aa2586` | C-123 | C-140, C-149 | reconstructed; **`9aa2586` component unresolved** | |
 | R-006 | `d977043`, `9aa2586` | C-125 | C-096, C-103, C-141, C-148 | reconstructed; **m1 second half and `9aa2586` component unresolved** | |
 | R-007 | `d977043` | C-075, C-094 | — | reconstructed | operative criterion (`Subsystem`) lives in the brief, not in `SKILL.md` |
-| R-008 | `9aa2586` | C-033, C-034, C-036 | C-147, C-172 | reconstructed | C-034 rewritten by `eb926bb`; the row still names `9aa2586` |
+| R-008 | `9aa2586` | C-033 (coverage), C-036 | C-147, C-172 | reconstructed | the enabler clause absorbed into `R-011` on 2026-08-06, and C-034 with it |
 | R-009 | `a06a5cc` | C-130, C-131 | C-142 | reconstructed | reconstructed from the commit message, which names the observed defect |
-| R-010 | `87150d3` | C-018, C-019 | C-106 (partial), C-178 | **declared** | |
-| R-011 | `eb926bb` | C-035 | — | **declared** | presupposes C-157, which has no row |
+| R-010 | `87150d3` | C-018, C-019 | C-023 (partial), C-106 (partial), C-178 | **declared**; absorbed limb reconstructed | absorbed `R-002` m1 on 2026-08-06 |
+| R-011 | `eb926bb` | C-034, C-035, C-033 (not an enabler) | — | **declared**; absorbed clause reconstructed | absorbed `R-008`'s enabler clause on 2026-08-06; presupposes C-157, which has no row |
 
-The pattern the plan predicted holds on the whole file, not only on the sample: **the anchor is
-intact exactly on the two `ex-ante` rows and drifts exactly on the reconstructed ones.** `R-010` and
-`R-011` point at clauses that still carry the wording they were written against. `R-002` and `R-008`
-point at commits that no longer own their clause — `87150d3` and `eb926bb` do. `R-005` and `R-006`
-carry a second commit in `Commit` whose clause cannot be identified at all.
+The pattern the plan predicted held on the whole file, not only on the sample: **the anchor was
+intact exactly on the two `ex-ante` rows and drifted exactly on the reconstructed ones.** `R-010` and
+`R-011` point at clauses that still carry the wording they were written against; `R-002` and `R-008`
+pointed at commits that no longer owned their clause — `87150d3` and `eb926bb` did. That is what the
+2026-08-06 absorption resolved on those two pairs: the drifted member moved into the row that was
+already anchored to the rewritten clause, instead of being re-anchored next to it. `R-005` and
+`R-006` are untouched by it and still carry a second commit in `Commit` whose clause cannot be
+identified at all.
 
 ## Unresolved anchors
 

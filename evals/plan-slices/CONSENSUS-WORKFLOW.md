@@ -7,8 +7,8 @@ Il grading system — `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-EVAL-WORKFLOW.md`
 `grader-rubric.v3.json`, `fixtures/`, `results/calibration-*/` — è **abbandonato dal 2026-08-06**.
 Non è un prerequisito di niente qui e non torna. Resta in git; la lapide è in fondo.
 
-Dal 2026-08-06 la lingua del progetto è l'**inglese**. Questo documento e il registro sono ancora in
-italiano e migrano nelle fasi 0b e 1c; ogni artefatto nuovo nasce in inglese.
+Dal 2026-08-06 la lingua del progetto è l'**inglese**. Il registro è già migrato; questo documento è
+ancora in italiano e migra nella Fase 0b. Ogni artefatto nuovo nasce in inglese.
 
 ## L'obiettivo
 
@@ -459,6 +459,14 @@ misurare un testo diverso da quello che dichiara, in silenzio. È esattamente ci
 `R-002` e a `R-008`, e la ragione per cui una clausola riformulata **ri-ancora** le righe che la
 coprono e ne azzera il contatore `×k`.
 
+Quando invece cambia la **portata** della regola — estesa, ristretta o corretta — la riga non si
+ri-ancora: **una riga sola afferma tutto** e l'affermazione che sostituisce esce dal file. È
+l'**assorbimento**, scritto da `improve` ed editato nel veto, con le regressioni assorbite conservate
+in una cella invece che in una riga. Regole e vincoli stanno in `REGRESSION-LEDGER.md` §
+*Re-anchoring and absorption*; applicato per la prima volta a mano il 2026-08-06 su `R-002` m1 →
+`R-010` e sulla clausola `Enabler` di `R-008` → `R-011`, che erano ancorate alla stessa clausola e
+contavano due volte la stessa evidenza.
+
 Lo stesso registro copre anche le regressioni **non previste**, senza un secondo artefatto: se il
 piano di miglioramento del ciclo N solleva un difetto che il ciclo N-2 aveva chiuso, quella è una
 regressione. È la fase `recidiva` a produrre quell'accoppiamento; prima era dichiarata nel registro e
@@ -588,10 +596,11 @@ convergenza del ciclo di consenso.
 
 ## Limiti che restano
 
-- **La copertura è minoranza.** Undici righe di registro contro 417 righe di `SKILL.md`. Il
-  peggioramento è rilevabile **solo sulla superficie coperta**; su tutto il resto è invisibile, e non
-  esiste un secondo strumento che la guardi. La mappa clausola → riga della Fase 1c è ciò che rende
-  questa frase un numero invece di un'impressione.
+- **La copertura è minoranza, e ora è un numero.** `support/CLAUSE-ROW-MAP.md` conta **205 clausole
+  normative** in `SKILL.md` a `28b5460`: **40 coperte da almeno una riga (20%)**, di cui **20 sono
+  restatement** in gate, anti-pattern o ledger non pubblicato — quindi le clausole di corpo coperte
+  sono **20 su 205**. **165 scoperte (80%).** Il peggioramento è rilevabile **solo sulla superficie
+  coperta**; su tutto il resto è invisibile, e non esiste un secondo strumento che la guardi.
 - **Un solo scenario.** Tutto gira su `recipe-app`. Limite accettato, non risolto — ma la ragione
   scritta prima era sbagliata: un secondo scenario **non «raddoppia il costo di ogni ciclo»**. Richiede
   un secondo `EVALUATION-BRIEF.md`, che è lavoro umano sostanziale e non replicabile, più la

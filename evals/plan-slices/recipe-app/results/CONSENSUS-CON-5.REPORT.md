@@ -28,7 +28,7 @@ entries applied                   2
   additions                       0
 new ledger rows                   2   (0 intersection, 0 intersection-theme, 2 judgement)
 re-anchored rows                  0   at the time; 2 retroactively on 2026-08-06
-candidate supersession pairs      0   at the time; 2 posed retroactively on 2026-08-06
+absorbed claims                   0   at the time; 2 retroactively on 2026-08-06
 active rows                       9 → 11
 entries rejected by the gate    n/a — partial cycle, no conformity gate existed
 rejected verdicts               n/a — partial cycle, verdicts came from offline human reading
@@ -58,12 +58,13 @@ human reading two generated plans against freshly written claims finds real defe
 - `R-010` and `R-011` were written in the same minute as the commits they verify — the only two
   `ex-ante` rows in the corpus.
 - The two `Da cercare al prossimo ciclo` notes became the `Watch for` cells of `R-010` and `R-011`.
-- On 2026-08-06 `R-002` was re-anchored to `87150d3` and `R-008` to `eb926bb`: the CON-5 corrections
-  rewrote in place the clauses those two rows were measuring, and the rows kept pointing at the old
-  commits until then.
-- The two subsumption pairs CON-5 created — `R-010` ⊂ `R-002` m1, `R-011` ⊂ the `Enabler` clause of
-  `R-008` — are recorded in the ledger as **candidates**. Supersession is a human decision and has
-  not been applied.
+- The CON-5 corrections rewrote in place the clauses `R-002` and `R-008` were measuring, and the two
+  rows kept pointing at the old commits. Re-anchored to `87150d3` and `eb926bb` on 2026-08-06, then
+  **absorbed** the same day: the corrections and the rows they corrected had landed on the same
+  clause, so `R-010` took over `R-002`'s first member and `R-011` took over `R-008`'s `Enabler`
+  clause and its exception. The overlap CON-5 created — two rows predicting one thing — is closed.
+  The uncorrected members stayed as their own rows: `R-002`'s open-choices requirement, and `R-008`'s
+  outcome coverage carrying rows C and D of this cycle's regression.
 
 ---
 
