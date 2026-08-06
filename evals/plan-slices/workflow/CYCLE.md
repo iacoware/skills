@@ -55,8 +55,9 @@ La cecità è **nominale**: un modello può riconoscere il proprio stile anche s
 limite dichiarato, non mitigato — mitigarlo costerebbe più di quanto il rischio valga. Il contratto di
 conformità la indebolisce ulteriormente, chiedendo riferimenti localizzati ai candidati.
 
-La mappa `candidate-A`/`candidate-B` → piano → generatore vive in `support/AGENT-PLAN-MAP.md` ed è
-esclusa da ogni payload **per costruzione**, perché i payload si compongono da una allowlist
+Le due mappe — `CANDIDATE-A`/`CANDIDATE-B` → piano e `REPORT-A`/`REPORT-B` → `IMPROVEMENT`, che non
+devono coincidere — vivono in `support/AGENT-PLAN-MAP.md` insieme al generatore di ogni artefatto, e
+sono escluse da ogni payload **per costruzione**, perché i payload si compongono da una allowlist
 esplicita di file. Il divieto scritto nei prompt serve solo all'esecuzione manuale.
 
 Il prompt `improve` esclude inoltre dall'analisi ogni problema relativo al **walking skeleton**. È

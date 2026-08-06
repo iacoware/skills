@@ -79,7 +79,8 @@ Non si ridiscutono all'inizio di ogni sessione.
   Sostituisce il pensionamento, che era rinviato senza trigger osservabile.
 - I prompt escono da `PROMPTS.md` e diventano l'unica sorgente sotto `prompts/`; `PROMPTS.md` resta
   scratchpad umano senza valore normativo.
-- `support/AGENT-PLAN-MAP.md` tiene la mappa alias → piano → generatore ed è escluso da ogni payload.
+- `support/AGENT-PLAN-MAP.md` tiene le due mappe alias → artefatto e il generatore di ciascuno, ed è
+  escluso da ogni payload.
 - `CON-N` resta il contatore di ciclo negli artefatti; non si rinominano artefatti storici. **CON-5
   non si riusa.** Il prossimo ciclo è **CON-6**.
 - **Modelli ed effort: `gpt-5.6-sol` e `claude-opus-5`, entrambi a `high` in CON-6.** `medium` è un

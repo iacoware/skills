@@ -49,7 +49,7 @@ appear, because they are evidence.
 | `REGRESSION-LEDGER.md` | Falsifiable claims implied by applied changes, with state `not refuted ×k`. |
 | `prompts/` | Normative source of the four phase prompts. Created in Phase 1b-i. |
 | `assets/improvement-template.md` | The conformance contract an `IMPROVEMENT` entry fills. Phase 1a. |
-| `support/` | `CLAUSE-ROW-MAP.md` with its extracted `clause-row-map.tsv`, and `AGENT-PLAN-MAP.md`. **Excluded from every payload.** |
+| `support/` | `CLAUSE-ROW-MAP.md` with its extracted `clause-row-map.tsv`, and `AGENT-PLAN-MAP.md` — alias → artifact → generator, and the `gen` slot of `Measured on`. **Excluded from every payload.** |
 | `scripts/consensus/` | Cycle code. `validate_improvement.py` and `extract_clause_map.py` exist; provider invocation and orchestrator are Phases 3 and 5. |
 | `NOTES.md` | Observations from running the evals, each self-contained. |
 | `PROMPTS.md` | Human scratchpad, nothing normative. Only the generation prompt is left; Phase 6 takes it and the file goes. |
@@ -63,7 +63,7 @@ appear, because they are evidence.
 | `make validate-improvement IMPROVEMENT=…` | The conformance gate, entry by entry. |
 | `make clause-map` | Regenerate `support/clause-row-map.tsv` from `CLAUSE-ROW-MAP.md`. |
 
-`support/AGENT-PLAN-MAP.md` is Phase 1b-ii, `assets/report-template.md` is Phase 1c.
+`assets/report-template.md` is Phase 1c and does not exist yet.
 
 `recipe-app/README.md` and `recipe-app/EVAL-NOTES.md` predate the split and still describe grading
 artifacts. They are scenario documentation, not grading documents, and are corrected when the

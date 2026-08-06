@@ -87,9 +87,13 @@ cycle · plans · tools · gen <model and effort per side> · verdict <instrumen
 
 - **tools** are `plans` when the generated artifacts suffice, plus `sources`, `brief` and
   `validator` when needed.
-- **gen** is the model and effort that generated each candidate. For CON-1…CON-5 this was never
-  recorded — the cell says `gen unrecorded` and `support/AGENT-PLAN-MAP.md` (Fase 1b-ii) is what will
-  carry it. `CC`/`CX` name the harness, not the model.
+- **gen** is the model and effort that generated each candidate. `CC`/`CX` name the harness, not the
+  model. For CON-1…CON-5 the model and the effort were **never recorded and cannot be
+  reconstructed**: every cell of those cycles reads `gen unrecorded`, and that is the true value, not
+  a gap left to fill. `support/AGENT-PLAN-MAP.md` states once where it was looked for — the artifacts,
+  the generation prompt, every grading artifact, the commit messages — and why the grading defaults
+  are not copied in. It carries the harness and the mode, which *are* reconstructable. From CON-6 the
+  cell is filled before the call.
 - **verdict** is the instrument that produced the verdict. CON-5 was a partial cycle: its verdicts
   come from offline human reading, not from a `verdetto` call.
 
@@ -327,9 +331,6 @@ indirect consequence. If the ledger were a separate artifact versioned next to t
   requirement was added to `R-006` after CON-5 *because* `CX` never declared reuse, so the row
   demands what the skill never asked for. Until this is decided, a verdict against them can look
   like a skill regression without being one.
-- **Model and effort of CON-1…CON-5.** Every `Measured on` cell carries `gen unrecorded`: which
-  model and which effort generated `CC` and `CX` was never recorded. `support/AGENT-PLAN-MAP.md`
-  (Fase 1b-ii) is the artifact that will carry it; the cells are filled from there when it exists.
 - **Changes of the five commits with no ledger row.** `d88328f` (non-hollow walking skeleton) and
   `b0d6dc5` (restriction to high-level roadmaps) are not reconstructable from the intersection of
   the two `REVIEW`s: the first appears in neither `also present` section, the second has no verified
