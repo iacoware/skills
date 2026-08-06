@@ -29,6 +29,12 @@ corrections applied live in the report of their own cycle —
 - Claims quantify **over a generated plan, not over the text of the skill**. This is the criterion
   the ledger was written with (`0273a73`: *«each stated over a generated plan rather than over the
   skill text»*), and it is why reformulating a clause does not falsify the row that covers it.
+- **One row, one claim.** A row states exactly one thing a generated plan can falsify on its own.
+  Where two requirements can fail independently, they are two rows. A row carrying several claims
+  cannot hold a counter — one falsified member would carry `×k` for the others — and disaggregating
+  a verdict afterwards means reconstructing predictions backwards, the defect this file declares of
+  itself in `0273a73`. **Applied on 2026-08-06** to the four rows written before the rule existed:
+  `R-001`, `R-004`, `R-006`, `R-009`. See *Splitting a row that carries several claims*.
 
 ### `Origin`
 
@@ -103,7 +109,10 @@ The commit whose text the claim is measured against. A row applied by the workfl
 `(pending)`: the workflow applies to the working tree and never commits, so the id exists only after
 the human veto. A row still carrying `(pending)` has not been committed yet.
 
-Where a row's members are anchored to different commits, the cell names each with its member.
+A cell carrying two commits means the claim is measured against both texts. Since 2026-08-06 no row
+states more than one claim, so a second commit no longer names a second member: on `R-005` and
+`R-006` it is a commit whose clause `support/CLAUSE-ROW-MAP.md` could not identify at all, recorded
+there under *Unresolved anchors*.
 
 ### `State`
 
@@ -151,12 +160,36 @@ Two constraints on absorption, both load-bearing:
   that cross rather than nest can merge into something broader and vaguer, and a vaguer claim is less
   falsifiable — the opposite of what this file is for. Where the merge would blur, the two rows stay
   and the overlap is declared in `Absorbs`.
-- **One row, one claim.** A row with several members is absorbed member by member. The members no
-  new claim takes over stay, as their own row. Dropping a whole row because one member was absorbed
-  deletes a live prediction.
+- **One row, one claim.** Since 2026-08-06 this is a writing rule for every row — see *How to
+  use* — so no row has members to absorb one at a time. It stays here as the rule for a row that a
+  future entry brings back to several claims: such a row is absorbed member by member, and the
+  members no new claim takes over stay, as their own row. Dropping a whole row because one member
+  was absorbed deletes a live prediction.
 
 An absorbing row goes to `not falsified ×0`, never to `to verify`, as soon as a cycle has run
 against any absorbed limb: cycles have run, and none of them tested the merged wording.
+
+### Splitting a row that carries several claims
+
+The inverse move of absorption, and recorded in the same column.
+
+- **The first claim keeps the row's id; the others take new ids at the end.** An id is never reused.
+- **Every child inherits `Origin`, `Provenance`, `Verification`, `Measured on`, `Last check` and the
+  parent's counter.** The cycle that failed to falsify the row failed to falsify each of its claims,
+  so restarting the children at `to verify` would erase a measurement actually obtained. Where the
+  parent is disproved on one claim only, that child takes `regressed` and the others keep the
+  counter. Provenance is inherited whole and not re-adjudicated per claim: deciding after the fact
+  which member a re-tuning touched is the backwards reconstruction the split exists to prevent.
+- **`Absorbs` carries the structural history**, as `Split from R-NNN mK (date)` on a child and
+  `Split (date)` on the row that keeps the id. One column for «this row has not always had this
+  shape» costs less than a twelfth, and the two moves are each other's inverse.
+- **A commit no claim resolves to stays with the row that keeps the id.** By rule, not by judgement:
+  attributing it to the child whose claim looks closest would resolve an anchor the map records as a
+  failure.
+- **A split adds no prediction.** The active-row count grows without the covered surface growing by
+  one clause — `support/CLAUSE-ROW-MAP.md` counts covered clauses, not rows — and the counters are
+  inherited instead of restarting. A cycle report reads `active rows N → M` as a measure of
+  accumulation, so a split must never be read there as new rules entering the skill.
 
 ### Authority and rewritten formulations
 
@@ -175,19 +208,32 @@ against any absorbed limb: cycles have run, and none of them tested the merged w
 
 | ID | Commit `SKILL.md` | Origin | Provenance | Falsifiable claim | Verification | Watch for | Last check | Measured on | Absorbs | State |
 |---|---|---|---|---|---|---|---|---|---|---|
-| R-001 | `2c89e7f` | `judgement` — `NOTES.md` § *Confine di scope vs identità* | reconstructed | The plan places identity after the differentiator **and** declares under `Cross-functional concerns` the single seam from which the current scope resolves. | reading, partly automatable | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | — | not falsified ×1 |
+| R-001 | `2c89e7f` | `judgement` — `NOTES.md` § *Confine di scope vs identità* | reconstructed | The plan places identity after the differentiator. | reading | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | Split (2026-08-06): the seam claim became `R-012` | not falsified ×1 |
 | R-002 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Sweep sistematico delle contraddizioni* ≡ *Explicit handling of source contradictions* | reconstructed and re-tuned | Every choice the plan declares open names the `NOW` slices it blocks, in whatever section it declares it. | validator-automatable on the open-choices section, whatever its title: every entry cites at least one existing `NOW` slice number | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | first member absorbed into `R-010` on 2026-08-06 | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
 | R-003 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Decisioni mai prese distinte dalle decisioni prese* ≡ *Explicit handling of undecided choices* | reconstructed and re-tuned | No `NOW` slice depends on an external choice — provider, model, service, or adapter — that is not made by a citable source, or made by the plan among the alternatives the brief declares acceptable, or declared open together with the slice it blocks, in whatever section it declares it; a qualifying adjective — `cheap`, `multilingual`, `managed` — does not count as a choice. | reading: the inventory of external dependencies requires comparison with the sources and with the brief's `Accepted alternatives` | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | — | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
-| R-004 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | reconstructed | No `NOW` slice delivers a behaviour the sources do not request; every `LATER` entry states a `Promotion trigger` and every `OUT-OF-SCOPE` entry an exclusion rationale. | reading for m1 — the skill places the tracing in reasoning, not in the plan; m2 is automatable on the template's structure | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | — | not falsified ×1 |
+| R-004 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | reconstructed | No `NOW` slice delivers a behaviour the sources do not request. | reading — the skill places the tracing in reasoning, not in the plan | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | Split (2026-08-06): the `LATER` claim became `R-013`, the `OUT-OF-SCOPE` claim `R-014` | not falsified ×1 |
 | R-005 | `d977043`, `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Continuità del tema* ≡ *Keep a theme and its recovery path contiguous* | reconstructed | If a `NOW` slice names a failure mode in its own `Verification` and another `NOW` slice is its remedy, no slice of a different theme is placed between the two. | reading for the failure→remedy coupling; theme interposition is automatable on the slices' `*(Theme: X)*` annotation | — | 2026-08-04 | CON-5 · `CC`+`CX` · plans · gen unrecorded · verdict offline reading | — | not falsified ×1 |
-| R-006 | `d977043`, `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | reconstructed and re-tuned | A pipeline or adapter shared by several paths is opened in the `Includes` of a single `NOW` slice; later slices that reuse it declare it as reuse. That slice follows every `NOW` slice that feeds it input, except when it validates controlled inputs that traverse the production computation and the scenario's brief admits early validation. | reading for identifying the producers; single ownership is partly automatable (same adapter named in the `Includes` of two slices) | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | — | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
+| R-006 | `d977043`, `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | reconstructed and re-tuned | A pipeline or adapter shared by several paths is opened in the `Includes` of a single `NOW` slice. | partly automatable — the same adapter named in the `Includes` of two slices is structural, recognizing that two names denote one adapter is reading | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | Split (2026-08-06): the reuse claim became `R-015`, the ordering claim `R-016`; the `9aa2586` component of `Commit` stays here unattributed, no claim resolves to it | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
 | R-007 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Audit esplicito di split* ≡ *Split capabilities and enablers with independent risks* | reconstructed and re-tuned | No `Enabler` slice validates uncertainties across more than one subsystem: its `Verification` cannot fail for causes that, in the brief's `Material uncertainties`, belong to different `Subsystem`s. Several entries of the same subsystem are one uncertainty, even when the answer invalidates the choice being verified. | reading: the per-pair split verdict lives in the unpublished ledger, only the outcome stays observable on the plan; the list of uncertainties, subsystems, and decisions that change is published by the brief | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading — the brief's `Material uncertainties` table was rewritten at 22:41 on 2026-08-04, in the same minute as this row | — | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts, together with the brief; CON-6 is its first test |
 | R-008 | `9aa2586` | `intersection-theme` — `REVIEW` CON-4 § *Use repeatable, decision-changing verification*, part «each theme has a first validation» | reconstructed | Every theme's `First validation` points to a slice whose `Outcome` covers the theme's entire desired outcome. | validator for the existence of the reference; reading for outcome coverage | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | `Enabler` clause and its exception absorbed into `R-011` on 2026-08-06 | regressed on `CX` in CON-5 (2026-08-04) against `9aa2586` — rows C and D of that regression; row A left with the absorption |
-| R-009 | `a06a5cc` | `judgement` — commit message of `a06a5cc`, defect observed on a graded plan | reconstructed | No `Outcome` of a `NOW` slice preceding identity promises a real user: every slice that precedes identity and delivers a behaviour names its own audience, developer or tester on the declared non-public environment. If more than two `NOW` slices deliver behaviour to an end user before identity, `Ordering criteria` justifies the residual deferral once, naming the evidence that requires it. | reading: the audience is read from the `Outcome`s and the justification from `Ordering criteria`, but deciding whether a slice delivers to an end user requires judgement | — | 2026-08-04 | CON-5 · `CC`+`CX` · plans · gen unrecorded · verdict offline reading | — | not falsified ×1 |
+| R-009 | `a06a5cc` | `judgement` — commit message of `a06a5cc`, defect observed on a graded plan | reconstructed | No `Outcome` of a `NOW` slice preceding identity promises a real user: every slice that precedes identity and delivers a behaviour names its own audience, developer or tester on the declared non-public environment. | reading: the audience is read from the `Outcome`s, but deciding whether a slice delivers to an end user requires judgement | — | 2026-08-04 | CON-5 · `CC`+`CX` · plans · gen unrecorded · verdict offline reading | Split (2026-08-06): the deferral-threshold claim became `R-017` | not falsified ×1 |
 | R-010 | `87150d3` | `judgement` — correction of `R-002`, first member, regressed on `CC` in CON-5 | ex-ante (own limb); reconstructed (absorbed limb) | No `Includes` or `Verification` bullet asserts in non-conditional form one side of an unresolved choice. Unresolved covers a conflict between the sources — those listed under `Known conflicts` in the brief, plus those demonstrable by citing two sources in disagreement — and, in the slices that choice blocks, any other choice the plan does not resolve by citing a selecting source. Declaring the choice under `Open questions` or assigning it a spike does not resolve it. | reading: recognizing which slices an open choice blocks requires comparing the declaration with the bullets | The correction comes from a violation on one model only: `CX` violated neither member of `R-002` and already used conditional wording. That is the typical way `judgement` applies a false rule. The failure to watch for is not the return of assertive wording but its opposite: plans that defer everything to the pending decision and publish nothing verifiable any more. If it appears, the defect is in `R-010`, not in the plans. | — | merged wording untested; the absorbed limb: CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | `R-002` first member (2026-08-06) — that limb regressed on `CC` in CON-5 against `d977043` | not falsified ×0 — merged on 2026-08-06; the absorbed limb was falsified in CON-5, the own limb has never been tested |
 | R-011 | `eb926bb` | `judgement` — correction of `R-008`, `Enabler` clause, regressed on `CX` in CON-5 | ex-ante (own claim); reconstructed (absorbed clause) | Every row of the `Themes` table has its `First validation` resolve to a `NOW` slice not annotated `*(Enabler: …)*`, unless its `Desired outcome` cell carries the `*(Developer outcome)*` marker. | validator: the check crosses two facts the plan already publishes, the slice number resolved by the cell and the title tag of that slice | The marker is declarative: a plan can attach it to a desired outcome that is not a developer's. The validator cannot know, and that residue is `reading`. The failure to watch for is the marker attached to get past the check, not its absence. | — | merged wording untested; the absorbed clause: CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | `R-008`'s `Enabler` clause and its exception (2026-08-06) — that clause regressed on `CX` in CON-5 against `9aa2586`, row A | not falsified ×0 — merged on 2026-08-06; the absorbed clause was falsified in CON-5, the own wording has never been tested |
+| R-012 | `2c89e7f` | `judgement` — `NOTES.md` § *Confine di scope vs identità* | reconstructed | The plan declares under `Cross-functional concerns` the single seam from which the current scope resolves. | reading, partly automatable on the presence of the declaration under `Cross-functional concerns` | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | Split from `R-001` m2 (2026-08-06) | not falsified ×1 |
+| R-013 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | reconstructed | Every `LATER` entry states a `Promotion trigger`. | validator-automatable on the template's structure; not implemented — `validate_plan.py` checks only that the section carries a list | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | Split from `R-004` m2 (2026-08-06) | not falsified ×1 |
+| R-014 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Ammissione in NOW subordinata a una domanda delle fonti* ≡ *Trace scope and horizon ownership* | reconstructed | Every `OUT-OF-SCOPE` entry states an exclusion rationale. | validator-automatable on the template's structure; not implemented — `validate_plan.py` checks only that the section carries a list | — | 2026-08-04 | CON-5 · `CC`+`CX` · brief+sources · gen unrecorded · verdict offline reading | Split from `R-004` m3 (2026-08-06) | not falsified ×1 |
+| R-015 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | reconstructed and re-tuned | A `NOW` slice that reuses a pipeline or adapter opened by an earlier slice declares it as reuse. | reading | The requirement was added to the parent row after CON-5 *because* `CX` never declared reuse, and `support/CLAUSE-ROW-MAP.md` records the anchor as `unresolved`: no clause of `SKILL.md` states it. A verdict against this row looks like a skill regression without being one until Fase 4 decides it. | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | Split from `R-006` m1, second half (2026-08-06) | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
+| R-016 | `d977043` | `intersection-theme` — `REVIEW` CON-4 § *Pipeline o adapter condiviso con un solo proprietario* ≡ *Open shared pipelines and adapters once, after their producers* | reconstructed and re-tuned | The `NOW` slice that opens a pipeline or adapter shared by several paths follows every `NOW` slice that feeds it input, except when it validates controlled inputs that traverse the production computation and the scenario's brief admits early validation. | reading for identifying the producers | The exception resolves to the scenario's brief, § `Accepted alternatives`, not to `SKILL.md` — see `support/CLAUSE-ROW-MAP.md` § *Anchors that resolve outside `SKILL.md`*. | 2026-08-04 | CON-5 · `CC`+`CX` · brief+plans · gen unrecorded · verdict offline reading | Split from `R-006` m2 (2026-08-06) | not falsified ×0 — re-tuned on 2026-08-04 after the CON-5 verdicts; CON-6 is its first test |
+| R-017 | `a06a5cc` | `judgement` — commit message of `a06a5cc`, defect observed on a graded plan | reconstructed | If more than two `NOW` slices deliver behaviour to an end user before identity, `Ordering criteria` justifies the residual deferral once, naming the evidence that requires it. | reading: the justification is read from `Ordering criteria`, but deciding whether a slice delivers to an end user requires judgement | — | 2026-08-04 | CON-5 · `CC`+`CX` · plans · gen unrecorded · verdict offline reading | Split from `R-009` m2 (2026-08-06) | not falsified ×1 |
 
-Active rows: **11**. Dormant: **0**.
+Active rows: **17**. Dormant: **0**.
+
+**The split of 2026-08-06 took the count from 11 to 17 and added no prediction.** `R-001`, `R-004`,
+`R-006` and `R-009` each stated more than one independently falsifiable requirement; each became one
+row per claim, the first claim keeping the parent's id. The covered surface did not move by one
+clause — `support/CLAUSE-ROW-MAP.md` counts covered clauses, not rows, and its totals are unchanged —
+and every child carries its parent's counter. A cycle report must not read `active rows 11 → 17` as
+six new rules entering the skill.
 
 **Two absorptions applied on 2026-08-06, by hand.** `R-010` absorbed the first member of `R-002`,
 `R-011` the `Enabler` clause of `R-008` and its exception; both pairs anchored on the same clause
@@ -267,19 +313,20 @@ indirect consequence. If the ledger were a separate artifact versioned next to t
   - **Desired-outcome coverage, term-by-term comparison. — Not applied, diagnosis decided
     (2026-08-04).** The alternative diagnosis the entry asked to decide is the right one on row C:
     `Theme compression`, site the § 2 split test, which already forbids it. On row D the enumerative
-    diagnosis holds instead, and it is already covered by the third clause of `R-008`. The two rows
+    diagnosis holds instead, and it is already covered by `R-008`'s outcome-coverage claim, the only
+    one that row still carries after the 2026-08-06 absorption. The two rows
     have different causes, so a single new rule next to `R-008` would have missed both. No rule
     added. **Unblocks a new rule:** a partial coverage observed on a theme that passes the split
     test, that is not reducible to compression, on a generation other than `CX` CON-5.
-- **Rows whose anchor does not resolve to a clause of `SKILL.md`.** `support/CLAUSE-ROW-MAP.md`
-  records four members that no clause states: `R-001` m1, the `9aa2586` component of `R-005`, the
-  second half of `R-006` m1, and the `9aa2586` component of `R-006`. The failures are recorded
-  there, not here; what belongs here is the decision they force, which is open: for each, either the
-  skill gains the clause the row assumes, or the row is rewritten to stop demanding something the
-  skill does not say. `R-006` m1's second half is the sharpest — the requirement was added to the
-  row after CON-5 *because* `CX` never declared reuse, so the row demands what the skill never asked
-  for. Until this is decided, a verdict against those members can look like a skill regression
-  without being one.
+- **Anchors that do not resolve to a clause of `SKILL.md`.** `support/CLAUSE-ROW-MAP.md` records
+  four, and after the 2026-08-06 split two of them are whole rows: `R-001` and `R-015`, plus the
+  `9aa2586` component of `R-005`'s and `R-006`'s `Commit` cells, which no claim of either row
+  resolves to. The failures are recorded there, not here; what belongs here is the decision they
+  force, which is open: for each, either the skill gains the clause the row assumes, or the row is
+  rewritten to stop demanding something the skill does not say. `R-015` is the sharpest — the
+  requirement was added to `R-006` after CON-5 *because* `CX` never declared reuse, so the row
+  demands what the skill never asked for. Until this is decided, a verdict against them can look
+  like a skill regression without being one.
 - **Model and effort of CON-1…CON-5.** Every `Measured on` cell carries `gen unrecorded`: which
   model and which effort generated `CC` and `CX` was never recorded. `support/AGENT-PLAN-MAP.md`
   (Fase 1b) is the artifact that will carry it; the cells are filled from there when it exists.
