@@ -56,7 +56,8 @@ appear, because they are evidence.
 | `make validate-improvement IMPROVEMENT=…` | The conformance gate, entry by entry. |
 | `make clause-map` | Regenerate `support/clause-row-map.tsv` from `CLAUSE-ROW-MAP.md`. |
 
-`prompts/` does not exist yet: Phase 1b creates it. `assets/report-template.md` is Phase 1c.
+`prompts/` does not exist yet: Phase 1b-i creates it. `support/AGENT-PLAN-MAP.md` is Phase 1b-ii,
+`assets/report-template.md` is Phase 1c.
 
 `recipe-app/README.md` and `recipe-app/EVAL-NOTES.md` predate the split and still describe grading
 artifacts. They are scenario documentation, not grading documents, and are corrected when the

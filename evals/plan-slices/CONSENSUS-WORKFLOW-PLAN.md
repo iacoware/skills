@@ -7,6 +7,25 @@ stata svolta.
 
 Lo strumento e la sua ragione stanno in `CONSENSUS-WORKFLOW.md`; qui c'è solo il lavoro da fare.
 
+Le fasi chiuse sono uscite da questo file il 2026-08-06 e stanno in `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`
+con la loro cronaca. Non serve aprirlo per lavorare: ciò che le fasi aperte usano è ripetuto dove
+serve.
+
+## Rotta
+
+Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già prese* e la propria fase.
+
+| Fase | Stato | Oltre a questo file, apri |
+|---|---|---|
+| 0a, 0, 0c, 1a | **chiuse** — `f659c8b`, `f659c8b`, `88a4e9b`, `278edfd` | `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`, solo per sapere *perché* |
+| 0b — conversione | aperta, senza dipendenze | i documenti da convertire |
+| **1b-i — prompt** | **aperta, prossima** | `assets/improvement-template.md`, `PROMPTS.md`, `CONSENSUS-WORKFLOW.md` §§ *Il ciclo*, *Cecità e simmetria* |
+| **1b-ii — mappa generatori** | **aperta, indipendente da 1b-i** | `recipe-app/results/PLAN-*`, `git log`, `REGRESSION-LEDGER.md` § *`Measured on`* |
+| 1c — report template | aperta, resta un deliverable | `recipe-app/results/CONSENSUS-CON-5.REPORT.md`, `assets/improvement-template.md` |
+| 2 — CON-6 | aperta, **9 chiamate, autorizzazione** | `prompts/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
+| 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
+
 ## Decisioni già prese
 
 Non si ridiscutono all'inizio di ogni sessione.
@@ -26,10 +45,11 @@ Non si ridiscutono all'inizio di ogni sessione.
   riformularla, e aggiungere righe richiede una ragione scritta.
 - **Il contratto di conformità è un template più un validator**, non prosa dentro un prompt: un
   contratto in prosa è ciò che entrambi i lati hanno ignorato in CON-4. La specificità è una **forma**
-  che il generico non riempie, non un giudizio con una soglia. **Niente soglie.**
-- Una voce non conforme si **scarta e si registra**, con **un solo tentativo**. Il documento non si
-  rigenera mai. Un errore di trasporto è un ritentativo della *chiamata*, non del documento. Un lato
-  a zero voci conformi non blocca il ciclo.
+  che il generico non riempie, non un giudizio con una soglia. **Niente soglie.** Una voce non
+  conforme si **scarta e si registra**, con **un solo tentativo**, e un lato a zero voci conformi non
+  blocca il ciclo. Forma, scarto, codice di uscita e cosa il gate *non* misura stanno in
+  `CONSENSUS-WORKFLOW.md` § *Il contratto di conformità* e in `assets/improvement-template.md`; qui
+  non si duplicano.
 - **`Origine` ha quattro valori**: `intersezione`, `intersezione-tema`, `giudizio`, `potatura`.
   **I nomi canonici sono inglesi** dal 2026-08-06, perché li scrivono il registro migrato, i prompt e
   il validator: `intersection`, `intersection-theme`, `judgement`, `pruning`. Stessa cosa per
@@ -37,27 +57,15 @@ Non si ridiscutono all'inizio di ogni sessione.
   `CONSENSUS-WORKFLOW.md` restano leggibili finché la Fase 0b non li converte, e la mappa fra i due
   insiemi è dichiarata nelle regole d'uso del registro. Prompt e validator non emettono mai gli
   italiani.
-- **Una voce che tocca una clausola coperta o ri-ancora la riga, o la assorbe.** Due regole, non una,
-  perché **le righe quantificano su un piano generato, non sul testo dello skill** — è il criterio con
-  cui il registro è stato scritto (`0273a73`: *«each stated over a generated plan rather than over the
-  skill text»*). Ne discende che una riformulazione **non falsifica** la riga: rompe l'attribuzione.
-  - **Cambia il testo, non la portata → ri-ancoraggio, automatico.** La riga resta, prende il commit
-    nuovo, contatore a **`×0`**. Vale anche per una riga regredita, e la smentita resta scritta nella
-    cella di stato con il commit contro cui era stata misurata.
-  - **Cambia la portata → assorbimento.** Una riga sola afferma tutto, `×0`, e l'affermazione che
-    sostituisce esce dal file: git conserva il testo, il registro conserva solo ciò che è ancora
-    previsto. La scrive `improve`, la edita il veto. Due vincoli: si assorbe solo se la fusione resta
-    decidibile in una lettura, e **una riga = una affermazione**, quindi i membri che nessuno rileva
-    restano come riga propria. Dal 2026-08-06 il secondo vincolo è **regola di scrittura di ogni
-    riga**, promossa dalla Fase 0c, che ha splittato le quattro righe multi-affermazione
-    preesistenti: nessuna riga ha più membri, e il vincolo resta come regola di ciò che accade a una
-    riga che una voce futura riportasse a più affermazioni.
-  Regole e vincoli vivono in `REGRESSION-LEDGER.md` § *Re-anchoring and absorption*; qui non si
-  duplicano. **Applicato il 2026-08-06** a `R-002` m1 → `R-010` e alla clausola `Enabler` di `R-008`
-  → `R-011`: erano ancorate alla stessa clausola dopo `87150d3` e `eb926bb`, quindi contavano due
-  volte una sola evidenza. L'assorbimento sostituisce il superamento con `superata da R-NNN`, che
-  teneva in vita una riga fuori dall'insieme verificato per conservarne la storia — che ora sta in una
-  cella.
+- **Una voce che tocca una clausola coperta o ri-ancora la riga, o la assorbe** — due regole, non
+  una, perché **le righe quantificano su un piano generato, non sul testo dello skill**. Ne discende
+  che una riformulazione **non falsifica** la riga: rompe l'attribuzione. Testo che cambia a portata
+  invariata → ri-ancoraggio, automatico; portata che cambia → assorbimento, e un'affermazione **esce**
+  dal registro. Regole, vincoli e cronaca degli assorbimenti già fatti vivono in
+  `REGRESSION-LEDGER.md` § *Re-anchoring and absorption* e nelle celle `Absorbs`; qui non si
+  duplicano. Ciò che va saputo senza aprirle: **una riga = una affermazione** è regola di scrittura
+  dal 2026-08-06, l'assorbimento è **la sola mossa che toglie una previsione**, e il ciclo che ne
+  emette uno lo mette in cima a ciò che il veto rilegge.
 - **Una voce vale `intersezione` o `intersezione-tema` solo se entrambi i `REVIEW` la classificano
   condivisa.** Classificazione unilaterale → `giudizio`, e nessuna applicazione automatica.
 - **Il workflow applica al working tree e non committa mai.** Applica solo ciò che il filtro
@@ -84,35 +92,6 @@ Non si ridiscutono all'inizio di ogni sessione.
 - La decisione su cosa applicare allo `SKILL.md` resta umana in ogni fase, in forma di veto.
 - **Le 15 unità di calibrazione già pagate non vanno conservate.** I 30 file sono tracciati in git.
 
-## Fase 0a — L'inglese è la lingua del progetto
-
-**Precondizioni:** nessuna. **Chiamate provider:** zero. **Va per prima.**
-
-**Fatta il 2026-08-06.** La regola, le due esclusioni permanenti con la loro ragione e la nota su
-`EVALUATION-BRIEF.md` e `SKILL.md` vivono in `CONSENSUS-WORKFLOW.md` § *La lingua del progetto* e in
-`evals/plan-slices/README.md` § *Language*. I due documenti sono il record; qui non si duplicano.
-
-La conversione dei documenti esistenti è Fase 0b e non blocca niente; separarle è ciò che evita di
-scrivere in italiano tutto ciò che nasce dalla Fase 0 in poi.
-
-## Fase 0 — Separazione dei due strumenti
-
-**Precondizioni:** Fase 0a. **Chiamate provider:** zero.
-
-L'ambizione di questa fase è stata **ridotta** il 2026-08-06: la versione precedente prescriveva di
-riscrivere internamente `GRADING-IMPROVEMENTS-PLAN.md` (52 KB). Con il grading abbandonato quella è
-manutenzione di un documento morto e non si fa.
-
-Fatto il 2026-08-06: rinomina di `EVAL-WORKFLOW.md` in `GRADING-EVAL-WORKFLOW.md` (`570e929`) e
-`CONSENSUS-WORKFLOW.md`, creato e riscritto due volte sull'esito delle sessioni di grilling.
-
-**Chiusa il 2026-08-06.** I due residui sono stati fatti insieme alla Fase 0a: il banner di
-abbandono in testa a `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-IMPROVEMENTS.md` e
-`GRADING-EVAL-WORKFLOW.md`, corpo non toccato; e `evals/plan-slices/README.md`, in inglese, con i
-gruppi *Active* e *Archived*. Il banner è **in inglese** anche nei due documenti italiani: è testo
-nuovo, quindi cade sotto la regola della Fase 0a, e una lapide uniforme sui tre vale più
-dell'allineamento alla lingua del documento ospite.
-
 ## Fase 0b — Conversione dei documenti umani
 
 **Precondizioni:** Fase 0a. **Chiamate provider:** zero. **Nessuna fase dipende da questa.**
@@ -120,108 +99,14 @@ dell'allineamento alla lingua del documento ospite.
 Documenti che nessun modello legge durante un ciclo. La conversione è lavoro bruto senza rischio e
 senza dipendenze: può stare per ultima, o essere fatta a pezzi, o slittare indefinitamente.
 
-- [ ] `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `NOTES.md`, `PROMPTS.md`.
+- [ ] `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN.md`, `CONSENSUS-WORKFLOW-PLAN-CLOSED.md`,
+  `NOTES.md`, `PROMPTS.md`.
 - [ ] Non toccare i documenti di grading: sono archivio.
 - [ ] Riparare `CONSENSUS-WORKFLOW.md:128`, che rimanda a *Formulazioni riscritte* del registro: la
   sezione è in `recipe-app/results/CONSENSUS-CON-5.REPORT.md` dalla Fase 1c.
 
 **Verifica:** i documenti convertiti non citano artefatti con nomi diversi da quelli reali; le
 citazioni testuali dagli artefatti storici restano **in italiano fra virgolette**, perché sono prove.
-
-## Fase 0c — Una riga, una affermazione
-
-**Precondizioni:** nessuna. **Chiamate provider:** zero. **Andava prima della Fase 1a e della Fase
-2.**
-
-**Fatta il 2026-08-06.** La regola sta in `REGRESSION-LEDGER.md` § *How to use*, accanto a «binary
-and falsifiable» e a «quantify over a generated plan»; la meccanica dello split — eredità del
-contatore, id, `Absorbs`, commit non attribuiti — in § *Splitting a row that carries several claims*.
-Registro e `support/CLAUSE-ROW-MAP.md` sono il record; qui non si duplicano.
-
-Cosa ha prodotto, perché le fasi seguenti ci si appoggiano:
-
-- **Le quattro righe multi-affermazione sono diventate dieci.** `R-001` → `R-001` + `R-012`; `R-004`
-  → `R-004` + `R-013` + `R-014`; `R-006` → `R-006` + `R-015` + `R-016`; `R-009` → `R-009` + `R-017`.
-  Il primo membro conserva l'id, i successivi lo prendono in coda, ogni figlio eredita il contatore
-  del padre e porta la sua provenienza in `Absorbs`. **Righe attive 11 → 17, senza una previsione in
-  più**, e il registro lo dichiara perché il report legge `righe attive N → M` come misura di
-  accumulo.
-- **I quattro ancoraggi `unresolved` restano quattro**, ma solo due erano affermazioni: sono ora le
-  righe `R-001` e `R-015`, e la Fase 4 le nomina per id. Gli altri due sono la componente `9aa2586`
-  della cella `Commit` di `R-005` e di `R-006` — commit che nessuna affermazione rivendica, quindi lo
-  split non li ha attribuiti a un figlio e li ha lasciati dove l'id è rimasto.
-- **Il formato non prevede più membri.** § *Commit `SKILL.md`* diceva che una cella nomina i membri
-  ancorati a commit diversi; ora una seconda voce in `Commit` significa solo un commit il cui testo
-  la mappa non identifica. Il vincolo dell'assorbimento «una riga con più membri si assorbe membro per
-  membro» resta come regola residuale, per una riga che una voce futura riportasse a più affermazioni.
-
-**Residuo dichiarato:** gli artefatti storici — `CONSENSUS-CON-5.REPORT.md` in testa — continuano a
-nominare i membri nella forma pre-split. Non si toccano: sono il record di ciò che è stato misurato
-allora. Nella mappa restano per la stessa ragione le note che raccontano l'assorbimento di `R-002` m1.
-
-## Fase 1a — Contratto: template e validator degli `IMPROVEMENT`
-
-**Precondizioni:** Fasi 0a e 0c. **Chiamate provider:** zero.
-
-**Fatta il 2026-08-06.** Il contratto è
-`evals/plan-slices/assets/improvement-template.md` più
-`evals/plan-slices/scripts/consensus/validate_improvement.py`, con
-`extract_clause_map.py` che proietta la mappa nei record che il validator legge. I documenti sono il
-record: il template dichiara la forma, la mappa dichiara la separazione dati/prosa in
-§ *Where the records live*, e qui non si duplicano.
-
-Cosa è stato deciso mentre si scriveva, perché le fasi seguenti ci si appoggiano:
-
-- **Un campo in più: `Remedy`, con tre valori — `reformulation`, `reach-change`, `addition`.** Senza
-  di esso la condizionalità degli altri due campi non è decidibile da uno strumento: `Merged claim`
-  serve «quando la voce cambia la portata» e la riformulazione scartata «quando la voce aggiunge
-  righe», e nessuna delle due condizioni si legge dal testo dei campi presenti. Dichiarata dalla
-  voce, la condizionalità diventa forma: `Merged claim` obbligatorio e solo con `reach-change`,
-  riformulazione scartata obbligatoria e solo con `addition` accanto a una clausola nominata. È
-  anche il campo che la Fase 5 legge per sapere se una voce si applica da sé.
-- **Il commit dell'ultima riscrittura non è rigenerabile, e si verifica invece di riscriverlo.** Una
-  clausola è una frase e una riga ne porta spesso due — `SKILL.md:43` porta `C-013` e l'inizio di
-  `C-014` — quindi ogni derivazione basata sullo span attribuisce a una clausola la riscrittura della
-  vicina: riprodotto in sede, dà 27 divergenze su 205 e sono esattamente le divergenze di blame che
-  la mappa registra. Lo script emette la sede, emette `site_last` accanto a `last` invece che al suo
-  posto, e verifica l'unico invariante che git può decidere: `last` non può essere più recente
-  dell'ultima modifica al testo che circonda la clausola. **Le 205 clausole lo rispettano.**
-- **`intersezione` fra template e validator sui riferimenti:** la forma `slice N più il nome del
-  campo` si risolve contro il candidato dichiarato in `## Inputs`, non solo contro una sintassi. Una
-  slice inesistente o un campo che quella slice non ha sono scarti, come una riga fuori range.
-- **Il gate legge le voci anche fuori da `## Entries`.** Un documento che numera le voci altrove
-  deve comunque un log degli scarti per voce: «nessun `## Entries`» e «nessuna voce» sono due fatti
-  diversi, e collassarli avrebbe reso invisibile proprio l'asimmetria di CON-4.
-- **I tre riferimenti stali della mappa sono riparati**, già che il file si riapriva qui: le note di
-  `C-157` e di `R-015` rimandano ora a `recipe-app/results/CONSENSUS-CON-5.REPORT.md` con la sezione
-  nominata, e quella di `C-106` a *To populate*.
-- **Codice di uscita:** una voce scartata non è un errore. Lo script esce con 1 solo quando il
-  documento non è leggibile come insieme di voci; un lato a zero voci conformi esce con 0, coerente
-  con «un lato a zero voci conformi non blocca il ciclo».
-
-**Verificato sui due artefatti di CON-4, con l'asimmetria attesa:** `PLAN-CC-CON-4.IMPROVEMENT.md`
-dà **10 voci, 0 conformi**, ognuna con l'elenco dei campi mancanti; `PLAN-CX-CON-4.IMPROVEMENT.md`
-dà **0 voci**, perché non ne contiene nessuna. È la stessa misura della tabella di
-`CONSENSUS-WORKFLOW.md` § *Il contratto di conformità* — «sezione per miglioramento: sì, 10 |
-nessuna: 8 bullet» — ottenuta ora da uno strumento. Precisazione sul senso di «parzialmente
-conformi»: nessuna voce di `CC` supera il contratto, perché il documento di CON-4 non ha nessuno dei
-campi nuovi; la conformità parziale sta nell'essere leggibile **come voce**, cioè nel produrre uno
-scarto diagnosticabile invece di sparire.
-
-`make test` verde: 80 test sotto `evals/plan-slices/scripts`, 28 dei quali sul contratto.
-
-**Residui dichiarati, tutti della stessa spaccatura `validator`/`lettura` delle righe del registro:**
-
-- il validator verifica **che** un riferimento esista, non che **sostenga** l'affermazione;
-- verifica che una fusione sia scritta nella grammatica delle righe, non che resti **decidibile in
-  una lettura**;
-- verifica che una riformulazione scartata sia stata scritta, non che la ragione sia **ammissibile**.
-  Il divieto — «la clausola è coperta da una riga del registro» non è una ragione — vive nel
-  template e sta al veto. La forma lo rende costoso da violare: il campo chiede la riformulazione
-  *effettivamente scritta*, e una dichiarazione di copertura non riempie quella cella.
-
-Restano fuori, e sono di altre fasi: la mappa non registra ancora ciò che CON-6 cambierà (Fase 4) e
-i quattro ancoraggi `unresolved` restano fallimenti registrati, non celle da riempire.
 
 ## Fase 1b — I quattro prompt e la mappa dei generatori
 
