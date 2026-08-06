@@ -103,12 +103,39 @@ Va letto prima di fidarsi di qualunque affermazione di questo documento sulla bo
   `R-008` riga A è un puntamento sbagliato. In entrambi i casi il tema era giusto — l'avevano visto
   due modelli — e il rimedio era di un lato solo.
 - Il ciclo CON-5 è **parziale**: generazione più lettura offline del registro, senza `improve` né
-  `review`. Ha comunque prodotto due regressioni e due commit dello skill. È la dimostrazione che il
-  rilevatore gira da solo.
+  `review`. Ha comunque prodotto due regressioni e due commit dello skill — ma per la ragione qui
+  sotto **non è la dimostrazione che il rilevatore gira da solo**. È la dimostrazione che un umano che
+  legge due piani generati contro affermazioni appena scritte trova difetti reali: la stessa attività
+  a cui questo documento attribuisce `2c89e7f` in § *Perché il grading system è abbandonato*.
 - Le fasi `verdetto` e `recidiva` a modelli non sono **mai** state eseguite.
+- **Il registro è stato popolato a posteriori.** Gli `IMPROVEMENT` e i `REVIEW` di CON-4 sono
+  artefatti realmente generati da un workflow; le righe del registro no. `REGRESSION-LEDGER.md` nasce
+  il 2026-08-04 alle 21:20 e alle 21:28 il commit `0273a73` — *«backdate the ledger to the CON-4
+  review cycle»* — vi scrive `R-002`…`R-008` risalendo a commit già fatti. Nessuna di quelle righe è
+  la previsione di chi ha applicato la modifica: sono ricostruzioni, e lo stesso messaggio dichiara il
+  criterio con cui sono state scritte — *«each stated over a generated plan rather than over the skill
+  text»*.
+- **Due righe sole sono previsioni ex-ante:** `R-010` (`865fc56`, 23:12) e `R-011` (`633ddf1`, 23:32),
+  scritte nello stesso minuto del commit che verificano — `87150d3` alle 23:11, `eb926bb` alle 23:30.
+  Sono anche le due sole la cui clausola è ancora nella forma su cui la riga è nata, e non è una
+  coincidenza: è il meccanismo. Entrambe sono tuttora `da verificare`.
+- **Quattro righe sono state ritarate sui piani su cui erano misurate.** I verdetti CON-5 entrano alle
+  22:02; fra le 22:20 e le 22:41 vengono riscritte `R-002` secondo membro, `R-003`, `R-006` e `R-007`,
+  e con loro l'autorità: il conflitto sull'embedding di query entra nel brief alle 22:20 (`b7af297`),
+  la tabella `Material uncertainties` alle 22:20 e le sue id alle 22:41 (`249a34e`), lo stesso minuto
+  in cui `R-007` è decisa sul criterio di sottosistema. Per quelle quattro righe **CON-5 non è un
+  test**: la riga è stata adattata al piano che avrebbe dovuto falsificarla. Il registro lo racconta
+  già in § *Formulazioni riscritte*, senza trarne la conseguenza sul contatore.
+- **La falsificazione più pulita del corpus è `R-008` su `CX`**: riga scritta alle 21:28, mai
+  riscritta, smentita alle 22:02 da tre voci della tabella `Themes`. `R-002` su `CC` regge quasi
+  altrettanto, ma il suo primo membro è ancorato ai `Known conflicts` del brief, che quella sera hanno
+  ricevuto un conflitto in più.
 
 Quindi lo strumento non è «già esistente e da formalizzare»: **CON-6 è la sua prima esecuzione nella
-forma documentata.** Il criterio con cui giudicarlo non è che produca tutti gli artefatti previsti, ma
+forma documentata**, e vale per il registro quanto per il filtro. Il corpus del registro è in parte
+validato — due falsificazioni reali su piani reali; la sua **disciplina** — la riga scritta dall'umano
+che applica, nel momento in cui applica — è stata eseguita due volte su undici. Il criterio con cui
+giudicare CON-6 non è che produca tutti gli artefatti previsti, ma
 che i due `IMPROVEMENT` abbiano **specificità comparabile**, cioè che l'intersezione sia letterale e
 non una mappatura generico → operativo. Il contratto di conformità rende quella proprietà una forma
 da riempire invece che un giudizio da emettere.
@@ -421,6 +448,16 @@ previsione falsificabile — *«al prossimo ciclo questo difetto non ricompare»
 obbligatoria: una riga per modifica applicata, con id, commit dello skill, origine, affermazione
 verificabile, modo di verifica, ultimo controllo, artefatti e strumenti su cui è stato prodotto il
 verdetto, cosa sorvegliare oltre all'affermazione, ed esito.
+
+**L'obbligo è dichiarato, non ancora esercitato.** Nove righe su undici sono ricostruzioni scritte a
+ritroso su commit già fatti; vedi § *Lo stato dell'evidenza*. La conseguenza operativa è che le
+affermazioni **quantificano su un piano generato, non sul testo dello skill** — è il criterio con cui
+sono state scritte, e ha due effetti opposti. Buono: riformulare una clausola **non falsifica** la
+riga che la copre, perché la riga non afferma niente sul testo della clausola. Cattivo: l'unico
+ancoraggio al testo sotto processo è la cella `Commit`, quindi una riformulazione lascia la riga a
+misurare un testo diverso da quello che dichiara, in silenzio. È esattamente ciò che è successo a
+`R-002` e a `R-008`, e la ragione per cui una clausola riformulata **ri-ancora** le righe che la
+coprono e ne azzera il contatore `×k`.
 
 Lo stesso registro copre anche le regressioni **non previste**, senza un secondo artefatto: se il
 piano di miglioramento del ciclo N solleva un difetto che il ciclo N-2 aveva chiuso, quella è una
