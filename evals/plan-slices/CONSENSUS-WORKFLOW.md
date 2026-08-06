@@ -378,10 +378,20 @@ formulata male»*. La firma è misurabile:
 2026-08-06  28b5460   417 righe
 ```
 
-**+69% in sette giorni, 18 commit, un solo commit che toglie qualcosa.** `R-010` e `R-011` sono
-entrambe correzioni di righe precedenti (`R-002`, `R-008`) ed **entrambe sono entrate come regole
-aggiuntive**, non come riformulazioni delle regole che avevano fallito — perché nessun'altra forma
-era disponibile.
+**+69% in sette giorni, 18 commit, un solo commit che toglie qualcosa.**
+
+`R-010` e `R-011` sembravano i due esempi della firma. Verificato sui diff il 2026-08-06, **non lo
+sono: sono riformulazioni in loco.** `87150d3` riscrive il paragrafo di § 1 su cui `R-002` era nata —
+`+7/-3`, `close` spaccato in *expose* e *resolve*; `eb926bb` riscrive la frase di § 2 su cui era nata
+`R-008` — `+4/-2`, il marcatore `*(Developer outcome)*` inserito dentro la stessa frase. Ciò che è
+entrato come aggiunta non è la regola: è la **riga di registro**. Lo skill ha preso +4 e +2 righe, il
+registro +2 righe su 9.
+
+Va corretta di conseguenza anche l'affermazione che fino a CON-6 non esistesse nessun percorso per cui
+un difetto uscisse come *«questa regola esistente è formulata male»*. Il percorso non esisteva **nel
+workflow**; fuori dal workflow un umano l'ha percorso due volte nella stessa sera. Il rimedio non è
+inventare una mossa mai fatta: è renderla disponibile a `improve`, che oggi non ha modo di proporla,
+e impedire che il costo si scarichi sul registro come è già successo.
 
 Il principio mancante era già scritto, nel posto sbagliato. `REGRESSION-LEDGER.md`: *«La sequenza di
 regressioni sullo stesso tema è il segnale che la regola è formulata male, non che va riscritta
