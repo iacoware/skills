@@ -79,14 +79,25 @@ l'effort**. I confini noti:
   `$plan-slices` su Codex: da `3658187` lo skill ha `disable-model-invocation: true` e
   `allow_implicit_invocation: false`, quindi il prompt di CON-1…CON-5, che si affidava all'attivazione
   implicita, avrebbe generato piani **senza lo skill**. Non è una scelta: è un confine che il commit
-  ha già attraversato e che il prompt non aveva ancora seguito. **Inglese**, di conseguenza i piani
-  nascono in inglese per la prima volta, perché lo skill scrive nella lingua della richiesta.
-  **Allowlist scritta** — solo `recipe-app/sources/`, come nei quattro prompt normativi: un piano
-  generato dopo aver letto `PLAN-*-CON-5.md` sarebbe contaminato senza che nulla lo dichiari.
-- **CON-6 → CON-7, effort.** I due modelli passano da `high` a `medium`. `high` è l'unica
-  configurazione mai esercitata contro provider reali, e resta ferma in CON-6: cambiarla nello stesso
-  ciclo che deve testare la specificità degli `IMPROVEMENT` avrebbe confuso la variabile testata con
-  una scelta di costo indipendente.
+  ha già attraversato e che il prompt non aveva ancora seguito. **Allowlist scritta** — solo
+  `recipe-app/sources/`, come nei quattro prompt normativi: un piano generato dopo aver letto
+  `PLAN-*-CON-5.md` sarebbe contaminato senza che nulla lo dichiari.
+  Un terzo punto — **l'inglese** — era previsto qui e **non si è verificato**: i piani CON-6 sono in
+  italiano come i cinque precedenti. `SKILL.md:335` scrive nella lingua dell'utente, non in quella
+  del prompt, e in inglese esce la sola **struttura**, che viene dal template. Il confine non è stato
+  attraversato; la previsione era sbagliata sul comportamento dello skill, non sui piani.
+- **CON-6, effort di generazione.** I due candidati sono nati a `medium` mentre `support/AGENT-PLAN-MAP.md`
+  dichiarava `high`, su entrambi i lati e simmetricamente. È un confine attraversato **senza
+  deliberazione**, cioè l'unico modo in cui il principio in fondo a questa lista si viola: si è
+  sanato registrandolo e correggendo le due celle, non rigenerando. Le ragioni per non rigenerare
+  stanno nella mappa; qui conta la conseguenza sulla lista, ed è che **effort di generazione ed
+  effort delle fasi del ciclo sono due variabili distinte**, che la decisione «entrambi a `high` in
+  CON-6» teneva confuse in una.
+- **CON-6 → CON-7, effort delle fasi del ciclo.** Le quattro fasi — `improve`, `review`, `verdetto`,
+  `recidiva` — passano da `high` a `medium`. Restano a `high` in CON-6 perché è lì che vive la
+  variabile testata: cambiarle nello stesso ciclo che deve misurare la specificità degli
+  `IMPROVEMENT` confonderebbe quella variabile con una scelta di costo indipendente. La generazione
+  non è più parte di questo confine: l'ha già attraversato in CON-6.
 - **CON-6 → CON-7, brief.** La revisione di `EVALUATION-BRIEF.md` sta dopo CON-6 per la stessa
   ragione: è l'autorità contro cui si decidono quattordici righe su diciassette.
 - **Dopo la fase di modularizzazione e pruning.** Spostare testo dello skill in file caricati

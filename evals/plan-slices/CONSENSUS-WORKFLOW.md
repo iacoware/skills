@@ -11,8 +11,9 @@ Non è un prerequisito di niente qui e non torna. Resta in git; la ragione e la 
 `workflow/RATIONALE.md`.
 
 La lingua del progetto è l'**inglese** dal 2026-08-06: ogni artefatto nuovo nasce in inglese, con due
-esclusioni permanenti — `recipe-app/sources/` e gli artefatti storici. La regola per esteso, con le
-sue ragioni, sta in `README.md` § *Language*, che è il record. Questi documenti sono un arretrato in
+esclusioni permanenti — `recipe-app/sources/` e gli artefatti storici — e con i **candidati
+generati** che la regola non raggiunge affatto, perché la loro lingua la decide lo `SKILL.md` sotto
+test. La regola per esteso, con le sue ragioni, sta in `README.md` § *Language*, che è il record. Questi documenti sono un arretrato in
 italiano che la Fase 0b converte e che non blocca niente.
 
 ## Cosa aprire

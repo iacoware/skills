@@ -59,7 +59,8 @@ simmetria* records as the CON-5 → CON-6 boundary.
 `Attribution` is how the harness was decided. The fourteen CON-1…CON-5 rows are `reconstructed`; the
 evidence is below, and their model and effort are `unrecorded`, once, for the reason stated in its
 own section. The CON-6 rows are `declared`: written before the calls, which is the whole point of the
-column.
+column — with one cell corrected afterwards, `effort corrected`, and the correction is described
+below rather than hidden in the cell. Writing a cell before the call makes it checkable, not true.
 
 | Cycle | Artifact | Role | Harness | Mode | Model · effort | Alias | Attribution |
 |---|---|---|---|---|---|---|---|
@@ -77,13 +78,13 @@ column.
 | CON-4 | `PLAN-CX-CON-4.REVIEW.md` | `review` output | `CX` — Codex CLI | interactive session | unrecorded | — | reconstructed |
 | CON-5 | `PLAN-CC-CON-5.md` | candidate | `CC` — Claude Code CLI | interactive session | unrecorded | — | reconstructed |
 | CON-5 | `PLAN-CX-CON-5.md` | candidate | `CX` — Codex CLI | interactive session | unrecorded | — | reconstructed |
-| CON-6 | `PLAN-CC-CON-6.md` | candidate | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `high` | `CANDIDATE-B` | declared |
-| CON-6 | `PLAN-CX-CON-6.md` | candidate | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `high` | `CANDIDATE-A` | declared |
+| CON-6 | `PLAN-CC-CON-6.md` | candidate | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `medium` | `CANDIDATE-B` | declared · effort corrected |
+| CON-6 | `PLAN-CX-CON-6.md` | candidate | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `medium` | `CANDIDATE-A` | declared · effort corrected |
 
 CON-5 is a partial cycle: it stopped at generation, so it has no `IMPROVEMENT` and no `REVIEW`, and
 its verdicts come from offline human reading.
 
-### CON-6, decided at S1 before the two generation calls
+### CON-6: decided at S1, and what the two calls actually did
 
 - **`SKILL.md` is `28b5460`**, the working tree clean at that commit. The installed copy under
   `~/.agents/skills/plan-slices/` is byte-identical to it, checked with `diff -r`; the candidates are
@@ -96,9 +97,25 @@ its verdicts come from offline human reading.
   `3658187` the skill carries `disable-model-invocation: true` and `allow_implicit_invocation: false`,
   so the CON-1…CON-5 generation prompt would have produced plans generated **without the skill**. The
   boundary is recorded in `../workflow/CYCLE.md` § *Confini di strumento*.
-- **The plans are in English**, the first cycle in which they are: `SKILL.md` writes content in the
-  language of the request, and the request is now in English per `../README.md` § *Language*. Same
-  boundary.
+- **Effort was `medium`, not the `high` declared here before the calls.** Both sides, symmetrically;
+  the two cells were corrected when S1 closed, and the plans were **not** regenerated. Two reasons
+  and one consequence. The thesis CON-6 tests is comparative — how many entries per side survive the
+  conformance gate — so a symmetric shift does not touch it, and the four cycle phases stay at
+  `high`, which is where that variable lives. And there is no `high` generation baseline to be
+  comparable with: CON-1…CON-5 read `unrecorded`, so regenerating would have bought a comparability
+  that does not exist. The error is asymmetric in the skill's favour: a candidate generated at lower
+  effort is a harder condition, so a `not falsified` verdict measured on these plans is stronger, not
+  weaker — only a `regressed` verdict is ambiguous, and that ambiguity is carried by the `gen` slot
+  of the row that records it. The consequence is in `../workflow/CYCLE.md` § *Confini di strumento*:
+  the CON-6 → CON-7 effort boundary is not what it said it was.
+- **The plans are in Italian**, as CON-1…CON-5 were, and the prediction this section previously
+  carried — *«the first cycle in which they are in English»* — was **wrong**. `SKILL.md:335` says
+  *«write content in the user's language»*, and the two harnesses resolved that to Italian on both
+  sides; the sources under `recipe-app/sources/` are Italian too, and nothing here separates the two
+  causes, which happen to agree. What is English is the **structure** — section names, field names,
+  order — because it comes from the template, which is exactly what that same line prescribes. So
+  the plans conform to the skill, `../README.md` § *Language* does not reach them, and the boundary
+  predicted at CON-5 → CON-6 **was not crossed**: one fewer, not one more.
 
 ### How the harness was reconstructed
 

@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta, prossima** — **quattro sessioni, 2+2+5 chiamate, autorizzazione per sessione** | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| **2 — CON-6** | **aperta** — S1 chiusa 2026-08-07; **prossima è S2**, 2 chiamate, autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -83,9 +83,17 @@ Non si ridiscutono all'inizio di ogni sessione.
   escluso da ogni payload.
 - `CON-N` resta il contatore di ciclo negli artefatti; non si rinominano artefatti storici. **CON-5
   non si riusa.** Il prossimo ciclo è **CON-6**.
-- **Modelli ed effort: `gpt-5.6-sol` e `claude-opus-5`, entrambi a `high` in CON-6.** `medium` è un
-  confine di strumento isolato in **CON-7**: cambiarlo in CON-6 confonderebbe la variabile testata —
-  la specificità degli `IMPROVEMENT` — con una scelta di costo indipendente.
+- **Modelli: `gpt-5.6-sol` e `claude-opus-5`.** L'**effort è due variabili, non una**, e la decisione
+  che le teneva insieme — «entrambi a `high` in CON-6» — è stata splittata alla chiusura di S1, dopo
+  che i due candidati sono nati a `medium` su entrambi i lati. **La generazione di CON-6 è a
+  `medium`**, registrata e non rigenerata; **le quattro fasi del ciclo restano a `high`**, perché è
+  lì che vive la variabile testata — la specificità degli `IMPROVEMENT` — e cambiarle nello stesso
+  ciclo la confonderebbe con una scelta di costo indipendente. `medium` sulle fasi è il confine
+  isolato in **CON-7**. Le ragioni per non rigenerare stanno in `support/AGENT-PLAN-MAP.md` § CON-6.
+- **La lingua dei candidati non è decisa qui.** La decide `SKILL.md`, che scrive il contenuto nella
+  lingua dell'utente e la struttura in quella del template: i piani CON-6 sono in **italiano** con
+  heading inglesi, e la regola «ogni nuovo artefatto nasce in inglese» non li raggiunge, perché la
+  loro lingua è l'effetto di una clausola **sotto test**, non una scelta editoriale.
 - **La revisione di `EVALUATION-BRIEF.md` sta dopo CON-6**, per la stessa ragione: è l'autorità contro
   cui si decidono quattordici righe su diciassette.
 - **L'inglese è la lingua del progetto dal 2026-08-06.** Le fonti in `recipe-app/sources/` e gli
@@ -114,7 +122,8 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 **Precondizioni:** Fasi 0c, 1a, 1b-i, 1b-ii, 1c. `0c` è esplicita e non solo transitiva: un ciclo eseguito su
 righe multi-affermazione produce verdetti che lo split dovrebbe poi disaggregare a posteriori.
 **Chiamate provider:** **9** — 2 generazione, 2 `improve`,
-2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high`**. Richiede **autorizzazione esplicita** dopo
+2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high` sulle sette chiamate delle fasi**; le due di
+generazione sono già state fatte, a `medium`. Richiede **autorizzazione esplicita** dopo
 il dry-run e il conteggio, per `evals/AGENTS.md`, **una per sessione** e non una per la fase.
 
 I piani CON-5 **non si riusano**: esistevano già il 2026-08-02 alle 17:03 — `support/AGENT-PLAN-MAP.md`
@@ -142,8 +151,7 @@ L'autorizzazione di `evals/AGENTS.md` si chiede **per sessione**, con il contegg
 sessione — 2, 2, 5 — mai una volta sola per nove: un'autorizzazione unica coprirebbe anche il ramo in
 cui S2 dice di fermarsi.
 
-**S1 — generazione. 2 chiamate.** In corso dal 2026-08-07: preparazione fatta, generazione in mano
-all'umano, chiusura da fare in una sessione fredda.
+**S1 — generazione. 2 chiamate. Chiusa il 2026-08-07.**
 
 - [x] Assegnare `CANDIDATE-A`/`CANDIDATE-B` ai due lati e `REPORT-A`/`REPORT-B` ai due `IMPROVEMENT`
   che nasceranno. **Le due assegnazioni non devono coincidere.** `CANDIDATE-A` = `CX`,
@@ -154,25 +162,28 @@ all'umano, chiusura da fare in una sessione fredda.
   `disable-model-invocation: true` e `allow_implicit_invocation: false`, quindi senza `/plan-slices`
   e `$plan-slices` i candidati nascevano **senza lo skill**. I due prompt da inviare sono in
   `PROMPTS.md` § `GENERATE PLAN`, il confine in `workflow/CYCLE.md`.
-- [ ] Generare i due candidati dallo `SKILL.md` corrente — `28b5460` — e dalle sole fonti. Le due
+- [x] Generare i due candidati dallo `SKILL.md` corrente — `28b5460` — e dalle sole fonti. Le due
   sessioni le lancia l'umano, una per lato, nuove e senza altro contesto.
-- [ ] `make validate PLAN=PLAN-CC-CON-6.md` e `PLAN=PLAN-CX-CON-6.md`.
+- [x] `make validate PLAN=PLAN-CC-CON-6.md` e `PLAN=PLAN-CX-CON-6.md`. Verdi entrambi, quindi lo
+  skill era attivo su entrambi i lati: la correzione del prompt ha tenuto.
+- [x] Nessuno dei due cita un piano precedente o un artefatto sotto `results/`. L'allowlist del
+  prompt è scritta, non imposta, e ha retto.
 
-**Ripresa di S1 in sessione fredda** — cosa fare quando i due file esistono, senza rileggere altro
-oltre a questo blocco:
+**I due scostamenti di S1, per il report S4.** Nessuno dei due ha fatto rigenerare; entrambi sono
+simmetrici sui due lati, ed è la simmetria a renderli innocui per ciò che il ciclo misura.
 
-1. `make validate` su entrambi. Un piano che non passa si rigenera con lo stesso prompt: è un difetto
-   strutturale, non una voce da registrare.
-2. Verificare che nessuno dei due citi un piano precedente o un artefatto sotto `results/`.
-   L'allowlist del prompt è scritta, non imposta: una citazione significa candidato contaminato, da
-   rigenerare in una sessione nuova.
-3. Verificare che i due piani siano **in inglese** — è il primo ciclo in cui lo sono, ed è la
-   conseguenza attesa del prompt in inglese, non un caso.
-4. Se modello o effort reali divergono da `claude-opus-5` · `high` e `gpt-5.6-sol` · `high`,
-   correggere le due righe CON-6 di `support/AGENT-PLAN-MAP.md`: sono `declared`, e una riga
-   `declared` sbagliata è peggio di `unrecorded`.
-5. Chiudere le due caselle qui sopra, annotare gli scostamenti per il report S4, e fermarsi. S2 è una
-   sessione a sé e chiede la propria autorizzazione — 2 chiamate.
+1. **Effort `medium` invece di `high` in generazione.** Registrato correggendo le due celle di
+   `support/AGENT-PLAN-MAP.md` — una riga `declared` sbagliata è peggio di `unrecorded` — e la
+   decisione sull'effort qui sopra è stata splittata in due variabili. La conseguenza da tenere per
+   S3: una **smentita** misurata su questi piani è ambigua fra skill ed effort e va letta con lo slot
+   `gen` della riga che la registra; una **non smentita** no, perché l'effort minore è una condizione
+   più dura.
+2. **I piani sono in italiano**, non in inglese come questo blocco prevedeva. La previsione era
+   sbagliata sullo skill, non sui piani: `SKILL.md:335` scrive nella lingua dell'utente e in inglese
+   esce la sola struttura, che viene dal template. Un confine previsto che **non è stato
+   attraversato**.
+
+S2 è una sessione a sé e chiede la propria autorizzazione — 2 chiamate.
 
 **S2 — `improve` e gate. 2 chiamate. Finisce con una decisione.**
 
@@ -193,6 +204,9 @@ oltre a questo blocco:
   le righe, dormienti incluse.
 - [ ] Le righe dormienti entrano 1 ciclo su 3; a CON-6 non ce ne sono, e se ce ne fossero si dichiara
   perché entrano o no.
+- [ ] Ogni cella `Misurato su` scritta da questo ciclo porta `gen claude-opus-5 medium + gpt-5.6-sol
+  medium`. È il primo ciclo in cui lo slot `gen` dice qualcosa, ed è `medium` perché lo è stata la
+  generazione, non perché lo siano le chiamate di questa sessione.
 
 **S4 — report, applicazione, veto. Zero chiamate.**
 
@@ -226,7 +240,8 @@ oltre a questo blocco:
   `review` portante — è la fase che separa questo esito dal precedente.
 
 **Fuori dal tavolo per CON-6:** cambiare uno dei due modelli. È un confine di strumento e renderebbe
-il ciclo non interpretabile, per la stessa ragione per cui l'effort resta a `high`.
+il ciclo non interpretabile, per la stessa ragione per cui l'effort delle quattro fasi resta a
+`high`. Vale anche per il ramo «si ripete»: un S2 ripetuto si ripete alla stessa configurazione.
 
 **Output:** il ciclo eseguito, la procedura corretta, e il primo dato sulla tesi. È il gate delle
 Fasi 2b, 4 e 5.

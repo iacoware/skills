@@ -41,4 +41,8 @@ The two differ in the `@` prefixes, which are Claude Code's file-reference synta
 equivalent. That asymmetry is inherited from CON-1…CON-5, not introduced here.
 
 Model and effort are set in the session, not in the prompt, and are written into
-`support/AGENT-PLAN-MAP.md` before the call: `claude-opus-5` · `high` and `gpt-5.6-sol` · `high`.
+`support/AGENT-PLAN-MAP.md` before the call. In CON-6 that was `claude-opus-5` · `high` and
+`gpt-5.6-sol` · `high` on paper and **`medium` on both sides in fact** — the cells were corrected at
+the close of S1 and the plans were not regenerated. Since the setting lives in the session and not
+here, **check it in the session before sending**, and write down what the session actually says
+rather than what this file expects.

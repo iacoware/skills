@@ -34,6 +34,12 @@ Already English, nothing to do: `EVALUATION-BRIEF.md` — the Italian section ti
 Textual quotations from historical artifacts stay in Italian inside quotation marks, wherever they
 appear, because they are evidence.
 
+**Generated candidates are not covered by the rule at all.** `PLAN-*-CON-N.md` is written by
+`skills/plan-slices/SKILL.md`, which puts the structure in the template's language and the content in
+the user's: CON-6 came out with English section names and Italian prose on both sides, and the
+sources it reads are Italian too. Their language is the effect of a clause **under test**, so
+legislating it here would be this project writing the answer into the thing it is measuring.
+
 ## Active
 
 | Path | Role |
