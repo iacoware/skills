@@ -43,6 +43,7 @@ COMMIT_PATTERN = re.compile(r"\b([0-9a-f]{7,40})\b")
 ROW_PATTERN = re.compile(r"\bR-\d{3}\b")
 COLUMNS = ("id", "sites", "section", "clause", "rows", "anchoring", "in", "last", "site_last")
 UNRESOLVED = "unresolved"
+UNCOVERED = "uncovered"
 
 
 @dataclass(frozen=True)
@@ -85,6 +86,18 @@ def _parse_sites(cell: str) -> tuple[tuple[int, int], ...] | None:
     return tuple(spans)
 
 
+def _parse_rows(cell: str) -> tuple[str, ...]:
+    """The covering rows of a clause, none when the cell declares the clause uncovered.
+
+    A cell opening with `uncovered` may still name a row: four of them name the candidate an
+    unresolved anchor was refused. Reading that id as coverage resolves, in the records, a failure
+    the map records as a failure.
+    """
+    if cell.strip().lower().startswith(UNCOVERED):
+        return ()
+    return tuple(dict.fromkeys(ROW_PATTERN.findall(cell)))
+
+
 def parse_map(text: str) -> list[Record]:
     records: list[Record] = []
     section = ""
@@ -114,7 +127,7 @@ def parse_map(text: str) -> list[Record]:
                 spans,
                 section,
                 cells[2],
-                tuple(dict.fromkeys(ROW_PATTERN.findall(cells[5]))),
+                _parse_rows(cells[5]),
                 cells[6],
                 introduced.group(1),
                 rewritten.group(1),

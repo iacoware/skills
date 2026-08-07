@@ -47,6 +47,19 @@ class ParseMap(unittest.TestCase):
 
         self.assertEqual(records["C-103"].rows, ("R-006", "R-016"))
 
+    def test_an_uncovered_clause_naming_the_candidate_it_refused_stays_uncovered(self):
+        records = {item.id: item for item in parse_map(MAP)}
+
+        self.assertEqual(records["C-071"].rows, ())
+        self.assertEqual(records["C-119"].rows, ())
+        self.assertEqual(records["C-120"].rows, ())
+        self.assertEqual(records["C-129"].rows, ())
+
+    def test_the_records_cover_the_forty_clauses_the_map_counts(self):
+        covered = [item for item in parse_map(MAP) if item.rows]
+
+        self.assertEqual(len(covered), 40)
+
     def test_every_record_is_emitted_as_one_line_of_named_columns(self):
         records = parse_map(MAP)
 

@@ -69,7 +69,7 @@ C-067	161-162	§ 3 Cut valuable vertical slices	Split whenever either part can b
 C-068	163-164	§ 3 Cut valuable vertical slices	Deliver a required correction, retry, or escape path before or with the first behaviour that can create the recoverable state		—	745192f	745192f	745192f
 C-069	166-167	§ 3 Cut valuable vertical slices	Different failure profiles do not justify non-adjacent partial ownership of one adapter or invariant		—	9aa2586	9aa2586	9aa2586
 C-070	167-168	§ 3 Cut valuable vertical slices	Co-locate the behaviour, or make the first slice establish a complete stable capability later slices consume		—	9aa2586	9aa2586	9aa2586
-C-071	168-169	§ 3 Cut valuable vertical slices	Never interleave another theme while shared adapter or invariant ownership remains partial	R-005	—	9aa2586	9aa2586	9aa2586
+C-071	168-169	§ 3 Cut valuable vertical slices	Never interleave another theme while shared adapter or invariant ownership remains partial		—	9aa2586	9aa2586	9aa2586
 C-072	173-173	§ 3 Cut valuable vertical slices	Allow an explicit `Enabler` slice only when its primary user is a developer		—	c001780	c001780	c001780
 C-073	175-175	§ 3 Cut valuable vertical slices	Enabler test: exercises a real end-to-end production path, not one isolated layer		—	c001780	c001780	c001780
 C-074	176-176	§ 3 Cut valuable vertical slices	Enabler test: produces executable evidence needed by the next product slice		—	c001780	c001780	c001780
@@ -117,8 +117,8 @@ C-115	258-259	§ 4 Assign horizons and order for learning	A capability merely co
 C-116	261-268	§ 4 Assign horizons and order for learning	Respect hard dependencies, then order `NOW` by the six listed factors		—	c001780	c001780	c001780
 C-117	270-270	§ 4 Assign horizons and order for learning	Use the cheapest real input capable of validating a risky engine		—	c001780	c001780	c001780
 C-118	270-271	§ 4 Assign horizons and order for learning	Do not front-load commodity work for reuse alone		—	c001780	c001780	c001780
-C-119	273-274	§ 4 Assign horizons and order for learning	Controlled cheap inputs may validate shared machinery in an enabler, but do not reorder independently useful product flows	R-006	—	9aa2586	9aa2586	9aa2586
-C-120	274-275	§ 4 Assign horizons and order for learning	When sources define a recovery chain, extend the primary interaction with automatic recovery before a separate manual escape	R-005	—	9aa2586	9aa2586	9aa2586
+C-119	273-274	§ 4 Assign horizons and order for learning	Controlled cheap inputs may validate shared machinery in an enabler, but do not reorder independently useful product flows		—	9aa2586	9aa2586	9aa2586
+C-120	274-275	§ 4 Assign horizons and order for learning	When sources define a recovery chain, extend the primary interaction with automatic recovery before a separate manual escape		—	9aa2586	9aa2586	9aa2586
 C-121	277-278	§ 4 Assign horizons and order for learning	After validating existential risks, prefer breadth before depth		—	745192f	745192f	745192f
 C-122	278-280	§ 4 Assign horizons and order for learning	Depart from breadth only for a differentiator, material risk, required recovery, or higher frequency, stated once under `Ordering criteria`		—	745192f	745192f	745192f
 C-123	282-284	§ 4 Assign horizons and order for learning	Required recovery outranks breadth: deliver the remedy of a named failure mode before opening a different theme	R-005	reconstructed	d977043	d977043	d977043
@@ -127,7 +127,7 @@ C-125	284-286	§ 4 Assign horizons and order for learning	A slice that opens a p
 C-126	288-289	§ 4 Assign horizons and order for learning	Ship the tenancy, ownership, or scope boundary with the first slice that persists data; a single named resolver owns the current scope	R-012	reconstructed	2c89e7f	2c89e7f	2c89e7f
 C-127	289-291	§ 4 Assign horizons and order for learning	A later slice may replace a configured scope with an authenticated one at one seam; state that seam under `Cross-functional concerns`	R-012	reconstructed	2c89e7f	2c89e7f	2c89e7f
 C-128	291-292	§ 4 Assign horizons and order for learning	Never defer the boundary itself, and never defer identity when no such seam exists		—	2c89e7f	2c89e7f	2c89e7f
-C-129	294-295	§ 4 Assign horizons and order for learning	Once the evidence that justified deferring identity exists, deliver identity before further user-facing slices	R-001	—	745192f	745192f	a06a5cc
+C-129	294-295	§ 4 Assign horizons and order for learning	Once the evidence that justified deferring identity exists, deliver identity before further user-facing slices		—	745192f	745192f	a06a5cc
 C-130	295-297	§ 4 Assign horizons and order for learning	Past the second `NOW` slice delivering to an end user, justify the remaining deferral once under `Ordering criteria`	R-017	reconstructed	a06a5cc	a06a5cc	a06a5cc
 C-131	297-299	§ 4 Assign horizons and order for learning	Every `NOW` slice preceding identity states its own audience	R-009	reconstructed	a06a5cc	a06a5cc	a06a5cc
 C-132	301-302	§ 4 Assign horizons and order for learning	When `NOW` targets selected end users, end it with the smallest release slice usable in its intended environment		—	745192f	745192f	745192f
