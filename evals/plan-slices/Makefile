@@ -36,11 +36,15 @@ IMPROVEMENT_VALIDATOR := scripts/consensus/validate_improvement.py
 CLAUSE_MAP_TOOL := scripts/consensus/extract_clause_map.py
 ORCHESTRATOR_TOOL := scripts/orchestrate_grading.py
 IMPROVEMENT ?=
+# Where the cited candidates live. They carry their payload aliases, so they are not under
+# `results/` with the report that cites them.
+PLANS_DIR ?=
 
 ENABLED_VALUES := 1 true yes
 DRY_RUN_ARG = $(if $(filter $(ENABLED_VALUES),$(DRY_RUN)),--dry-run,)
 RESUME_ARG = $(if $(filter $(ENABLED_VALUES),$(RESUME)),--resume,)
 CONFIRM_SEND_ARG = $(if $(filter $(ENABLED_VALUES),$(CONFIRM_SEND)),--confirm-send,)
+PLANS_DIR_ARG = $(if $(PLANS_DIR),--plans-dir "$(PLANS_DIR)",)
 SKILL_COMMIT_ARGS = $(foreach commit,$(SKILL_COMMITS),--candidate-skill-commit "$(commit)")
 COMMON_ARGS = \
 	$(foreach source,$(SOURCES),--source "$(source)") \
@@ -72,7 +76,8 @@ help:
 	@echo "  Add RESUME=1 to verify and reuse existing artifacts."
 	@echo "  Add CONFIRM_SEND=1 only after reviewing dry-run output."
 	@echo "  make validate PLAN=PLAN-CX-5.md"
-	@echo "  make validate-improvement IMPROVEMENT=PLAN-CC-CON-6.IMPROVEMENT.md"
+	@echo "  make validate-improvement IMPROVEMENT=PLAN-CC-CON-6.IMPROVEMENT.md \\"
+	@echo "       PLANS_DIR=recipe-app/payloads/CON-6/improve  # where the aliased candidates live"
 	@echo "  make clause-map  # regenerate support/clause-row-map.tsv from the map"
 	@echo "  make test"
 
@@ -84,7 +89,7 @@ validate: require-plan
 	python3 $(VALIDATOR) $(RESULTS_DIR)/$(PLAN)
 
 validate-improvement: require-improvement
-	python3 $(IMPROVEMENT_VALIDATOR) $(RESULTS_DIR)/$(IMPROVEMENT)
+	python3 $(IMPROVEMENT_VALIDATOR) $(RESULTS_DIR)/$(IMPROVEMENT) $(PLANS_DIR_ARG)
 
 clause-map:
 	python3 $(CLAUSE_MAP_TOOL)
