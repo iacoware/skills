@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta** — S1 chiusa 2026-08-07; **prossima è S2**, 2 chiamate, autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| **2 — CON-6** | **aperta** — S1 chiusa 2026-08-07; S2 eseguita e **scartata al gate** per un difetto del payload, corretto; **prossima è S2b**, 2 chiamate, autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -121,8 +121,9 @@ citazioni testuali dagli artefatti storici restano **in italiano fra virgolette*
 
 **Precondizioni:** Fasi 0c, 1a, 1b-i, 1b-ii, 1c. `0c` è esplicita e non solo transitiva: un ciclo eseguito su
 righe multi-affermazione produce verdetti che lo split dovrebbe poi disaggregare a posteriori.
-**Chiamate provider:** **9** — 2 generazione, 2 `improve`,
-2 `review`, 2 `verdetto`, 1 `recidiva`. Effort **`high` sulle sette chiamate delle fasi**; le due di
+**Chiamate provider:** **9** in un ciclo che non ripete — 2 generazione, 2 `improve`,
+2 `review`, 2 `verdetto`, 1 `recidiva`. CON-6 ne spende **11**: le due `improve` del primo S2 sono
+state scartate al gate per un difetto del payload, e la ripetizione è S2b. Effort **`high` sulle sette chiamate delle fasi**; le due di
 generazione sono già state fatte, a `medium`. Richiede **autorizzazione esplicita** dopo
 il dry-run e il conteggio, per `evals/AGENTS.md`, **una per sessione** e non una per la fase.
 
@@ -187,15 +188,65 @@ S2 è una sessione a sé e chiede la propria autorizzazione — 2 chiamate.
 
 **S2 — `improve` e gate. 2 chiamate. Finisce con una decisione.**
 
-- [ ] Comporre i payload: candidati rinominati, più `CLAUSE-INDEX.md` e `LEDGER-CLAIMS.md` proiettati
+- [x] Comporre i payload: candidati rinominati, più `CLAUSE-INDEX.md` e `LEDGER-CLAIMS.md` proiettati
   **a mano** dalla mappa e dal registro. Il produttore è Fase 5 e scriverlo qui sarebbe iniziarla da
   un'altra porta. **Verificare entrambe le proiezioni su un campione prima di inviare:** un indice
   sbagliato scarta al gate ogni voce che nomina una clausola, e il log si leggerebbe come «il modello
   non sa fare il lavoro» quando è un errore di payload. È il punto più fragile del ciclo.
-- [ ] Eseguire `improve` sui due lati, copiando `prompts/improve.prompt.md`.
-- [ ] `make validate-improvement` su entrambi, e conservare il log degli scarti per voce e campo.
-- [ ] **Scegliere il ramo** fra i tre esiti qui sotto. Il ramo «si corregge il campo e si ripete»
-  torna a S2, non prosegue.
+  Il payload è una **directory** — `recipe-app/payloads/CON-6/improve/` — che contiene l'allowlist e
+  nient'altro; i due prompt resi stanno un livello sopra, fuori dal payload. La verifica non è stata
+  un campione: tutte e 200 le celle-sito dell'indice sono state date al gate nella forma in cui una
+  voce le scriverebbe, e tutte e 200 passano con le righe che l'indice stampa. Ha trovato **due
+  difetti, entrambi negli strumenti e nessuno nella mappa**, ed entrambi avrebbero scartato al gate
+  voci corrette:
+  1. **La proiezione `.tsv` copriva quattro clausole che la mappa dichiara scoperte.** `C-071`,
+     `C-119`, `C-120` e `C-129` portano nella cella `Rows` la riga *candidata* che un ancoraggio
+     `unresolved` ha **rifiutato**; `extract_clause_map.py` la leggeva come copertura, cioè risolveva
+     nei record un fallimento che la mappa registra come fallimento. Le clausole coperte tornano da
+     44 a **40**, il totale che la mappa dichiara.
+  2. **Il gate rispondeva per tutte le clausole che un sito attraversa.** Una riga di `SKILL.md`
+     porta spesso due clausole normative, quindi citare un sito **esattamente come l'indice lo
+     stampa** faceva pretendere anche le righe delle clausole vicine: 36 siti su 205, fra cui i gate
+     `Complete when` di § 5, dove vive metà del registro. Ora un sito che è **lo span esatto** di una
+     clausola risponde per quella sola, e l'unione resta la risposta per un sito che non coincide con
+     nessuna. Resta un solo sito genuinamente ambiguo — `SKILL.md:369`, dove `C-171` e `C-172`
+     condividono la riga — e l'indice lo stampa una volta con l'unione, che è ciò che il gate chiede.
+- [x] Eseguire `improve` sui due lati, copiando `prompts/improve.prompt.md`. **Verificare l'effort
+  `high` nella sessione prima di inviare:** è la cella che S1 ha sbagliato dichiarandola senza
+  guardarla. Fatto a `high` su entrambi i lati, verificato in sessione.
+- [x] `make validate-improvement` su entrambi, e conservare il log degli scarti per voce e campo.
+  `REPORT-A` **5 conformi su 5**; `REPORT-B` **0 su 3**, e i tre scarti portano lo stesso campo e lo
+  stesso messaggio: ``` `Clause` must name its section as § `section title` ```.
+- [x] **Scegliere il ramo** fra i tre esiti qui sotto. Il ramo «si corregge il campo e si ripete»
+  torna a S2, non prosegue. **È il ramo scelto**, e non per il conteggio: per la concentrazione degli
+  scarti su un campo solo.
+
+**Perché il primo tentativo non conta come dato sulla tesi.** Il difetto è il terzo degli strumenti trovato a S2,
+e come i due della composizione del payload avrebbe scartato voci corrette.
+`CLAUSE-INDEX.md` stampava i titoli numerati come `## § 1 …` mentre il template chiede `§ ` più il
+titolo *come marcatore del campo*: la forma conforme era un `§` doppio. Un lato l'ha scritta, l'altro
+ha assorbito il marcatore nel titolo ed è caduto per intero. Le tre voci di `REPORT-B` nominano sito,
+sezione e citazione **correttamente**: rimettendo il solo separatore, tutte e tre passano — verificato
+su copia in scratchpad, senza toccare l'artefatto. Un conteggio 5 contro 0 letto come specificità
+comparata direbbe una cosa che il gate non ha misurato.
+
+**Correzione applicata, e il suo confine.** L'indice stampa quei titoli **senza** `§` e dichiara la
+regola del campo; il template resta com'è. Nessuna cella della mappa né del `.tsv` cambia, e il gate
+non legge l'indice: la correzione è nel payload, cioè in ciò che il modello legge. `_comparable`
+toglie `§` da entrambi i lati del confronto, quindi **entrambe le forme restano accettate** — le
+cinque voci conformi di `REPORT-A` rivalidano verdi con l'indice nuovo, e tutti e dieci i titoli
+dell'indice risolvono a una sezione del `.tsv`. I due `IMPROVEMENT` scartati stanno in
+`recipe-app/payloads/CON-6/out/attempt-1-discarded/`, perché sono la prova di questa lettura.
+
+**S2b — ripetizione. 2 chiamate, autorizzazione propria.**
+
+- [ ] Ripetere `improve` sui due lati **alla stessa configurazione** — `high`, stessi modelli, stesse
+  assegnazioni alias — con il payload corretto. È il vincolo di riga «un S2 ripetuto si ripete alla
+  stessa configurazione»: l'unica variabile che cambia è l'indice.
+- [ ] `make validate-improvement` su entrambi, log degli scarti conservato.
+- [ ] Riscegliere il ramo. Se `REPORT-B` cade di nuovo su un campo solo, il difetto non era l'indice e
+  la lettura qui sopra va rifatta; se gli scarti sono sparsi, vale l'esito «il modello non sa fare il
+  lavoro» e l'ipotesi prende una smentita `×1`.
 
 **S3 — `review`, `verdetto`, `recidiva`. 5 chiamate.**
 

@@ -80,9 +80,41 @@ below rather than hidden in the cell. Writing a cell before the call makes it ch
 | CON-5 | `PLAN-CX-CON-5.md` | candidate | `CX` — Codex CLI | interactive session | unrecorded | — | reconstructed |
 | CON-6 | `PLAN-CC-CON-6.md` | candidate | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `medium` | `CANDIDATE-B` | declared · effort corrected |
 | CON-6 | `PLAN-CX-CON-6.md` | candidate | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `medium` | `CANDIDATE-A` | declared · effort corrected |
+| CON-6 | `PLAN-CC-CON-6.IMPROVEMENT.md` | `improve` output | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `high` | `REPORT-A` | declared |
+| CON-6 | `PLAN-CX-CON-6.IMPROVEMENT.md` | `improve` output | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `high` | `REPORT-B` | declared |
 
 CON-5 is a partial cycle: it stopped at generation, so it has no `IMPROVEMENT` and no `REVIEW`, and
 its verdicts come from offline human reading.
+
+### CON-6: decided at S2, before the two `improve` calls
+
+- **The payload is a directory, not a list of repository paths.**
+  `recipe-app/payloads/CON-6/improve/` holds exactly the allowlist of `prompts/improve.prompt.md`
+  and nothing else: the two candidates under their aliases, `SKILL.md` at `28b5460`, the brief, the
+  sources, the template, and the two projections. For a manual execution the allowlist is written,
+  not imposed, and a directory is the closest a written one gets to being imposed.
+- **`CLAUSE-INDEX.md` and `LEDGER-CLAIMS.md` are projections, and both were checked before the
+  calls.** Every one of the 200 site cells was fed to `validate_improvement.py` as an entry would
+  state it: all 200 are accepted with the rows the index prints. The index was also compared, site
+  by site, against the Markdown of `support/CLAUSE-ROW-MAP.md` rather than against the `.tsv` both
+  it and the gate derive from. Two defects found by that check are recorded in
+  `../CONSENSUS-WORKFLOW-PLAN.md` § Fase 2, S2; both were in the tooling, neither in the map.
+- **Effort is `high` on both `improve` calls**, and it is the cell S1 got wrong by not checking. It
+  is verified in the session, before sending, not declared and assumed. Confirmed in session for the
+  first attempt, and it is the configuration the repeat runs at: a repeated S2 repeats at the same
+  configuration, so the two rows above hold for both attempts and are not re-declared.
+- **The first attempt was discarded, and the fault was the index, not either model.** The gate read
+  `REPORT-A` 5 conforming of 5 and `REPORT-B` 0 of 3, all three discards on the same field with the
+  same message. `CLAUSE-INDEX.md` printed the numbered headings as `## § 1 …`, while the template
+  asks for `§ ` + the title as the marker of that field, so the conforming form was a doubled `§`.
+  One side wrote it, the other absorbed the marker into the title and was discarded whole. The three
+  `REPORT-B` entries name site, section and quotation correctly; restoring the separator alone makes
+  all three conform. The index now prints those headings without the `§` and states the rule for the
+  field; `_comparable` strips `§` either way, so both forms are accepted and no cell of the map or of
+  the `.tsv` changed. The discarded outputs are kept under
+  `../recipe-app/payloads/CON-6/out/attempt-1-discarded/` as the evidence for that reading. This is
+  the third tooling defect found at S2, and like the first two it would have discarded correct
+  entries.
 
 ### CON-6: decided at S1, and what the two calls actually did
 
