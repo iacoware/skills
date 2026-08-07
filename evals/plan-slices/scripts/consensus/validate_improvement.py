@@ -363,6 +363,10 @@ class Coverage:
         covering = [record for record in self.clauses if record.covers(start, end)]
         if not covering:
             return [f"`SKILL.md:{start}-{end}` holds no normative clause"], True
+        # A site copied verbatim from the index names the clause whose span it is: answering for
+        # everything that span overlaps would demand the rows of its neighbours, and one line of
+        # `SKILL.md` often carries two clauses. Only a span that matches none falls back to overlap.
+        covering = [record for record in covering if (start, end) in record.spans] or covering
 
         errors = self._section_errors(clause, covering)
         errors.extend(self._row_errors(rows, covering))

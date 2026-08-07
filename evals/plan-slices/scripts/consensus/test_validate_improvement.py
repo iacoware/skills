@@ -185,6 +185,34 @@ class CoveringRows(unittest.TestCase):
             reasons(result, "Existing rule that failed to prevent the defect")[0],
         )
 
+    def test_a_site_that_is_one_clause_s_span_answers_for_that_clause_alone(self):
+        entry = {
+            "Existing rule that failed to prevent the defect": (
+                "- **Clause:** `SKILL.md:372` § `§ 5 Publish and audit` — «no slice asserts a side»\n"
+                "- **Covering rows:** `R-010`"
+            )
+        }
+
+        result = run(document(entry))
+
+        self.assertEqual(result.conforming, [1])
+
+    def test_a_site_that_is_no_clause_s_span_answers_for_everything_it_overlaps(self):
+        entry = {
+            "Existing rule that failed to prevent the defect": (
+                "- **Clause:** `SKILL.md:371-373` § `§ 5 Publish and audit` — «…»\n"
+                "- **Covering rows:** `R-010`"
+            )
+        }
+
+        result = run(document(entry))
+
+        self.assertIn(
+            "declares R-010, but the map covers C-175, C-176, C-177, C-178, C-179 with "
+            "R-002, R-003, R-004, R-010, R-013",
+            reasons(result, "Existing rule that failed to prevent the defect")[0],
+        )
+
     def test_naming_no_clause_requires_naming_no_rows(self):
         entry = {
             "Existing rule that failed to prevent the defect": (
