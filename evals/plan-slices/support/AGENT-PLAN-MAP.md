@@ -82,9 +82,62 @@ below rather than hidden in the cell. Writing a cell before the call makes it ch
 | CON-6 | `PLAN-CX-CON-6.md` | candidate | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `medium` | `CANDIDATE-A` | declared · effort corrected |
 | CON-6 | `PLAN-CC-CON-6.IMPROVEMENT.md` | `improve` output | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `high` | `REPORT-A` | declared |
 | CON-6 | `PLAN-CX-CON-6.IMPROVEMENT.md` | `improve` output | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `high` | `REPORT-B` | declared |
+| CON-6 | `PLAN-CC-CON-6.REVIEW.md` | `review` output | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `high` | — | declared |
+| CON-6 | `PLAN-CX-CON-6.REVIEW.md` | `review` output | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `high` | — | declared |
+| CON-6 | `PLAN-CC-CON-6.VERDICTS.md` | `verdict` output | `CC` — Claude Code CLI | interactive session | `claude-opus-5` · `high` | — | declared |
+| CON-6 | `PLAN-CX-CON-6.VERDICTS.md` | `verdict` output | `CX` — Codex CLI | interactive session | `gpt-5.6-sol` · `high` | — | declared |
 
 CON-5 is a partial cycle: it stopped at generation, so it has no `IMPROVEMENT` and no `REVIEW`, and
 its verdicts come from offline human reading.
+
+### CON-6: decided at S3, before the five calls
+
+- **Three payload directories, disjoint, one per phase.**
+  `recipe-app/payloads/CON-6/review/` holds `REPORT-A.md` and `REPORT-B.md` and nothing else;
+  `verdict/` holds `CANDIDATE-A.md`, `CANDIDATE-B.md`, `EVALUATION-BRIEF.md`, `sources/` and
+  `LEDGER-ROWS.md`; `recidiva/` holds the two reports and `ROWS.md`. Each is exactly the allowlist
+  of its prompt, as `improve/` was at S2. The candidates, the brief and the four sources in
+  `verdict/` are byte-identical to the copies `improve/` carried, which are themselves identical to
+  the repository originals: checked with `diff`, not assumed.
+- **Both alias assignments stand from S1 and are not re-decided.** `CANDIDATE-A` is `CX`'s plan,
+  `CANDIDATE-B` is `CC`'s; `REPORT-A` is `CC`'s `IMPROVEMENT`, `REPORT-B` is `CX`'s. Both
+  `IMPROVEMENT`s came out of S2b fully conforming — 4 of 4 and 7 of 7, revalidated unchanged — so
+  the two reports enter `review` and `recidiva` **whole**: no entry was stripped, and the ids the
+  two phases pair on are the reports' own numbering, `A#1`…`A#4` and `B#1`…`B#7`.
+- **The two projections carry claims and nothing else.** `LEDGER-ROWS.md` is `id · claim · watch
+  for`, `ROWS.md` is `id · claim`; all 17 claims were extracted from `REGRESSION-LEDGER.md` and
+  compared cell by cell against both files — verbatim on every row. No state, no counter, no origin,
+  no provenance travels with them. **All 17 rows are active and none is dormant**, so the 1-cycle-in-3
+  rule does not bite here and both files carry the same 17 ids.
+- **What was dropped from the `Watch for` cells, and why.** Four rows carry a note; the projection is
+  not a copy. `R-011` enters whole. `R-010` enters as the instruction only — *«a plan that defers
+  everything to a pending decision»* — without the sentence that names a harness and retells the
+  row's own history: a payload that names `CX` breaks the blindness of a phase whose candidates are
+  aliased. `R-016` enters without its pointer to `support/CLAUSE-ROW-MAP.md`, which is excluded from
+  every payload by construction; what remains is where the exception is decided, and the brief is in
+  the payload. `R-015` does not enter at all: its note is about the row's provenance and the Fase 4
+  decision it forces, it names a harness, and it is not an instruction about a generated plan. This
+  is an editorial decision on what a projection is, taken before the calls and recorded because it
+  changes what two of the five executions read.
+- **Output directories are separate per phase and per side, and empty.**
+  `out-review/CC`, `out-review/CX`, `out-verdict/CC`, `out-verdict/CX`, `out-recidiva`. The S2b
+  lesson applied forward: the two `IMPROVEMENT`s stay in `out/` and no execution of this session
+  writes there, so no run has another run's artifact — or the previous phase's, under its real
+  name — one `ls` away. As at S2, each rendered prompt names its own side in its output path: the
+  side already knows which harness it is, and the path says nothing about which report or which
+  candidate is whose.
+- **`recidiva` has no row in the table above and one is not added.** It is a single call with no
+  side; the model is fixed at `claude-opus-5` and declared in `REGRESSION-LEDGER.md` § *`Measured
+  on`*. The facts that belong here are the two the ledger cell does not carry: it runs on `CC` —
+  Claude Code CLI, interactive session — at effort `high`.
+- **Effort is `high` on all five calls**, verified in session before sending, per side
+  `claude-opus-5` for `CC` and `gpt-5.6-sol` for `CX`. The generation stays `medium` and is what the
+  `gen` slot of every cell this cycle writes must say.
+- **One prompt defect was corrected before the calls, at unknown result.**
+  `prompts/recidiva.prompt.md` forbade any count anywhere while its own output structure requires
+  three — the two report sizes and the number of rows considered. The prohibition now names what it
+  is for: the pairings. Unlike the two corrections of S2, this one was decided without knowing what
+  either side would produce.
 
 ### CON-6: decided at S2, before the two `improve` calls
 
@@ -280,10 +333,17 @@ not the side's run ordinal**. Two consequences worth holding on to:
 
 ## Format for a new cycle
 
-Add the rows **before** the calls, not after the report. Per cycle, six rows at most: two candidates,
-two `IMPROVEMENT`s, two `REVIEW`s. Each row carries harness, mode, model, effort, alias, and the
-attribution — which for a cycle recorded ahead of time is `declared`, the value CON-1…CON-5 could not
-have.
+Add the rows **before** the calls, not after the report. Per cycle, eight rows at most: two
+candidates, two `IMPROVEMENT`s, two `REVIEW`s, two `VERDICTS`. Each row carries harness, mode,
+model, effort, alias, and the attribution — which for a cycle recorded ahead of time is `declared`,
+the value CON-1…CON-5 could not have.
+
+**The two `VERDICTS` rows joined the format at CON-6**, which is the first cycle whose verdicts come
+from a `verdetto` call instead of offline human reading. Their alias column is `—`: those artifacts
+enter no payload, so they have nothing to be blind about, and the column would record a mapping that
+does not exist. What their rows carry that nothing else does is the fifth `Measured on` slot,
+`verdict <instrument>`, which without them would name a call whose model and effort are recorded
+nowhere. The same holds for the two `REVIEW` rows.
 
 Both alias assignments are decided at payload composition and written here first. A row whose alias
 column is filled after the call has recorded nothing: the point of the column is that the mapping

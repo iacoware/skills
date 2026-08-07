@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta** — S1, S2 e S2b chiuse 2026-08-07; i due `IMPROVEMENT` sono conformi, 4 e 7 voci; **prossima è S3**, 5 chiamate, autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| **2 — CON-6** | **aperta** — S1, S2 e S2b chiuse 2026-08-07; i due `IMPROVEMENT` sono conformi, 4 e 7 voci; **S3 è preparata** — payload, proiezioni e prompt resi — e restano le sue **5 chiamate**, con autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -285,14 +285,43 @@ producono voci ancorate — non dice quanto bene, e non va scritto come se lo di
 
 **S3 — `review`, `verdetto`, `recidiva`. 5 chiamate.**
 
-- [ ] I tre payload sono disgiunti e le esecuzioni indipendenti: `review` legge i due `IMPROVEMENT`
+- [x] I tre payload sono disgiunti e le esecuzioni indipendenti: `review` legge i due `IMPROVEMENT`
   conformi, `verdetto` i due candidati più le righe attive, `recidiva` i due `IMPROVEMENT` più tutte
-  le righe, dormienti incluse.
-- [ ] Le righe dormienti entrano 1 ciclo su 3; a CON-6 non ce ne sono, e se ce ne fossero si dichiara
-  perché entrano o no.
+  le righe, dormienti incluse. Composti il 2026-08-07 come tre directory —
+  `recipe-app/payloads/CON-6/{review,verdict,recidiva}/` — ciascuna esattamente l'allowlist del suo
+  prompt.
+- [x] Le righe dormienti entrano 1 ciclo su 3; a CON-6 non ce ne sono, e se ce ne fossero si dichiara
+  perché entrano o no. **Diciassette attive, zero dormienti**: i due file portano gli stessi 17 id, e
+  la regola non morde in questo ciclo.
 - [ ] Ogni cella `Misurato su` scritta da questo ciclo porta `gen claude-opus-5 medium + gpt-5.6-sol
   medium`. È il primo ciclo in cui lo slot `gen` dice qualcosa, ed è `medium` perché lo è stata la
   generazione, non perché lo siano le chiamate di questa sessione.
+- [ ] Eseguire le cinque chiamate a `high`, due per `review`, due per `verdetto`, una per `recidiva`
+  su `CC` a modello fisso. I cinque prompt resi stanno un livello sopra i payload, come a S2. Le
+  quattro directory di output — una per fase e per lato — sono vuote prima delle chiamate; nessuna
+  esecuzione scrive in `out/`, dove stanno i due `IMPROVEMENT` con i nomi veri.
+
+**Cosa la preparazione ha verificato, e cosa ha deciso.** Zero chiamate; il dettaglio sta in
+`support/AGENT-PLAN-MAP.md` § *decided at S3*, che è il record, e qui c'è solo ciò che serve a
+rileggere il ciclo.
+
+- **Le due proiezioni sono verbatim.** I 17 claim di `LEDGER-ROWS.md` e di `ROWS.md` sono stati
+  estratti dal registro e confrontati cella per cella: identici, senza stato, contatore, origine né
+  provenienza. È l'analogo della verifica che a S2 ha trovato tre difetti negli strumenti, sull'unico
+  punto in cui questa fase ha un payload derivato.
+- **Le celle `Watch for` sono una proiezione, non una copia.** Quattro righe ne portano una: `R-011`
+  entra intera, `R-010` senza la frase che nomina un harness e ripercorre la storia della riga,
+  `R-016` senza il rimando a `support/`, `R-015` non entra affatto — la sua nota parla della
+  provenienza della riga e della decisione di Fase 4, non di un piano generato. È una decisione
+  editoriale presa **a risultato ignoto** e registrata perché cambia ciò che due delle cinque
+  esecuzioni leggono.
+- **Un difetto del prompt `recidiva`, corretto prima delle chiamate.** Vietava qualunque conteggio
+  «anywhere» mentre la sua stessa struttura di output ne chiede tre. Il divieto ora nomina ciò per cui
+  esiste: le coppie. È il quarto aggiustamento di strumento del ciclo ed è il primo deciso senza
+  sapere cosa produrrà nessuno dei due lati.
+- **Le due righe `VERDICTS` entrano nel formato della mappa**, con alias `—`: CON-6 è il primo ciclo
+  i cui verdetti nascono da una chiamata invece che da lettura umana offline, e senza quelle righe il
+  quinto slot di `Misurato su` nominerebbe uno strumento di cui nessuno registra modello ed effort.
 
 **S4 — report, applicazione, veto. Zero chiamate.**
 
