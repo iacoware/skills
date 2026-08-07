@@ -53,8 +53,12 @@ first blocked slice.
 
 Exposing is not resolving. Only a source that selects resolves an entry; a published question and a
 scheduled spike both leave it open, because neither has produced its answer when the plan is written.
-While an entry is open, no `Includes` or `Verification` bullet of a slice it blocks may assert a
-side: only conditional wording that defers to the pending decision is allowed.
+No `Includes` or `Verification` bullet may assert one side of a behaviour the sources leave open,
+whether or not the sweep listed it. Two sources that describe the same behaviour, path, or invariant
+incompatibly leave it open even when neither names a provider, model, service, or adapter: sweep per
+behaviour the plan will slice, not per component named. A bullet that touches such a behaviour uses
+conditional wording that defers to the pending decision, and the plan lists that behaviour among its
+open entries with the slices it blocks.
 
 **Proceed when:** every sequencing-relevant statement has applicable classifications and a source;
 unsupported conclusions are assumptions; exclusions have explicit rationale; every material conflict
