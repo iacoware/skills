@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta solo sul veto** — S1, S2, S2b, S3 e S4 chiuse il 2026-08-07. Il ciclo è completo, 11 chiamate; il report è `recipe-app/results/CONSENSUS-CON-6.REPORT.md`. `SKILL.md` e `REGRESSION-LEDGER.md` sono modificati **nel working tree e non committati**: resta la lettura umana dei contatori e `git diff` | `recipe-app/results/CONSENSUS-CON-6.REPORT.md` |
+| 2 — CON-6 | **chiusa** — 2026-08-07, veto compreso. Ciclo completo in 11 chiamate; `SKILL.md` a `550077f`, registro a 18 righe attive. Il report è il record: `recipe-app/results/CONSENSUS-CON-6.REPORT.md` | come sopra, per sapere *perché* |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -333,7 +333,8 @@ rileggere il ciclo.
   i cui verdetti nascono da una chiamata invece che da lettura umana offline, e senza quelle righe il
   quinto slot di `Misurato su` nominerebbe uno strumento di cui nessuno registra modello ed effort.
 
-**S4 — report, applicazione, veto. Zero chiamate. Eseguita il 2026-08-07; resta il solo veto umano.**
+**S4 — report, applicazione, veto. Zero chiamate. Chiusa il 2026-08-07, veto compreso: il batch è
+stato accettato per intero, `SKILL.md` è `550077f`.**
 
 - [x] Scrivere `CONSENSUS-CON-6.REPORT.md` nella forma di `assets/report-template.md`, contatori in
   testa. È la prima istanza del template: ogni punto in cui non regge si corregge **nel template**,

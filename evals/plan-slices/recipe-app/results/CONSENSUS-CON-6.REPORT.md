@@ -142,9 +142,9 @@ and adapter choices, and this entry's defect names none. The reasoning is repeat
 
 **Re-anchored rows** — automatic: the clause changed wording, the row's claim held its reach.
 
-- `R-010` — new commit `(pending)`, counter to `not falsified ×0`, claim unchanged. It read `holds`
+- `R-010` — new commit `550077f`, counter to `not falsified ×0`, claim unchanged. It read `holds`
   on both plans from both instruments in CON-6, and the reset **discards that measurement on
-  purpose**: `×k` counts cycles against a text, and the text changed in the same working tree. The
+  purpose**: `×k` counts cycles against a text, and the text changed. The
   boundary is recorded in the row's own `Measured on` cell as well as in the cycle line.
 
 **Absorbed claims** — none. No entry declared `reach-change`, so no `Merged claim` was emitted and
@@ -161,7 +161,7 @@ no prediction left the file.
 - `R-001` and `R-016` move to `regressed on CX`, both unanimously and both against `28b5460`.
 - `R-006` is held at `not falsified ×1` instead of moving to `×2`: both instruments read `holds` on
   both plans, but `recidiva` pairs `B#5` to it. See *Recidiva*.
-- `R-018` is born `ex-ante`, `to verify`, `Commit SKILL.md: (pending)`, with a `Watch for` cell
+- `R-018` is born `ex-ante`, `to verify`, `Commit SKILL.md: 550077f` after the veto, with a `Watch for` cell
   naming the opposite failure — a plan that lists non-conflicts to satisfy the rule.
 
 ## Classification instability
@@ -376,8 +376,8 @@ real artifacts.
 **`R-010` was re-measured by the application itself.** Both instruments read `holds` on both plans
 against `28b5460`, and then this cycle's applied entry reformulated the very clause the row is
 anchored to. Per `REGRESSION-LEDGER.md` § *Re-anchoring and absorption* the counter restarts at `×0`
-against the pending text: the CON-6 measurement was real and is deliberately discarded, because it
-measured a text that no longer exists in the working tree. The verdict is trustworthy; it is simply
+against `550077f`: the CON-6 measurement was real and is deliberately discarded, because it
+measured a text that no longer exists. The verdict is trustworthy; it is simply
 no longer about the text the row now declares.
 
 **The four undecided rows are not `row-defect`.** No instrument returned `row-defect` on any row
@@ -454,7 +454,7 @@ Two of the three regressions produce a diagnosis; one does not, and saying so is
 three regressions produced no correction: `R-001`'s and `R-016`'s seats are clauses that already
 state the rule, and `R-015`'s correction is a Fase 4 decision on an `unresolved` anchor.
 
-`SKILL.md` in the working tree therefore differs from `28b5460` by exactly one hunk, `+6/-2`.
+`SKILL.md` therefore differs from `28b5460` by exactly one hunk, `+6/-2`, committed as `550077f`.
 
 ## Recidiva
 
@@ -574,7 +574,13 @@ Ten, and none silent.
    without the sentence naming a harness, `R-016` without its pointer to `support/`, `R-015` not at
    all. Decided at S3 at unknown result and recorded there. It changed what two of the five
    executions read, and in `R-015`'s case it is why the verdict was reached straight.
-10. **No commit was made by the application step.** `SKILL.md` and `REGRESSION-LEDGER.md` are
-    modified in the working tree only, `R-018` and the re-anchored `R-010` both carry
-    `Commit SKILL.md: (pending)`. The artifacts and this report are committed as the cycle's record;
-    that is a different commit from the one the workflow does not make.
+10. **No commit was made by the application step**, and the veto was exercised afterwards.
+    `SKILL.md` and `REGRESSION-LEDGER.md` were left modified in the working tree with `R-018` and
+    the re-anchored `R-010` both carrying `Commit SKILL.md: (pending)`; the artifacts and this
+    report were committed separately as the cycle's record, which is a different commit from the one
+    the workflow does not make. The human veto then accepted the batch on 2026-08-07: `SKILL.md` is
+    `550077f`, and the two `(pending)` cells were resolved to it before the ledger was committed —
+    the order the `Commit SKILL.md` rule requires, since the id does not exist until the veto.
+    **The tie-break on the wording was accepted with the batch**, so `A`'s formulation is what the
+    skill now carries; `B`'s stays published above, and reversing it is a normal change from here on,
+    not a veto.
