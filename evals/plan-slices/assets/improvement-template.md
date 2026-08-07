@@ -25,7 +25,9 @@ under these names because their real ones carry the generator's alias.]
 [Each cell holds either a locatable reference — `CANDIDATE-A.md:NN`, `CANDIDATE-B.md:NN-MM`, or
 `slice N Includes` naming a slice and one of its fields — or the literal `not manifested` followed by
 what that candidate does instead. A defect no candidate manifests is not a defect this cycle
-observed.]
+observed. A defect shown at several places may name them all in one cell —
+`CANDIDATE-A.md:NN-MM,PP-QQ` — and every span is resolved: more sites is a stronger claim, and each
+one is checked.]
 
 **Existing rule that failed to prevent the defect**
 

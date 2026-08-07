@@ -45,7 +45,8 @@ FIELD_PATTERN = re.compile(r"^\*\*([^*]+?)\*\*\s*$", re.MULTILINE)
 BULLET_PATTERN = re.compile(r"^\s*[-*+]\s+(.*)$")
 LABELLED_PATTERN = re.compile(r"^\*\*([^*]+?):\*\*\s*(.*)$")
 CANDIDATE_PATTERN = re.compile(r"^\s*[-*+]\s+\*\*Candidate ([AB]):\*\*\s*`([^`]+)`\s*$", re.MULTILINE)
-LINE_REFERENCE_PATTERN = re.compile(r"^([\w.\-]+\.md):(\d+)(?:-(\d+))?$")
+LINE_REFERENCE_PATTERN = re.compile(r"^([\w.\-]+\.md):(\d+(?:-\d+)?(?:\s*,\s*\d+(?:-\d+)?)*)$")
+SPAN_PATTERN = re.compile(r"(\d+)(?:-(\d+))?")
 SLICE_REFERENCE_PATTERN = re.compile(r"^slice (\d+)\s+(.+?)$")
 SITE_PATTERN = re.compile(r"`SKILL\.md:(\d+)(?:-(\d+))?`")
 SECTION_QUOTE_PATTERN = re.compile(r"§\s*`([^`]+)`")
@@ -298,15 +299,20 @@ class Candidates:
 
     def _reference_errors(self, raw: str, candidate: str) -> list[str]:
         if line_reference := LINE_REFERENCE_PATTERN.match(raw):
-            name, start = line_reference.group(1), int(line_reference.group(2))
-            end = int(line_reference.group(3)) if line_reference.group(3) else start
+            name = line_reference.group(1)
             if name != candidate:
                 return [f"cites `{name}`, which is not this side's candidate `{candidate}`"]
             lines = self._lines(name)
             if lines is None:
                 return [f"cites `{name}`, which does not exist"]
-            if not 1 <= start <= end <= len(lines):
-                return [f"cites `{raw}`, outside its {len(lines)} lines"]
+            # A defect often shows at more than one place, and naming them all is more specific,
+            # not less — which is what this cell exists to demand. Every span is resolved, so the
+            # extra sites are checked rather than accepted unread.
+            for span in SPAN_PATTERN.finditer(line_reference.group(2)):
+                start = int(span.group(1))
+                end = int(span.group(2)) if span.group(2) else start
+                if not 1 <= start <= end <= len(lines):
+                    return [f"cites `{name}:{span.group(0)}`, outside its {len(lines)} lines"]
             return []
         if slice_reference := SLICE_REFERENCE_PATTERN.match(raw):
             return self._slice_errors(

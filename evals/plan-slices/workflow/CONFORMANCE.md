@@ -51,7 +51,11 @@ Il template la esclude **per forma**:
 1. **`Evidenza — candidato A`** e **`Evidenza — candidato B`** sono due celle separate. O contengono
    un riferimento localizzabile — `PLAN-…-CON-N.md:NN`, oppure `slice N` più il nome del campo — o la
    dichiarazione esplicita che quel candidato non manifesta il difetto. Un bullet generico non riempie
-   due celle di evidenza.
+   due celle di evidenza. **Una cella può nominare più siti** — `…:NN-MM,PP-QQ` — e il validator li
+   risolve tutti: il criterio è il generico, e citare due punti è più specifico che citarne uno.
+   Il vincolo a un intervallo solo è caduto a CON-6, dove ha scartato sette voci ancorate
+   correttamente da un lato che scrive sempre così; la cronaca è in `../CONSENSUS-WORKFLOW-PLAN.md`
+   § Fase 2, S2b.
 2. **`Regola esistente che non ha impedito il difetto`** nomina una clausola di `SKILL.md` con la sua
    sezione, oppure dichiara `nessuna`.
 3. **`Test binario`** è scritto nella grammatica delle righe del registro — `Nessuna slice NOW…`,

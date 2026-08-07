@@ -90,6 +90,20 @@ class Evidence(unittest.TestCase):
 
         self.assertIn("outside its 346 lines", reasons(result, "Evidence — candidate A")[0])
 
+    def test_a_defect_shown_at_several_places_may_cite_them_all(self):
+        entry = {"Evidence — candidate A": "- `PLAN-CC-CON-5.md:130,144-150` — both places"}
+
+        result = run(document(entry))
+
+        self.assertEqual(result.conforming, [1])
+
+    def test_a_span_past_the_end_is_discarded_wherever_it_sits_in_the_list(self):
+        entry = {"Evidence — candidate A": "- `PLAN-CC-CON-5.md:130,9000` — the second is invented"}
+
+        result = run(document(entry))
+
+        self.assertIn("`PLAN-CC-CON-5.md:9000`", reasons(result, "Evidence — candidate A")[0])
+
     def test_citing_the_other_side_s_candidate_is_discarded(self):
         result = run(document({"Evidence — candidate A": "- `PLAN-CX-CON-5.md:12` — wrong side"}))
 
