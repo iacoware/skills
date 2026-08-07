@@ -58,8 +58,9 @@ delegate to — not the plans the reports cite, not the sources, not the brief, 
 
 Do not judge whether an entry is correct, whether its evidence holds, or whether its remedy is a
 good idea. Do not judge whether a row is well written. Do not propose changes to the skill or to the
-ledger. Do not compare the two reports with each other. Do not count, do not compute a rate, do not
-state a total anywhere.
+ledger. Do not compare the two reports with each other. Do not count the pairings, do not compute a
+rate over them, do not state a total of them anywhere — the three sizes the `Inputs` block asks for
+are the only numbers this document carries.
 
 ## Output
 
@@ -93,4 +94,4 @@ For a section with nothing in it, write exactly `None identified.` and no more.
 
 Before finishing, check that: every entry id of both reports appears exactly once across the two
 sections; every pair names a row that `ROWS.md` holds; no entry carries more than one pair; and no
-count, rate or total appears anywhere in the document.
+number other than the three sizes of the `Inputs` block appears anywhere in the document.
