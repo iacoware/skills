@@ -20,6 +20,14 @@ three where they enter.
 The `Watch for` cell enters as an extra instruction for its own row, and only for that row. This is
 the only place the ledger says what to hunt for other than the claim itself.
 
+**The phase runs twice, one execution per side, and each judges both plans**, so every row ends up
+with four verdicts. Neither execution is told this and neither should be: the point is two
+independent readings. What the runner does with them is not the model's problem, and the rule is in
+`workflow/LEDGER.md` § *Due strumenti di `verdetto`* — instruments agreeing on both plans, the
+verdict stands; instruments disagreeing on either plan, the row takes no state change and goes to
+human reading. It is written there and not below the rule because a model told that a second
+instrument exists starts hedging.
+
 ---
 
 You are checking falsifiable claims about generated delivery plans. Each claim is one row of a

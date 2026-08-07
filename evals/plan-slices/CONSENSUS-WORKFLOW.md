@@ -98,16 +98,22 @@ ragionamento per esteso, con la varianza misurata su CON-5, sta in `workflow/RAT
    solo lo stesso tema.
 6. **`verdetto`.** Ogni riga attiva del registro viene verificata sui piani appena generati, con
    citazione obbligatoria del punto pubblicato che regge il verdetto. Un verdetto la cui citazione non
-   si risolve viene scartato e registrato. Le righe dormienti entrano 1 ciclo su 3.
+   si risolve viene scartato e registrato. Le righe dormienti entrano 1 ciclo su 3. **Le esecuzioni
+   sono due e ciascuna giudica entrambi i piani**, quindi ogni riga porta quattro verdetti: strumenti
+   concordi, il verdetto vale; strumenti discordi su un piano, la riga non cambia stato e va alla
+   lettura umana — `workflow/LEDGER.md` § *Due strumenti di `verdetto`*.
 7. **`recidiva`.** Una sola chiamata, modello fisso. Produce l'elenco delle coppie `voce improve →
    riga di registro | nessuna`, su **tutte** le righe, dormienti incluse. Non un numero: l'elenco.
 8. **Applicazione.** Il workflow applica al working tree **solo ciò che il filtro licenzia** — le
-   voci classificate condivise da **entrambi** i `REVIEW`. Una voce = **un hunk di `SKILL.md` + una
-   riga di registro**, stesso id. Le righe nascono con `Commit SKILL.md: (pending)`. **Il workflow
-   non committa mai.** Cosa è automatico e cosa no: `workflow/CYCLE.md`.
+   voci classificate condivise da **entrambi** i `REVIEW`. Una voce = **un hunk di `SKILL.md`** più
+   ciò che il registro deve registrare: una riga nuova quando la modifica porta una previsione che
+   nessuna riga attiva fa, il solo ri-ancoraggio delle righe coperte quando non la porta. Le righe
+   nuove nascono con `Commit SKILL.md: (pending)`. **Il workflow non committa mai.** Cosa è
+   automatico e cosa no: `workflow/CYCLE.md`.
 9. **Report.** `recipe-app/results/CONSENSUS-CON-N.REPORT.md`, nella forma di
    `assets/report-template.md`, con i contatori **in testa**. È composizione degli artefatti del
-   ciclo: nessuna chiamata.
+   ciclo: nessuna chiamata. Gli artefatti prodotti dalle esecuzioni si spostano qui a questo passo,
+   con i nomi veri; le directory di payload restano dove sono.
 10. **Veto umano.** Si leggono i contatori, poi `git diff`. Si rifiuta il batch, o una voce per id.
     Ciò che sopravvive lo committa l'umano.
 

@@ -44,9 +44,17 @@ for a clause the ledger covers discards the entry.]
 - `reformulation` | `reach-change` | `addition`
 
 [`reformulation` — the named clause changes wording and keeps its reach; the covering rows are
-re-anchored and no row is added. `reach-change` — the rule's reach is extended, restricted, or
-corrected; `Merged claim` states the single row that replaces the covering rows. `addition` — the
-skill gains a rule it did not have, and a new ledger row with it.]
+re-anchored. `reach-change` — the rule's reach is extended, restricted, or corrected; `Merged claim`
+states the single row that replaces the covering rows. `addition` — the skill gains a rule it did
+not have, and a new ledger row with it.]
+
+[**How many rows a reformulation adds is decided at application, against the `Binary test` below,
+and it is not always zero.** Where the test is already entailed by a covering row's claim, no row is
+added: two rows on one clause count one piece of evidence twice. Where the change carries a limb no
+active row predicts, that limb becomes a row. The gate cannot check this — it is structural, and it
+cannot tell a reformulation from a reach extension by reading the text either. The report does, in
+*Entries applied*. If the change extends the rule's reach, the honest value here is `reach-change`
+and a `Merged claim` is owed.]
 
 **Change to the skill**
 

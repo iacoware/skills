@@ -29,6 +29,14 @@ provenance is unstated is a reconstruction.]
 - **Reviews:** `PLAN-CC-CON-[N].REVIEW.md`, `PLAN-CX-CON-[N].REVIEW.md`
 - **Verdicts:** `PLAN-CC-CON-[N].VERDICTS.md`, `PLAN-CX-CON-[N].VERDICTS.md`
 - **Recidiva:** `CONSENSUS-CON-[N].RECIDIVA.md`
+
+[**All nine artifacts live under `recipe-app/results/`**, under the names above — the convention
+CON-4 established for `IMPROVEMENT` and `REVIEW`, extended to `VERDICTS` and `RECIDIVA` at CON-6.
+A cycle run by hand writes its outputs wherever its rendered prompts point, and **moves them here at
+step 9**. The reason is not tidiness: a payload directory is composed from an explicit allowlist, so
+a cycle's outputs left inside that tree must be excluded from the next composition **by name**
+instead of by construction. The payload directories stay where they are — they are the record of
+what each execution was allowed to read, not of what it produced.]
 - **Models and effort:** generation `[model]`/`[effort]` per side; `improve`, `review` and `verdict`
   `[model]`/`[effort]` per side; `recidiva` `claude-opus-5`/`[effort]`
 - **`Measured on`:** `CON-[N] · CC+CX · [tools] · gen [model and effort per side] · verdict [instrument]`
@@ -46,8 +54,18 @@ artifacts because the cycle is over; it does not restate the mapping the map own
 [Required whenever the fifth `Measured on` slot is not a `verdetto` call — offline human reading, a
 partial cycle, a one-off instrument. Say what was read against what, and **what the cycle is
 therefore not evidence of**. The slot records the instrument; this paragraph records the
-consequence, and without it a verdict looks more solid than the way it was obtained. Omit the
-section when the instrument is the cycle's own `verdetto`.]
+consequence, and without it a verdict looks more solid than the way it was obtained.]
+
+[**Also required when the instrument *is* the cycle's own `verdetto`**, because there are two of
+them. The phase runs one execution per side and each judges **both** plans, so every row carries
+**four** verdicts. The ledger's arithmetic — *«a claim holds only if it holds on both plans»* — is
+about the two plans and says nothing about two instruments. State the combination rule the cycle
+applied and the count of rows it left undecided. The rule, from `../CONSENSUS-WORKFLOW.md` §
+*Vocabolario* — *«due modelli discordi mandano il punto alla lettura umana, non a un arbitro»*:
+**instruments agree on both plans → the verdict stands and the counter moves; instruments disagree
+on either plan → no state change, the counter does not move, and the row goes to *Points requiring
+human reading* with both citations.** A cycle whose two instruments contradict each other has not
+tested that row, and saying how many rows that covers is the point of this paragraph.]
 
 ## Counters
 
@@ -66,6 +84,8 @@ entries discarded by the gate    [N]   ([the fields they fell on])
 discarded verdicts               [N]   (citation does not resolve)
 recidiva                         [N] pairs over [M] entries
 structural validator             [outcome per candidate]
+provider calls                   [N]   ([M] planned; [what forced the difference])
+rows the cycle could not decide  [N]   (the two `verdetto` instruments disagree)
 ```
 
 [**Read `absorbed claims` first.** It is the only counter that says a prediction has **left** the
@@ -81,6 +101,13 @@ that is not a split therefore accuses the additions and nothing else.]
 [**The three remedies sum to `entries applied`.** `reformulation`, `reach-change` and `addition` are
 the three values `improvement-template.md` allows; a cycle whose sub-counters do not add up has lost
 an entry between the gate and the application.]
+
+[**`entries applied` and `new ledger rows` are not the same number, and neither bounds the other.**
+A `reformulation` whose change is entirely inside a covering row's claim re-anchors and adds no row;
+one that also carries a limb no active row predicts adds exactly that row. An `addition` always adds
+one. `provider calls` counts every call the cycle actually spent, discarded attempts included: a
+repeated phase is part of what the cycle cost, and publishing only the planned figure hides it.
+`rows the cycle could not decide` is a `0` when the instruments agreed everywhere, never blank.]
 
 ### Reading of the counters
 
@@ -103,13 +130,26 @@ applica da sé e cosa no*.]
 ### `[A#N]` / `[B#N]` — [the defect, one line]
 
 - **Origin:** `intersection` | `intersection-theme` — [when `intersection-theme`, which side carries
-  the wording and why]
-- **Remedy:** `reformulation` | `reach-change` | `addition`
+  the wording and why; when the two reviews name **different** sides, say so here and send the
+  choice to *Classification instability*]
+- **Remedy:** `reformulation` | `reach-change` | `addition` — [as declared by the entry. When the
+  `Change to the skill` does something else — most often a reach extension declared as a
+  reformulation — say so: the gate is structural and cannot tell them apart from the text, so the
+  report is where the mismatch becomes visible.]
 - **Hunk:** `SKILL.md:[NN]-[MM]` § `[section title]`
-- **Ledger row:** `R-[NNN]` — [the claim, verbatim as written into the row]
+- **Ledger row:** `R-[NNN]` — [the claim, verbatim as written into the row] | `none — re-anchoring
+  only`
 - **Covering rows declared:** `R-[NNN]` | `uncovered`
 - **Discarded reformulation:** [required when the remedy is `addition` and a clause was named;
   `n/a` otherwise]
+
+[**The row is not automatically the entry's `Binary test`.** Check the test against the covering
+rows first. If a covering row's claim already entails it, writing it as a row puts two rows on one
+clause counting one piece of evidence twice — the error the absorptions of 2026-08-06 closed — and
+the entry adds no row, only the re-anchoring. If the applied change carries a limb **no active row
+predicts**, that limb is the row, and the paragraph that says which rows were checked and why they
+do not cover it belongs under the entry. An applied change with no falsifiable prediction attached
+is the one outcome that is never acceptable.]
 
 [`Origin` is `intersection` or `intersection-theme` **only if both `REVIEW`s classify the entry as
 shared**. Unilateral classification is `judgement` and never applies automatically — it goes to
@@ -151,6 +191,20 @@ of the classification becomes observable instead of being asserted.]
 - `[A#N` / `B#N]` — shared according to `[which review]`, `[what the other review called it]`.
   [What the divergence is about.]
 
+### Instability of `Remedy carried by`
+
+[**A second axis, and it is not the same measure.** The two reviews can partition the entries
+identically and still name **different sides** in `Remedy carried by` for a shared entry with
+`Same remedy: no`. That divergence decides which wording enters `SKILL.md`, so it is louder than a
+classification disagreement, not quieter. `../workflow/CYCLE.md` § *Cosa il workflow applica da sé e
+cosa no* presumes the two reviews agree on the side; where they do not, the workflow has no rule.]
+
+[List each such entry with both answers and both justifications. Then state **how the tie was
+broken and on what ground**, and reproduce the losing side's wording **verbatim**, so the veto can
+substitute it with one edit. The tie-break is a judgement the workflow is not supposed to make: the
+report's job is to make it reversible, not to hide it. Write `none` when every shared entry has
+`Same remedy: yes` or both reviews name the same side.]
+
 ## Points requiring human reading
 
 [Everything the filter does not license: entries shared according to one review only, entries unique
@@ -171,9 +225,29 @@ the cycle and is a fact of the cycle, not a fault to repair.]
 |---|---|---|---|
 | `[A` / `B]` | [N] | `[field]` | [reason] |
 
+[**A discarded attempt is logged in its own table, and counted apart.** When a phase was repeated —
+its first outputs discarded whole for a defect of the payload or of the tooling — those discards
+measure the defect, not the models, and adding them to `entries discarded by the gate` would read as
+a measurement of the models. Second table, marked as not counted, with what the defect was and where
+the discarded outputs are kept.]
+
 [**The distribution is the diagnosis.** Discards concentrated on a single field accuse the template,
 and that field is corrected. Discards spread across fields accuse the model, and the specificity
 hypothesis takes a `×1` disproof. Say which of the two this cycle shows.]
+
+### What the gate counts are not evidence of
+
+[**Required whenever the gate, the template or the projections it reads were corrected inside the
+cycle** — and mandatory when any correction was decided **at known result**, i.e. knowing which side
+was failing. The per-side conforming counts are the cycle's only number about the specificity
+hypothesis, and they are the easiest number in the report to quote out of shape.]
+
+[Name each correction, whether it was decided at known or unknown result, and which side's count it
+touched. Then state the weakest claim the counts still support and the claim they do **not**: a pair
+of per-side counts read as comparative specificity says something the gate did not measure whenever
+one side's entries were read under a rule made explicit after they were written. `provider calls`
+belongs here too when the cycle overspent. This section is the analogue of *What produced the
+verdicts* for the gate — the counter records the number, this paragraph records what it is worth.]
 
 **Discarded verdicts** — [step 6: a verdict whose citation does not resolve is discarded and logged.
 A discarded verdict measures nothing, and the discard rate is the thermometer of dilution.]
@@ -184,16 +258,28 @@ A discarded verdict measures nothing, and the discard rate is the thermometer of
 
 ## Verdicts
 
-[One line per row per candidate, from the two `VERDICTS` artifacts. **Two verdicts per row**, never
-aggregated: a claim holds only if it holds on both, and that arithmetic is done here, not by the
-model. Dormant rows enter 1 cycle in 3 and are marked as such.]
+[**Four verdicts per row**, never aggregated: the phase runs one execution per side and each judges
+both plans. Two verdicts per plan, from the two instruments; two plans per row. The arithmetic is
+done here, not by any model, in two steps and in this order: across **instruments** first — agree,
+or the row is undecided — then across **plans**, where a claim holds only if it holds on both.
+`Resulting state` is what the ledger cell becomes. Dormant rows enter 1 cycle in 3 and are marked as
+such; a cycle with none says so.]
 
-| Row | Candidate A | Candidate B | Resulting state | Watch for |
+| Row | Candidate A (`CC` / `CX`) | Candidate B (`CC` / `CX`) | Resulting state | Watch for |
 |---|---|---|---|---|
-| `R-[NNN]` | `holds` / `falsified` / `row-defect — <reason>` + citation | idem | `not falsified ×k` / `regressed on <side>` / — | [what was found] / `not observed` / `no note on this row` |
+| `R-[NNN]` | `holds` / `falsified` / `row-defect — <reason>` | idem | `not falsified ×k` / `regressed on <side>` / `undecided — instruments disagree; <prior state> held` | [what was found] / `not observed` / `no note on this row` |
+
+[**Citations do not go in the table** — four of them per row make it unreadable. They live in the
+two `VERDICTS` artifacts, which the report names under *Inputs*. Reproduce a citation in prose
+wherever the reader cannot check the claim without it: every `falsified` in *Regressions detected*,
+and both sides of every disagreement in *Points requiring human reading*. The step-9 check that
+every citation resolves is what the `discarded verdicts` counter reports; it is not repeated here.]
 
 [`row-defect` records no regression and is not a verdict about the plan: it says the claim is badly
-written, and the row goes to *Rewritten formulations*.]
+written, and the row goes to *Rewritten formulations*. **An instrument disagreement is not a
+`row-defect`**: it is two readings of a claim that is decidable, which is a different failure and
+belongs to the instruments, not to the row. Say so explicitly when a cycle has disagreements and no
+`row-defect`, because the two are easy to collapse.]
 
 [A row that needed re-measuring — first passed over, or measured against the wrong authority — gets
 its own paragraph under the table, naming what it was re-measured on and whether the verdict moved.
@@ -249,6 +335,14 @@ was.]
 [A pairing is evidence, not an oversight: the reports were written with the ledger's claims in front
 of them, so a pair is a defect raised **despite** the claim being visible.]
 
+[**Say, per pair, whether the `verdetto` corroborates it or contradicts it.** A pair landing on a
+row both instruments read as `holds` is the detector's two mechanisms disagreeing about the same
+published text, and it is the most informative thing this section can produce. Such a row **does not
+advance its counter**: a cycle in which `recidiva` and `verdetto` contradict each other has not
+confirmed it. It is not resolved by majority either — `../workflow/LEDGER.md` § *Perché `recidiva` è
+una sola chiamata* is explicit that `recidiva` is a thermometer and that applying *«regge solo se
+regge su entrambi»* to it would maximise false positives. It goes to the veto.]
+
 ## Artifact defects with no row
 
 [Real defects of the generated artifacts that no cycle had recorded. They are **not** regressions:
@@ -275,10 +369,12 @@ cycle's artifacts — no call, no judgement.]
 | `re-anchored rows` | *Consequences carried into the ledger*, first list |
 | `absorbed claims` | the `Absorbs` cells written this cycle |
 | `active rows N → M` | rows in `REGRESSION-LEDGER.md` § *The ledger* not in state `dormant`, before and after |
-| `entries discarded by the gate` | `validate_improvement.py --json`, `discards`, distinct entries over both reports |
-| `discarded verdicts` | the citations of the two `VERDICTS` artifacts that do not resolve against the plan they judge |
+| `entries discarded by the gate` | `validate_improvement.py --json`, `discards`, distinct entries over both reports — of the attempt the cycle kept; a discarded attempt is logged apart and not added here |
+| `discarded verdicts` | the citations of the two `VERDICTS` artifacts that do not resolve against the plan they judge — all four per row |
 | `recidiva` | pairs and entries of `CONSENSUS-CON-N.RECIDIVA.md` |
 | `structural validator` | `make validate PLAN=…` on both candidates |
+| `provider calls` | every call the cycle spent, discarded attempts included, against the 9 `../CONSENSUS-WORKFLOW.md` publishes |
+| `rows the cycle could not decide` | rows whose two `VERDICTS` artifacts give different verdicts on the same candidate |
 
 [**Artifact names.** `IMPROVEMENT` and `REVIEW` follow the convention CON-4 established.
 `VERDICTS` and `RECIDIVA` are named here for the first time: no cycle has produced them yet, and the

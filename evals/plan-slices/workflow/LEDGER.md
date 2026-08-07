@@ -74,6 +74,29 @@ righe restituisce quaranta verdetti comunque, con meno attenzione per riga, e de
 - **La `recidiva` rende sicura la dormienza.** Una riga dormiente risollevata da `improve` torna attiva
   immediatamente. Senza recidiva la dormienza sarebbe cieca.
 
+## Due strumenti di `verdetto`, e cosa fare quando discordano
+
+Il passo 6 ha **due esecuzioni**, una per lato, e ciascuna giudica **entrambi** i piani: ogni riga
+porta quindi **quattro** verdetti, non due. L'aritmetica che il registro dichiara — *«un'affermazione
+regge solo se regge su entrambi»* — parla dei due **piani** e non ha mai detto niente sui due
+**strumenti**. Il buco è emerso a CON-6, il primo ciclo i cui verdetti nascono da una chiamata: su
+quattro righe su diciassette i due strumenti si sono contraddetti sullo stesso testo pubblicato.
+
+La regola è quella che il progetto ha già, `../CONSENSUS-WORKFLOW.md` § *Vocabolario*: *«due modelli
+discordi mandano il punto alla lettura umana, non a un arbitro»*. Applicata al verdetto:
+
+- **strumenti concordi sui due piani** → il verdetto vale, e si applica l'aritmetica sui piani;
+- **strumenti discordi su uno dei due piani** → la riga **non cambia stato**, il contatore **non si
+  muove**, e la riga va nell'elenco umano con entrambe le citazioni.
+
+Un ciclo i cui due strumenti si contraddicono su una riga **non l'ha testata**, e il report lo
+pubblica come contatore: `rows the cycle could not decide`. Non è un `row-defect`: quello dice che
+l'affermazione è scritta male, questo dice che due lettori decidibilmente in disaccordo hanno letto
+lo stesso testo in due modi. Confonderli sposterebbe sulla riga la colpa dello strumento.
+
+Stesso trattamento, per la stessa ragione, quando è la `recidiva` a contraddire i due verdetti: la
+riga non avanza il contatore e va al veto. Non si decide a maggioranza — vedi la sezione seguente.
+
 ## Perché `recidiva` è una sola chiamata
 
 Il filtro di consenso esiste dove un disaccordo cambia cosa entra nello skill. La recidiva non fa

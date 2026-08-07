@@ -15,6 +15,12 @@ Il passo 8 è automatico solo dove il filtro è portante. Tre insiemi disgiunti:
 - **Condivisa da entrambi i `REVIEW`, rimedi diversi** → applicata con la formulazione del lato che
   la porta, `Origine: intersezione-tema`. Due lettori indipendenti che vedono rotta la stessa area
   sono evidenza reale; che concordino anche sulla cura è un evento separato e più raro.
+  **I due `REVIEW` possono nominare lati diversi in `Remedy carried by`**, ed è successo alla prima
+  voce condivisa mai applicata, in CON-6. Qui il workflow non ha una regola: applica una delle due,
+  e il report **pubblica verbatim la formulazione scartata** nella sezione *Instability of `Remedy
+  carried by`*, così che il veto la sostituisca con una modifica sola. Il pareggio si rompe sul
+  criterio che il prompt di `review` già dichiara — *«Detail is not a reason; being decidable on a
+  generated plan is»* — e la scelta resta reversibile per costruzione, non per cortesia.
 - **Condivisa da un `REVIEW` solo, o unica a un lato** → **non applicata**. Va nell'elenco dei punti
   che richiedono lettura umana. Si applica quando l'umano ritrova il difetto sul piano generato e lo
   giudica valido; in quel caso la riga nasce `giudizio` e la modifica cita il difetto osservato, non
@@ -24,6 +30,21 @@ La regola dura di `improve` bidirezionale è meccanica allo stesso passo: se il 
 che non ha impedito il difetto` nomina una clausola e la voce aggiunge righe **senza** la ragione
 scritta per cui la riformulazione è stata scartata, la voce **non si applica da sé** e passa
 all'elenco umano.
+
+**«Una voce = un hunk + una riga di registro» non è un'identità, ed è il punto in cui CON-6 ha
+sbandato.** Quante righe nasca da una voce lo decide il confronto fra il suo `Binary test` e le
+`Covering rows` che dichiara, non il conteggio delle voci:
+
+- il test è **già implicato** da una riga coperta → nessuna riga nuova, solo il **ri-ancoraggio**
+  delle righe coperte. Scriverla comunque metterebbe due righe sulla stessa clausola a contare due
+  volte la stessa evidenza, cioè l'errore che i due assorbimenti del 2026-08-06 hanno chiuso;
+- la modifica applicata porta un **membro che nessuna riga attiva prevede** → quel membro è la riga,
+  e il report dice quali righe sono state controllate e perché non lo coprono;
+- una modifica applicata **senza nessuna previsione attaccata** è l'unico esito mai accettabile.
+
+Corollario: il `Remedy` dichiarato dalla voce può non corrispondere a ciò che il `Change to the
+skill` fa — tipicamente una `reformulation` dichiarata su un cambio di portata. Il gate è strutturale
+e dal testo non può accorgersene; è il report a renderlo visibile, sezione *Entries applied*.
 
 ## `improve` è bidirezionale
 
