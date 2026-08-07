@@ -99,6 +99,16 @@ Non si ridiscutono all'inizio di ogni sessione.
 - **L'inglese è la lingua del progetto dal 2026-08-06.** Le fonti in `recipe-app/sources/` e gli
   artefatti storici — `PLAN-*`, `IMPROVEMENT`, `REVIEW`, report — **non si convertono mai**.
 - Un confine di strumento **si attraversa una volta sola, deliberatamente, e si registra.**
+- **Il ciclo ha una soglia di abbandono, dal 2026-08-07, e sta in `workflow/EVIDENCE.md`.** Tre
+  condizioni decidibili dai contatori che il report già pubblica, valutate alla chiusura di **CON-8**,
+  e ne basta una: manutenzione della procedura non scesa sotto una modifica allo skill per ciclo;
+  righe indecise ancora ≥3 dopo aver riscritto le quattro formulazioni ambigue di CON-6; nessuna riga
+  `ex-ante` arrivata a `non smentita ×2`. Esiste perché il grading è morto portando un gate di
+  ripresa irraggiungibile e questo ciclo aveva il difetto speculare — nessuna uscita affatto. Non si
+  ridiscute a ogni ciclo: si valuta a CON-8.
+- **Riscrivere le quattro formulazioni ambigue prima di CON-7** — `R-002`, `R-004`, `R-008`, `R-009`.
+  I due strumenti di `verdetto` le hanno lette in due modi, quindi il difetto è nella riga. È lavoro
+  dovuto, e la seconda condizione della soglia lo tratta come tale.
 - La decisione su cosa applicare allo `SKILL.md` resta umana in ogni fase, in forma di veto.
 - **Le 15 unità di calibrazione già pagate non vanno conservate.** I 30 file sono tracciati in git.
 

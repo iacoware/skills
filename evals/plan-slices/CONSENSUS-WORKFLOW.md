@@ -26,7 +26,7 @@ italiano che la Fase 0b converte e che non blocca niente.
 | il passo 9, i contatori, cosa il veto legge per primo | `assets/report-template.md` |
 | i passi 6 e 7, dormienza, verdetti falsificati | `workflow/LEDGER.md` + `REGRESSION-LEDGER.md` § *How to use* |
 | sapere **perché** una decisione è stata presa così | `workflow/RATIONALE.md` |
-| sapere **quanto** lo strumento ha già dimostrato, e cosa non copre | `workflow/EVIDENCE.md` |
+| sapere **quanto** lo strumento ha già dimostrato, cosa non copre, e **a quali condizioni si abbandona** | `workflow/EVIDENCE.md` |
 | il lavoro che resta e in che ordine | `CONSENSUS-WORKFLOW-PLAN.md` § *Rotta* |
 
 ## Cosa decide, e con quale errore

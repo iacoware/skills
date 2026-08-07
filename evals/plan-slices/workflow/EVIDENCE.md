@@ -4,7 +4,10 @@ Cosa lo strumento ha davvero misurato finora, e cosa resta fuori dalla sua porta
 di fidarsi di qualunque affermazione degli altri documenti sulla bontà del filtro.**
 
 È l'unico file di questa directory che ogni ciclo aggiorna: i numeri qui datati sono misure, non
-regole.
+regole. **Con una sola eccezione, ed è deliberata:** la *soglia di abbandono* in fondo è normativa e
+sta qui perché è l'unico posto che porta i numeri contro cui si decide. Una soglia scritta altrove
+sarebbe una regola senza il suo strumento di misura, che è esattamente come è morto il gate di
+ripresa del grading.
 
 ## Lo stato dell'evidenza
 
@@ -33,7 +36,8 @@ regole.
   sotto **non è la dimostrazione che il rilevatore gira da solo**. È la dimostrazione che un umano che
   legge due piani generati contro affermazioni appena scritte trova difetti reali: la stessa attività
   a cui `RATIONALE.md` § *Perché il grading system è abbandonato* attribuisce `2c89e7f`.
-- Le fasi `verdetto` e `recidiva` a modelli non sono **mai** state eseguite.
+- Le fasi `verdetto` e `recidiva` a modelli sono state eseguite **una volta sola**, in CON-6, il
+  2026-08-07. Prima di quella data non erano mai girate.
 - **Il registro è stato popolato a posteriori.** Gli `IMPROVEMENT` e i `REVIEW` di CON-4 sono
   artefatti realmente generati da un workflow; le righe del registro no. `REGRESSION-LEDGER.md` nasce
   il 2026-08-04 alle 21:20 e alle 21:28 il commit `0273a73` — *«backdate the ledger to the CON-4
@@ -62,14 +66,49 @@ regole.
   confronto fra modelli. La maggior parte della storia dello skill non ha né previsioni scritte né una
   traccia recuperabile da git.
 
-Quindi lo strumento non è «già esistente e da formalizzare»: **CON-6 è la sua prima esecuzione nella
-forma documentata**, e vale per il registro quanto per il filtro. Il corpus del registro è in parte
-validato — due falsificazioni reali su piani reali; la sua **disciplina** — la riga scritta dall'umano
-che applica, nel momento in cui applica — è stata eseguita due volte su diciassette. Il criterio con
-cui giudicare CON-6 non è che produca tutti gli artefatti previsti, ma
-che i due `IMPROVEMENT` abbiano **specificità comparabile**, cioè che l'intersezione sia letterale e
-non una mappatura generico → operativo. Il contratto di conformità rende quella proprietà una forma
-da riempire invece che un giudizio da emettere.
+Quindi lo strumento non era «già esistente e da formalizzare»: **CON-6 è stata la sua prima
+esecuzione nella forma documentata**, e vale per il registro quanto per il filtro. Il corpus del
+registro è in parte validato — due falsificazioni reali su piani reali; la sua **disciplina** — la
+riga scritta dall'umano che applica, nel momento in cui applica — era stata eseguita due volte su
+diciassette, ed è tre volte su diciotto da CON-6.
+
+## CON-6, misurato (2026-08-07)
+
+Il primo ciclo completo. Il report è `../recipe-app/results/CONSENSUS-CON-6.REPORT.md`; qui stanno
+solo i numeri che dicono quanto lo strumento vale, non cosa ha prodotto.
+
+- **Il criterio dichiarato per giudicare CON-6 — specificità comparabile fra i due `IMPROVEMENT` —
+  non è stato misurato.** Il gate è stato corretto **due volte dentro S2**, la seconda **a risultato
+  noto**, cioè sapendo quale lato cadeva. Il conteggio `4` contro `7` non è quindi specificità
+  comparata e non va citato come tale. Ciò che regge è la forma debole: **entrambi i lati producono
+  voci ancorate, localizzabili e conformi**, che è la proprietà che il contratto di conformità
+  doveva rendere una forma invece che un giudizio. L'ipotesi sul filtro **non prende né conferma né
+  smentita** da questo ciclo.
+- **Resa del filtro: 1 voce applicata su 11 conformi.** Misura la resa, non la precisione: delle 10
+  scartate non si sa quante fossero regole false e quante regole buone perse. La precisione è
+  misurabile solo nel tempo, sull'assenza di regressioni fra le voci applicate.
+- **Accordo fra i due strumenti di `verdetto`: 13 righe su 17 (0,76) con tutti e quattro i verdetti
+  concordi; 29 verdetti su 34 (0,85) contando per coppia riga-piano.** Il confronto con lo 0,56 di
+  inter-grader agreement del grading è **istruttivo ma non alla lettera**: unità diversa, compito
+  diverso. Ciò che si confronta è l'ordine di grandezza, ed è lo stesso.
+- **4 righe su 17 senza verdetto** — `R-002`, `R-004`, `R-008`, `R-009`. È il ~24% dell'unica
+  superficie che il rilevatore guarda, muto per un ciclo. Le quattro discordanze **non sono rumore**:
+  cadono tutte su righe la cui formulazione ammette due letture, quindi accusano le righe prima degli
+  strumenti. Riscriverle è lavoro dovuto prima di CON-7.
+- **Accordo fra i due `REVIEW`: 11 voci su 11 sulla classificazione (1,00), 0 su 1 su `Remedy carried
+  by`.** Il filtro ha licenziato *cosa* applicare e non *come*.
+- **Costo reale: 5 sessioni supervisionate** — S1, S2, S2b, S3, S4 — e **11 chiamate contro le 9**
+  pubblicate. Le chiamate non sono il costo dominante; le sessioni sì.
+- **Manutenzione contro resa: 3 correzioni strutturali alla procedura e 4 aggiustamenti di strumento,
+  contro 1 modifica allo skill.** È il numero da tenere d'occhio più di ogni altro: un ciclo che
+  produce più manutenzione di sé che modifiche al suo bersaglio non è sostenibile per quanto onesti
+  siano i suoi contatori. In un primo giro è atteso; se non scende, è la diagnosi.
+- **Il cricchetto è stato fermato, per un ciclo.** 1 riformulazione, 0 aggiunte, `SKILL.md` 417 → 421.
+  Contro il `+69% in sette giorni e un solo commit sottrattivo` di `RATIONALE.md` § *Il cricchetto*,
+  è il primo giro con la firma opposta. Un ciclo non è una tendenza.
+- **La prima previsione scritta prima della misura in tutto il corpus è `R-018`**, nata il 2026-08-07
+  con la modifica che verifica. Con `R-010` e `R-011` sono tre righe `ex-ante` su diciotto, ed è la
+  sola parte del meccanismo che, a CON-7, farà per la prima volta ciò che il file dichiara.
 
 ## Limiti che restano
 
@@ -101,4 +140,62 @@ da riempire invece che un giudizio da emettere.
 - **Cecità nominale.** Vedi `CYCLE.md` § *Cecità e simmetria*. Il contratto di conformità la
   indebolisce.
 - **«Peggiorato» non è definito quando i segnali sono discordi.** La decisione resta umana e guarda
-  quali criteri, non quanti.
+  quali criteri, non quanti. CON-6 ha mostrato che il caso non è raro: quattro righe indecise fra i
+  due strumenti, e una — `R-006` — dove `recidiva` contraddice entrambi i verdetti.
+- **`support/CLAUSE-ROW-MAP.md` è un costo ricorrente proporzionale al ritmo di cambiamento dello
+  skill,** cioè la stessa forma di costo che ha ucciso il grading. 577 righe, 205 clausole ancorate
+  **per numero di riga**: l'hunk di 4 righe applicato in CON-6 ha già sfalsato ogni sito dopo
+  `SKILL.md:57` e cambiato il testo di `C-019`. `extract_clause_map.py` rigenera il `.tsv`, non la
+  mappa. È l'unico tapis roulant del ciclo, ed è dichiarato qui perché nessun altro documento lo
+  chiama con questo nome.
+- **Il peso non è sceso, si è spostato dal codice alla prosa.** ~2.100 righe di procedura più ~950 di
+  dati mantenuti, contro uno `SKILL.md` di 421 righe: un rapporto di circa 7 a 1. Il grading pesava
+  3.477 righe di Python; il ciclo ne pesa 1.395, ma la differenza è finita nei documenti. La
+  distinzione che tiene in piedi la scelta è il **tipo** di costo — la prosa si scrive una volta, la
+  matrice di calibrazione si ricollezionava a ogni cambio — e vale finché il numero sopra non cresce.
+
+## Soglia di abbandono
+
+**Questa sezione è normativa.** È l'unica del file, e la ragione per cui esiste è simmetrica a un
+errore già commesso: il grading system è morto portando un **gate di ripresa irraggiungibile per
+costruzione** — `RATIONALE.md` § *Perché il grading system è abbandonato*. Il ciclo di consenso
+aveva il difetto speculare, e cioè **nessuna soglia di abbandono affatto**: nessun numero che, se
+raggiunto, dica di fermarsi. Uno strumento senza condizione di uscita non si valuta, si difende.
+
+Le tre condizioni qui sotto sono **decidibili dai contatori che il report già pubblica**, senza
+misure nuove e senza chiamate. È il requisito che il gate del grading non aveva, ed è il solo modo
+per cui una soglia possa scattare davvero.
+
+**Scattano insieme, non a maggioranza: basta una.** Sono valutate alla chiusura di **CON-8**, cioè
+dopo due cicli oltre quello che ha prodotto i numeri di partenza.
+
+1. **Manutenzione contro resa.** Il rapporto cumulato su CON-6…CON-8 fra *correzioni strutturali alla
+   procedura* — sezione *Deviations from the procedure* del report — e *voci applicate allo skill* —
+   contatore `entries applied` — **non è sceso sotto 1**. Valore di partenza a CON-6: **3 a 1**.
+2. **Superficie muta del rilevatore.** Le *righe che il ciclo non ha potuto decidere* — contatore
+   `rows the cycle could not decide` — restano **≥ 3** a CON-8, **dopo** che le quattro formulazioni
+   ambigue di CON-6 sono state riscritte. La riscrittura è lavoro dovuto prima di CON-7: se non viene
+   fatta, la condizione si valuta come se fosse scattata, perché una soglia aggirabile non
+   rimandando il lavoro non è una soglia. Valore di partenza a CON-6: **4 su 17**.
+3. **Il meccanismo non ha mai fatto il suo mestiere.** Nessuna delle righe `ex-ante` — `R-010`,
+   `R-011`, `R-018`, e quelle che nasceranno con lo stesso `Provenance` — ha raggiunto
+   `non smentita ×2` a CON-8. Sono le sole righe la cui previsione è stata scritta **prima** della
+   misura; se dopo tre cicli nessuna accumula, il ciclo non sta verificando modifiche, sta
+   collezionando difetti. Valore di partenza a CON-6: **0 su 3**.
+
+**Cosa si fa se una scatta, deciso ora e non allora.** Non si calibra meglio, che è la risposta con
+cui il grading ha comprato tre settimane. Si confronta il ciclo con l'**alternativa più economica che
+ha storicamente prodotto miglioramenti**: un umano che legge un piano generato — `2c89e7f`, e i due
+commit di CON-5 — cioè **una sessione contro cinque**. Di ciò che il ciclo aggiunge sopra quella
+baseline si tiene solo la parte che si è pagata da sé, e la candidata è una sola: la **previsione
+falsificabile attaccata alla modifica**, che è ciò che la lettura umana non dà e l'unica ragione per
+cui il registro esiste. `improve`, `review`, il gate di conformità e la `recidiva` sono la parte che
+in quello scenario si smonta, e con loro il tapis roulant di `support/CLAUSE-ROW-MAP.md`.
+
+**Il validator strutturale e `EVALUATION-BRIEF.md` sopravvivono a qualunque esito.** Sono già
+sopravvissuti al grading — `RATIONALE.md` § *Cosa il ciclo eredita* — e non dipendono da nessuno dei
+due meccanismi.
+
+**Nessuna delle tre condizioni riguarda l'ipotesi sul filtro.** Una sua falsificazione non fa cadere
+l'obiettivo, e non deve poter far cadere lo strumento: queste soglie misurano se lo strumento **si
+paga**, che è una domanda diversa e finora mai posta per scritto.
