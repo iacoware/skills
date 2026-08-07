@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta** — S1 chiusa 2026-08-07; S2 eseguita e **scartata al gate** per un difetto del payload, corretto; **prossima è S2b**, 2 chiamate, autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| **2 — CON-6** | **aperta** — S1, S2 e S2b chiuse 2026-08-07; i due `IMPROVEMENT` sono conformi, 4 e 7 voci; **prossima è S3**, 5 chiamate, autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -236,17 +236,52 @@ non legge l'indice: la correzione è nel payload, cioè in ciò che il modello l
 toglie `§` da entrambi i lati del confronto, quindi **entrambe le forme restano accettate** — le
 cinque voci conformi di `REPORT-A` rivalidano verdi con l'indice nuovo, e tutti e dieci i titoli
 dell'indice risolvono a una sezione del `.tsv`. I due `IMPROVEMENT` scartati stanno in
-`recipe-app/payloads/CON-6/out/attempt-1-discarded/`, perché sono la prova di questa lettura.
+`recipe-app/payloads/CON-6/discarded/attempt-1/`, perché sono la prova di questa lettura — **fuori
+da `out/`**, che è la sola directory in cui le due esecuzioni scrivono: lasciarveli avrebbe messo
+l'output del primo tentativo a un `ls` dalla sessione che ripete.
 
 **S2b — ripetizione. 2 chiamate, autorizzazione propria.**
 
-- [ ] Ripetere `improve` sui due lati **alla stessa configurazione** — `high`, stessi modelli, stesse
+- [x] Ripetere `improve` sui due lati **alla stessa configurazione** — `high`, stessi modelli, stesse
   assegnazioni alias — con il payload corretto. È il vincolo di riga «un S2 ripetuto si ripete alla
-  stessa configurazione»: l'unica variabile che cambia è l'indice.
-- [ ] `make validate-improvement` su entrambi, log degli scarti conservato.
-- [ ] Riscegliere il ramo. Se `REPORT-B` cade di nuovo su un campo solo, il difetto non era l'indice e
-  la lettura qui sopra va rifatta; se gli scarti sono sparsi, vale l'esito «il modello non sa fare il
-  lavoro» e l'ipotesi prende una smentita `×1`.
+  stessa configurazione»: l'unica variabile che cambia è l'indice. Il payload è stato verificato prima
+  delle chiamate — `support/AGENT-PLAN-MAP.md` § CON-6: le 204 forme-sito che l'indice corretto induce
+  passano tutte il gate, `out/` era vuota, e il primo tentativo è stato spostato fuori di lì.
+- [x] `make validate-improvement` su entrambi, log degli scarti conservato.
+- [x] Riscegliere il ramo. **`REPORT-A` 4 su 4, `REPORT-B` 0 su 7 e poi 7 su 7** dopo la correzione
+  descritta qui sotto: entrambi i lati operativi, S3 parte.
+
+**L'indice era il difetto giusto, e ne è emerso un quarto.** Il campo `Clause` non ha scartato più
+niente, su nessuno dei due lati: la lettura di S2 ha retto e non va rifatta. Ma `REPORT-B` è caduto
+di nuovo per intero, su un campo diverso — le due celle `Evidence`, tutte e sette le voci, stesso
+motivo. `CX` cita gli insiemi di siti in una cella sola — `CANDIDATE-A.md:149-153,351-355` — e
+`LINE_REFERENCE_PATTERN` accettava un intervallo solo. Non è un caso limite ma la convenzione
+costante di quel lato: **10 celle su 10** con riferimento diretto la usano, contro **0 su 7** di
+`CC`. Spezzando i soli riferimenti in un bullet per intervallo, verificato su copia in scratchpad,
+tutte e sette passavano già prima della correzione.
+
+**Il difetto stava nel validator, non nel payload, ed è ciò che ha deciso il ramo.** Il template
+elenca *esempi* di riferimento localizzabile e non dice «uno solo per cella»: la restrizione viveva
+solo nel controllo. `workflow/CONFORMANCE.md` § *La specificità è una forma* dichiara che quella cella
+esiste per escludere **il bullet generico**, e due siti citati sono più specifici di uno. E il gate
+leggeva comunque **solo il primo bullet** di ogni cella, quindi «due siti in due bullet» passava già
+con il secondo mai verificato: accettare la lista **e risolvere ogni intervallo** stringe il gate
+invece di allentarlo. Poiché ciò che i due modelli hanno letto non cambia, non c'era niente da
+rigenerare — a differenza di S2b, dove l'indice difettoso stava **dentro** il payload. Quindi
+correzione del validator, un test per la lista e uno per lo span fuori intervallo in mezzo alla lista,
+e rivalidazione degli artefatti già prodotti: **zero chiamate**.
+
+**Il confine di questa correzione, dichiarato.** È stata decisa **a risultato noto**, cioè sapendo
+quale lato cadeva, ed è il terzo aggiustamento di strumento in due tentativi. Ciò che la tiene
+onesta e che va riletto se un giorno sembra comoda: non tocca nessun altro campo, rende il controllo
+più severo e non più permissivo, e il template è stato corretto **solo alla sorgente** —
+`assets/improvement-template.md` — mentre la copia dentro `recipe-app/payloads/CON-6/improve/assets/`
+resta com'era, perché è la prova di ciò che i due lati hanno effettivamente letto.
+
+**Conseguenza per il report S4, e non è piccola.** Il conteggio `4` contro `7` **non è specificità
+comparata pulita**: il gate è stato corretto due volte dentro S2, e le voci di `REPORT-B` sono state
+lette sotto una regola resa esplicita dopo essere state scritte. Il ciclo dice che entrambi i lati
+producono voci ancorate — non dice quanto bene, e non va scritto come se lo dicesse.
 
 **S3 — `review`, `verdetto`, `recidiva`. 5 chiamate.**
 

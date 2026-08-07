@@ -112,9 +112,27 @@ its verdicts come from offline human reading.
   all three conform. The index now prints those headings without the `§` and states the rule for the
   field; `_comparable` strips `§` either way, so both forms are accepted and no cell of the map or of
   the `.tsv` changed. The discarded outputs are kept under
-  `../recipe-app/payloads/CON-6/out/attempt-1-discarded/` as the evidence for that reading. This is
+  `../recipe-app/payloads/CON-6/discarded/attempt-1/` — outside `out/`, the one directory the two
+  executions write to, so that the repeat does not run with the previous attempt one `ls` away — as
+  the evidence for that reading. This is
   the third tooling defect found at S2, and like the first two it would have discarded correct
-  entries.
+  entries. The corrected index was re-checked the same way before the repeat: all 200 site cells,
+  plus each span alone of the two cells that print two, were fed to the gate in the form the index
+  now induces — `§ ` + the title as printed — and all 204 are accepted, on the rule field and on
+  `Section` alike.
+- **The repeat cleared the clause field and hit a fourth defect, this one in the validator.**
+  `REPORT-A` 4 of 4; `REPORT-B` 0 of 7, every discard on the two `Evidence` cells, because `CX`
+  cites sets of sites in one cell — `CANDIDATE-A.md:149-153,351-355` — and the reference pattern
+  took one span. It is that side's constant convention, not an edge case: 10 of its 10 direct
+  references carry several spans, against 0 of `CC`'s 7. The template lists *examples* of a
+  locatable reference and never says one per cell, and the gate read only the first bullet anyway,
+  so two sites in two bullets already passed with the second unread. `_reference_errors` now takes
+  the list and resolves **every** span, which tightens the check rather than loosening it; the
+  artifacts were revalidated unchanged — 4 of 4 and 7 of 7 — since nothing the models read had
+  changed. `assets/improvement-template.md` states the form from now on, but **only at the source**:
+  the copy inside this payload stays as it was, because it is the evidence of what the two sides
+  actually read. The correction was decided knowing which side was falling, and that is recorded
+  here rather than smoothed over.
 
 ### CON-6: decided at S1, and what the two calls actually did
 
