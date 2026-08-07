@@ -23,7 +23,7 @@ Cosa aprire, per fase. Una sessione legge questa tabella, le *Decisioni già pre
 | 1b-i — prompt | **chiusa** — 2026-08-06 | `prompts/`, che è il record |
 | 1b-ii — mappa generatori | **chiusa** — 2026-08-07 | `support/AGENT-PLAN-MAP.md`, che è il record |
 | 1c — registro, mappa e report | **chiusa** — 2026-08-07 | `assets/report-template.md`, `support/CLAUSE-ROW-MAP.md` e `REGRESSION-LEDGER.md`, che sono il record |
-| **2 — CON-6** | **aperta** — S1, S2 e S2b chiuse 2026-08-07; i due `IMPROVEMENT` sono conformi, 4 e 7 voci; **S3 è preparata** — payload, proiezioni e prompt resi — e restano le sue **5 chiamate**, con autorizzazione propria | `prompts/`, `assets/`, `../AGENTS.md`, `support/AGENT-PLAN-MAP.md` |
+| **2 — CON-6** | **aperta solo sul veto** — S1, S2, S2b, S3 e S4 chiuse il 2026-08-07. Il ciclo è completo, 11 chiamate; il report è `recipe-app/results/CONSENSUS-CON-6.REPORT.md`. `SKILL.md` e `REGRESSION-LEDGER.md` sono modificati **nel working tree e non committati**: resta la lettura umana dei contatori e `git diff` | `recipe-app/results/CONSENSUS-CON-6.REPORT.md` |
 | 2b, 4 | aperte, dopo CON-6 | `recipe-app/EVALUATION-BRIEF.md` (2b); `support/CLAUSE-ROW-MAP.md` (4) |
 | 3, 5, 6, 7 | aperte, codice | `scripts/`, `Makefile` |
 
@@ -293,10 +293,10 @@ producono voci ancorate — non dice quanto bene, e non va scritto come se lo di
 - [x] Le righe dormienti entrano 1 ciclo su 3; a CON-6 non ce ne sono, e se ce ne fossero si dichiara
   perché entrano o no. **Diciassette attive, zero dormienti**: i due file portano gli stessi 17 id, e
   la regola non morde in questo ciclo.
-- [ ] Ogni cella `Misurato su` scritta da questo ciclo porta `gen claude-opus-5 medium + gpt-5.6-sol
+- [x] Ogni cella `Misurato su` scritta da questo ciclo porta `gen claude-opus-5 medium + gpt-5.6-sol
   medium`. È il primo ciclo in cui lo slot `gen` dice qualcosa, ed è `medium` perché lo è stata la
   generazione, non perché lo siano le chiamate di questa sessione.
-- [ ] Eseguire le cinque chiamate a `high`, due per `review`, due per `verdetto`, una per `recidiva`
+- [x] Eseguire le cinque chiamate a `high`, due per `review`, due per `verdetto`, una per `recidiva`
   su `CC` a modello fisso. I cinque prompt resi stanno un livello sopra i payload, come a S2. Le
   quattro directory di output — una per fase e per lato — sono vuote prima delle chiamate; nessuna
   esecuzione scrive in `out/`, dove stanno i due `IMPROVEMENT` con i nomi veri.
@@ -323,15 +323,31 @@ rileggere il ciclo.
   i cui verdetti nascono da una chiamata invece che da lettura umana offline, e senza quelle righe il
   quinto slot di `Misurato su` nominerebbe uno strumento di cui nessuno registra modello ed effort.
 
-**S4 — report, applicazione, veto. Zero chiamate.**
+**S4 — report, applicazione, veto. Zero chiamate. Eseguita il 2026-08-07; resta il solo veto umano.**
 
-- [ ] Scrivere `CONSENSUS-CON-6.REPORT.md` nella forma di `assets/report-template.md`, contatori in
+- [x] Scrivere `CONSENSUS-CON-6.REPORT.md` nella forma di `assets/report-template.md`, contatori in
   testa. È la prima istanza del template: ogni punto in cui non regge si corregge **nel template**,
   non nel report.
-- [ ] Applicare le sole voci che il filtro licenzia, una riga di registro per voce, `Commit:
-  (pending)`. **Non committare dal workflow.** Leggere i contatori, poi `git diff`, poi decidere.
-- [ ] Correggere `prompts/`, `assets/`, `CONSENSUS-WORKFLOW.md` e `workflow/` dove la procedura non
+- [x] Applicare le sole voci che il filtro licenzia, `Commit: (pending)`. **Non committare dal
+  workflow.** Leggere i contatori, poi `git diff`, poi decidere. **Una sola voce licenziata**,
+  `A#1`≡`B#1`: un hunk a `SKILL.md:56-61`, `R-018` nuova, `R-010` ri-ancorata.
+- [x] Correggere `prompts/`, `assets/`, `CONSENSUS-WORKFLOW.md` e `workflow/` dove la procedura non
   ha retto, e annotare ogni scostamento nella sezione che il report ha per questo.
+
+**I tre buchi che S4 ha trovato, e che non erano previsti qui.** Stanno per esteso nel report; qui
+c'è ciò che le fasi successive devono sapere senza aprirlo.
+
+1. **Il `verdetto` ha due strumenti e nessuna regola per combinarli.** Ogni riga porta *quattro*
+   verdetti, non due: due esecuzioni × due piani. L'aritmetica «regge solo se regge su entrambi»
+   parla dei piani. Regola scritta ora in `workflow/LEDGER.md` § *Due strumenti di `verdetto`*:
+   strumenti discordi → la riga non cambia stato e va al veto. **Quattro righe su diciassette** sono
+   restate indecise in CON-6 — `R-002`, `R-004`, `R-008`, `R-009`. È il vincolo che la Fase 5 deve
+   implementare nel join, non un caso limite.
+2. **«Una voce = una riga di registro» non è vero.** Quante righe nascono lo decide il confronto fra
+   il `Binary test` della voce e le sue `Covering rows`. Vedi `workflow/CYCLE.md`.
+3. **I due `REVIEW` possono nominare lati diversi in `Remedy carried by`**, ed è successo alla prima
+   voce applicata in assoluto. Il report pubblica la formulazione scartata verbatim; la scelta è del
+   veto.
 
 **Verifica — due criteri distinti, ed è il secondo quello che conta:**
 
