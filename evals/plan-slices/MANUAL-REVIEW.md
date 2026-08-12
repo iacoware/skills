@@ -48,8 +48,9 @@ Half an hour, one provider call.
    The two differ only in the `@` prefixes, Claude Code's file-reference syntax, which has no Codex
    equivalent. Model and effort are set in the session, never in the prompt: check what the session
    actually says before sending, and write down what it said rather than what you intended.
-2. `make validate PLAN=<plan.md>` — structural, deterministic, free. `PLAN` is a bare filename
-   under `recipe-app/results/`. If it is red, stop and fix before reading.
+2. `make validate PLAN=<path>` from the repository root — structural, deterministic, free. `PLAN`
+   is a path, not a bare filename: `make validate PLAN=evals/plan-slices/recipe-app/results/PLAN-CC-CON-7.md`.
+   If it is red, stop and fix before reading.
 3. Read the plan against `recipe-app/EVALUATION-BRIEF.md`, opening `sources/` only to verify a
    citation. **The brief is the authority**, not the sources: it decides which conflicts exist,
    which alternatives are accepted, which uncertainties are material. Skipping this step is how the

@@ -50,7 +50,7 @@ becomes sufficient rather than a consolation.
 | Path | Role |
 |---|---|
 | `../../skills/plan-slices/scripts/validate_plan.py` | Structural validator. Deterministic, free, one second. The only real regression test in the project. |
-| `make validate PLAN=…` | Runs it. |
+| `make validate PLAN=<path>` | Runs it, from the repository root. `PLAN` is a path. |
 | `MANUAL-REVIEW.md` | The loop, the generation prompt, seventeen checks distilled from the retired ledger, and what stays open. Rules about the skill, portable to any scenario. |
 | `recipe-app/sources/` | The only inputs a candidate plan is generated from. |
 | `recipe-app/EVALUATION-BRIEF.md` | Facts about the sources: what they require, what they leave open, where they disagree, and which differences are *not* disagreements. Verifiable, no taste. |
