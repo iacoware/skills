@@ -3,10 +3,11 @@
 What to read on a plan produced by `skills/plan-slices/SKILL.md`, to notice that a change to the
 skill broke something it used to get right.
 
-This list is the distillation of `REGRESSION-LEDGER.md`, which retired on 2026-08-11 together with
-the consensus cycle — see `README.md`. Each check was a falsifiable claim implied by a change
-actually applied to the skill, verified across five cycles. What is gone is the apparatus around
-them: counters, provenance, `Measured on`, absorption, dormancy. What stays is the list.
+This list is the distillation of a ledger of falsifiable claims that retired on 2026-08-11 together
+with the consensus cycle, and was deleted with it — `README.md` § *Recovering the apparatus* says
+where it is. Each check was a claim implied by a change actually applied to the skill, verified
+across five cycles. What is gone is the apparatus around them: counters, provenance, `Measured on`,
+absorption, dormancy. What stays is the list.
 
 **Ids are inherited** from the ledger, so that `results/CONSENSUS-CON-*.REPORT.md` and the commit
 history keep resolving. They are labels, not a sequence: a new check takes the next free number and
@@ -25,8 +26,28 @@ specific to `recipe-app` lives in two files that a review opens at different mom
 Half an hour, one provider call.
 
 1. Generate one plan from `recipe-app/sources/` alone, in a fresh session with no other context.
-   The prompt is in `PROMPTS.md` § `GENERATE PLAN`; it must activate the skill explicitly, or the
-   candidate is born without it.
+
+   The skill is **invoked explicitly** — `/plan-slices` on Claude Code, `$plan-slices` on Codex.
+   Neither harness activates it on its own: `skills/plan-slices/agents/openai.yaml` sets
+   `allow_implicit_invocation: false` and the skill's frontmatter sets
+   `disable-model-invocation: true`. Drop the prefix and the candidate is born without the skill,
+   which means you are reviewing the model instead.
+
+   **Claude Code**, one message, replacing `<N>`:
+
+   ```
+   /plan-slices Read the markdown documents in @evals/plan-slices/recipe-app/sources/, starting from @evals/plan-slices/recipe-app/sources/goal.md, and produce a high-level delivery plan cut into slices. Write it to evals/plan-slices/recipe-app/results/PLAN-CC-<N>.md. Read nothing else in this repository, in this session or in any session you delegate to: the sources are the only input, and the existing plans under results/ are off limits.
+   ```
+
+   **Codex**, one message:
+
+   ```
+   $plan-slices Read the markdown documents in evals/plan-slices/recipe-app/sources/, starting from evals/plan-slices/recipe-app/sources/goal.md, and produce a high-level delivery plan cut into slices. Write it to evals/plan-slices/recipe-app/results/PLAN-CX-<N>.md. Read nothing else in this repository, in this session or in any session you delegate to: the sources are the only input, and the existing plans under results/ are off limits.
+   ```
+
+   The two differ only in the `@` prefixes, Claude Code's file-reference syntax, which has no Codex
+   equivalent. Model and effort are set in the session, never in the prompt: check what the session
+   actually says before sending, and write down what it said rather than what you intended.
 2. `make validate PLAN=<plan.md>` — structural, deterministic, free. `PLAN` is a bare filename
    under `recipe-app/results/`. If it is red, stop and fix before reading.
 3. Read the plan against `recipe-app/EVALUATION-BRIEF.md`, opening `sources/` only to verify a
@@ -129,11 +150,11 @@ failure against it looks like a skill regression without being one.
   failed to do it — a rule invented backwards from one observation. Either the skill acquires the
   clause, or the check dies. It is currently outside the list.
 - **Three anchors with no clause.** `R-001`'s, and the `9aa2586` component that `R-005` and `R-006`
-  carried. Recorded in `support/CLAUSE-ROW-MAP.md` § *Unresolved anchors*. Same decision, same
-  owner: the scope reduction of the skill.
+  carried. Same decision, same owner: the scope reduction of the skill.
 - **Two agreed improvements that never reached the skill** — semantic checks in `validate_plan.py`
   (interrupted themes, duplicated adapters, open questions ignored by the slices), and versioned
   evaluation sets for quality claims. Both raised by two independent reviews in CON-4. The first
   would move R-002, R-005 and R-006 from reading to validator, which is the only direction in which
-  this list gets cheaper. `REGRESSION-LEDGER.md` § *Agreed improvements that never reached the
-  skill* has the detail.
+  this list gets cheaper. The second exists because no clause of `SKILL.md` asks a quality,
+  relevance or accuracy claim to name a versioned evaluation set with positive and negative cases:
+  a slice can verify that a semantic engine answers, not that it answers well.
