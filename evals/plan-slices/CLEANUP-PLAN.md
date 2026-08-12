@@ -18,7 +18,7 @@ them; only then does Phase 2 delete. In the opposite order there is a commit whe
 
 ## Counts
 
-`git ls-files evals` is **186**. After this plan it is **35**.
+`git ls-files evals` is **187**, this file included. After this plan it is **35**.
 
 | Kept | Files |
 |---|---|
@@ -35,12 +35,42 @@ them; only then does Phase 2 delete. In the opposite order there is a commit whe
 | `recipe-app/payloads/` — CON-6 payloads and discarded attempts | 33 |
 | `fixtures/` — labeled calibration fixtures, v1 and v3 manifests | 21 |
 | `recipe-app/results/calibration-{legacy,v2,v3}/` | 50 |
-| `workflow/` (5), `prompts/` (4), `support/` (3), `assets/` (2) | 14 |
+| `prompts/` — the four phase prompts. See *Why `prompts/` goes too* | 4 |
+| `workflow/` (5), `support/` (3), `assets/` (2) | 10 |
 | `CONSENSUS-WORKFLOW{,-PLAN,-PLAN-CLOSED}.md`, `GRADING-{EVAL-WORKFLOW,IMPROVEMENTS,IMPROVEMENTS-PLAN}.md`, `NOTES.md`, `PROMPTS.md`, `REGRESSION-LEDGER.md` | 9 |
 | `grader-rubric.json`, `grader-rubric.v3.json` | 2 |
 | `CLEANUP-PLAN.md` — this file | 1 |
 
 **Everything deleted stays in git.** Phase 0 makes that pointer permanent instead of implicit.
+
+## Why `prompts/` goes too
+
+Decided 2026-08-12, recorded here so it is not reopened. The four phase prompts are the most
+reusable-looking thing in the apparatus — 498 lines of blind allowlists, filled contracts and
+self-check criteria — and keeping them was considered. Every one of their inputs is on the deletion
+list:
+
+| Prompt | Lines | Inputs that disappear |
+|---|---|---|
+| `improve` | 123 | `CLAUSE-INDEX.md`, `LEDGER-CLAIMS.md`, `assets/improvement-template.md` |
+| `review` | 141 | `REPORT-A.md`, `REPORT-B.md` |
+| `verdict` | 137 | `LEDGER-ROWS.md`, `CANDIDATE-A/B.md`; cites `workflow/LEDGER.md` and `REGRESSION-LEDGER.md` |
+| `recidiva` | 97 | `ROWS.md`, `REPORT-A.md`, `REPORT-B.md` |
+
+`CLAUSE-INDEX`, `LEDGER-*`, `ROWS` and `REPORT-*` are payload projections under
+`recipe-app/payloads/CON-6/`, which this plan deletes.
+
+`improve.prompt.md` is the decisive case rather than a marginal one. It names
+`assets/improvement-template.md` four times and calls it *«the contract»* — line 23 puts it in the
+payload allowlist, line 79 reads *«Fill exactly the fields it declares»*. Keeping the prompt while
+deleting the template leaves a prompt instructing a model to satisfy a contract that does not exist:
+not a broken link, an inoperable prompt.
+
+So the four are not a portable technique but the wiring diagram of a machine with no parts left,
+and keeping them produces precisely what this cleanup exists to remove — files that look
+operational and are not. The craft in them stays reachable by name through the `evals-final` tag:
+`git show evals-final:evals/plan-slices/prompts/review.prompt.md`. That tag is what makes deleting
+safe enough to be aggressive here.
 
 ## Phase 0 — Make the history reachable
 
