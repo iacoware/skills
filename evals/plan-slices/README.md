@@ -1,92 +1,118 @@
-# `plan-slices` evaluation
+# `plan-slices` evaluation — closed
 
-Two tools have lived in this directory. Only one is in service.
+Two automated evaluation systems were built here between 2026-07 and 2026-08. **Both are retired.**
+The goal they served — noticing that a change to `skills/plan-slices/SKILL.md` improved one thing
+while breaking another — is now met by a structural validator and a human reading list.
 
-- **Consensus cycle — active.** Decides whether a change to `skills/plan-slices/SKILL.md` made the
-  skill worse. Entry point: `CONSENSUS-WORKFLOW.md`, which carries the procedure and routes to
-  `workflow/` for everything else.
-- **Grading system — abandoned on 2026-08-06.** Not suspended, not behind a gate. The code and its
-  documents stay in git and are recoverable from history; they are not maintained.
+- **Grading system** — abandoned 2026-08-06. A rubric, calibrated graders, adjudication between two
+  providers, immutable artifacts in three versions.
+- **Consensus cycle** — abandoned 2026-08-11. Two models, four blind phases (`improve`, `review`,
+  `verdetto`, `recidiva`), a conformance gate, and a ledger of falsifiable claims.
 
-## Language
+Nothing is deleted. Everything below is in git and recoverable.
 
-English is the project language as of 2026-08-06. **Every new artifact is born in English**:
-prompts, templates, validators, reports, ledger rows, commit messages.
+## Why
 
-Human documents still written in Italian — `CONSENSUS-WORKFLOW.md`, `workflow/`,
-`CONSENSUS-WORKFLOW-PLAN.md`, `NOTES.md`, `PROMPTS.md` — are a backlog, not an exception. Phase 0b
-converts them, one file at a time since Phase 0d split them, and blocks nothing.
-`REGRESSION-LEDGER.md` is already migrated.
+Not because the idea was wrong. Because the measured cost of running it never fell, and the reason
+it never fell is structural rather than incidental.
 
-**Two exclusions are permanent** and do not expire with Phase 0b:
+**The numbers, at closure.** The apparatus was 4.872 lines of Python and 18.927 lines of Markdown
+across 108 files, against the 421 lines of `SKILL.md` and 309 of `validate_plan.py` it existed to
+protect — roughly 25× the artifact under measurement. Between 2026-08-01 and closure, `evals/` took
+131 commits and the skill took 15.
 
-- **`recipe-app/sources/`.** Converting them is a **new scenario**, not a translation. It would
-  invalidate the five plans generated from them, the ledger rows measured over those plans, and the
-  citations in `EVALUATION-BRIEF.md`, which point at Italian section titles (`sources/goal.md`,
-  “Vincoli e scala”).
-- **Historical artifacts** — `PLAN-*`, `*.IMPROVEMENT.md`, `*.REVIEW.md` and the reports already
-  produced. They are the record of what was generated. Translating them falsifies it.
+**CON-6, the only complete consensus cycle.** Eleven provider calls. Four tool defects found and
+fixed *during* the cycle — two in the payload projection, one in the conformance validator, one in a
+prompt. One entry applied to the skill. Four rows out of seventeen left undecided because the two
+`verdetto` instruments disagreed on how to read them.
 
-Already English, nothing to do: `EVALUATION-BRIEF.md` — the Italian section titles it carries are
-**pointers into the sources**, not prose to translate, and translating them would break the pointer
-— and `skills/plan-slices/SKILL.md`.
+`CONSENSUS-WORKFLOW-PLAN.md` had written an abandonment threshold, to be evaluated at CON-8. Its
+first condition was *procedure maintenance has not fallen below one skill change per cycle*. CON-6
+came in at four tool fixes against one applied change. The condition had already failed; CON-7 and
+CON-8 would have cost eighteen more calls to confirm it.
 
-Textual quotations from historical artifacts stay in Italian inside quotation marks, wherever they
-appear, because they are evidence.
+**The structural reason, which matters more than the arithmetic.** `REGRESSION-LEDGER.md` stated its
+own founding rule: *claims quantify over a generated plan, not over the text of the skill*.
+Everything expensive descends from there — re-anchoring, absorption, the `Absorbs` column, the
+unresolved anchors, the whole clause→row map. It means **every edit to the skill costs maintenance
+to the measuring apparatus**, and the cost grows with the size of the skill. The measurement was
+coupled to the artefact at the worst available joint: not to the text, which is stable and
+diffable, but to the behaviour of a non-deterministic generator, judged by a second
+non-deterministic generator.
 
-**Generated candidates are not covered by the rule at all.** `PLAN-*-CON-N.md` is written by
-`skills/plan-slices/SKILL.md`, which puts the structure in the template's language and the content in
-the user's: CON-6 came out with English section names and Italian prose on both sides, and the
-sources it reads are Italian too. Their language is the effect of a clause **under test**, so
-legislating it here would be this project writing the answer into the thing it is measuring.
+Reducing the scope of the skill attacks the same cause: less surface to regress, and a manual net
+becomes sufficient rather than a consolation.
 
-## Active
+## What is live
 
 | Path | Role |
 |---|---|
-| `CONSENSUS-WORKFLOW.md` | The tool: the ten steps, the vocabulary, and a routing table. Read this first. |
-| `workflow/CYCLE.md` | Detailed rules of the cycle steps: what applies itself, bidirectional `improve`, blindness, tool boundaries. |
-| `workflow/CONFORMANCE.md` | The step-4 gate: why it exists, the form it imposes, discards, what it does not measure. |
-| `workflow/LEDGER.md` | The ledger mechanism: dormancy, why `recidiva` is one call, what to do when a verdict falsifies a row. |
-| `workflow/RATIONALE.md` | Why the decisions were taken this way. No phase needs it to work. |
-| `workflow/EVIDENCE.md` | What the tool has actually measured, and the limits that remain. The one file every cycle updates. |
-| `CONSENSUS-WORKFLOW-PLAN.md` | The work left to do, one cold session per phase. Opens with a routing table. |
-| `CONSENSUS-WORKFLOW-PLAN-CLOSED.md` | Closed phases, kept for *why* a decision was taken. No session needs it to work. |
-| `REGRESSION-LEDGER.md` | Falsifiable claims implied by applied changes, with state `not refuted ×k`. |
-| `prompts/` | Normative source of the four phase prompts. Created in Phase 1b-i. |
-| `assets/improvement-template.md` | The conformance contract an `IMPROVEMENT` entry fills. Phase 1a. |
-| `support/` | `CLAUSE-ROW-MAP.md` with its extracted `clause-row-map.tsv`, and `AGENT-PLAN-MAP.md` — alias → artifact → generator, and the `gen` slot of `Measured on`. **Excluded from every payload.** |
-| `scripts/consensus/` | Cycle code. `validate_improvement.py` and `extract_clause_map.py` exist; provider invocation and orchestrator are Phases 3 and 5. |
-| `NOTES.md` | Observations from running the evals, each self-contained. |
-| `PROMPTS.md` | Human scratchpad, nothing normative. Only the generation prompt is left; Phase 6 takes it and the file goes. |
+| `../../skills/plan-slices/scripts/validate_plan.py` | Structural validator. Deterministic, free, one second. The only real regression test in the project. |
+| `make validate PLAN=…` | Runs it. |
+| `MANUAL-REVIEW.md` | Seventeen checks distilled from the retired ledger, plus what stays open. Rules about the skill, portable to any scenario. |
 | `recipe-app/sources/` | The only inputs a candidate plan is generated from. |
-| `recipe-app/EVALUATION-BRIEF.md` | Authority classes, hard constraints, accepted alternatives, known conflicts. |
-| `recipe-app/results/PLAN-*.md` | Candidate plans and their `IMPROVEMENT` / `REVIEW` artifacts. |
-| `recipe-app/results/CONSENSUS-CON-*.REPORT.md` | Cycle reports. |
-| `../../skills/plan-slices/scripts/validate_plan.py` | Structural validator. Lives in the skill, not here. |
-| `../AGENTS.md` | Authorization rules for provider runs. |
-| `make validate PLAN=…` | Structural check of a candidate plan. |
-| `make validate-improvement IMPROVEMENT=…` | The conformance gate, entry by entry. |
-| `make clause-map` | Regenerate `support/clause-row-map.tsv` from `CLAUSE-ROW-MAP.md`. |
+| `recipe-app/EVALUATION-BRIEF.md` | Facts about the sources: what they require, what they leave open, where they disagree, and which differences are *not* disagreements. Verifiable, no taste. |
+| `recipe-app/REFERENCE-PLAN.md` | One good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Restored 2026-08-11. |
+| `PROMPTS.md` § `GENERATE PLAN` | The generation prompt. Must activate the skill explicitly. |
+| `../AGENTS.md` | Authorization rules for provider runs. Still binding for the one generation call. |
 
-`assets/report-template.md` is Phase 1c and does not exist yet.
+Three documents, three jobs, no overlap: **rules** that hold across scenarios, **facts** about this
+scenario's sources, **one worked answer** for this scenario. Add a second scenario and only the
+first travels.
 
-`recipe-app/README.md` and `recipe-app/EVAL-NOTES.md` predate the split and still describe grading
-artifacts. They are scenario documentation, not grading documents, and are corrected when the
-scenario changes.
+**The reference plan is the reason the brief is not enough.** `EVALUATION-BRIEF.md` was created by
+`6476f32` — the commit calls it a *blind* brief — precisely to give an automated grader an oracle
+that withheld the answer. It is the reference plan with the answer removed: everything mechanically
+checkable kept, everything requiring judgement dropped. With no machine judge left, that amputation
+has no purpose, and what it removed is the only artifact in the repository carrying the author's own
+judgement about how this product should be sliced. It is also the only defence against the failure
+mode of pure manual review: the reviewer's sense of "good" drifting toward whatever the model last
+produced. A frozen reference costs nothing per run and does not drift.
 
-## Archived
+**None of these three may enter a generation session.** They are the answer key — which is why the
+checklist lives here and not beside the skill, where an agent exploring the directory could pick it
+up.
 
-Kept for history, not maintained. Nothing in the active list depends on any of it.
+## What is archive
 
-| Path | Role |
+Unmaintained, not deleted. Nothing live depends on any of it.
+
+| Path | Was |
 |---|---|
-| `GRADING-IMPROVEMENTS-PLAN.md`, `GRADING-IMPROVEMENTS.md`, `GRADING-EVAL-WORKFLOW.md` | The abandoned tool's documents. Each opens with an abandonment banner. |
-| `grader-rubric.json`, `grader-rubric.v3.json` | Rubrics v1 and v3. |
-| `fixtures/` | Labeled calibration fixtures and manifests. |
-| `recipe-app/results/calibration-legacy/`, `calibration-v2/`, `calibration-v3/` | Immutable grading artifacts and calibration reports. |
-| `scripts/*.py` at the top level of `scripts/` | Grading orchestrator, graders, scoring, adjudication, and their tests. |
-| `make grade`, `make compare`, `make calibrate`, `make calibrate-critical`, `make calibrate-critical-report` | Grading targets. |
+| `CONSENSUS-WORKFLOW.md`, `workflow/`, `CONSENSUS-WORKFLOW-PLAN*.md` | The consensus tool and its plan. `workflow/EVIDENCE.md` is the honest record of what the cycle actually measured. |
+| `REGRESSION-LEDGER.md` | 18 rows with counters, provenance and absorption history. `MANUAL-REVIEW.md` is its distillation; this file keeps the *why* of each row. |
+| `prompts/`, `assets/`, `support/`, `scripts/consensus/` | Phase prompts, conformance template, clause→row map, `validate_improvement.py`. |
+| `recipe-app/payloads/`, `recipe-app/results/CONSENSUS-CON-*` | CON-6 payloads and cycle reports. |
+| `GRADING-*.md`, `grader-rubric*.json`, `fixtures/`, `scripts/*.py`, `recipe-app/results/calibration-*/` | The grading system in full. |
+| `make grade`, `compare`, `calibrate*`, `validate-improvement`, `clause-map` | Their targets. |
 
 `make test` still runs the grading tests and is expected to stay green: archived means unmaintained,
 not deleted.
+
+`recipe-app/README.md` and `recipe-app/EVAL-NOTES.md` were deleted rather than archived. They were
+neither tool nor record — only a path index and a note on which inputs the graders read, both
+describing a layout that no longer exists. An index that lies is worse than no index; this file is
+the index now.
+
+## What would justify reopening
+
+Left observable on purpose, so that "closed" stays a decision instead of becoming a habit.
+
+**The manual net leaks twice.** If a regression reaches a commit and is only noticed two changes
+later — and it happens a second time — then reading is no longer catching what it was kept to catch,
+and the answer is either a cheaper automated check or a smaller skill. In that order: the two
+agreed improvements listed at the end of `MANUAL-REVIEW.md` move three checks from reading to the
+validator, and cost nothing per run.
+
+Rebuilding a model-judged cycle is not on that list. If it ever is, the thing to fix first is the
+coupling described above, not the orchestration.
+
+## Language
+
+English is the project language since 2026-08-06. Two permanent exclusions: `recipe-app/sources/`,
+because converting them is a new scenario rather than a translation, and the historical artifacts
+under `recipe-app/results/`, because they are the record of what was generated. Quotations from them
+stay in Italian inside quotation marks, wherever they appear, because they are evidence.
+
+`CONSENSUS-WORKFLOW.md`, `workflow/`, `CONSENSUS-WORKFLOW-PLAN*.md`, `NOTES.md` and `PROMPTS.md`
+remain in Italian. Phase 0b was going to convert them and will not: they are archive.
