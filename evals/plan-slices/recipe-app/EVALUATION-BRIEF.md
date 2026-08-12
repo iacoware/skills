@@ -26,9 +26,7 @@
 
 What this scenario does not know yet, and the decision each answer changes. A plan is free to place
 these where it wants. `Subsystem` groups uncertainties that a single slice may validate together:
-two rows of the same subsystem are one question asked twice, while two subsystems in one slice are
-two, and an `Enabler` that spans two subsystems is putting more on the fire than one cold
-implementation session can carry.
+two rows of the same subsystem are one question asked twice, two subsystems are two questions.
 
 | ID | Subsystem | Uncertainty | Decision it changes | Source |
 |---|---|---|---|---|
@@ -41,7 +39,7 @@ implementation session can carry.
 # Known conflicts
 
 - Manual input skips extraction in `sources/concepts.md`, “Pipeline di estrazione”, while `sources/arch-choices.md`, “Estrazione contenuto”, says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path.
-- Search queries are never embedded at runtime in `sources/goal.md`, “Vincoli e scala”, and `sources/arch-choices.md`, “Embeddings”, while `sources/concepts.md`, “Ricerca (MVP)”, defines search as `similarity(Recipe.embedding, embedding(query))`, which requires embedding the query; no `Includes` or `Verification` bullet may assert either side before the interpretation is resolved, and the resolution — per-query call, cache, or precomputation — belongs to the plan's declared open choices with the slice it blocks.
+- Search queries are never embedded at runtime in `sources/goal.md`, “Vincoli e scala”, and `sources/arch-choices.md`, “Embeddings”, while `sources/concepts.md`, “Ricerca (MVP)”, defines search as `similarity(Recipe.embedding, embedding(query))`, which requires embedding the query. The sources admit three resolutions and select none: a per-query call, a cache, or precomputation.
 
 # Not conflicts
 
