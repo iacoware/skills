@@ -33,6 +33,10 @@ make list                     # elenca le skill scoperte, senza installare
 
 `skills add` **copia** i file in `~/.agents/skills/`: rilancia `make add` dopo ogni modifica, e riavvia la sessione dell'agent perché la rilegga (obbligatorio quando cambi `name` o `description`: determinano come la skill viene invocata).
 
+## Design
+
+`design/<skill>/` contiene i documenti di progettazione ed evoluzione delle skill: obiettivi, decisioni e razionale. Sta fuori dalle cartelle delle skill per la stessa ragione degli evals — non è payload di runtime e non va installato sulle macchine target. Vedi [`design/plan-slices`](design/plan-slices).
+
 ## Evals
 
 `evals/<skill>/<scenario>/` contiene gli scenari di valutazione, fuori dalle cartelle delle skill perché `skills add` copia solo il payload di runtime: input in `sources/`, oracolo alla root dello scenario, output generati in `results/`. Vedi [`evals/plan-slices/recipe-app`](evals/plan-slices/recipe-app).
