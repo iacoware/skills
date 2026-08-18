@@ -28,8 +28,8 @@ developer; it is the only case in which `First validation` may name an `Enabler`
 - **Data integrity and recovery:** [Invariants, derived data, and partial-failure recovery.]
 
 [Keep all five. Add a further concern — cost, privacy, compliance, latency, auditability, data
-migration — only when a source
-makes it a constraint that several slices must respect; a concern one slice owns stays in it.]
+migration — only when a source makes it a constraint that several slices must respect; a concern
+one slice owns stays in it.]
 
 ## NOW
 
