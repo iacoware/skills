@@ -185,6 +185,11 @@ Allow an explicit `Enabler` slice when its primary user is a developer and it:
 Examples include processing normalized fixtures through the real embedding and persistence
 pipeline before semantic retrieval, or deploying the minimum runtime before authentication.
 
+Uncertainties belonging to different subsystems are different uncertainties. One enabler may answer
+several questions about a single subsystem — a datastore with its driver and migrations, an
+inference engine, one adapter family — but not questions whose answers change decisions in two:
+a verification that can fail for either would not say which decision to revisit.
+
 An enabler may include the smallest diagnostic consumer needed to observe its uncertainty, such as
 a command that ranks persisted vectors. Keep product interaction and business feedback in the
 successor, and ensure the successor adds a user outcome rather than merely repackaging the enabler.
