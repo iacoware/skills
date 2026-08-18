@@ -345,7 +345,6 @@ i numeri in `First validation`.
 **Includes**
 
 - Ambiente di produzione su Fly con dominio, segreti (OAuth, embedding, LLM, storage) e callback Google configurati.
-- Backup del database con procedura di ripristino.
 - Tetto di spesa e allarme su LLM ed embedding.
 - Nessuna nuova capability di prodotto.
 
@@ -353,7 +352,6 @@ i numeri in `First validation`.
 
 - Due utenti reali completano in produzione import, ricerca, modifica e condivisione.
 - Costo del primo mese misurato contro il target di centesimi.
-- Il ripristino del backup è provato, non solo configurato.
 
 **Outcome**
 
