@@ -77,8 +77,8 @@ commit, since a net you skip is worse than a net you sized honestly.
 ## Horizon and admission
 
 - **R-004** — No `NOW` slice delivers a behaviour the sources do not request.
-- **R-013** — Every `LATER` entry states a `Promotion trigger`. *Automatable; `validate_plan.py`
-  today checks only that the section carries a list.*
+- **R-013** — Every `LATER` entry names the `NOW` evidence that would promote it. *Automatable;
+  `validate_plan.py` today checks only that the section carries a list.*
 - **R-014** — Every `OUT-OF-SCOPE` entry states an exclusion rationale. *Same.*
 
 ## Undecided choices and source conflicts

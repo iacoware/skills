@@ -359,33 +359,15 @@ i numeri in `First validation`.
 
 ## LATER
 
-- **Scelta manuale della cover**
-  - **Promotion trigger:** utenti pilota che segnalano la prima foto come rappresentazione sbagliata.
-  - **Expected value:** rifinitura di un default già spedito.
-- **Scelta di quali foto tenere durante l'import**
-  - **Promotion trigger:** import che portano immagini irrilevanti in modo sistematico.
-  - **Expected value:** qualità della galleria senza reintrodurre una review obbligatoria.
-- **Filtri strutturati (tag, tempo) e ricerca ibrida semantica + full-text**
-  - **Promotion trigger:** query reali che la sola semantica sbaglia sistematicamente, tipo "senza glutine" o "meno di 30 minuti".
-  - **Expected value:** `tags` e `prepTime` sono già popolati, quindi attivabili senza migrazione.
-- **Ricerca cross-ricettario**
-  - **Promotion trigger:** utenti con più ricettari che cercano ripetutamente nello scope sbagliato.
-  - **Expected value:** elimina il cambio di contesto manuale.
-- **Creazione di ricettari aggiuntivi dall'interfaccia**
-  - **Promotion trigger:** un gruppo chiede di separare i contenuti oltre al ricettario creato al primo accesso.
-  - **Expected value:** il modello N:N esiste già.
-- **Ricettari pubblici tematici**
-  - **Promotion trigger:** richiesta di condividere fuori dal gruppo invitato.
-  - **Expected value:** `visibility=public` è già modellato.
-- **Concetto di gruppo sopra i ricettari**
-  - **Promotion trigger:** ri-invitare gli stessi membri a ogni nuovo ricettario diventa attrito segnalato.
-  - **Expected value:** additivo sopra `Membership`.
-- **Macchina Fly sempre calda**
-  - **Promotion trigger:** cold start percepito come fastidioso dagli utenti pilota.
-  - **Expected value:** un flag reversibile in `fly.toml` al costo noto di ~$3/mese.
-- **Passkeys**
-  - **Promotion trigger:** la dipendenza da Google limita l'adozione e il recupero account in Auth.js matura.
-  - **Expected value:** accesso senza password senza introdurre un provider email.
+- **Scelta manuale della cover** — se gli utenti pilota segnalano la prima foto come rappresentazione sbagliata; rifinitura di un default già spedito.
+- **Scelta di quali foto tenere durante l'import** — se gli import portano immagini irrilevanti in modo sistematico; qualità della galleria senza reintrodurre una review obbligatoria.
+- **Filtri strutturati (tag, tempo) e ricerca ibrida semantica + full-text** — se query reali tipo "senza glutine" o "meno di 30 minuti" sbagliano sistematicamente; `tags` e `prepTime` sono già popolati, quindi attivabili senza migrazione.
+- **Ricerca cross-ricettario** — se utenti con più ricettari cercano ripetutamente nello scope sbagliato; elimina il cambio di contesto manuale.
+- **Creazione di ricettari aggiuntivi dall'interfaccia** — se un gruppo chiede di separare i contenuti oltre al ricettario creato al primo accesso; il modello N:N esiste già.
+- **Ricettari pubblici tematici** — se arriva la richiesta di condividere fuori dal gruppo invitato; `visibility=public` è già modellato.
+- **Concetto di gruppo sopra i ricettari** — se ri-invitare gli stessi membri a ogni nuovo ricettario diventa attrito segnalato; additivo sopra `Membership`.
+- **Macchina Fly sempre calda** — se il cold start risulta fastidioso agli utenti pilota; un flag reversibile in `fly.toml` al costo noto di ~$3/mese.
+- **Passkeys** — se la dipendenza da Google limita l'adozione e il recupero account in Auth.js matura; accesso senza password senza introdurre un provider email.
 
 ## OUT-OF-SCOPE
 
