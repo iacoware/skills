@@ -1,11 +1,22 @@
-# Authority
+# Evaluation brief — recipe-app
+
+Facts about `sources/`, decided once so that no cycle re-litigates them: what the sources require,
+what they leave open, where they disagree, and which differences only look like disagreements.
+Verifiable, no taste — the taste is in `REFERENCE-PLAN.md`.
+
+Read it at step 3 of the loop in `../MANUAL-REVIEW.md`, before walking the checks and with the
+candidate plan in hand. **Here the brief is the authority, not `sources/`:** it decides which
+conflicts exist, which alternatives are acceptable, and which uncertainties are material. Open
+`sources/` only to verify a citation.
+
+## Authority
 
 - Product scope and priority come from `sources/goal.md` sections “Visione”, “Differenziatore”, “Cosa fa (MVP)” and “Fuori scope MVP”.
 - Domain invariants come from `sources/concepts.md` sections “Modello di condivisione: cookbook-centrico”, “Entità principali”, “Pipeline di estrazione” and “Ricerca (MVP)”.
 - Infrastructure decisions come from `sources/arch-choices.md` sections “Datastore”, “Object storage foto”, “Embeddings”, “Estrazione contenuto” and “Hosting”.
 - Stack decisions come from `sources/tech-choices.md` sections “Linguaggio e framework”, “Business logic”, “Auth”, “Data fetching client” and “Persistenza / ORM”.
 
-# Hard constraints
+## Hard constraints
 
 - NOW must validate multilingual semantic search; it is the differentiator (`sources/goal.md`, “Differenziatore” and “Ricerca”).
 - Every recipe read, write, and semantic query is scoped to the current cookbook; members can edit all cookbook content (`sources/goal.md`, “Condivisione”; `sources/concepts.md`, “Cookbook” and “Membership”).
@@ -14,7 +25,7 @@
 - MVP uses Google OAuth, Postgres with pgvector, R2, multilingual cloud embeddings, Next.js on Fly.io, Effect, React Query, and Drizzle (`sources/goal.md`, “Auth”; `sources/arch-choices.md`; `sources/tech-choices.md`).
 - Public cookbooks, structured filters, cross-cookbook search, groups, and granular roles are excluded from MVP (`sources/goal.md`, “Fuori scope MVP”).
 
-# Accepted alternatives
+## Accepted alternatives
 
 - Neon or Supabase may provide Postgres because the source leaves that provider undecided (`sources/arch-choices.md`, “Datastore”).
 - A cheap multilingual cloud embedding model may replace the named example if it preserves cross-language behavior and the cost constraint (`sources/arch-choices.md`, “Embeddings”).
@@ -22,7 +33,7 @@
 - Fly.io may start suspended or always warm; the former is preferred and the latter is an evidence-triggered operational change (`sources/arch-choices.md`, “Hosting”).
 - Controlled inputs may validate extraction, embeddings, or search before their final user entry point when they traverse the production computation (`sources/goal.md`, “Principi guida”; `sources/concepts.md`, “Pipeline di estrazione”).
 
-# Material uncertainties
+## Material uncertainties
 
 What this scenario does not know yet, and the decision each answer changes. A plan is free to place
 these where it wants. `Subsystem` groups uncertainties that a single slice may validate together:
@@ -36,12 +47,12 @@ two rows of the same subsystem are one question asked twice, two subsystems are 
 | U4 | Extraction | What is the JSON-LD hit rate on the blogs actually used? | How much weight and cost the LLM fallback carries, and whether it moves earlier or later | `sources/arch-choices.md`, “Estrazione contenuto” |
 | U5 | Extraction | Is a cheap structured-output model accurate enough per recipe, at fractions of a cent? | Which model implements the fallback, or narrowing the cases that invoke it | `sources/arch-choices.md`, “Estrazione contenuto” |
 
-# Known conflicts
+## Known conflicts
 
 - Manual input skips extraction in `sources/concepts.md`, “Pipeline di estrazione”, while `sources/arch-choices.md`, “Estrazione contenuto”, says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path.
 - Search queries are never embedded at runtime in `sources/goal.md`, “Vincoli e scala”, and `sources/arch-choices.md`, “Embeddings”, while `sources/concepts.md`, “Ricerca (MVP)”, defines search as `similarity(Recipe.embedding, embedding(query))`, which requires embedding the query. The sources admit three resolutions and select none: a per-query call, a cache, or precomputation.
 
-# Not conflicts
+## Not conflicts
 
 Differences a reader may mistake for a conflict, resolved here so each cycle does not re-litigate them.
 
