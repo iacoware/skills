@@ -9,6 +9,9 @@
 
 ## Themes
 
+A theme is a product promise that can be deferred or cancelled whole, on its own. The order below is
+by importance, differentiators first; the build order is the one the `First validation` numbers give.
+
 | Theme | Desired outcome | First validation |
 |---|---|---|
 | [A. Independently schedulable value area] | [User-useful outcome] | [NOW slice number] |
