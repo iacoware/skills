@@ -48,6 +48,7 @@ FIRST_VALIDATION_PATTERN = re.compile(
 )
 ENABLER_TITLE_PATTERN = re.compile(r"\*\(Enabler:\s*[^)]+\)\*")
 DEVELOPER_OUTCOME_MARKER = "*(Developer outcome)*"
+THEMES_HEADER = ("theme", "desired outcome", "first validation")
 
 
 @dataclass(frozen=True)
@@ -106,14 +107,27 @@ def _parse_slices(now_body: str) -> tuple[Slice, ...]:
     )
 
 
+def _table_cells(line: str) -> list[str] | None:
+    stripped = line.strip()
+    if not stripped.startswith("|") or not stripped.endswith("|"):
+        return None
+    return [cell.strip() for cell in stripped.strip("|").split("|")]
+
+
+def _has_themes_header(themes_body: str) -> bool:
+    return any(
+        cells is not None
+        and len(cells) >= 3
+        and tuple(cell.lower() for cell in cells[:3]) == THEMES_HEADER
+        for cells in map(_table_cells, themes_body.splitlines())
+    )
+
+
 def _parse_themes(themes_body: str) -> tuple[Theme, ...]:
     rows: list[Theme] = []
     for line in themes_body.splitlines():
-        stripped = line.strip()
-        if not stripped.startswith("|") or not stripped.endswith("|"):
-            continue
-        cells = [cell.strip() for cell in stripped.strip("|").split("|")]
-        if len(cells) < 3 or cells[0].lower() == "theme":
+        cells = _table_cells(line)
+        if cells is None or len(cells) < 3 or cells[0].lower() == "theme":
             continue
         if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
             continue
@@ -252,7 +266,7 @@ def validate_structure(plan: Plan) -> list[str]:
             errors.extend(_list_only_errors(section))
 
     if themes := plan.sections.get("Themes"):
-        if "| Theme | Desired outcome | First validation |" not in themes.body:
+        if not _has_themes_header(themes.body):
             errors.append("Themes: expected columns Theme, Desired outcome, First validation")
         if not plan.themes:
             errors.append("Themes: expected at least one data row")

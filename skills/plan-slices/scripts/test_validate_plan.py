@@ -54,6 +54,25 @@ class ValidatePlanV3Tests(unittest.TestCase):
     def test_accepts_numeric_first_validation(self) -> None:
         self.assertEqual(validate_structure(parse_plan(PLAN)), [])
 
+    def test_accepts_a_themes_table_whose_cells_are_padded_for_alignment(self) -> None:
+        padded = PLAN.replace(
+            "| Theme | Desired outcome | First validation |\n|---|---|---|\n"
+            "| Search | Users find relevant content. | 1 |",
+            "| Theme  | Desired outcome              | First validation |\n"
+            "| ------ | ---------------------------- | ---------------- |\n"
+            "| Search | Users find relevant content. | 1                |",
+        )
+
+        self.assertEqual(validate_structure(parse_plan(padded)), [])
+
+    def test_rejects_a_themes_table_with_the_wrong_columns(self) -> None:
+        renamed = PLAN.replace("| Theme | Desired outcome | First validation |", "| Theme | Outcome | Validated by |")
+
+        self.assertIn(
+            "Themes: expected columns Theme, Desired outcome, First validation",
+            validate_structure(parse_plan(renamed)),
+        )
+
     def test_accepts_first_validation_carrying_the_slice_title(self) -> None:
         for cell in ("1. Search proof", "1) Search proof", "NOW slice 1"):
             with self.subTest(cell=cell):
