@@ -4,7 +4,7 @@ Four questions about `sources/`, answered once so that no review re-litigates th
 must contain, where it may differ, what it must leave open, and what only looks like a defect.
 Verifiable, no taste — the taste is in `REFERENCE-PLAN.md`.
 
-Read it at step 3 of the loop in `../MANUAL-REVIEW.md`, before walking the checks and with the
+Read it at step 3 of `../REVIEW-WORKFLOW.md`, before walking the rules and with the
 candidate plan in hand. **Here the brief is the authority, not `sources/`:** it decides which
 conflicts exist, which alternatives are acceptable, and which uncertainties are material. Open
 `sources/` only to verify a citation.

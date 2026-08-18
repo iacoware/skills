@@ -15,16 +15,18 @@ where an agent exploring the directory could pick them up.
 |---|---|
 | `../../skills/plan-slices/scripts/validate_plan.py` | Structural validator. Deterministic, free, one second. The only real regression test in the project. |
 | `make validate PLAN=<path>` | Runs it, from the repository root. `PLAN` is a path. |
-| `MANUAL-REVIEW.md` | The loop, the generation prompt, and the checks. Rules about the skill, portable to any scenario. |
+| `REVIEW-WORKFLOW.md` | How to run one review: the five steps and the generation prompt. |
+| `EVALUATION-RULES.md` | What to look for, as numbered checks. Rules about the skill, portable to any scenario. |
 | `recipe-app/sources/` | The only inputs a candidate plan is generated from. |
 | `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources: what the plan must contain, where it may differ, what it must leave open, what only looks like a defect. Verifiable, no taste. Read at step 3. |
 | `recipe-app/REFERENCE-PLAN.md` | One good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Read at step 5, never earlier. |
 | `recipe-app/REFERENCE-PLAN-RATIONALE.md` | Why each reference slice sits where it sits — the reasoning `SKILL.md` § 5 forbids publishing in a plan. |
 | `../AGENTS.md` | Authorization rules for provider runs. Still binding for the one generation call. |
 
-Three jobs, no overlap: **rules** that hold across scenarios, **facts** about this scenario's
-sources, **one worked answer** for this scenario with its reasoning. Add a second scenario and only
-the first travels.
+Four jobs, no overlap: a **procedure**, **rules** that hold across scenarios, **facts** about this
+scenario's sources, **one worked answer** for this scenario with its reasoning. Add a second
+scenario and the rules travel unchanged, the procedure travels with a directory substituted, and
+the last two are written anew.
 
 **Why the brief is not enough on its own.** It is the reference plan with the answer removed:
 everything mechanically checkable kept, everything requiring judgement dropped. That amputation

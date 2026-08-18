@@ -92,12 +92,12 @@ git ls-tree -r --name-only evals-final evals/plan-slices/
 | What lived at | Was |
 |---|---|
 | `CONSENSUS-WORKFLOW.md`, `CONSENSUS-WORKFLOW-PLAN*.md`, `workflow/` | The consensus tool and its plan. `workflow/EVIDENCE.md` is the honest record of what the cycle actually measured. |
-| `REGRESSION-LEDGER.md` | 18 rows with counters, provenance and absorption history. `MANUAL-REVIEW.md` is its distillation; the ledger keeps the *why* of each row. |
+| `REGRESSION-LEDGER.md` | 18 rows with counters, provenance and absorption history. `EVALUATION-RULES.md` is its distillation; the ledger keeps the *why* of each row. |
 | `prompts/` | The four blind phase prompts — `improve`, `review`, `verdict`, `recidiva`. 498 lines of allowlists, filled contracts and self-check criteria. |
 | `assets/`, `support/`, `scripts/consensus/` | Conformance template, clause→row map and its *Unresolved anchors*, `validate_improvement.py`. |
 | `recipe-app/payloads/` | The CON-6 payload projections the four prompts read. |
 | `GRADING-*.md`, `grader-rubric*.json`, `fixtures/`, `scripts/*.py`, `recipe-app/results/calibration-*/` | The grading system in full. |
-| `PROMPTS.md`, `NOTES.md` | Consensus scratchpads. The generation prompt one of them held is now inlined in `MANUAL-REVIEW.md` step 1, which is the only part of either that was live. |
+| `PROMPTS.md`, `NOTES.md` | Consensus scratchpads. The generation prompt one of them held is now inlined in `REVIEW-WORKFLOW.md` step 1, which is the only part of either that was live. |
 | `Makefile` targets `grade`, `compare`, `calibrate*`, `validate-improvement`, `clause-map` | Their entry points. |
 
 **The cycle reports under `recipe-app/results/` keep their dangling citations, deliberately.** The

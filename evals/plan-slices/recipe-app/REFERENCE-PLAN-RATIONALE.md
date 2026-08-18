@@ -2,7 +2,7 @@
 
 `SKILL.md` § 5 forbids publishing per-slice ordering rationale, so this reasoning cannot live in
 `REFERENCE-PLAN.md`: there, the slice order and `Ordering criteria` carry it silently. It lives here
-because step 5 of `../MANUAL-REVIEW.md` asks, on every difference between candidate and reference,
+because step 5 of `../REVIEW-WORKFLOW.md` asks, on every difference between candidate and reference,
 which of the two has the better reason — and a reason you have to re-derive from the sources is a
 reason you will not weigh.
 
