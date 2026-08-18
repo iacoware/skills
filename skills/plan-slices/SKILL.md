@@ -340,6 +340,8 @@ section names, field names, and order; write content in the user's language.
 
 - Use bullets or tables for technical sections; avoid prose blocks.
 - Keep `Cross-functional concerns`, `NOW`, `LATER`, and `OUT-OF-SCOPE` as exact labels.
+- Keep the template's five cross-functional concerns and add a further one only when a source makes
+  it a constraint several slices must respect.
 - Set every `Themes.First validation` cell to the number of an existing `NOW` slice, and order the
   theme rows by importance, differentiators first.
 - Detail numbered `NOW` slices only. Tag them `(Theme: …)`, `(Enabler: …)`, or
