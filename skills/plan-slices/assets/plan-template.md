@@ -96,11 +96,9 @@ coherent release to its intended environment. Omit it for explicitly developer-o
 
 ## LATER
 
-- **[Candidate capability]**
-  - **Promotion trigger:** [NOW evidence that would justify implementation.]
-  - **Expected value:** [Why it may become useful.]
+- **[Candidate capability]** — [NOW evidence that would promote it; why it may become useful.]
 
-[Use `- None identified.` when empty.]
+[One line per entry. Use `- None identified.` when empty.]
 
 ## OUT-OF-SCOPE
 
