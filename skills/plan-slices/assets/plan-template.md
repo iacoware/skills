@@ -96,13 +96,13 @@ coherent release to its intended environment. Omit it for explicitly developer-o
 
 ## LATER
 
-- **[Candidate capability]** — [NOW evidence that would promote it; why it may become useful.]
+- **[Candidate capability]**: [NOW evidence that would promote it; why it may become useful.]
 
 [One line per entry. Use `- None identified.` when empty.]
 
 ## OUT-OF-SCOPE
 
-- **[Excluded capability]** — [Source-backed rationale.]
+- **[Excluded capability]**: [Source-backed rationale.]
 
 [Use `- None identified.` when empty.]
 
