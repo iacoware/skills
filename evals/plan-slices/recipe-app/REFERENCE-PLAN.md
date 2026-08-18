@@ -359,26 +359,26 @@ i numeri in `First validation`.
 
 ## LATER
 
-- **Scelta manuale della cover** — se gli utenti pilota segnalano la prima foto come rappresentazione sbagliata; rifinitura di un default già spedito.
-- **Scelta di quali foto tenere durante l'import** — se gli import portano immagini irrilevanti in modo sistematico; qualità della galleria senza reintrodurre una review obbligatoria.
-- **Filtri strutturati (tag, tempo) e ricerca ibrida semantica + full-text** — se query reali tipo "senza glutine" o "meno di 30 minuti" sbagliano sistematicamente; `tags` e `prepTime` sono già popolati, quindi attivabili senza migrazione.
-- **Ricerca cross-ricettario** — se utenti con più ricettari cercano ripetutamente nello scope sbagliato; elimina il cambio di contesto manuale.
-- **Creazione di ricettari aggiuntivi dall'interfaccia** — se un gruppo chiede di separare i contenuti oltre al ricettario creato al primo accesso; il modello N:N esiste già.
-- **Ricettari pubblici tematici** — se arriva la richiesta di condividere fuori dal gruppo invitato; `visibility=public` è già modellato.
-- **Concetto di gruppo sopra i ricettari** — se ri-invitare gli stessi membri a ogni nuovo ricettario diventa attrito segnalato; additivo sopra `Membership`.
-- **Macchina Fly sempre calda** — se il cold start risulta fastidioso agli utenti pilota; un flag reversibile in `fly.toml` al costo noto di ~$3/mese.
-- **Passkeys** — se la dipendenza da Google limita l'adozione e il recupero account in Auth.js matura; accesso senza password senza introdurre un provider email.
+- **Scelta manuale della cover**: se gli utenti pilota segnalano la prima foto come rappresentazione sbagliata; rifinitura di un default già spedito.
+- **Scelta di quali foto tenere durante l'import**: se gli import portano immagini irrilevanti in modo sistematico; qualità della galleria senza reintrodurre una review obbligatoria.
+- **Filtri strutturati (tag, tempo) e ricerca ibrida semantica + full-text**: se query reali tipo "senza glutine" o "meno di 30 minuti" sbagliano sistematicamente; `tags` e `prepTime` sono già popolati, quindi attivabili senza migrazione.
+- **Ricerca cross-ricettario**: se utenti con più ricettari cercano ripetutamente nello scope sbagliato; elimina il cambio di contesto manuale.
+- **Creazione di ricettari aggiuntivi dall'interfaccia**: se un gruppo chiede di separare i contenuti oltre al ricettario creato al primo accesso; il modello N:N esiste già.
+- **Ricettari pubblici tematici**: se arriva la richiesta di condividere fuori dal gruppo invitato; `visibility=public` è già modellato.
+- **Concetto di gruppo sopra i ricettari**: se ri-invitare gli stessi membri a ogni nuovo ricettario diventa attrito segnalato; additivo sopra `Membership`.
+- **Macchina Fly sempre calda**: se il cold start risulta fastidioso agli utenti pilota; un flag reversibile in `fly.toml` al costo noto di ~$3/mese.
+- **Passkeys**: se la dipendenza da Google limita l'adozione e il recupero account in Auth.js matura; accesso senza password senza introdurre un provider email.
 
 ## OUT-OF-SCOPE
 
-- **Ingredienti strutturati (quantità e unità)** — trade-off accettato in `goal.md`: la ricerca è semantica e chi legge interpreta il testo.
-- **Lista della spesa e scaling delle porzioni** — dipendono dagli ingredienti strutturati.
-- **Review obbligatoria prima del salvataggio** — bloccare l'utente a ogni aggiunta è il costo che il prodotto elimina; la correzione resta disponibile come edit.
-- **Deduplica delle ricette** — duplicati consentiti per scelta esplicita in `concepts.md`.
-- **Ruoli e permessi granulari** — nell'MVP basta `creatorId` e tutti i membri sono pari.
-- **Email + password e magic link** — richiedono comunque un provider email.
-- **Vector DB dedicato** — a ≤10k ricette pgvector con HNSW è già istantaneo.
-- **IaC versionata (SST, Terraform)** e **hosting su Vercel o Cloudflare Workers** — scartati in `arch-choices.md` per costo e complessità.
+- **Ingredienti strutturati (quantità e unità)**: trade-off accettato in `goal.md`; la ricerca è semantica e chi legge interpreta il testo.
+- **Lista della spesa e scaling delle porzioni**: dipendono dagli ingredienti strutturati.
+- **Review obbligatoria prima del salvataggio**: bloccare l'utente a ogni aggiunta è il costo che il prodotto elimina; la correzione resta disponibile come edit.
+- **Deduplica delle ricette**: duplicati consentiti per scelta esplicita in `concepts.md`.
+- **Ruoli e permessi granulari**: nell'MVP basta `creatorId` e tutti i membri sono pari.
+- **Email + password e magic link**: richiedono comunque un provider email.
+- **Vector DB dedicato**: a ≤10k ricette pgvector con HNSW è già istantaneo.
+- **IaC versionata (SST, Terraform)** e **hosting su Vercel o Cloudflare Workers**: scartati in `arch-choices.md` per costo e complessità.
 
 ## Decision checkpoints
 
