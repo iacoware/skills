@@ -3,27 +3,28 @@
 What to read on a plan produced by `skills/plan-slices/SKILL.md`, to notice that a change to the
 skill broke something it used to get right.
 
-This list is the distillation of a ledger of falsifiable claims that retired on 2026-08-11 together
-with the consensus cycle, and was deleted with it — `README.md` § *Recovering the apparatus* says
-where it is. Each check was a claim implied by a change actually applied to the skill, verified
-across five cycles. What is gone is the apparatus around them: counters, provenance, `Measured on`,
-absorption, dormancy. What stays is the list.
-
-**Ids are inherited** from the ledger, so that `results/CONSENSUS-CON-*.REPORT.md` and the commit
-history keep resolving. They are labels, not a sequence: a new check takes the next free number and
-no id is ever reused.
-
 **This is not a grading rubric and produces no score.** A check that fails is a question — did the
 skill stop asking for this, or did the model have a bad day? One plan cannot tell you. Two plans in
 a row can.
 
 **These are rules about the skill, not about recipes.** They carry over to any scenario. What is
-specific to `recipe-app` lives in two files that a review opens at different moments:
-`recipe-app/EVALUATION-BRIEF.md` before the checks, `recipe-app/REFERENCE-PLAN.md` strictly after.
+specific to `recipe-app` lives in files a review opens at different moments: `EVALUATION-BRIEF.md`
+before the checks, `REFERENCE-PLAN.md` and its rationale strictly after.
+
+**A check is admitted when `SKILL.md` states the clause it guards** — not when a model was once
+observed failing. Most of the list was distilled from a ledger of falsifiable claims that retired
+on 2026-08-11 with the consensus cycle; `POST-MORTEM-EVALS.md` says where the ledger is and which
+of its rows are debts rather than checks. **Ids are inherited** from it, so that
+`results/CONSENSUS-CON-*.REPORT.md` and the commit history keep resolving. They are labels, not a
+sequence: a new check takes the next free number and no id is ever reused.
+
+**If a check fails against a rule the skill no longer states, the defect is in the check.** Rewrite
+it or delete it. The list describes the skill, it does not govern it.
 
 ## The loop
 
-Half an hour, one provider call.
+Half an hour, one provider call. Run it after a change you believe is substantive — not after every
+commit, since a net you skip is worse than a net you sized honestly.
 
 1. Generate one plan from `recipe-app/sources/` alone, in a fresh session with no other context.
 
@@ -56,17 +57,22 @@ Half an hour, one provider call.
    which alternatives are accepted, which uncertainties are material. Skipping this step is how the
    ledger used to produce false positives.
 4. Walk the checks below.
-5. **Only now** open `recipe-app/REFERENCE-PLAN.md` and compare. Forming your verdict first is what
-   keeps the reference a memory aid instead of a diff target — the order is the whole discipline,
-   and it is one rule rather than four authority classes. Differences in titles, numbering, theme
-   count, ordering, and example detail are all allowed; on each one ask which of the two has the
-   better reason. What you are hunting is what you forgot, not what you did differently.
+5. **Only now** open `recipe-app/REFERENCE-PLAN.md`, and its rationale, and compare. Forming your
+   verdict first is what keeps the reference a memory aid instead of a diff target — the order is
+   the whole discipline. What you are hunting is what you forgot, not what you did differently.
 
-Run it after a change you believe is substantive. Not after every commit — a net you skip is worse
-than a net you sized honestly.
+   The reference was hand-written from the sources before any candidate existed, and is frozen: it
+   is rewritten only when the sources change, never because a candidate convinced. How binding each
+   part of it is:
 
-**If a check fails against a rule the skill no longer states, the defect is in the check.** Rewrite
-it or delete it. The list describes the skill, it does not govern it.
+   - Where reference and `sources/` diverge, the defect is in the reference.
+   - Titles, numbering, theme count, order and worked detail may all differ. On each difference, ask
+     which of the two has the better reason — the rationale file holds the reference's.
+   - Each `Verification` bullet illustrates how a slice could be demonstrated; it is one way, not
+     the only one. The same holds for the operational detail of `Cross-functional concerns`, whose
+     six entries are owed but not their wording, and for `Decision checkpoints`, which are advice
+     rather than an exact precedence.
+   - A source may support a `LATER` or `OUT-OF-SCOPE` classification other than the reference's.
 
 ## Horizon and admission
 
@@ -84,16 +90,16 @@ it or delete it. The list describes the skill, it does not govern it.
   or declared open together with the slice it blocks. A qualifying adjective (`cheap`,
   `multilingual`, `managed`) is not a choice.
 - **R-010** — No `Includes` or `Verification` bullet asserts, in non-conditional form, one side of
-  an unresolved choice. Unresolved covers the brief's `Known conflicts`, any conflict demonstrable
-  by citing two sources in disagreement, and — inside the slices that choice blocks — any choice the
-  plan does not resolve by citing a selecting source. Declaring it under open questions or assigning
-  a spike does not resolve it.
+  an unresolved choice. Unresolved covers the conflicts under the brief's *What it must leave open*,
+  any conflict demonstrable by citing two sources in disagreement, and — inside the slices that
+  choice blocks — any choice the plan does not resolve by citing a selecting source. Declaring it
+  under open questions or assigning a spike does not resolve it.
   ⚠ **Watch the opposite failure.** This rule was written from a violation on one model only. The
   risk is not assertive wording coming back but plans that defer everything to a pending decision
   and publish nothing verifiable. If that appears, the defect is in R-010.
 - **R-018** — Every behaviour two sources describe incompatibly appears among the plan's open
   entries with the `NOW` slices it blocks, whether or not either source names a provider, model,
-  service, or adapter. The brief's `Known conflicts` lists only some of the cases this covers.
+  service, or adapter. The brief lists only some of the cases this covers.
   ⚠ **Watch the opposite failure.** A plan that lists non-conflicts among its open entries to
   satisfy the rule, deferring slices nothing leaves open. Never yet tested on a real cycle.
 
@@ -130,32 +136,25 @@ it or delete it. The list describes the skill, it does not govern it.
   `NOW` slice. *Partly automatable: the same name in two slices is structural, recognising that two
   names denote one adapter is reading.*
 - **R-016** — The `NOW` slice that opens a shared pipeline or adapter follows every `NOW` slice that
-  feeds it input — except when it validates controlled inputs traversing the production computation
-  and the brief admits early validation (`Accepted alternatives`, last entry).
+  feeds it input — except when it validates controlled inputs traversing the production computation,
+  which the brief admits under *Where it may differ*.
   ⚠ **Has failed.** CON-6, `CX`: the LLM extraction adapter opened at slice 7, before the paste path
   feeding it at slice 8.
 - **R-007** — No `Enabler` slice validates uncertainties across more than one subsystem: its
   `Verification` cannot fail for causes belonging to different `Subsystem`s in the brief's
-  `Material uncertainties`. Several entries of the same subsystem are one uncertainty, even when the
+  uncertainty table. Several entries of the same subsystem are one uncertainty, even when the
   answer invalidates the choice being verified. An `Enabler` spanning two subsystems is more than
   one cold implementation session can carry.
 
-## Open — not checks
+## The two ends of NOW
 
-Do not run these. They are decisions the retired program left owing, and until each is decided a
-failure against it looks like a skill regression without being one.
-
-- **R-015 — reuse declaration.** *«A `NOW` slice that reuses a pipeline or adapter opened by an
-  earlier slice declares it as reuse.»* Regressed unanimously in CON-6, exactly as predicted: **no
-  clause of `SKILL.md` states this**. It was added to the ledger after CON-5 *because* a model
-  failed to do it — a rule invented backwards from one observation. Either the skill acquires the
-  clause, or the check dies. It is currently outside the list.
-- **Three anchors with no clause.** `R-001`'s, and the `9aa2586` component that `R-005` and `R-006`
-  carried. Same decision, same owner: the scope reduction of the skill.
-- **Two agreed improvements that never reached the skill** — semantic checks in `validate_plan.py`
-  (interrupted themes, duplicated adapters, open questions ignored by the slices), and versioned
-  evaluation sets for quality claims. Both raised by two independent reviews in CON-4. The first
-  would move R-002, R-005 and R-006 from reading to validator, which is the only direction in which
-  this list gets cheaper. The second exists because no clause of `SKILL.md` asks a quality,
-  relevance or accuracy claim to name a versioned evaluation set with positive and negative cases:
-  a slice can verify that a semantic engine answers, not that it answers well.
+- **R-020** — The greenfield prerequisites are two separate slices: repository and CI with no
+  provisioning or deploy, then a walking skeleton that reaches the datastore at runtime through the
+  real driver and applies one non-domain migration, carrying no domain entity, authentication, or
+  tenancy. One slice doing both, or a skeleton that answers without touching the datastore, are the
+  `Oversized` and `Hollow walking skeleton` anti-patterns.
+- **R-019** — When `NOW` delivers to end users, its last slice promotes the release to its intended
+  environment and is tagged `*(Release: delivery)*`, carrying only source-backed operational
+  readiness. A plan that ends `NOW` without it, or tags it `Enabler`, states instead — explicitly —
+  that `NOW` ends at developer validation, and names that audience and environment. *Tag presence is
+  automatable; whether the readiness is source-backed is reading.*
