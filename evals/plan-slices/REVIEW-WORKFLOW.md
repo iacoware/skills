@@ -38,7 +38,8 @@ everywhere; the rules do not change.
 3. Read the plan against `recipe-app/EVALUATION-BRIEF.md`, opening `sources/` only to verify a
    citation. **The brief is the authority**, not the sources: it decides which conflicts exist,
    which alternatives are accepted, which uncertainties are material. Skipping this step is how the
-   retired ledger used to produce false positives.
+   retired ledger used to produce false positives. Its entries carry ids — cite them, in notes and
+   in the report, instead of paraphrasing what they say.
 4. Walk `EVALUATION-RULES.md`, keeping the brief's uncertainty table open for R-007.
 5. **Only now** open `recipe-app/REFERENCE-PLAN.md`, and its rationale, and compare. Forming your
    verdict first is what keeps the reference a memory aid instead of a diff target — the order is

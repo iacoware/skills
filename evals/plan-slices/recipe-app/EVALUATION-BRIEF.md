@@ -1,7 +1,7 @@
 # Evaluation brief — recipe-app
 
-Four questions about `sources/`, answered once so that no review re-litigates them: what the plan
-must contain, where it may differ, what it must leave open, and what only looks like a defect.
+Four questions about `sources/`, answered once so that no review re-litigates them: where the plan
+may differ, what it must leave open, what only looks like a defect, and what it must contain.
 Verifiable, no taste — the taste is in `REFERENCE-PLAN.md`.
 
 Read it at step 3 of `../REVIEW-WORKFLOW.md`, before walking the rules and with the
@@ -9,28 +9,29 @@ candidate plan in hand. **Here the brief is the authority, not `sources/`:** it 
 conflicts exist, which alternatives are acceptable, and which uncertainties are material. Open
 `sources/` only to verify a citation.
 
-## What the plan must contain (hard constraints)
+The sections are ordered by what comparing a candidate against `REFERENCE-PLAN.md` cannot surface.
+The reference holds one admissible choice per question, so the first three sections come first: the
+whole admissible set, the questions no plan may answer, and the apparent conflict that is none. The
+last section is the one a careful comparison mostly reconstructs on its own — kept here because the
+reference shows its constraints without marking them as binding.
 
-A candidate that misses one of these has a defect, wherever it places it.
-
-- NOW validates multilingual semantic search; it is the differentiator (`sources/goal.md`, “Differenziatore” and “Ricerca”).
-- Every recipe read, write, and semantic query is scoped to the current cookbook; members can edit all cookbook content (`sources/goal.md`, “Condivisione”; `sources/concepts.md`, “Cookbook” and “Membership”).
-- URL extraction tries JSON-LD before a validated LLM fallback; pasted text uses the extraction schema; manual input uses the shared edit form (`sources/goal.md`, “Aggiunta ricetta”; `sources/concepts.md`, “Pipeline di estrazione”).
-- Add saves without mandatory review; edit is the recovery path and regenerates derived embeddings (`sources/goal.md`, “Aggiunta ricetta”; `sources/concepts.md`, “Recipe”).
-- The stack is Google OAuth, Postgres with pgvector, R2, multilingual cloud embeddings, Next.js on Fly.io, Effect, React Query, and Drizzle (`sources/goal.md`, “Auth”; `sources/arch-choices.md`; `sources/tech-choices.md`).
-- Public cookbooks, structured filters, cross-cookbook search, groups, and granular roles are excluded from MVP (`sources/goal.md`, “Fuori scope MVP”).
+Every entry carries a stable id — `A` accepted alternative, `C` conflict, `U` uncertainty, `N`
+non-defect, `H` hard constraint. **Cite the id in reviews and reports**, not a paraphrase. Ids are
+never reused; a new entry takes the next free number in its letter. A second scenario keeps the
+section titles and the letters, and numbers its own entries. The rules in `../EVALUATION-RULES.md`
+cite sections and never ids, so that they travel to that scenario unchanged.
 
 ## Where it may differ (accepted alternatives)
 
 A candidate that chooses otherwise here is not wrong; judge it on its stated reason.
 
-- Neon or Supabase may provide Postgres, because the source leaves that provider undecided (`sources/arch-choices.md`, “Datastore”).
-- A cheap multilingual cloud embedding model may replace the named example if it preserves cross-language behavior and the cost constraint (`sources/arch-choices.md`, “Embeddings”).
-- A cheap structured-output LLM may implement extraction fallback; the source specifies a class, not a provider (`sources/arch-choices.md`, “Estrazione contenuto”).
-- Fly.io may start suspended or always warm; the former is preferred and the latter is an evidence-triggered operational change (`sources/arch-choices.md`, “Hosting”).
-- Controlled inputs may validate extraction, embeddings, or search before their final user entry point when they traverse the production computation (`sources/goal.md`, “Principi guida”; `sources/concepts.md`, “Pipeline di estrazione”). R-016 reads this entry as its exception.
-- A changeable cover may sit in NOW inside the photo slice, or in LATER with a trigger. The source declares it without making it MVP-mandatory (`sources/goal.md:74`).
-- Choosing which photos to keep during import may be deferred, or kept in NOW only as an optional step: a mandatory one would contradict “nessun passo di review nel flusso di add” (`sources/concepts.md:143`).
+- **A1** — Neon or Supabase may provide Postgres, because the source leaves that provider undecided (`sources/arch-choices.md`, “Datastore”).
+- **A2** — A cheap multilingual cloud embedding model may replace the named example if it preserves cross-language behavior and the cost constraint (`sources/arch-choices.md`, “Embeddings”).
+- **A3** — A cheap structured-output LLM may implement extraction fallback; the source specifies a class, not a provider (`sources/arch-choices.md`, “Estrazione contenuto”).
+- **A4** — Fly.io may start suspended or always warm; the former is preferred and the latter is an evidence-triggered operational change (`sources/arch-choices.md`, “Hosting”).
+- **A5** — Controlled inputs may validate extraction, embeddings, or search before their final user entry point when they traverse the production computation (`sources/goal.md`, “Principi guida”; `sources/concepts.md`, “Pipeline di estrazione”). R-016 reads this entry as its exception.
+- **A6** — A changeable cover may sit in NOW inside the photo slice, or in LATER with a trigger. The source declares it without making it MVP-mandatory (`sources/goal.md:74`).
+- **A7** — Choosing which photos to keep during import may be deferred, or kept in NOW only as an optional step: a mandatory one would contradict “nessun passo di review nel flusso di add” (`sources/concepts.md:143`).
 
 ## What it must leave open (known conflicts and material uncertainties)
 
@@ -39,8 +40,8 @@ them open without naming the slices they block has a different one (R-002).
 
 Two conflicts, each with both sides citable:
 
-- Manual input skips extraction in `sources/concepts.md`, “Pipeline di estrazione”, while `sources/arch-choices.md`, “Estrazione contenuto”, says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path.
-- Search queries are never embedded at runtime in `sources/goal.md`, “Vincoli e scala”, and `sources/arch-choices.md`, “Embeddings”, while `sources/concepts.md`, “Ricerca (MVP)”, defines search as `similarity(Recipe.embedding, embedding(query))`, which requires embedding the query. The sources admit three resolutions and select none: a per-query call, a cache, or precomputation.
+- **C1** — Manual input skips extraction in `sources/concepts.md`, “Pipeline di estrazione”, while `sources/arch-choices.md`, “Estrazione contenuto”, says manual input reuses the extraction engine and schema; implementation must defer to a resolved interpretation before asserting the manual path.
+- **C2** — Search queries are never embedded at runtime in `sources/goal.md`, “Vincoli e scala”, and `sources/arch-choices.md`, “Embeddings”, while `sources/concepts.md`, “Ricerca (MVP)”, defines search as `similarity(Recipe.embedding, embedding(query))`, which requires embedding the query. The sources admit three resolutions and select none: a per-query call, a cache, or precomputation.
 
 Five uncertainties, which a plan may place where it likes. `Subsystem` exists for R-007: two rows of
 the same subsystem are one question asked twice, two subsystems are two questions.
@@ -55,4 +56,18 @@ the same subsystem are one question asked twice, two subsystems are two question
 
 ## What only looks like a defect (not conflicts)
 
-- Cost. `sources/goal.md`, “Scelte tecniche”, says everything fits “entro free tier … target ~$0/mese”; `sources/arch-choices.md`, “Hosting”, says Fly has no real free tier and costs cents per month. Both describe the same target: `sources/arch-choices.md` holds the authoritative figures, `sources/goal.md` states the intent.
+- **N1 — Cost.** `sources/goal.md`, “Scelte tecniche”, says everything fits “entro free tier … target ~$0/mese”; `sources/arch-choices.md`, “Hosting”, says Fly has no real free tier and costs cents per month. Both describe the same target: `sources/arch-choices.md` holds the authoritative figures, `sources/goal.md` states the intent.
+
+## What the plan must contain (hard constraints)
+
+A candidate that misses one of these has a defect, wherever it places it. Tick the row, or record
+the miss with its id.
+
+| ID | The plan contains | Source |
+|---|---|---|
+| H1 | NOW validates multilingual semantic search; it is the differentiator | `sources/goal.md`, “Differenziatore” and “Ricerca” |
+| H2 | Every recipe read, write, and semantic query is scoped to the current cookbook; members can edit all cookbook content | `sources/goal.md`, “Condivisione”; `sources/concepts.md`, “Cookbook” and “Membership” |
+| H3 | URL extraction tries JSON-LD before a validated LLM fallback; pasted text uses the extraction schema; manual input uses the shared edit form | `sources/goal.md`, “Aggiunta ricetta”; `sources/concepts.md`, “Pipeline di estrazione” |
+| H4 | Add saves without mandatory review; edit is the recovery path and regenerates derived embeddings | `sources/goal.md`, “Aggiunta ricetta”; `sources/concepts.md`, “Recipe” |
+| H5 | The stack is Google OAuth, Postgres with pgvector, R2, multilingual cloud embeddings, Next.js on Fly.io, Effect, React Query, and Drizzle | `sources/goal.md`, “Auth”; `sources/arch-choices.md`; `sources/tech-choices.md` |
+| H6 | Public cookbooks, structured filters, cross-cookbook search, groups, and granular roles are excluded from MVP | `sources/goal.md`, “Fuori scope MVP” |

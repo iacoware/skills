@@ -18,7 +18,7 @@ where an agent exploring the directory could pick them up.
 | `REVIEW-WORKFLOW.md` | How to run one review: the five steps and the generation prompt. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks. Rules about the skill, portable to any scenario. |
 | `recipe-app/sources/` | The only inputs a candidate plan is generated from. |
-| `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources: what the plan must contain, where it may differ, what it must leave open, what only looks like a defect. Verifiable, no taste. Read at step 3. |
+| `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources: where the plan may differ, what it must leave open, what only looks like a defect, what it must contain. Verifiable, no taste, entries with citable ids. Read at step 3. |
 | `recipe-app/REFERENCE-PLAN.md` | One good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Read at step 5, never earlier. |
 | `recipe-app/REFERENCE-PLAN-RATIONALE.md` | Why each reference slice sits where it sits — the reasoning `SKILL.md` § 5 forbids publishing in a plan. |
 | `../AGENTS.md` | Authorization rules for provider runs. Still binding for the one generation call. |
