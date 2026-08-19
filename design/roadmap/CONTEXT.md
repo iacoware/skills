@@ -18,8 +18,8 @@ file o sezione)
 **Goal**:
 L'esito dichiarato che la roadmap serve, preso dal documento di goal in input o dall'invocazione
 della skill, e riscritto in testa a `roadmap.md`. È il metro con cui si chiede, a ogni update, se ciò
-che resta in `NOW` arriva da qualche parte. Raggiungerlo svuota `NOW`; dichiararne uno nuovo è un
-evento di `roadmap-create` sullo stesso `.roadmap/`, non di update.
+che resta in `NOW` arriva da qualche parte. Raggiungerlo svuota `NOW`; dichiararne uno nuovo fa
+ridisegnare la mappa sullo stesso `.roadmap/`, con le roadmap rules che scattano di nuovo.
 _Avoid_: vision, obiettivo, milestone
 
 **Slice**:

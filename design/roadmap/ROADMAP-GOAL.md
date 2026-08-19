@@ -1,10 +1,11 @@
 # Where the roadmap skill is going — a roadmapping tool
 
-Written 2026-08-13 from a design conversation, revised 2026-08-19 after a nomenclature grilling,
-again the same day when `roadmap-review` was dropped — nobody audits a roadmap they are handed, and
-reviewing the skills themselves is a manual procedure — and once more after the author walked through
-the workflow the skills have to reproduce, which bound `NOW` to a declared goal, capped its size, and
-gave `roadmap-update` the two operations it was missing.
+Written 2026-08-13 from a design conversation, then revised three times on 2026-08-19: after a
+nomenclature grilling; when `roadmap-review` was dropped, because nobody audits a roadmap they are
+handed and reviewing the skill itself is a manual procedure; and after the author walked through the
+workflow the skill has to reproduce, which bound `NOW` to a declared goal, capped its size, gave the
+update path the two operations it lacked, and collapsed the create/update split into a single
+`roadmap` skill.
 This is the goal and the reasoning behind it, not a plan. The plan comes next, in its own session,
 and this document is its source.
 
@@ -57,29 +58,37 @@ at the cost of that sentence is a non-goal, and stays out on purpose:
 
 This is the constraint most likely to erode one revision at a time, which is why it is written down.
 
-### Two regimes, and the line between them
+### What does not go through the roadmap
 
-Vertical slicing earns its cost at the **start of a greenfield project**: it delivers value early and
-attacks the technical challenges at the right moment. Once the project is standing, work arrives as
-an **idea** that needs clarifying, and which may then split into slices — or may simply be
-implemented, with no roadmap involvement at all.
+Vertical slicing earns its cost whenever a goal is declared and the way to it is unknown — at the
+start of a greenfield project, and again at every goal after that. It does not earn it on a copy
+change, a small refactor, or an idea that does not serve the current goal. Those go from the
+conversation into the existing chain, `to-spec` onwards, with no roadmap involved. That is not an
+escape hatch to be written into the skill; it is the chain used without it.
 
-So the separation that lasts is not *first time* versus *afterwards*. It is:
+### Two rule sets, and when each fires
 
 - **Roadmap rules** — themes, first validator per theme, breadth before depth, repository
-  prerequisite and walking skeleton, ordering for learning. These answer *in what order do we
-  discover things*. They matter at the start and go inert afterwards.
+  prerequisite and walking skeleton, ordering for learning. They answer *in what order do we discover
+  things*, and they fire when a goal is declared and the map is drawn against it.
 - **Slice rules** — what makes a valid slice, split and merge tests, verification mapping to the
-  learning target, readiness, executor, id. These hold for ever, in both regimes.
+  learning target, readiness, executor, id. They hold for ever, on every operation.
 
-The shared reference is the format contract plus the slice rules. The roadmap heuristics live only in
-the creating skill. Otherwise every post-greenfield idea drags the theme ceremony behind it, and the
-tool becomes unbearable exactly where it should be lightest.
+The two do not run in sequence, greenfield then steady state. They **alternate**: a goal is declared,
+the map is drawn, the map is delivered and re-trued a session at a time, the goal is reached, the next
+one is declared and the roadmap rules fire again. Nothing goes inert; it comes back round.
 
-Two skills follow, split by **what they read** rather than by when they run: `roadmap-create` reads the
-sources and the declared goal and applies the roadmap rules; `roadmap-update` reads what delivery
-taught and applies only the slice rules. Which is also why `create` is not a one-off event — it runs
-again whenever a new goal is declared.
+This is why there is **one skill, not two**. An earlier draft split it into `roadmap-create` and
+`roadmap-update`, by what each reads — sources and a goal on one side, what delivery taught on the
+other. That split asks the author to pick the verb before describing the situation, which is exactly
+what the skill refuses to do one level down, with its operations. And the situation is legible without
+asking: `.roadmap/` exists or it does not, the goal is new or it is not.
+
+The cost the split was avoiding is real but misattributed. Dragging the theme ceremony into a routine
+update would make the tool unbearable where it should be lightest — but that is fixed by keeping the
+roadmap rules in a reference file loaded on one branch only, not by a second skill name. Two skills
+would instead have created a problem of their own: `skills add` copies one folder at a time, so
+anything shared between them either gets duplicated or breaks when one is installed alone.
 
 ## Where it sits
 
@@ -106,12 +115,12 @@ and `to-tickets`.
 Run end to end, a slice leaving the roadmap looks like this:
 
 ```
-/roadmap-update            promote S7, mark it ready, hand over
+/roadmap                   promote S7, mark it ready, hand over
 /grill-with-docs S7        the slice document is the subject of the conversation
 /to-spec                   captures that conversation; record the spec on the slice
 /to-tickets <spec>         only if the work exceeds one session
 /implement <ticket>        one at a time, working the frontier
-/roadmap-update            close S7 out, absorb what it taught
+/roadmap                   close S7 out, absorb what it taught
 ```
 
 ### The handover into `to-spec`
@@ -137,10 +146,6 @@ replanning: it is deliberately **ephemeral**, and a ticket dies when it closes. 
 **durable** and decides *what to do next*, not *how*. Nothing at that altitude exists in the
 installed set, and that is the whole of what gets built here.
 
-The post-greenfield path — an idea arrives, gets clarified, gets built — is already covered end to
-end by that chain, with no roadmap involved. That is not an escape hatch to be written into the
-skill; it is the existing chain used without it.
-
 ## Decisions taken
 
 **Artifact layout.** `.roadmap/roadmap.md` is the readable overview: the goal, sources, current state,
@@ -155,7 +160,7 @@ delivered slice, both named `S<id>-<slug>.md`.
 equivalent stated in the invocation; `roadmap.md` restates it at the top. Without it there is nothing
 to ask *do these slices arrive anywhere* against, and that question has to stay askable at every
 update, not only at creation. Reaching the goal empties `NOW`; declaring the next one is a
-`roadmap-create` event on the same `.roadmap/`, not an update.
+redrawing, on the same `.roadmap/`, with the roadmap rules firing again.
 
 **Three horizons, separated by their relation to the goal.** `NOW` is what it takes to reach the
 declared goal. `LATER` is what does not serve *this* goal — speculation, or material for the next one.
@@ -175,8 +180,8 @@ the goal is too wide and wants an intermediate one declared, or the slicing is s
 cannot yet know. Below three or four the roadmap does not repay its cost — that is an idea, and the
 existing chain handles it with no roadmap involved.
 
-The cap binds `roadmap-update` too. An admission that would take `NOW` to eighteen forces a merge or a
-deferral instead of growing the list, which is what stops a living roadmap from silting up.
+The cap binds every later session too. An admission that would take `NOW` to eighteen forces a merge
+or a deferral instead of growing the list, which is what stops a living roadmap from silting up.
 
 **No gradient of detail inside `NOW`.** The last slice on the path is genuinely foggier than the
 first, but the fog has nowhere to accumulate: the slice document is thin for `S1` exactly as it is for
@@ -300,48 +305,54 @@ rule holds for *every* slice — authorization, validation and errors, operabili
 security, data integrity and recovery — and the anchor for the identity seam. Without it each slice
 restates the same paragraph, which is the repetition this format exists to remove.
 
-## The skills
+## The skill
 
-- **`roadmap-create`** — reads sources and a declared goal. Full ceremony: themes, a first validator
-  per theme, breadth before depth, the repository prerequisite and the walking skeleton, ordering for
-  learning. It runs on a greenfield project, and again whenever a new goal is declared; it extends an
-  existing roadmap rather than starting a second one.
+**`roadmap`.** One entry point, one folder. `SKILL.md` is a router: it establishes what it is looking
+at — whether `.roadmap/` exists, whether a goal has just been declared, what has been delivered since
+the last session — and takes one of two branches.
 
-  **It does not end when the files are written.** A first map is a proposal to argue with, and the
-  argument produces exactly the operations `roadmap-update` performs — split this one, drop that part,
-  swap the order. So the first round of revision belongs inside `create`, in the same session. Ending
-  at the write would push the author out of one skill and straight into another to do the real work,
-  which makes the split feel like paperwork.
+**Drawing the map**, when there is a goal and no map against it. Full ceremony, and the roadmap rules
+that carry it live in a reference file loaded only here: themes, a first validator per theme, breadth
+before depth, the repository prerequisite and the walking skeleton, ordering for learning. It extends
+an existing roadmap rather than starting a second one.
 
-- **`roadmap-update`** — reads what delivery taught. Five operations: **close-out** (remove the
-  delivered slice from the register, archive its document, absorb the evidence it produced),
-  **promotion** (a candidate becomes a slice), **admission** (new work enters), **revision** (split,
-  merge, reword, reorder) and **retirement** (a slice that should not have been one leaves `NOW`,
-  dead or demoted to candidate). The first three were the original set; revision is the
-  split/merge/reorder branch of `plan-slices`, dropped earlier without a replacement; retirement was
-  simply missing — every arrow pointed forward, `LATER → NOW → archive`, with no way back.
+It **does not end when the files are written**. A first map is a proposal to argue with, and the
+argument produces exactly the operations the other branch performs — split this one, drop that part,
+swap the order. So the first round of revision happens right there, in the same session.
 
-  **No subcommands.** Nobody arrives saying *perform a promotion*. They arrive saying *we closed S2
-  and S3, I found out X, and there is this screenshot idea*. The skill derives which operations apply
-  from that. The five names are its internal vocabulary — enough to order the work, close-out first,
-  since everything else is decided against a register that has already been trued up — not verbs the
-  author types. `/roadmap-update promote S7` is precision where sense-making was wanted.
+**Re-truing the map**, every session after. Five operations: **close-out** (remove the delivered slice
+from the register, archive its document, absorb the evidence it produced), **promotion** (a candidate
+becomes a slice), **admission** (new work enters), **revision** (split, merge, reword, reorder) and
+**retirement** (a slice that should not have been one leaves `NOW`, dead or demoted to candidate). The
+first three were the original set; revision is the split/merge/reorder branch of `plan-slices`,
+dropped earlier without a replacement; retirement was simply missing — every arrow pointed forward,
+`LATER → NOW → archive`, with no way back.
 
-  Every update re-asks the coverage question — *does what is left in `NOW` still reach the goal* —
-  which is what recording the goal is for. And all of it is conversation, not generation: the skill
-  proposes a block of changes and asks for confirmation once.
+**No subcommands, on either branch.** Nobody arrives saying *perform a promotion*. They arrive saying
+*we closed S2 and S3, I found out X, and there is this screenshot idea*. The skill derives which
+operations apply from that. The five names are its internal vocabulary — enough to order the work,
+close-out first, since everything else is decided against a register that has already been trued up —
+not verbs the author types. `/roadmap promote S7` is precision where sense-making was wanted.
 
-There is no third skill, and an audit command would have no audience: whoever reads a roadmap takes
-it as it stands, and the one check that does not rest on judgement is the validator, which both skills
-already run.
+Both branches end the same way: re-ask the coverage question — *does what is left in `NOW` still reach
+the goal* — which is what recording the goal is for. And all of it is conversation, not generation:
+the skill proposes a block of changes and asks for confirmation once.
 
-The review that does exist is the review of **the skills themselves**, and it is manual — half an
+The router is the one thing that can fail quietly, in two directions: the theme ceremony fired on a
+routine session, or a session spent re-truing a map when the goal had actually changed and it wanted
+redrawing. Those are two eval scenarios, not two skills.
+
+There is no second skill, and an audit command would have no audience: whoever reads a roadmap takes
+it as it stands, and the one check that does not rest on judgement is the validator, which the skill
+already runs.
+
+The review that does exist is the review of **the skill itself**, and it is manual — half an
 hour after a change believed substantive, in the shape already written down for `plan-slices` in
 [`evals/plan-slices/REVIEW-WORKFLOW.md`](../../evals/plan-slices/REVIEW-WORKFLOW.md): generate,
 validate, read against the brief, walk the rules, and only then open the reference. Its roadmap
 counterpart lands under `evals/roadmap/`, beside the scenarios.
 
-The validator stays a script, invoked automatically at the end of both skills and callable by hand. A
+The validator stays a script, invoked automatically at the end of a session and callable by hand. A
 skill whose body is "run this script" adds surface and nothing else.
 
 ## The integration boundary
@@ -352,10 +363,10 @@ mature skills with something answering a different question.
 Couple loosely, on purpose:
 
 - **Close-out asks.** It does not interrogate the tracker for what is closed. Interrogating would
-  bind these skills to whichever tracker is configured and would depend on slice references being
+  bind the skill to whichever tracker is configured and would depend on slice references being
   reliable; asking is more robust, and close-out is an explicitly manual resynchronisation step. On a
   local tracker there is also nothing to interrogate — see below.
-- **`roadmap-update` hands over, it does not drive.** It updates the roadmap, marks the slice ready,
+- **The skill hands over, it does not drive.** It updates the roadmap, marks the slice ready,
   and suggests the next step if it is available on the system — the clarifying conversation,
   `/grill-with-docs` normally or `/wayfinder` when the slice is big and foggy, never `/to-spec`
   directly, since a capture step has nothing to capture yet. The two stacks stay independent.
@@ -390,7 +401,7 @@ Two consequences:
 The boundary still holds: the roadmap records that a **slice** is closed and what it produced. The
 state of individual tickets stays the tracker's business, badly kept though it currently is. A fix for
 that belongs in `docs/agents/issue-tracker.md`, which the setup skill declares hand-editable — not in
-these skills.
+this skill.
 
 Adjacent and deliberately out of scope: there is no skill for *capture and park* — filing one small
 item you do not intend to do now. `to-spec` captures a whole conversation, `to-tickets` breaks work
@@ -403,7 +414,7 @@ it belongs in the roadmap.
 
 - **Two dependency models.** Roadmap `Depends on` orders *outcomes*; ticket blocking edges order
   *edits*. Both are needed, at different granularities. They are not synchronised, and
-  `roadmap-update` does not generate ticket edges.
+  the roadmap skill does not generate ticket edges.
 - **Two sources of truth about state.** Reality lives on the tracker; the register is a copy that
   ages. Close-out is the resynchronisation, not a background automatism.
 - **A vocabulary collision.** `to-tickets` calls its tickets "tracer-bullet vertical slices". Keep
@@ -412,8 +423,8 @@ it belongs in the roadmap.
 ## What changes relative to `plan-slices`
 
 `plan-slices` is not invalidated: it keeps its own template, validator, tests and the 33 payload
-files under `evals/plan-slices/recipe-app/`. The new skills are built **beside** it, and it is
-retired once they stand. The two are never used together on the same project; the one intended
+files under `evals/plan-slices/recipe-app/`. The new skill is built **beside** it, and it is retired
+once the new one stands. The two are never used together on the same project; the one intended
 overlap is transitional — `plan-slices` as a yardstick against which to judge the first roadmaps.
 Until the retirement lands, `slice` unqualified means the roadmap unit, and the `plan-slices` unit is
 a **plan slice**.
@@ -440,14 +451,12 @@ legal values. It counts the register and warns past the cap without failing — 
 to the author, and failing on it would be grading the map instead of checking it.
 
 New homes: `design/roadmap/` for this document and its glossary — already applied — `evals/roadmap/`
-for the scenarios, and inside each skill `assets/roadmap-template.md` and
-`scripts/validate_roadmap.py`.
+for the scenarios, and inside the skill `assets/roadmap-template.md`,
+`scripts/validate_roadmap.py`, and the roadmap rules as a reference file the drawing branch loads on
+its own.
 
 ## Open questions
 
-- Where the shared reference lives, and whether the two skills carry it by reference or by copy.
-  `skills add` copies one skill folder at a time, so a shared file either gets duplicated or breaks
-  when a single skill is installed alone.
 - Where a spike sits in a living roadmap. The practice is wanted, the location is not settled:
   `kind: spike` in the register makes it visible and schedulable but demands the vertical outcome a
   spike by definition lacks; leaving it to `wayfinder` under `needs-decision` keeps it out of the
