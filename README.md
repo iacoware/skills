@@ -35,7 +35,7 @@ make list                     # elenca le skill scoperte, senza installare
 
 ## Design
 
-`design/<skill>/` contiene i documenti di progettazione ed evoluzione delle skill: obiettivi, decisioni e razionale. Sta fuori dalle cartelle delle skill per la stessa ragione degli evals — non è payload di runtime e non va installato sulle macchine target. Vedi [`design/plan-slices`](design/plan-slices).
+`design/<skill>/` contiene i documenti di progettazione ed evoluzione delle skill: obiettivi, decisioni, razionale e il glossario del contesto (`CONTEXT.md`, indicizzato da [`CONTEXT-MAP.md`](CONTEXT-MAP.md)). Sta fuori dalle cartelle delle skill per la stessa ragione degli evals — non è payload di runtime e non va installato sulle macchine target. Vedi [`design/roadmap`](design/roadmap).
 
 ## Evals
 
