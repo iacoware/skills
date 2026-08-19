@@ -226,6 +226,10 @@ i numeri in `First validation`.
 
 - Un membro salva una ricetta che conosce e corregge in seguito qualsiasi ricetta del ricettario.
 
+**Precondizione**
+
+- La contraddizione sul percorso manuale va risolta prima di implementare la slice: se il manuale riusa il motore di estrazione, la slice dipende dall'estrattore aperto dalla 9 e va riordinata dopo di essa.
+
 ### 8. Import da URL con JSON-LD *(Theme: Import automatico)*
 
 ---
@@ -390,6 +394,7 @@ i numeri in `First validation`.
 ## Open questions
 
 - **Embedding della query a runtime:** `goal.md:110` e `arch-choices.md:33` lo vietano, mentre `concepts.md:153` richiede `embedding(query)`; blocca implementazione e verifica delle slice 3 e 4.
+- **Percorso manuale e motore di estrazione:** `concepts.md:126` fa saltare l'estrazione all'inserimento manuale, mentre `arch-choices.md:43` gli fa riusare lo stesso motore e schema; blocca implementazione e ordinamento della slice 7.
 - **Provider Postgres:** Neon o Supabase; blocca lo skeleton della slice 1, perché determina driver, modalità di connessione e limiti del free tier.
 - **Modello di embedding:** deve essere multilingue; blocca la pipeline della slice 3.
 - **Modello LLM:** deve supportare output strutturato entro il budget; blocca il fallback della slice 9.

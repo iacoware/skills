@@ -18,7 +18,7 @@ the defect is here.
 | 4. Ricerca semantica | The existential risk, validated as soon as the pipeline makes it observable. |
 | 5. Lettura della ricetta | Completes the Consultazione theme on real content and serves every later theme, while staying tiny. |
 | 6. Accesso Google | The scope resolver moves from configured to authenticated before the product reaches real users; from here every slice is shippable. |
-| 7. Inserimento manuale | Establishes the shared form and the save-and-reindex path that every import slice reuses as its correction surface. |
+| 7. Inserimento manuale | Establishes the shared form and the save-and-reindex path that every import slice reuses as its correction surface. Its position bets on the manual path skipping extraction; the open question it carries is what makes that a bet rather than an assertion, and resolving it the other way moves the slice after 9. |
 | 8. Import da URL | The most frequent acquisition case and the free path, before any variable cost. |
 | 9. Fallback LLM | The second differentiator, right after the free path that bounds its use. |
 | 10. Testo incollato | Closes the Import automatico theme by reusing the engine and schema of slice 9, opening no new adapter. |
