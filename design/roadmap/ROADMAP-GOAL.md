@@ -1,6 +1,8 @@
 # Where the roadmap skill is going — a roadmapping tool
 
-Written 2026-08-13 from a design conversation, revised 2026-08-19 after a nomenclature grilling.
+Written 2026-08-13 from a design conversation, revised 2026-08-19 after a nomenclature grilling and
+again the same day, when `roadmap-review` was dropped: nobody audits a roadmap they are handed, and
+reviewing the skills themselves is a manual procedure.
 This is the goal and the reasoning behind it, not a plan. The plan comes next, in its own session,
 and this document is its source.
 
@@ -46,7 +48,7 @@ attacks the technical challenges at the right moment. Once the project is standi
 an **idea** that needs clarifying, and which may then split into slices — or may simply be
 implemented, with no roadmap involvement at all.
 
-So the durable separation is not create/update/review. It is:
+So the durable separation is not create/update. It is:
 
 - **Roadmap rules** — themes, first validator per theme, breadth before depth, repository
   prerequisite and walking skeleton, ordering for learning. These answer *in what order do we
@@ -225,9 +227,18 @@ restates the same paragraph, which is the repetition this format exists to remov
   evidence it produced), **promotion** (a candidate becomes a slice), **admission** (new work
   enters). Close-out runs first. All three are conversations, not generations: the skill proposes a
   block of changes and asks for confirmation once.
-- **`roadmap-review`** — read-only audit, running the validator first.
 
-The validator stays a script, invoked automatically at the end of all three and callable by hand. A
+There is no third skill, and an audit command would have no audience: whoever reads a roadmap takes
+it as it stands, and the one check that does not rest on judgement is the validator, which both skills
+already run.
+
+The review that does exist is the review of **the skills themselves**, and it is manual — half an
+hour after a change believed substantive, in the shape already written down for `plan-slices` in
+[`evals/plan-slices/REVIEW-WORKFLOW.md`](../../evals/plan-slices/REVIEW-WORKFLOW.md): generate,
+validate, read against the brief, walk the rules, and only then open the reference. Its roadmap
+counterpart lands under `evals/roadmap/`, beside the scenarios.
+
+The validator stays a script, invoked automatically at the end of both skills and callable by hand. A
 skill whose body is "run this script" adds surface and nothing else.
 
 ## The integration boundary
@@ -328,10 +339,10 @@ for the scenarios, and inside each skill `assets/roadmap-template.md` and
 
 ## Open questions
 
-- Whether three skills is the right shape at all. `roadmap-create` / `roadmap-update` /
-  `roadmap-review` is the split assumed above, and its efficacy has not been tested; it wants its own
-  session before any of it is written.
-- Where the shared reference lives, and whether the three skills carry it by reference or by copy.
+- Whether two skills is the right shape at all. `roadmap-create` / `roadmap-update` is the split
+  assumed above, and its efficacy has not been tested; it wants its own session before any of it is
+  written.
+- Where the shared reference lives, and whether the two skills carry it by reference or by copy.
   `skills add` copies one skill folder at a time, so a shared file either gets duplicated or breaks
   when a single skill is installed alone.
 - Where published traceability lands. Source-to-slice tracing is per-slice reasoning, so by the
