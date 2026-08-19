@@ -7,7 +7,9 @@ Questo repo pubblica agent skill: ogni skill che sviluppa un vocabolario proprio
 
 - [Roadmap](./design/roadmap/CONTEXT.md) — l'artefatto vivente che decide cosa fare dopo: roadmap,
   register, slice, candidate, orizzonti. Il razionale sta in
-  [`ROADMAP-GOAL.md`](./design/roadmap/ROADMAP-GOAL.md).
+  [`ROADMAP-GOAL.md`](./design/roadmap/ROADMAP-GOAL.md), che è l'autorità; tre sessioni camminate per
+  intero su `recipe-app` stanno in [`WORKFLOWS.md`](./design/roadmap/WORKFLOWS.md) e illustrano
+  soltanto.
 
 ## Relationships
 

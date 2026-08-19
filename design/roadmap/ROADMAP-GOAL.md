@@ -9,7 +9,9 @@ update path the two operations it lacked, and collapsed the create/update split 
 This is the goal and the reasoning behind it, not a plan. The plan comes next, in its own session,
 and this document is its source.
 
-The vocabulary this document fixes lives in [`CONTEXT.md`](./CONTEXT.md) and is binding.
+The vocabulary this document fixes lives in [`CONTEXT.md`](./CONTEXT.md) and is binding. Three
+sessions walked end to end on the `recipe-app` scenario live in [`WORKFLOWS.md`](./WORKFLOWS.md);
+they illustrate and never rule — where they disagree with this document, they are wrong.
 `plan` never names the roadmap, its parts, or any file under `.roadmap/`; it survives only as a verb
 and in `plan-slices`, the skill being replaced.
 
@@ -378,6 +380,13 @@ operations apply from that. The five names are its internal vocabulary — enoug
 close-out first, since everything else is decided against a register that has already been trued up —
 not verbs the author types. `/roadmap promote S7` is precision where sense-making was wanted.
 
+**Absorbing the evidence is a state change, not a summary.** Closing a slice asks three questions of
+the map: whether the delivery settles a line in `Assumptions and gaps`, which then dies rather than
+being annotated; whether it changes another row — a size that was wrong, a readiness that can flip, a
+`Depends on` gone moot; and whether it produced a decision clearing the ADR bar, which is what the
+archived slice's `ADRs` reference is for. When all three answers are no, nothing is written. A
+paragraph produced to prove the step happened is the ceremony this tool refuses.
+
 Both branches end the same way: re-ask the coverage question — *does what is left in `NOW` still reach
 the goal* — which is what recording the goal is for. And all of it is conversation, not generation:
 the skill proposes a block of changes and asks for confirmation once.
@@ -495,10 +504,15 @@ across `slices/` and `archive/`, no candidate or exclusion carries an id, readin
 legal values. It counts the register and warns past the cap without failing — exceeding it is a signal
 to the author, and failing on it would be grading the map instead of checking it.
 
-New homes: `design/roadmap/` for this document and its glossary — already applied — `evals/roadmap/`
-for the scenarios, and inside the skill `assets/roadmap-template.md`,
-`scripts/validate_roadmap.py`, and the roadmap rules as a reference file the drawing branch loads on
-its own.
+New homes: `design/roadmap/` for this document, its glossary and its worked examples — already
+applied — and inside the skill `assets/roadmap-template.md`, `scripts/validate_roadmap.py`, and the
+roadmap rules as a reference file the drawing branch loads on its own.
+
+`evals/roadmap/` mirrors the structure `evals/plan-slices/` already has: a scenario directory with
+`sources/` and `results/`, an evaluation brief, the rules, and the review workflow. The `recipe-app`
+sources carry over unchanged — they are input, not `plan-slices` output — and the three sessions in
+`WORKFLOWS.md` are what its scenarios are derived from. Building it belongs to the implementation
+plan, not here.
 
 ## Open questions
 
