@@ -175,10 +175,15 @@ map on the same `.roadmap/`, with the roadmap rules firing again.
 one of them is an opinion about the future. Redrawn from nothing: `Goal`, the themes, the register,
 the ordering criteria, `Assumptions and gaps`. Carried over: `archive/`, because a local tracker has
 no notion of *done* and it is the only durable record of what was delivered; the id high-water mark,
-because restarting at `S0` would make one number mean two things inside one archive; `OUT-OF-SCOPE`,
-because the trade-offs already shipped are defensible precisely by those exclusions and forgetting
-them does not un-ship anything; `Cross-functional concerns`; and `LATER`, which is the pool the next
-goal draws from.
+because restarting at `S0` would make one number mean two things inside one archive; `OUT-OF-SCOPE`
+and `Cross-functional concerns`, because both are constraints the shipped code already obeys and
+forgetting a trade-off does not un-ship it — where the new goal contradicts one, it is lifted
+deliberately and in the open, which is the whole reason it was written down.
+
+`LATER` survives as a file and not as a reading. Every candidate is re-read one at a time against the
+new goal and gets a verdict: promoted into the new map, kept as speculation, or killed. `LATER` is a
+focus tool and focus is relative to a goal, so when the goal changes the whole list is stale by
+definition — a candidate that survives without being re-read is one nobody chose.
 
 Slices still open in `NOW` when the goal changes are **not** carried automatically. Each is
 re-justified against the new goal: the ones that still serve it keep their ids, the rest are retired,

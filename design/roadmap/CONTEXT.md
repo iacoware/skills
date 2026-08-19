@@ -136,9 +136,10 @@ _Avoid_: demotion (è il caso particolare, non il nome dell'operazione), wontfix
 **Redraw**:
 Il ridisegno della mappa quando viene dichiarato un goal nuovo. Si rifanno da zero `Goal`, temi,
 register, criteri di ordinamento e `Assumptions and gaps`; sopravvivono `.roadmap/archive/`, il
-massimo id raggiunto, `OUT-OF-SCOPE`, `Cross-functional concerns` e `LATER`. Le slice ancora aperte
-non passano in automatico: si rigiustificano contro il goal nuovo, tenendo l'id, oppure vanno in
-retirement. Non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input.
+massimo id raggiunto, `OUT-OF-SCOPE` e `Cross-functional concerns` — e un'esclusione che il goal
+nuovo contraddice si toglie in modo esplicito. Né `LATER` né le slice ancora aperte passano in
+automatico: ogni candidate si rilegge una per una contro il goal nuovo, ogni slice aperta si
+rigiustifica tenendo l'id oppure va in retirement. Non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input.
 _Avoid_: reset, ricreazione, nuova roadmap
 
 **Learning target**:
