@@ -1,8 +1,10 @@
 # Where the roadmap skill is going — a roadmapping tool
 
-Written 2026-08-13 from a design conversation, revised 2026-08-19 after a nomenclature grilling and
-again the same day, when `roadmap-review` was dropped: nobody audits a roadmap they are handed, and
-reviewing the skills themselves is a manual procedure.
+Written 2026-08-13 from a design conversation, revised 2026-08-19 after a nomenclature grilling,
+again the same day when `roadmap-review` was dropped — nobody audits a roadmap they are handed, and
+reviewing the skills themselves is a manual procedure — and once more after the author walked through
+the workflow the skills have to reproduce, which bound `NOW` to a declared goal, capped its size, and
+gave `roadmap-update` the two operations it was missing.
 This is the goal and the reasoning behind it, not a plan. The plan comes next, in its own session,
 and this document is its source.
 
@@ -23,7 +25,7 @@ That is the wrong shape for how the work actually goes. A plan is not for ever. 
 and becomes specified only when it is promoted, where delivered work is closed out and the evidence
 it produced feeds the next decision, and where new work can enter at any point.
 
-Four things follow from that, none of which the skill has today:
+Five things follow from that, none of which the skill has today:
 
 - **Identity.** A slice needs a stable id (`S0`, `S1`, …) that survives promotion, reordering and
   insertion, and is never recycled. Position-based numbering makes every revision a rename.
@@ -34,12 +36,26 @@ Four things follow from that, none of which the skill has today:
   single executor and cannot say "this one is not delegable".
 - **Readability.** One dense document holding the whole map, the cross-functional concerns and every
   slice body at once. The overview and the detail want different files.
+- **Coverage.** Nothing ties the plan to a declared goal, so nothing can answer *do these slices
+  arrive anywhere*, and nothing reports which parts of the vision had to be guessed to draw it.
 
 ## What the tool is for
 
 A roadmap that is **easy to read, visible, and evolvable**. Visible because the overview fits on one
 screen; evolvable because a single slice can be expanded, promoted, or closed without touching
 anything else.
+
+It is a **sense-making tool, not a precision instrument**. Its job is to let the author say *these are
+the twelve slices that get me to the goal*, and then argue with that sentence. Whatever buys precision
+at the cost of that sentence is a non-goal, and stays out on purpose:
+
+- no dates, no estimates, no percentage complete, no velocity;
+- no field nobody re-reads — promotion triggers and decision checkpoints were dropped for exactly this
+  reason, and anything of that family gets dropped the same way;
+- the validator checks referential coherence, never judgement: it may not demand that a field be
+  filled *well*. A validator that grades content turns the tool into a form.
+
+This is the constraint most likely to erode one revision at a time, which is why it is written down.
 
 ### Two regimes, and the line between them
 
@@ -48,7 +64,7 @@ attacks the technical challenges at the right moment. Once the project is standi
 an **idea** that needs clarifying, and which may then split into slices — or may simply be
 implemented, with no roadmap involvement at all.
 
-So the durable separation is not create/update. It is:
+So the separation that lasts is not *first time* versus *afterwards*. It is:
 
 - **Roadmap rules** — themes, first validator per theme, breadth before depth, repository
   prerequisite and walking skeleton, ordering for learning. These answer *in what order do we
@@ -59,6 +75,11 @@ So the durable separation is not create/update. It is:
 The shared reference is the format contract plus the slice rules. The roadmap heuristics live only in
 the creating skill. Otherwise every post-greenfield idea drags the theme ceremony behind it, and the
 tool becomes unbearable exactly where it should be lightest.
+
+Two skills follow, split by **what they read** rather than by when they run: `roadmap-create` reads the
+sources and the declared goal and applies the roadmap rules; `roadmap-update` reads what delivery
+taught and applies only the slice rules. Which is also why `create` is not a one-off event — it runs
+again whenever a new goal is declared.
 
 ## Where it sits
 
@@ -122,19 +143,47 @@ skill; it is the existing chain used without it.
 
 ## Decisions taken
 
-**Artifact layout.** `.roadmap/roadmap.md` is the readable overview: sources, current state, ordering
-criteria, the theme table, `Cross-functional concerns`, then the three horizons — the register under
-`NOW`, the candidate list under `LATER`, the exclusions under `OUT-OF-SCOPE`. `.roadmap/slices/`
-holds one document per open slice, `.roadmap/archive/` one per delivered slice, both named
-`S<id>-<slug>.md`.
+**Artifact layout.** `.roadmap/roadmap.md` is the readable overview: the goal, sources, current state,
+ordering criteria, the theme table, `Assumptions and gaps`, `Cross-functional concerns`, then the
+three horizons — the register under `NOW`, the candidate list under `LATER`, the exclusions under
+`OUT-OF-SCOPE`. `.roadmap/slices/` holds one document per open slice, `.roadmap/archive/` one per
+delivered slice, both named `S<id>-<slug>.md`.
 
 **One roadmap per project, not per initiative.** A new capability extends the existing roadmap.
 
-**Three horizons, three shapes, and only `NOW` has identity.** The register **is** `NOW`: a table,
-one row per slice, and having an id is the same fact as having a row. `LATER` is a list of
-candidates and `OUT-OF-SCOPE` a list of exclusions — neither carries ids, columns, or documents.
-`horizon` is a collective word in prose, never a field: a value that is constant down a column is not
-information.
+**The roadmap serves one declared `Goal`, and records it.** The input is a goal document, or the
+equivalent stated in the invocation; `roadmap.md` restates it at the top. Without it there is nothing
+to ask *do these slices arrive anywhere* against, and that question has to stay askable at every
+update, not only at creation. Reaching the goal empties `NOW`; declaring the next one is a
+`roadmap-create` event on the same `.roadmap/`, not an update.
+
+**Three horizons, separated by their relation to the goal.** `NOW` is what it takes to reach the
+declared goal. `LATER` is what does not serve *this* goal — speculation, or material for the next one.
+`OUT-OF-SCOPE` is what the solution declares it will never solve. The axis is not how much attention
+each deserves, which is unfalsifiable, but whether it is on the path — which turns promotion into a
+real moment of sense-making: *this thing I filed as peripheral is on the path after all*.
+
+**Three shapes, and only `NOW` has identity.** The register **is** `NOW`: a table, one row per slice,
+and having an id is the same fact as having a row. `LATER` is a list of candidates and `OUT-OF-SCOPE`
+a list of exclusions — neither carries ids, columns, or documents. `horizon` is a collective word in
+prose, never a field: a value that is constant down a column is not information.
+
+**`NOW` is capped, and the cap binds granularity rather than count.** Between three or four slices and
+twenty, fifteen the number to aim at. A bigger problem does not buy more rows, it buys fatter slices;
+a small one gets small slices. Not fitting under the cap is a finding, not an inconvenience: either
+the goal is too wide and wants an intermediate one declared, or the slicing is specifying work it
+cannot yet know. Below three or four the roadmap does not repay its cost — that is an idea, and the
+existing chain handles it with no roadmap involved.
+
+The cap binds `roadmap-update` too. An admission that would take `NOW` to eighteen forces a merge or a
+deferral instead of growing the list, which is what stops a living roadmap from silting up.
+
+**No gradient of detail inside `NOW`.** The last slice on the path is genuinely foggier than the
+first, but the fog has nowhere to accumulate: the slice document is thin for `S1` exactly as it is for
+`S12`, because the detail of `S1` is born downstream, in the clarifying conversation and the spec, and
+never in the roadmap. What differs between near and far is confidence, and confidence already has its
+expression — a fuller `Open decisions`, and `readiness: needs-decision`. No new field, no new rule,
+nothing to keep in sync.
 
 **The register holds the comparison metadata; the slice document holds the rest.** A field earns a
 column when it is used to *compare slices and decide what comes first* — id, theme, kind, size,
@@ -142,13 +191,28 @@ readiness, executor, `Depends on`, and the one-line outcome. A field that only m
 reasoning inside one slice belongs to that slice's document. Repeating register fields inside the
 document is what made the current output feel cluttered in the first place.
 
-**The register is the queue of open work.** Close-out removes the row and moves the document to the
-archive. The register answers *what can I pick up now*; the archive answers *what did we deliver*.
+**The register is the whole path, not the pickable subset.** Most of its rows are not actionable
+today, and that is the point: the reader has to see the twelve slices standing between here and the
+goal on one screen. *What is the path* is the register's question; *what can I pick up* is
+`readiness`'s; *what did we deliver* is the archive's. Close-out removes the row and moves the
+document to the archive, so `NOW` shrinks toward the goal — which is as much progress reporting as
+this tool does.
 
 **Stable ids, minted at promotion by monotonic increment.** The next id is the highest found across
 `.roadmap/slices/` and `.roadmap/archive/`, plus one — the filenames carry it, so it is two directory
 listings and no counter to keep in sync. Ids are identity, not position: register order carries the
 delivery order.
+
+**A split keeps the id on the half that keeps the learning target.** The other half is minted new.
+Retiring the original and minting two is cleaner in principle and worse in practice: it invalidates
+every `Depends on` pointing at the original, for no gain. The learning target is already the invariant
+the split test rests on, so identity following it costs nothing extra to explain.
+
+**Retirement spends the id and deletes the document.** A slice leaving `NOW` for `LATER` becomes a
+candidate, and candidates have no id — the number is spent and never comes back, which monotonic
+minting already allows for. Its document does not go to `archive/`: the archive means *delivered*, and
+would start lying the moment it held something that was not. It is deleted, and git is the archive for
+things that never happened.
 
 **A `LATER` entry is a candidate: a line, never a file, and it has no id.** `LATER` is a focus tool —
 everything it is not important to concentrate on now — not a backlog. From there a candidate dies or
@@ -158,6 +222,21 @@ document invites specifying it, and a candidate is vague by design.
 **No promotion triggers and no decision checkpoints.** Both recorded the same shape — *when this
 evidence arrives, change this decision* — and both state something a human reading the roadmap can
 already see. A living roadmap is re-read at every update; the condition does not need storing.
+
+**`Assumptions and gaps` reports on the input.** Drawing the map forces the skill to resolve things
+the goal document left open; the section says which ones, so the author gets a second reading of the
+vision's completeness. Two kinds of line, each traced to what it touches — a theme or a slice id:
+
+- **assumed** — taken as true in order to draw the map; correct it,
+- **unresolved** — could not be settled; decide it.
+
+Assumptions come first, because one taken silently does more damage than a question left visibly open.
+
+What lands here rather than on a slice is decided by what it blocks. A gap that puts the *shape of the
+map* in doubt — an undefined theme, a self-contradicting ambition, an unnamed audience — cannot live
+on a slice, because it questions whether that slice exists at all. A gap that blocks one slice is that
+slice's `Open decisions`, with `readiness: needs-decision`. The section is not a work queue and mints
+nothing: an entry dies when it is answered.
 
 **`OUT-OF-SCOPE` declares the boundaries of the solution.** It is not a graveyard: several trade-offs
 the implementation takes are defensible *precisely because* those problems are declared unsolved.
@@ -169,7 +248,7 @@ that promotes or reorders would otherwise violate a constraint recorded nowhere.
 
 **Traceability gets published too.** Source-to-slice tracing and adjacent split/merge verdicts
 currently live "in reasoning, not in the published plan". In a living roadmap the previous session's
-reasoning no longer exists. Where exactly it lands is still open — see below.
+reasoning no longer exists, so it lands on the slice, as `Requested by` — see below.
 
 **Two axes of state, and neither names an actor.** *Readiness* is `ready`, `needs-decision` (a choice
 the author owns and has not made) or `needs-info` (waiting on somebody else). *Executor* is separate
@@ -209,8 +288,12 @@ evidence, open decisions, exclusions. Those are also the ones that carry across:
 `Verification` constrains its *Testing Decisions*. Anything a capture step could plausibly have
 written by itself does not need to be on the slice.
 
-**The slice carries three outbound references.** `Spec` and `Tickets`, filled at promotion, and
-`ADRs`, filled at close-out. They point and hold no content, so they do not reopen the rule above.
+**The slice carries four references: one inbound, three outbound.** `Requested by` points back at
+whatever produced the slice — a source document, or, for work admitted later, the delivered slice that
+made it visible. Those are the same question asked at two different times, so one field answers both;
+`Sources` is taken at roadmap level, which is why it is not called that. `Spec` and `Tickets` are
+filled at promotion, `ADRs` at close-out. All four point and hold no content, so they do not reopen
+the rule above.
 
 **`Cross-functional concerns` survives, with the template's five entries.** It is the only place a
 rule holds for *every* slice — authorization, validation and errors, operability, accessibility and
@@ -219,14 +302,34 @@ restates the same paragraph, which is the repetition this format exists to remov
 
 ## The skills
 
-- **`roadmap-create`** — greenfield, or a capability large enough to have themes of its own. Full
-  ceremony. Writes `.roadmap/roadmap.md` and `.roadmap/slices/`; extends an existing roadmap rather
-  than starting a second one.
-- **`roadmap-update`** — the only mutating skill afterwards. Its three operations have one name each:
-  **close-out** (remove the delivered slice from the register, archive its document, absorb the
-  evidence it produced), **promotion** (a candidate becomes a slice), **admission** (new work
-  enters). Close-out runs first. All three are conversations, not generations: the skill proposes a
-  block of changes and asks for confirmation once.
+- **`roadmap-create`** — reads sources and a declared goal. Full ceremony: themes, a first validator
+  per theme, breadth before depth, the repository prerequisite and the walking skeleton, ordering for
+  learning. It runs on a greenfield project, and again whenever a new goal is declared; it extends an
+  existing roadmap rather than starting a second one.
+
+  **It does not end when the files are written.** A first map is a proposal to argue with, and the
+  argument produces exactly the operations `roadmap-update` performs — split this one, drop that part,
+  swap the order. So the first round of revision belongs inside `create`, in the same session. Ending
+  at the write would push the author out of one skill and straight into another to do the real work,
+  which makes the split feel like paperwork.
+
+- **`roadmap-update`** — reads what delivery taught. Five operations: **close-out** (remove the
+  delivered slice from the register, archive its document, absorb the evidence it produced),
+  **promotion** (a candidate becomes a slice), **admission** (new work enters), **revision** (split,
+  merge, reword, reorder) and **retirement** (a slice that should not have been one leaves `NOW`,
+  dead or demoted to candidate). The first three were the original set; revision is the
+  split/merge/reorder branch of `plan-slices`, dropped earlier without a replacement; retirement was
+  simply missing — every arrow pointed forward, `LATER → NOW → archive`, with no way back.
+
+  **No subcommands.** Nobody arrives saying *perform a promotion*. They arrive saying *we closed S2
+  and S3, I found out X, and there is this screenshot idea*. The skill derives which operations apply
+  from that. The five names are its internal vocabulary — enough to order the work, close-out first,
+  since everything else is decided against a register that has already been trued up — not verbs the
+  author types. `/roadmap-update promote S7` is precision where sense-making was wanted.
+
+  Every update re-asks the coverage question — *does what is left in `NOW` still reach the goal* —
+  which is what recording the goal is for. And all of it is conversation, not generation: the skill
+  proposes a block of changes and asks for confirmation once.
 
 There is no third skill, and an audit command would have no audience: whoever reads a roadmap takes
 it as it stands, and the one check that does not rest on judgement is the validator, which both skills
@@ -320,18 +423,21 @@ The format diverges on every axis, which is why nothing is shared:
 | | `plan-slices` | roadmap |
 |---|---|---|
 | Artifact | one file, written once | `.roadmap/`, living |
+| Goal | implicit in the sources | declared, recorded, re-checked at every update |
+| Scale | unbounded | `NOW` capped at ~15; granularity absorbs the problem's size |
 | Identity | position number, renamed on every edit | id minted at promotion, never recycled |
 | Metadata | inline in the slice body and title tags | register columns, comparison fields only |
 | Dependencies | unpublished, carried by order | `Depends on` column |
 | State | none | readiness × executor |
 | Horizons | three sections of slices | register + candidates + exclusions |
 | Deferral | `LATER` entry with a promotion trigger | candidate, no trigger, no id |
-| Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open decisions` + `Spec` / `Tickets` / `ADRs` |
+| Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open decisions` + `Requested by` / `Spec` / `Tickets` / `ADRs` |
 
 The validator also grows from checking one file to checking a graph: every register row resolves to a
 slice document and back, every `Depends on` resolves to a row, no id is recycled or non-monotonic
 across `slices/` and `archive/`, no candidate or exclusion carries an id, readiness and executor hold
-legal values.
+legal values. It counts the register and warns past the cap without failing — exceeding it is a signal
+to the author, and failing on it would be grading the map instead of checking it.
 
 New homes: `design/roadmap/` for this document and its glossary — already applied — `evals/roadmap/`
 for the scenarios, and inside each skill `assets/roadmap-template.md` and
@@ -339,16 +445,9 @@ for the scenarios, and inside each skill `assets/roadmap-template.md` and
 
 ## Open questions
 
-- Whether two skills is the right shape at all. `roadmap-create` / `roadmap-update` is the split
-  assumed above, and its efficacy has not been tested; it wants its own session before any of it is
-  written.
 - Where the shared reference lives, and whether the two skills carry it by reference or by copy.
   `skills add` copies one skill folder at a time, so a shared file either gets duplicated or breaks
   when a single skill is installed alone.
-- Where published traceability lands. Source-to-slice tracing is per-slice reasoning, so by the
-  register rule it belongs in the slice document — but the six fields fixed above have no room for
-  it, and a seventh field named `Sources` would collide with the roadmap-level `Sources`.
-  `Requested by` is the leading candidate, undecided.
 - Where a spike sits in a living roadmap. The practice is wanted, the location is not settled:
   `kind: spike` in the register makes it visible and schedulable but demands the vertical outcome a
   spike by definition lacks; leaving it to `wayfinder` under `needs-decision` keeps it out of the
