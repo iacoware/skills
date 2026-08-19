@@ -9,9 +9,9 @@ definiti dalle skill installate.
 
 **Roadmap**:
 L'artefatto vivente che tiene l'ordine di scoperta di un progetto verso un `Goal` dichiarato: temi,
-slice `NOW`, speculazioni `LATER`, esclusioni `OUT-OF-SCOPE`. Vive in `.roadmap/`, è uno per
-progetto, e non viene mai riscritto da zero. È uno strumento di sense making, non di precisione: non
-porta date, stime, percentuali di completamento.
+slice `NOW`, speculazioni `LATER`, esclusioni `OUT-OF-SCOPE`. Vive in `.roadmap/`, è una per
+progetto e serve un goal alla volta: due goal non corrono mai in parallelo. È uno strumento di sense
+making, non di precisione: non porta date, stime, percentuali di completamento.
 _Avoid_: plan, delivery plan, piano (`plan` resta solo verbo o attività, mai nome di artefatto,
 file o sezione)
 
@@ -19,7 +19,8 @@ file o sezione)
 L'esito dichiarato che la roadmap serve, preso dal documento di goal in input o dall'invocazione
 della skill, e riscritto in testa a `roadmap.md`. È il metro con cui si chiede, a ogni update, se ciò
 che resta in `NOW` arriva da qualche parte. Raggiungerlo svuota `NOW`; dichiararne uno nuovo fa
-ridisegnare la mappa sullo stesso `.roadmap/`, con le roadmap rules che scattano di nuovo.
+partire un `Redraw`. Un input che pretende sulla *destinazione* mette in discussione il goal; un
+input che pretende sul *percorso* è lavoro, e il goal non si tocca.
 _Avoid_: vision, obiettivo, milestone
 
 **Slice**:
@@ -131,6 +132,14 @@ candidate in `LATER`. L'id è speso e non torna disponibile; il documento non va
 `.roadmap/archive/` — che significa *consegnato* — ma viene cancellato, perché git è l'archivio di
 ciò che non è mai successo.
 _Avoid_: demotion (è il caso particolare, non il nome dell'operazione), wontfix
+
+**Redraw**:
+Il ridisegno della mappa quando viene dichiarato un goal nuovo. Si rifanno da zero `Goal`, temi,
+register, criteri di ordinamento e `Assumptions and gaps`; sopravvivono `.roadmap/archive/`, il
+massimo id raggiunto, `OUT-OF-SCOPE`, `Cross-functional concerns` e `LATER`. Le slice ancora aperte
+non passano in automatico: si rigiustificano contro il goal nuovo, tenendo l'id, oppure vanno in
+retirement. Non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input.
+_Avoid_: reset, ricreazione, nuova roadmap
 
 **Learning target**:
 Ciò che la slice deve insegnare: uno solo, obbligatorio, ed è l'invariante che regge lo split test.

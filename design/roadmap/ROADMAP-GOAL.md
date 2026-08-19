@@ -154,13 +154,39 @@ three horizons — the register under `NOW`, the candidate list under `LATER`, t
 `OUT-OF-SCOPE`. `.roadmap/slices/` holds one document per open slice, `.roadmap/archive/` one per
 delivered slice, both named `S<id>-<slug>.md`.
 
-**One roadmap per project, not per initiative.** A new capability extends the existing roadmap.
+**One roadmap per project, one goal at a time.** A new capability extends the existing roadmap
+rather than opening a second one, and two goals never run side by side. Concurrency is what would
+force a second roadmap, and the cost is where it always is: `NOW` becomes the union of two paths, the
+coverage question has to be asked twice, the cap of fifteen is split into two anaemic maps, and the
+register stops answering *what is the path* because there are two. The alternatives — a `Goal` column
+in the register, or `.roadmap/<goal>/` with ids to keep unique, `Depends on` edges crossing folders
+and concerns duplicated — buy multi-goal bookkeeping at the price of the focus the tool exists to
+impose. If the author cannot say which of two goals comes first, that is the decision the roadmap is
+there to force, not to record: either they are one goal at a higher altitude, or one of them is
+`LATER`. Several projects remain several repositories, and several `.roadmap/`.
 
 **The roadmap serves one declared `Goal`, and records it.** The input is a goal document, or the
 equivalent stated in the invocation; `roadmap.md` restates it at the top. Without it there is nothing
 to ask *do these slices arrive anywhere* against, and that question has to stay askable at every
-update, not only at creation. Reaching the goal empties `NOW`; declaring the next one is a
-redrawing, on the same `.roadmap/`, with the roadmap rules firing again.
+session, not only at the first. Reaching the goal empties `NOW`; declaring the next one redraws the
+map on the same `.roadmap/`, with the roadmap rules firing again.
+
+**A redraw rebuilds the map and keeps the ledger.** `.roadmap/` holds two kinds of thing, and only
+one of them is an opinion about the future. Redrawn from nothing: `Goal`, the themes, the register,
+the ordering criteria, `Assumptions and gaps`. Carried over: `archive/`, because a local tracker has
+no notion of *done* and it is the only durable record of what was delivered; the id high-water mark,
+because restarting at `S0` would make one number mean two things inside one archive; `OUT-OF-SCOPE`,
+because the trade-offs already shipped are defensible precisely by those exclusions and forgetting
+them does not un-ship anything; `Cross-functional concerns`; and `LATER`, which is the pool the next
+goal draws from.
+
+Slices still open in `NOW` when the goal changes are **not** carried automatically. Each is
+re-justified against the new goal: the ones that still serve it keep their ids, the rest are retired,
+dead or demoted. That is what makes it a redraw and not a patch — the map is re-derived, not mended,
+and no new machinery is involved, only the operations that already exist applied in one block.
+
+No history of superseded goals is kept. Nobody re-reads it and git has it; if the context matters,
+`Current state` already has room for a sentence.
 
 **Three horizons, separated by their relation to the goal.** `NOW` is what it takes to reach the
 declared goal. `LATER` is what does not serve *this* goal — speculation, or material for the next one.
@@ -308,13 +334,26 @@ restates the same paragraph, which is the repetition this format exists to remov
 ## The skill
 
 **`roadmap`.** One entry point, one folder. `SKILL.md` is a router: it establishes what it is looking
-at — whether `.roadmap/` exists, whether a goal has just been declared, what has been delivered since
-the last session — and takes one of two branches.
+at — whether `.roadmap/` exists, what the recorded goal is, what has been delivered since the last
+session — and takes one of two branches.
 
-**Drawing the map**, when there is a goal and no map against it. Full ceremony, and the roadmap rules
-that carry it live in a reference file loaded only here: themes, a first validator per theme, breadth
-before depth, the repository prerequisite and the walking skeleton, ordering for learning. It extends
-an existing roadmap rather than starting a second one.
+The branch is decided by **what the input makes a claim about**. A claim about *where we are going*
+that contradicts the recorded `Goal` means the map is drawn again; a claim about *how we get there* is
+work, and only the second branch touches it. That is the common case by a wide margin, and it is the
+default: new work is admission, promotion or revision, and it leaves the goal alone.
+
+Nothing has to be divined. The coverage question runs every session anyway, and it is the trigger:
+when what the author brings cannot be reconciled with the recorded goal — it does not serve it, and it
+is not an exclusion either — the skill states the goal it has on file, says what the input looks like
+to it, and asks which one holds. A question with a short answer, not an inference.
+
+**Drawing the map**, when there is a goal and no map standing against it. Full ceremony, and the
+roadmap rules that carry it live in a reference file loaded only here: themes, a first validator per
+theme, breadth before depth, the repository prerequisite and the walking skeleton, ordering for
+learning. A redraw is not a separate mode: it is this same branch with more input, since what the
+previous goal leaves behind — the archive, the id high-water mark, the exclusions, the concerns, the
+candidates — enters as a constraint exactly the way sources do. There is no reconciliation logic to
+write.
 
 It **does not end when the files are written**. A first map is a proposal to argue with, and the
 argument produces exactly the operations the other branch performs — split this one, drop that part,
@@ -338,9 +377,10 @@ Both branches end the same way: re-ask the coverage question — *does what is l
 the goal* — which is what recording the goal is for. And all of it is conversation, not generation:
 the skill proposes a block of changes and asks for confirmation once.
 
-The router is the one thing that can fail quietly, in two directions: the theme ceremony fired on a
-routine session, or a session spent re-truing a map when the goal had actually changed and it wanted
-redrawing. Those are two eval scenarios, not two skills.
+The router can still misfire in two directions — the theme ceremony fired on a routine session, or a
+session spent re-truing a map whose goal had changed under it. Both are eval scenarios rather than a
+reason for two skills, and neither is expensive: every branch ends in a proposed block of changes and
+one confirmation, so a wrong turn costs a proposal, not a record.
 
 There is no second skill, and an audit command would have no audience: whoever reads a roadmap takes
 it as it stands, and the one check that does not rest on judgement is the validator, which the skill
