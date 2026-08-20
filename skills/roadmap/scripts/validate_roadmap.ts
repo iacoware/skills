@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs"
+import { existsSync, readFileSync, readdirSync, realpathSync } from "node:fs"
 import { join } from "node:path"
 
 const ROADMAP_FILE = "roadmap.md"
@@ -591,6 +591,19 @@ export const main = (argv: string[]): number => {
   return 0
 }
 
-if (process.argv[1] === import.meta.filename) {
+// An installed skill is reached through a symlink, and process.argv[1] keeps the link path while
+// import.meta.filename holds the target: comparing them unresolved makes the command exit 0 in
+// silence on exactly the invocation SKILL.md prescribes.
+const invokedAsCommand = () => {
+  const entry = process.argv[1]
+  if (entry === undefined) return false
+  try {
+    return realpathSync(entry) === import.meta.filename
+  } catch {
+    return false
+  }
+}
+
+if (invokedAsCommand()) {
   process.exitCode = main(process.argv.slice(2))
 }

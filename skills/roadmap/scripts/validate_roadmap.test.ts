@@ -1,7 +1,8 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs"
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, symlinkSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
+import { execFileSync } from "node:child_process"
 import { basename, join } from "node:path"
 import { main, readRoadmapDirectory, validateRoadmap } from "./validate_roadmap.ts"
 
@@ -338,4 +339,14 @@ test("the command exits two when there is no roadmap to read", () => {
   const { code } = captured(() => main([join(tmpdir(), "nessuna-roadmap-qui")]))
 
   assert.equal(code, 2)
+})
+
+test("the command validates when it is invoked through a symlink to the script", () => {
+  const directory = writtenAt(mkdtempSync(join(tmpdir(), "roadmap-")), registerWith(5))
+  const link = join(mkdtempSync(join(tmpdir(), "roadmap-link-")), "validate_roadmap.ts")
+  symlinkSync(new URL("validate_roadmap.ts", import.meta.url).pathname, link)
+
+  const output = execFileSync(process.execPath, [link, directory], { encoding: "utf8" })
+
+  assert.ok(output.startsWith("OK: "))
 })
