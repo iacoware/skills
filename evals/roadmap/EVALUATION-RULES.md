@@ -30,9 +30,11 @@ document; nothing in it was about this format. The two lists are unrelated and m
 their file when both are open. Here ids are labels, not an order: a new check takes the next free
 number and no id is ever reused.
 
-**No check here carries a failure record yet**, because no run has been read against them. A
-`⚠ Has failed` mark appears as evidence arrives; a `⚠ Watch the opposite failure` mark is already on
-the rules whose overcorrection would cost more than the failure they guard.
+**A `⚠ Has failed` mark carries the runs a check has already gone red on**, and a
+`⚠ Watch the opposite failure` mark sits on the rules whose overcorrection would cost more than the
+failure they guard. The first evidence arrived on 2026-08-20: one drawing and three router scenarios,
+recorded below on R-005, R-007, R-009 and R-015. One run is still a question — a mark says a check
+went red once, not that the skill is broken there.
 
 ## The situation
 
@@ -62,7 +64,10 @@ the rules whose overcorrection would cost more than the failure they guard.
   unilaterally. `SKILL.md` § 2, *When the input cannot be reconciled*.
   ⚠ **Watch the opposite failure.** A session that asks on every input turns a re-truing into an
   interview. The question is owed exactly when the reconciliation fails, and the slice-or-spike
-  reading never owes one.
+  reading never owes one. **Observed, in its mildest form, on all three router scenarios of
+  2026-08-20**: each owed question was asked correctly and each arrived with a second one attached to
+  it — conditional, hedged, and unasked for. Nothing was inferred and no session asked instead of
+  deciding, so no check went red; it is the direction to watch, not yet a failure.
 - **R-006** — A capability already sitting in `LATER` is **promoted**, not admitted anew: the
   candidate line goes, the row takes the next id, its document appears in `slices/`, and
   `Requested by` records what produced it. A candidate's presence is a licence to schedule and never
@@ -71,6 +76,12 @@ the rules whose overcorrection would cost more than the failure they guard.
   can exercise is minted as a spike, and proposed in the block without a question, since nothing
   about the destination is in doubt. `SKILL.md` § 2, *Slice or spike*;
   `references/slice-rules.md`, *The spike test*.
+  ⚠ **Has failed.** Router scenario 3, 2026-08-20. The session read the input correctly, found the
+  unknown, and split it out of the row that could not carry it — then minted it `kind: enabler`. The
+  row it wrote has a spike's `Verification` (every clause a declared number), a spike's
+  `Learning target`, and an `Audience` naming the people building it. Only the column disagreed. The
+  enabler definition in `references/slice-rules.md` also promises to *resolve one material
+  uncertainty*, which is the overlap to watch on the next run before anything is rewritten.
   ⚠ **Watch the opposite failure.** Every uncertain row turning into a spike. Uncertainty is the
   learning target of an ordinary row; what makes a spike is that there is no outcome to deliver.
 
@@ -83,6 +94,10 @@ the rules whose overcorrection would cost more than the failure they guard.
   *complete* promise, and is not `kind: enabler` unless the `Promise` cell says the promise is to a
   developer. `references/drawing-the-map.md`, *Themes*. *That the reference resolves to a row is
   checked by the validator; coverage and kind are reading.*
+  ⚠ **Has failed.** First drawing, 2026-08-20. The `cattura` promise was written with two halves —
+  paste a link and the recipe is in, and an escape hatch for pages that will not be read — and its
+  first validator was the link row alone. The escape hatch was two rows further down. Either half of
+  the promise was one half too many, or the validator was the wrong row; the map said neither.
 - **R-010** — A row serving every promise and cancellable with none carries `theme: —` rather than
   being pinned to one. `references/drawing-the-map.md`, *Themes*; `assets/roadmap-template.md`.
 - **R-011** — Greenfield draws the repository row and the walking skeleton as two rows. The skeleton
@@ -107,6 +122,11 @@ the rules whose overcorrection would cost more than the failure they guard.
   Exposing is not resolving, and scope is the only thing that routes an entry between map altitude
   and a row: what blocks one row alone lives on that row and shows in its readiness.
   `references/drawing-the-map.md`, *What the map reports about its input*.
+  ⚠ **Has failed.** First drawing, 2026-08-20. The sweep found the embedding-at-runtime conflict and
+  named its reading; it missed the second one — manual entry skipping extraction against manual entry
+  reusing the extraction engine and schema — and took the first side in an `Excludes` bullet with no
+  line anywhere. The hand-written reference had the same hole, closed in the same pass, which says
+  the entry is easy to walk past rather than that the clause is weak.
   ⚠ **Watch the opposite failure.** A map that takes no reading and publishes everything as an open
   question. An assumption is what makes the map drawable; a map that assumes nothing has deferred its
   own shape.
