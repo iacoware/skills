@@ -47,7 +47,11 @@ Settled in the planning session. They are premises, not choices to reopen inside
   repository and installable; P8 records the deprecation and nothing else.
 - **English**, as `plan-slices` and the design documents. `README.md`, `CONTEXT-MAP.md` and
   `CONTEXT.md` stay as they are; the `recipe-app` sources carry over unconverted, for the reason
-  [`evals/plan-slices/README.md`](../../evals/plan-slices/README.md) already gives.
+  [`evals/plan-slices/README.md`](../../evals/plan-slices/README.md) already gives. The reference
+  roadmap itself is the other exception, in Italian as `REFERENCE-PLAN.md` is and for the same
+  reason: the skill writes in the author's language and these sources are Italian. Its rationale
+  stays English, as `REFERENCE-PLAN-RATIONALE.md` does, and field names, column names and state
+  values are English everywhere because they are format rather than prose.
 
 ## Rules every phase obeys
 
