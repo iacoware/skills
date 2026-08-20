@@ -1,0 +1,11 @@
+{
+  "check": "a slice document whose title disagrees with its row",
+  "edits": [
+    {
+      "in": "slices/S7-scrittura-a-mano.md",
+      "find": "# S7 — Scrittura e correzione a mano",
+      "replace": "# S7 — Scrittura a mano"
+    }
+  ],
+  "expect": "the title reads 'Scrittura a mano' and the register row 'Scrittura e correzione a mano'"
+}

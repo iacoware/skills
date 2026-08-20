@@ -1,0 +1,11 @@
+{
+  "check": "a Depends on that names no row of the register",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "| `S3` | [Indicizzazione semantica delle ricette](slices/S3-indicizzazione-semantica.md) | `ricerca-semantica` | `enabler` | `medium` | `ready` | `agent` | `S2` |",
+      "replace": "| `S3` | [Indicizzazione semantica delle ricette](slices/S3-indicizzazione-semantica.md) | `ricerca-semantica` | `enabler` | `medium` | `ready` | `agent` | `S2`, `S99` |"
+    }
+  ],
+  "expect": "'Depends on' names 'S99', which is not a row of this register"
+}

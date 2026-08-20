@@ -1,0 +1,16 @@
+{
+  "check": "two sections of roadmap.md in the wrong order",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "## Open questions\n\n- `ricerca-semantica`, `import-automatico` — se",
+      "replace": "## Assumptions\n\n- `ricerca-semantica`, `import-automatico` — se"
+    },
+    {
+      "in": "roadmap.md",
+      "find": "## Assumptions\n\n- `ricerca-semantica`, `S4` —",
+      "replace": "## Open questions\n\n- `ricerca-semantica`, `S4` —"
+    }
+  ],
+  "expect": "the sections must read"
+}

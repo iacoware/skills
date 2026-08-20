@@ -1,0 +1,11 @@
+{
+  "check": "an exclusion carrying an id",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "- **Deduplicazione.** Due membri possono salvare",
+      "replace": "- **Deduplicazione.** `S16` — due membri possono salvare"
+    }
+  ],
+  "expect": "OUT-OF-SCOPE: line"
+}

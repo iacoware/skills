@@ -1,0 +1,11 @@
+{
+  "check": "a slice, not a spike, leaving Audience unfilled",
+  "edits": [
+    {
+      "in": "slices/S0-repository-ci-segreti.md",
+      "find": "## Audience\n\nChi lavora al progetto, compreso l'agente: è la prima riga perché tutto il resto si consegna da qui.",
+      "replace": "## Audience\n\n—"
+    }
+  ],
+  "expect": "only a spike may leave 'Audience' unfilled"
+}

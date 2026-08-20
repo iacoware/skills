@@ -1,0 +1,11 @@
+{
+  "check": "a section missing from a slice document",
+  "edits": [
+    {
+      "in": "slices/S4-ricerca-semantica.md",
+      "find": "## Verification\n\nCercando «cena leggera»",
+      "replace": "Cercando «cena leggera»"
+    }
+  ],
+  "expect": "missing the 'Verification' section"
+}

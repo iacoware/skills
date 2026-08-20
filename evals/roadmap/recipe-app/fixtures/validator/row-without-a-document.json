@@ -1,0 +1,5 @@
+{
+  "check": "a register row whose document is not there",
+  "remove": ["slices/S5-elenco-e-lettura.md"],
+  "expect": "the title links to 'slices/S5-elenco-e-lettura.md', which is not there"
+}

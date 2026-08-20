@@ -1,0 +1,11 @@
+{
+  "check": "prose where the section holds a list",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "la licenza per non avere alcuna infrastruttura di posta.",
+      "replace": "la licenza per non avere alcuna infrastruttura di posta.\n\nQuesta riga è prosa, e non una voce di elenco."
+    }
+  ],
+  "expect": "is prose; the section holds list items"
+}

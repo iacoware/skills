@@ -1,0 +1,11 @@
+{
+  "check": "the theme table header renaming a column",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "| Theme | Promise | First validator |",
+      "replace": "| Theme | Outcome | First validator |"
+    }
+  ],
+  "expect": "Themes: expected the columns Theme, Promise, First validator"
+}

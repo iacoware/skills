@@ -1,0 +1,11 @@
+{
+  "check": "a cycle in Depends on",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "| `S3` | [Indicizzazione semantica delle ricette](slices/S3-indicizzazione-semantica.md) | `ricerca-semantica` | `enabler` | `medium` | `ready` | `agent` | `S2` |",
+      "replace": "| `S3` | [Indicizzazione semantica delle ricette](slices/S3-indicizzazione-semantica.md) | `ricerca-semantica` | `enabler` | `medium` | `ready` | `agent` | `S2`, `S4` |"
+    }
+  ],
+  "expect": "closes a cycle"
+}

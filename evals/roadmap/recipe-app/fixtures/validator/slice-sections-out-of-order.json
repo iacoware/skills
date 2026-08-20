@@ -1,0 +1,16 @@
+{
+  "check": "two sections of a slice document in the wrong order",
+  "edits": [
+    {
+      "in": "slices/S5-elenco-e-lettura.md",
+      "find": "## Verification\n\nDall'elenco",
+      "replace": "## Includes\n\nDall'elenco"
+    },
+    {
+      "in": "slices/S5-elenco-e-lettura.md",
+      "find": "## Includes\n\n- La home",
+      "replace": "## Verification\n\n- La home"
+    }
+  ],
+  "expect": "the sections must read"
+}

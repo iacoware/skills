@@ -1,0 +1,11 @@
+{
+  "check": "a slice document that does not link back to the register",
+  "edits": [
+    {
+      "in": "slices/S0-repository-ci-segreti.md",
+      "find": "\n← [Register](../roadmap.md#now)\n",
+      "replace": "\n"
+    }
+  ],
+  "expect": "missing the link back to the register"
+}

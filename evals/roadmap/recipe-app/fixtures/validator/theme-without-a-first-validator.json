@@ -1,0 +1,11 @@
+{
+  "check": "a theme whose first validator is not a row",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "| `foto` | Una ricetta si riconosce dalla foto prima che dal nome | `S11` |",
+      "replace": "| `foto` | Una ricetta si riconosce dalla foto prima che dal nome | `S99` |"
+    }
+  ],
+  "expect": "the first validator of 'foto' is 'S99'"
+}

@@ -1,0 +1,11 @@
+{
+  "check": "a section missing from roadmap.md",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "## Assumptions\n\n- `ricerca-semantica`, `S4` —",
+      "replace": "- `ricerca-semantica`, `S4` —"
+    }
+  ],
+  "expect": "missing the 'Assumptions' section"
+}

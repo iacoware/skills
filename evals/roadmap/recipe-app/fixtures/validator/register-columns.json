@@ -1,0 +1,11 @@
+{
+  "check": "the register header renaming a column",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "| Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |",
+      "replace": "| Id | Title | Theme | Kind | Size | Readiness | Executor | Dependencies |"
+    }
+  ],
+  "expect": "NOW: expected the columns Id, Title, Theme, Kind, Size, Readiness, Executor, Depends on"
+}

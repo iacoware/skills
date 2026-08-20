@@ -1,0 +1,11 @@
+{
+  "check": "a candidate carrying an id",
+  "edits": [
+    {
+      "in": "roadmap.md",
+      "find": "- Passkey come secondo modo di entrare.",
+      "replace": "- Passkey come secondo modo di entrare (`S15`)."
+    }
+  ],
+  "expect": "LATER: line"
+}

@@ -1,0 +1,7 @@
+{
+  "check": "a slice document no register row links to",
+  "add": {
+    "slices/S99-riga-fantasma.md": "# S99 — Riga fantasma\n"
+  },
+  "expect": "no register row links to this document"
+}

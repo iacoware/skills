@@ -1,0 +1,7 @@
+{
+  "check": "an id spent twice across slices/ and archive/",
+  "add": {
+    "archive/S3-indicizzazione-semantica.md": "# S3 — Indicizzazione semantica delle ricette\n"
+  },
+  "expect": "ids are never recycled"
+}
