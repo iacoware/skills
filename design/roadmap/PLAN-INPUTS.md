@@ -22,7 +22,10 @@ this material.
 
 Grows from checking one file to checking a graph:
 
-- every register row resolves to a slice document, and every slice document back to a row;
+- every register row resolves to a slice document, and every slice document back to a row — the row's
+  title is a link and the link is what has to resolve, so a renamed file breaks a check instead of
+  breaking a reader;
+- every slice document carries the link back to the register;
 - every `Depends on` resolves to a row;
 - no id recycled or non-monotonic across `slices/` and `archive/`;
 - no candidate and no exclusion carries an id;

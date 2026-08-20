@@ -207,6 +207,16 @@ document is what made the current output feel cluttered in the first place. Clos
 row and moves the document to the archive, so `NOW` shrinks toward the goal, which is as much progress
 reporting as this tool does.
 
+**The row is named by its title, and the two artifacts link to each other.** The register carries the
+descriptive title, not the one-line outcome: a title is what the eye reads down a column of fifteen
+rows, while a sentence per row turns the table into prose and makes the columns beside it unreadable.
+The outcome is not lost, it moves — it is the slice document's opening line, above everything else,
+so the two artifacts each carry the form of the answer they are read for. The title in the register
+links to the slice document and the slice document links back to the register, because a map whose
+detail is one directory away is only readable if getting there and back costs a click. Ids stay plain
+text on both sides, in the `Id` column and in `Depends on`: an identity that renders as a link twice
+in one row is noise, and it is the filename that resolves it anyway.
+
 **Ids are minted at promotion by monotonic increment.** The next one is the highest found across
 `.roadmap/slices/` and `.roadmap/archive/`, plus one — the filenames carry it, so it is two directory
 listings and no counter to keep in sync. Two operations follow from that. A **split** keeps the id on
@@ -292,11 +302,12 @@ There is no timebox field. A spike is timeboxed in the doing, downstream, and a 
 can check is the same hollow ritual as a token budget. What the roadmap can see is the row that has
 not closed for three sessions, which is a conversation, not a field.
 
-**The slice document holds no spec.** Its fields are `Audience`, `Includes`, `Verification`,
-`Learning target`, `Excludes`, `Open questions`. Seams, user stories and contracts are born in
-`to-spec` and live on the tracker; duplicating them yields two truths that diverge at the first
-ticket. There is no `Outcome` field either: the one-line outcome is a register column, and the
-register is where outcomes get compared.
+**The slice document holds no spec.** Its fields are `Outcome`, `Audience`, `Includes`,
+`Verification`, `Learning target`, `Excludes`, `Open questions`. Seams, user stories and contracts
+are born in `to-spec` and live on the tracker; duplicating them yields two truths that diverge at the
+first ticket. `Outcome` is one line and it opens the document, because the register names the row by
+its title and the sentence that says what the row delivers has to live somewhere; it is the one field
+whose place moved rather than whose content is new.
 
 **Its fields are chosen as what `to-spec` cannot invent.** Those are also the ones that carry across:
 `Audience` and `Learning target` become the spec's *Problem Statement*, `Excludes` becomes its *Out of
@@ -435,6 +446,7 @@ The format diverges on every axis, which is why nothing is shared:
 | State | none | readiness × executor |
 | Horizons | three sections of slices | register + candidates + exclusions |
 | Deferral | `LATER` entry with a promotion trigger | candidate, no trigger, no id |
-| Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open questions` + `Requested by` / `Spec` / `Tickets` / `ADRs` |
+| Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Outcome` / `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open questions` + `Requested by` / `Spec` / `Tickets` / `ADRs` |
+| Navigation | one file, so none | register title links to the slice, slice links back to the register |
 
 The validator also grows from checking one file to checking a graph.

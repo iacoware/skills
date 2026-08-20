@@ -45,11 +45,13 @@ _Avoid_: research slice, investigation slice, non-product work, timebox (non è 
 
 **Register**:
 La tabella in `roadmap.md` che tiene il percorso verso il goal: una riga per ogni elemento di `NOW`,
-slice o spike, con i soli metadati che servono a *confrontare* le righe fra loro e decidere cosa
-viene prima — id, theme, kind, size, readiness, executor, `Depends on`, esito in una riga. La maggior
+slice o spike, con il titolo della riga e i soli metadati che servono a *confrontare* le righe fra
+loro e decidere cosa viene prima — id, titolo, theme, kind, size, readiness, executor, `Depends on`.
+Il titolo è un link al documento della riga, e il documento ha un link che riporta qui. La maggior
 parte delle righe non è prendibile in mano oggi, ed è voluto: il register risponde a *qual è il
 percorso*, non a *cosa posso fare adesso* — a quello risponde `readiness`. Ciò che serve a ragionare
-*dentro* una riga sta nel suo documento. Una riga chiusa esce dal register.
+*dentro* una riga sta nel suo documento, a partire dall'`Outcome`, che è la prima riga del documento
+e non una colonna. Una riga chiusa esce dal register.
 _Avoid_: slice index, index, tabella delle slice, backlog
 
 **Id**:
@@ -95,6 +97,12 @@ prima di `Open questions`: un'assunzione presa in silenzio fa più danno di una 
 visibilmente aperta. Insieme a `Open questions` dà all'autore una seconda lettura sulla completezza
 della visione.
 _Avoid_: Assumptions and gaps, assunzioni implicite
+
+**Outcome**:
+La prima riga del documento di slice: una frase che dice cosa la riga consegna. Sta lì e non nel
+register perché il register nomina la riga con il titolo — quindici frasi incolonnate renderebbero
+illeggibili le colonne accanto. Su uno spike dice quale conoscenza produce.
+_Avoid_: esito in una riga come colonna del register, Outcome come sezione in fondo al documento
 
 **Open questions**:
 Ciò che è rimasto senza risposta, allo stesso nome a due altitudini: la seconda sezione di
