@@ -6,7 +6,7 @@ Agent skills installabili con la [Skills CLI](https://github.com/vercel-labs/ski
 
 | Skill | Descrizione |
 | --- | --- |
-| [`plan-slices`](skills/plan-slices) | Crea, rivede, splitta, unisce e riordina delivery plan per prodotti greenfield e capability rilevanti: slice verticali value-first e risk-first, con orizzonti NOW / LATER / OUT-OF-SCOPE. Si invoca esplicitamente (`/plan-slices`), l'agent non la attiva da solo. |
+| [`plan-slices`](skills/plan-slices) | Crea, rivede, splitta, unisce e riordina delivery plan per prodotti greenfield e capability rilevanti: slice verticali value-first e risk-first, con orizzonti NOW / LATER / OUT-OF-SCOPE. Si invoca esplicitamente (`/plan-slices`), l'agent non la attiva da solo. **Deprecata**: superata da [`roadmap`](skills/roadmap). Resta installabile e non viene rimossa. |
 | [`roadmap`](skills/roadmap) | Tiene viva la roadmap di un progetto rispetto a un goal dichiarato: le slice verticali e gli spike che ci arrivano, aggiornati man mano che il lavoro viene consegnato, scoperto, rimodellato o abbandonato. Vive in `.roadmap/`. Si invoca esplicitamente (`/roadmap`), l'agent non la attiva da solo. |
 
 ## Installazione

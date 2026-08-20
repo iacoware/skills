@@ -7,6 +7,10 @@ disable-model-invocation: true
 
 # Plan Delivery Slices
 
+**Deprecated — superseded by the `roadmap` skill.** `roadmap` keeps a living map in `.roadmap/`
+across sessions instead of producing one plan document, and new work should start there. This skill
+is not removed: it stays installable and keeps working for the plans that already exist.
+
 Produce a multi-session delivery map, not an implementation plan or task backlog. Treat each slice
 as an independently schedulable outcome; do not decompose slices into implementation tasks.
 
