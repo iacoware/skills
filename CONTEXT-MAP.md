@@ -21,5 +21,7 @@ Questo repo pubblica agent skill: ogni skill che sviluppa un vocabolario proprio
   conversazione, non un file; `to-tickets` e `implement` seguono. I termini di quella catena — spec,
   issue, ticket, i cinque ruoli di `triage` — sono definiti dalle skill installate e non vanno
   ridefiniti qui.
-- **Roadmap → `plan-slices`**: `plan-slices` è la skill che la roadmap sostituisce e verrà ritirata.
+- **Roadmap → `plan-slices`**: `plan-slices` è la skill che la roadmap sostituisce. Dal 2026-08-20 è
+  marcata deprecata in `README.md` e nel corpo del suo `SKILL.md`; non è stata rimossa e resta
+  installabile, e `evals/plan-slices/` resta il metro con cui si leggono le prime roadmap.
   Non ha un contesto proprio; la sua unità si chiama *plan slice* quando i due documenti si toccano.

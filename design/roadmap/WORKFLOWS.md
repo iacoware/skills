@@ -21,8 +21,10 @@ format. The format contract lives in the template, and the template is checked b
 **The scenario material is `evals/plan-slices/recipe-app/sources/`** — `goal.md`, `concepts.md`,
 `arch-choices.md`, `tech-choices.md` — and not `REFERENCE-PLAN.md`, which is `plan-slices` output and
 dies with it. Where an example needs a starting state, it recaps it in a few lines rather than
-pointing at that plan. When `evals/roadmap/` lands with its own `sources/` and `results/`, these three
-examples are the seed its scenarios are derived from.
+pointing at that plan. `evals/roadmap/` has since landed with its own `sources/`, `fixtures/` and
+`results/`, and its three router scenarios are derived from these examples. Derived, not copied: the
+scenarios stand on states a real run produced and frozen, so their ids are not the ones below. The
+verdicts agree and the ids do not, which is the right way round for a file that illustrates decisions.
 
 The slice ids below are roadmap ids, minted in the order the map was drawn. They are not the position
 numbers `plan-slices` used, even where the underlying work is recognisably the same.
