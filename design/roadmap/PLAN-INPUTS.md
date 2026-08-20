@@ -5,7 +5,8 @@ accumulates here as it comes up, and the plan session consumes it.
 
 [`ROADMAP-GOAL.md`](./ROADMAP-GOAL.md) is the authority on intent and
 [`CONTEXT.md`](./CONTEXT.md) on vocabulary; nothing here overrides either, and a rule that turns out
-to be about intent moves back there.
+to be about intent moves back there. [`PLAN.md`](./PLAN.md) is what the plan session produced out of
+this material.
 
 ## Where things live
 
