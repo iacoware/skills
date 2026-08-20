@@ -43,7 +43,8 @@ Two scenarios exist specifically for router misfires, the two directions in whic
 the theme ceremony fired on a routine session, and a session spent re-truing a map whose goal had
 changed under it. Neither is expensive — every branch ends in a proposed block of changes and one
 confirmation, so a wrong turn costs a proposal, not a record — which is why they are eval scenarios
-and not a reason for a second skill.
+and not a reason for a second skill. A third holds the other axis, work admitted as a slice when its
+honest verification is a measurement and it should have been a spike.
 
 ## Reviewing the skill itself
 

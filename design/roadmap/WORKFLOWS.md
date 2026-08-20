@@ -160,11 +160,12 @@ focus is relative to a goal.
 against the new goal. *Invitation and equal collaboration* still serves publication, so it stays and
 **keeps its id**; whatever does not serve the new goal is retired, dead or demoted to candidate.
 
-## 3. Two inputs the router can get wrong
+## 3. Three inputs the router can get wrong
 
-The rule is that a claim about **where we are going** redraws the map and a claim about **how we get
-there** is work, with work as the default. These two are the cases where reading the rule off the
-input is hardest, and they are the ones the eval scenarios exist to hold.
+Two rules are being read off the input at once. A claim about **where we are going** redraws the map
+and a claim about **how we get there** is work, with work as the default; and work that produces an
+outcome is a slice while work that produces knowledge is a spike. These three are the cases where
+reading either rule off the input is hardest, and they are the ones the eval scenarios exist to hold.
 
 **Sounds like a change of destination, is work.** *Search has to work across every cookbook I belong
 to, not just the current one.* It reads like a scope change, and scope changes sound structural. But
@@ -182,10 +183,52 @@ The tell is worth stating plainly, because it is the trap: **how cheap something
 nothing about whether it moves the destination.** The cost of the change and the altitude of the
 change are unrelated, and the roadmap only cares about the second.
 
-**In both cases the skill does not decide.** It states the goal it has on file, says what the input
-looks like from where it sits, and asks which of the two holds. The coverage question is what surfaces
-it: when what the author brings cannot be reconciled with the recorded goal — it does not serve it,
-and it is not an exclusion either — that is the moment to ask, and the answer is one sentence long.
+**Sounds like a slice, is a spike.** We are inside the redrawn map: `NOW` holds `S14`–`S19`, and `S16`
+is cross-cookbook search, promoted out of `LATER` because discovery is now the goal. The author
+arrives with *search has to work on the public corpus, thousands of recipes across cookbooks nobody
+curated together*. Admitting it as a slice is the natural move, and it is wrong for a reason nothing
+in the input announces: nobody knows yet whether one shared index holds at that volume or whether it
+has to be one index per cookbook, and the two shapes are different slices. Specifying either is
+specifying work the map cannot yet know.
+
+It is nearly the sentence of the first case, one goal later, and the verdict differs because what is
+unknown differs. There the capability was known and only its scope was in question, so promotion
+settled it. Here the capability is known too, and what is missing is a measurement.
+
+So a spike is minted, `S20`, `kind: spike`, and `S16` gains it in `Depends on`. That it carries a
+higher id than the slice waiting on it is not a wrinkle: ids are identity, the register's order is
+delivery order, and the spike is delivered first.
+
+The tell here is the honest `Verification`. Write it out and it reads *we can state recall and p95
+latency for a ten-thousand-recipe shared index* — a number, not a thing a user can do. **When the
+verification is a measurement rather than a capability, it is a spike.** `Audience` stays empty for
+the same reason: nobody is served, and who consumes the answer is `S16`, which is already written in
+the dependency.
+
+It is not a `wayfinder` decision either, which is the other plausible home. Nobody can settle this by
+thinking about it; somebody has to build a throwaway index and measure it, so the handover is
+`/prototype`. And it takes a row under the cap: `NOW` goes from six to seven, which is comfortable
+here, but at nineteen the spike would displace a slice — the argument *is this research worth a slice
+of the path* happening where it can be had.
+
+When `S20` closes, the three questions of absorption are the whole point rather than a formality: the
+assumption *one index scales to public volume* dies, `S16` is resized from `small` to `large` and its
+shape settles, and the choice of index topology clears the ADR bar, so the archived spike's `ADRs`
+reference is where the thread continues. A spike that answered no to all three would have taught
+nothing, and that is a finding about the spike.
+
+The free-floating variant is the second form of the same rule. *Is anonymous public read affordable at
+all — a public corpus means embedding and serving traffic nobody pays for today* has no dependent
+slice, because what it questions is whether the goal stands. Then the row says so, and the dependent
+requirement is met by the declaration rather than by an edge. A spike with neither is curiosity, and
+the validator says so.
+
+**In the first two cases the skill does not decide.** It states the goal it has on file, says what the
+input looks like from where it sits, and asks which of the two holds. The coverage question is what
+surfaces it: when what the author brings cannot be reconciled with the recorded goal — it does not
+serve it, and it is not an exclusion either — that is the moment to ask, and the answer is one
+sentence long. The third needs no question, because nothing about the destination is in doubt: the
+spike is proposed in the block with everything else, and one confirmation covers it.
 
 And when the router does get it wrong, the cost is bounded. Every branch ends in a proposed block of
 changes and a single confirmation, so a wrong turn costs a proposal, not a record: the author reads a
