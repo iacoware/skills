@@ -1,0 +1,41 @@
+# Results
+
+What the skill actually produced, one directory per run. Never read by a generation session, and
+never the input to one: a session gets a copy.
+
+| Run | Branch exercised | Starting state | Outcome |
+|---|---|---|---|
+| `ROADMAP-CC-1` | Drawing | empty project | 12 rows, `S0`–`S11`, validator green |
+| `ROUTER-1-CC-1` | Re-truing — promotion | `fixtures/mid-flight/` | promoted into `S12`, no redraw, no question |
+| `ROUTER-2-CC-1` | Router — question | `reference-roadmap/` copied | ended in a question, wrote nothing |
+| `REDRAW-CC-1` | Redraw | `fixtures/mid-flight/` | `S0`–`S11` archived, `S12`–`S16` drawn |
+| `ROUTER-3-CC-1` | Re-truing — spike | `fixtures/redrawn/` | minted `S17`, `kind: enabler` — diverges, see R-007 |
+
+`REDRAW-CC-1` is the run `fixtures/redrawn/` was frozen from; it is not one of the three router
+scenarios. `ROUTER-2-CC-1` is identical to the oracle because the correct session for that scenario
+writes nothing — that it is unchanged *is* the result.
+
+Every run keeps its own `PROMPT.md`: the exact text sent, every answer given back, and the model and
+harness it ran on. Half the evidence about this skill is in what a session asked and what it declined
+to write, and none of that survives in the map alone.
+
+## These runs were driven by a sub-agent, not by a person
+
+[`../../REVIEW-WORKFLOW.md`](../../REVIEW-WORKFLOW.md) is written for a human typing `/roadmap` into
+an interactive session. The runs of 2026-08-20 were driven differently, and each `PROMPT.md` carries
+the full text so the difference is readable rather than assumed. What was added, in every run:
+
+- **how to reach the skill.** A sub-agent cannot type `/roadmap`, and the skill sets
+  `disable-model-invocation: true`, so the prompt tells it to call the skill by name and to fall back
+  to reading `~/.claude/skills/roadmap/SKILL.md` as its instructions. The installed copy was verified
+  byte-identical to `skills/roadmap/` first.
+- **do not delegate.** The workflow's read restriction has to survive one level down.
+- **stop at the proposal.** An interactive session stops for confirmation on its own; a sub-agent
+  runs to completion, so it was told explicitly to return the block and write nothing until answered.
+
+What this costs: the invocation path is not the one a real author uses, so anything that depends on
+how the harness loads the skill is untested here. What it does not touch is the reading the session
+does or the block it proposes, which is what the rules are about.
+
+The prompts themselves — the request, the read restriction, and the author's opening sentence — are
+the workflow's, unchanged.

@@ -39,6 +39,12 @@ says before sending, and write down what it said rather than what you intended.
 directory as if it were the project. Never point a session at `reference-roadmap/` or at
 `fixtures/`: both are frozen and a session writes.
 
+**Every run directory keeps a `PROMPT.md`** holding the exact text sent, every answer given back, and
+the model and harness it ran on. Write it from what the session actually received, not from the
+template above: a run driven any other way — through a sub-agent, on another harness, with a prompt
+you adapted — is still evidence, but only if the adaptation is readable. `recipe-app/results/README.md`
+carries the convention and what the 2026-08-20 runs departed from.
+
 **What a session may read** is the sources, and its own copy of `.roadmap/`. Everything else in this
 repository is off limits, and the prompt says so. Three things are off limits in particular:
 `reference-roadmap/` and its rationale, which are the answer key to a drawing; `EVALUATION-RULES.md`
