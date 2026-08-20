@@ -18,6 +18,9 @@ Run either after a change you believe is substantive, not after every commit: a 
 than a net you sized honestly. One run is a question, not a verdict — the same run twice with the
 same answer is a verdict.
 
+What this net does **not** cover yet, and what it would cost to cover, is in
+[`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md).
+
 The steps use `recipe-app`, today's only scenario. With a second one, substitute its directory
 everywhere; the rules do not change.
 
