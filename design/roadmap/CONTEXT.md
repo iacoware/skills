@@ -25,29 +25,45 @@ _Avoid_: vision, obiettivo, milestone
 
 **Slice**:
 Un esito verticale singolo, indipendentemente schedulabile, con un solo learning target. Esiste solo
-in `NOW`: ha un id, una riga nel register e un documento in `.roadmap/slices/`.
+in `NOW`: ha un id, una riga nel register e un documento in `.roadmap/slices/`. Non è il nome
+collettivo delle righe del register: uno spike ha id, riga e documento come una slice, ma non è una
+slice.
 _Avoid_: ticket, task, story (un ticket di `to-tickets` non va mai chiamato slice in questi
-documenti, nonostante `to-tickets` chiami i propri ticket "tracer-bullet vertical slices")
+documenti, nonostante `to-tickets` chiami i propri ticket "tracer-bullet vertical slices"); spike
+
+**Spike**:
+Un'indagine timeboxed il cui prodotto è conoscenza: ha un learning target e nessun esito verticale,
+e perciò non è una slice. Sta nel register con `kind: spike` perché è lavoro che occupa tempo e
+sblocca slice successive, e una mappa che lo omette fa fare sense-making su informazione parziale.
+Condivide tutto il resto con una slice — id dalla stessa sequenza, `Depends on`, readiness,
+executor, documento, close-out in `.roadmap/archive/` — tranne `Audience`, che non si compila. Deve
+avere un dipendente: o una slice lo elenca in `Depends on`, o la sua riga dichiara che valida la
+fattibilità del goal. Occupa una riga sotto il limite di `NOW` come tutto il resto. A valle non passa
+da `to-spec`: `prototype` se la domanda richiede di costruire qualcosa, `wayfinder` se è una scelta
+da prendere.
+_Avoid_: research slice, investigation slice, non-product work, timebox (non è un campo)
 
 **Register**:
-La tabella in `roadmap.md` che tiene il percorso verso il goal: una riga per slice `NOW`, con i soli
-metadati che servono a *confrontare* le slice fra loro e decidere cosa viene prima — id, theme,
-kind, size, readiness, executor, `Depends on`, esito in una riga. La maggior parte delle righe non è
-prendibile in mano oggi, ed è voluto: il register risponde a *qual è il percorso*, non a *cosa posso
-fare adesso* — a quello risponde `readiness`. Ciò che serve a ragionare *dentro* una slice sta nel
-suo documento. Una slice chiusa esce dal register.
+La tabella in `roadmap.md` che tiene il percorso verso il goal: una riga per ogni elemento di `NOW`,
+slice o spike, con i soli metadati che servono a *confrontare* le righe fra loro e decidere cosa
+viene prima — id, theme, kind, size, readiness, executor, `Depends on`, esito in una riga. La maggior
+parte delle righe non è prendibile in mano oggi, ed è voluto: il register risponde a *qual è il
+percorso*, non a *cosa posso fare adesso* — a quello risponde `readiness`. Ciò che serve a ragionare
+*dentro* una riga sta nel suo documento. Una riga chiusa esce dal register.
 _Avoid_: slice index, index, tabella delle slice, backlog
 
 **Id**:
-L'identità stabile di una slice (`S0`, `S1`, …), assegnata alla promozione da `LATER` a `NOW` per
-incremento monotòno. Sopravvive a riordini e inserimenti, non viene mai riciclata, e non esprime
-posizione: l'ordine di consegna lo porta l'ordine del register.
+L'identità stabile di una riga del register (`S0`, `S1`, …), assegnata alla promozione da `LATER` a
+`NOW` per incremento monotòno. La sequenza è una sola: `kind` dice cosa è la riga, l'id no.
+Sopravvive a riordini e inserimenti, non viene mai riciclata, e non esprime posizione: l'ordine di
+consegna lo porta l'ordine del register.
 _Avoid_: numero di slice, indice, posizione
 
 **NOW**:
-L'orizzonte di ciò che serve per arrivare al `Goal`: le slice che, prese tutte, ci portano. Solo le
-slice `NOW` hanno id, riga nel register e documento. È limitato — da tre o quattro slice a venti,
-quindici il numero a cui puntare — e il limite vincola la granularità, non il conteggio: un problema
+L'orizzonte di ciò che serve per arrivare al `Goal`: le slice che, prese tutte, ci portano, più gli
+spike che servono a scoprire come. Solo ciò che sta in `NOW` ha id, riga nel register e documento. È
+limitato — da tre o quattro slice a venti, quindici il numero a cui puntare — e il limite vincola la
+granularità, non il conteggio: un problema
 più grande non compra più righe, compra slice più ciccione. Non c'è gradiente di dettaglio al suo
 interno: il documento di `S12` è sottile quanto quello di `S1`, e la minore confidenza si manifesta
 in `Open questions` e `readiness`, non in un campo.
@@ -97,13 +113,13 @@ oppure, per il lavoro ammesso più tardi, la slice consegnata che l'ha resa visi
 `Sources` perché quel nome è già preso a livello di roadmap.
 
 **Kind**:
-Colonna del register che dice cosa è una slice: `product`, `enabler`, `release`. Sostituisce i tag
-`(Theme: …)`, `(Enabler: …)`, `(Release: delivery)` nel titolo.
+Colonna del register che dice cosa è una riga: `product`, `enabler`, `release` sono slice, `spike`
+no. Sostituisce i tag `(Theme: …)`, `(Enabler: …)`, `(Release: delivery)` nel titolo.
 
 **Size**:
 Colonna del register con un segnale grossolano di dimensione, il cui unico effetto è instradare la
 slice a valle: `large` passa da `to-tickets`, altrimenti si va diritti a `to-spec`. Non è un budget
-di token.
+di token, e su uno spike non decide nulla: lì instrada `kind`.
 
 **Theme**:
 Una promessa di prodotto rinviabile o cancellabile per intero, con un esito desiderato in linguaggio

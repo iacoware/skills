@@ -25,7 +25,9 @@ Grows from checking one file to checking a graph:
 - every `Depends on` resolves to a row;
 - no id recycled or non-monotonic across `slices/` and `archive/`;
 - no candidate and no exclusion carries an id;
-- `readiness` and `executor` hold legal values.
+- `readiness`, `executor` and `kind` hold legal values;
+- every `kind: spike` row is named in some row's `Depends on`, or declares on its own row that it
+  validates the goal's feasibility.
 
 It counts the register and warns past the cap without failing — exceeding it is a signal to the
 author, and failing on it would be grading the map instead of checking it. It stays a script, invoked

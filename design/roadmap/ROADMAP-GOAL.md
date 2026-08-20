@@ -200,10 +200,10 @@ conversation and the spec, never in the roadmap. What differs between near and f
 confidence already has its expression — a fuller `Open questions`, and `readiness: needs-decision`. No
 new field, no new rule, nothing to keep in sync.
 
-**The register holds the comparison metadata; the slice document holds the rest.** A field earns a
-column when it is used to *compare slices and decide what comes first*. A field that only makes sense
-while reasoning inside one slice belongs to that slice's document — repeating register fields inside
-the document is what made the current output feel cluttered in the first place. Close-out removes the
+**The register holds the comparison metadata; the document holds the rest.** A field earns a column
+when it is used to *compare rows and decide what comes first*. A field that only makes sense while
+reasoning inside one row belongs to that row's document — repeating register fields inside the
+document is what made the current output feel cluttered in the first place. Close-out removes the
 row and moves the document to the archive, so `NOW` shrinks toward the goal, which is as much progress
 reporting as this tool does.
 
@@ -256,12 +256,41 @@ consumes — its decision tickets are questions whose resolution is a decision �
 executors are what `wizard` consumes.
 
 **No token budget on a slice.** Sizing to a single context window is `to-tickets`' job, and it does it
-better because by then a spec exists. A token count no validator can check is a hollow ritual.
+better because by then a spec exists. A token count no validator can check is a hollow ritual. `size`
+routes what gets delivered; `kind: spike` routes ahead of it, since a spike has no spec to write.
 
-**`kind` replaces the title tags.** The current skill writes `(Theme: …)`, `(Enabler: …)` and
-`(Release: delivery)` into the slice title, which hides metadata in prose and puts the theme in two
-places at once; as a column it also makes "an enabler may not be a theme's first validator" checkable
-instead of parseable.
+**`kind` replaces the title tags.** `product`, `enabler`, `release`, `spike`. The current skill writes
+`(Theme: …)`, `(Enabler: …)` and `(Release: delivery)` into the slice title, which hides metadata in
+prose and puts the theme in two places at once; as a column it also makes "an enabler may not be a
+theme's first validator" checkable instead of parseable.
+
+**Research gets a row: `kind: spike`.** A spike is timeboxed investigation whose product is knowledge,
+so it has a learning target and no vertical outcome. Keeping it out of the register — as a
+`wayfinder` decision alone — would hide work that takes real time and blocks real slices, and the
+register would then answer *what is the path* on partial information, which is the one thing this tool
+exists not to do. Sense-making on a map that omits the research is sense-making on a lie.
+
+A spike is therefore **not a slice**, and the word does not stretch to cover it: the vertical outcome,
+the split test and verification-mapped-to-the-learning-target are what *slice* means, and a spike
+fails all three by design. The register holds rows, and a row is a slice or a spike. Everything else
+is shared, because none of it depends on the outcome being vertical: same id sequence and same
+minting, same `Depends on`, same readiness and executor, same document in `slices/`, same close-out
+into `archive/` — a spike that answers its question was delivered. The one field that does not apply
+is `Audience`; a spike has no user, and who consumes its answer is named by what depends on it.
+
+Two things keep it from becoming the polite way to defer a decision — the failure `plan-slices`
+already had to write an eval rule against, that assigning a spike does not resolve a conflict between
+sources:
+
+- **A spike must have a dependent.** Either a slice lists it in `Depends on`, or its row declares that
+  it validates the goal's feasibility. A spike nobody is waiting on is curiosity, and the check is
+  referential, so the validator can make it.
+- **It competes for a row under the cap**, like everything else in `NOW`. Research displacing a slice
+  is the cost showing up where it can be argued with.
+
+There is no timebox field. A spike is timeboxed in the doing, downstream, and a duration no validator
+can check is the same hollow ritual as a token budget. What the roadmap can see is the row that has
+not closed for three sessions, which is a conversation, not a field.
 
 **The slice document holds no spec.** Its fields are `Audience`, `Includes`, `Verification`,
 `Learning target`, `Excludes`, `Open questions`. Seams, user stories and contracts are born in
@@ -329,7 +358,9 @@ the map: whether the delivery settles a line in `Assumptions` or `Open questions
 rather than being annotated; whether it changes another row — a size that was wrong, a readiness
 that can flip, a `Depends on` gone moot; and whether it produced a decision clearing the ADR bar,
 which is what the archived slice's `ADRs` reference is for. When all three answers are no, nothing is
-written. A paragraph produced to prove the step happened is the ceremony this tool refuses.
+written. A paragraph produced to prove the step happened is the ceremony this tool refuses. A spike
+is the exception that proves it: three noes on a spike mean it taught nothing, which is a finding
+about the spike.
 
 Both branches end the same way: re-ask the coverage question — *does what is left in `NOW` still reach
 the goal* — which is what recording the goal is for. And all of it is conversation, not generation:
@@ -348,10 +379,12 @@ Couple loosely, on purpose:
 - **Close-out asks.** It does not interrogate the tracker for what is closed. Interrogating would bind
   the skill to whichever tracker is configured and would depend on slice references being reliable;
   asking is more robust, and close-out is an explicitly manual resynchronisation step.
-- **The skill hands over, it does not drive.** It updates the roadmap, marks the slice ready, and
+- **The skill hands over, it does not drive.** It updates the roadmap, marks the row ready, and
   suggests the next step if it is available on the system — the clarifying conversation,
   `/grill-with-docs` normally or `/wayfinder` when the slice is big and foggy, never `/to-spec`
-  directly, since a capture step has nothing to capture yet. The two stacks stay independent.
+  directly, since a capture step has nothing to capture yet. A spike goes elsewhere: `/prototype`
+  when the question needs something built to answer it, `/wayfinder` when it is a choice to be made
+  rather than an experiment to run. The two stacks stay independent.
 - **Degrade cleanly.** Read `docs/agents/issue-tracker.md` when it is there; when it is not, say so
   and carry on, as the installed skills do.
 - **Do not extend the triage label vocabulary.** `needs-decision` is a roadmap readiness state, never
@@ -405,10 +438,3 @@ The format diverges on every axis, which is why nothing is shared:
 | Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open questions` + `Requested by` / `Spec` / `Tickets` / `ADRs` |
 
 The validator also grows from checking one file to checking a graph.
-
-## Open questions
-
-- Where a spike sits in a living roadmap. The practice is wanted, the location is not settled:
-  `kind: spike` in the register makes it visible and schedulable but demands the vertical outcome a
-  spike by definition lacks; leaving it to `wayfinder` under `needs-decision` keeps it out of the
-  comparison view; a `Non-product work` section reintroduces a second place to look.
