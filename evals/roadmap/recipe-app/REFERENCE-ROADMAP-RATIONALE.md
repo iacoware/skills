@@ -23,7 +23,7 @@ field used only while reasoning inside one row belongs to that row's document.
 | Column | Why it compares rows |
 |---|---|
 | `Id` | Identity. It is what `Depends on` points at and what survives promotion and reordering. |
-| `Titolo` | The row's name, and the link into its document. It is what the eye reads down fifteen rows, which is why it sits second and not last. |
+| `Title` | The row's name, and the link into its document. It is what the eye reads down fifteen rows, which is why it sits second and not last. |
 | `Theme` | Breadth. You cannot ask *has every promise got a first validator yet* without reading themes across rows. |
 | `Kind` | Routing, and the one check the format makes on the map's shape: an enabler may not be a theme's first validator. |
 | `Size` | Routes what happens downstream — `large` goes through `to-tickets`, the rest goes straight to `to-spec`. |

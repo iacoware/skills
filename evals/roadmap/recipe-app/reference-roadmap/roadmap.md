@@ -24,7 +24,7 @@ questa è la mappa come è stata disegnata la prima volta contro il goal.
 
 ## Themes
 
-| Theme | Promessa | Primo validatore |
+| Theme | Promise | First validator |
 |---|---|---|
 | `ricerca-semantica` | Descrivi quello che vuoi mangiare e la ricetta esce, in qualunque lingua sia scritta | `S4` |
 | `consultazione` | Le ricette del ricettario si sfogliano e si leggono mentre si cucina | `S5` |
@@ -79,7 +79,7 @@ questa è la mappa come è stata disegnata la prima volta contro il goal.
 
 ## NOW
 
-| Id | Titolo | Theme | Kind | Size | Readiness | Executor | Depends on |
+| Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |
 |---|---|---|---|---|---|---|---|
 | `S0` | [Repository, CI e segreti](slices/S0-repository-ci-segreti.md) | — | `enabler` | `small` | `ready` | `mixed` | — |
 | `S1` | [Walking skeleton in produzione](slices/S1-walking-skeleton.md) | — | `release` | `medium` | `needs-decision` | `mixed` | — |
