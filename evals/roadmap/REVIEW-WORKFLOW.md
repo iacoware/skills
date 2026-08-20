@@ -73,10 +73,11 @@ scenarios, verdicts and all.
    the repository root — structural, deterministic, free. `ROADMAP` is the directory holding
    `roadmap.md`, not a file. If it is red, stop and fix before reading.
 
-   The session runs the validator itself at § 5, and its run is not this one: the working directory
-   of an eval session is the repository root, so its `.roadmap` argument resolves to nothing. That it
-   ran it, and what it did with the `WARNING`s, is what R-033 reads; where it pointed it is an
-   artifact of this layout and not a defect.
+   The session runs the validator itself at § 5, and its run is not this one: § 5 resolves `.roadmap`
+   against the author's project, which here is the run directory and not the repository root. A
+   session that changes directory first gets a real result; one that does not gets nothing, and that
+   is an artifact of this layout rather than a defect. What R-033 reads is that it ran the validator
+   at all and what it did with the `WARNING`s, never where it pointed.
 
 3. **Read the map against `recipe-app/EVALUATION-BRIEF.md`**, opening `sources/` only to verify a
    citation. **The brief is the authority**, not the sources: it decides which conflicts exist, which
@@ -147,8 +148,8 @@ ids move with it and the scenario text is what gets corrected.
 
 ### 1. Sounds like a change of destination, is work
 
-**Starting state:** `fixtures/mid-flight/` — the MVP map with `S0`–`S8` delivered and in `archive/`,
-`NOW` holding `S9`–`S14`, and `LATER` still carrying *ricerca su tutti i ricettari di cui si è
+**Starting state:** `fixtures/mid-flight/` — the MVP map with `S0`–`S3` delivered and in `archive/`,
+`NOW` holding `S4`–`S11`, and `LATER` still carrying *ricerca su tutti i ricettari di cui si è
 membri*.
 
 **The author's opening sentence:** *Search has to work across every cookbook I belong to, not just
@@ -159,8 +160,8 @@ the current one.*
 **A correct session** reads a claim about the path. The `Goal` line is untouched, no theme is
 recomputed, and nothing is redrawn. The capability is already a candidate, so it is **promoted**, not
 admitted anew: the `LATER` line is gone, the register has one more row carrying the next free id —
-`S15` — a document appears under `slices/`, and `Requested by` records where the candidate came from.
-The cap is checked and holds at seven rows.
+`S12` — a document appears under `slices/`, and `Requested by` records where the candidate came from.
+The cap is checked and holds at nine rows.
 
 **The failure it watches for** is the map being redrawn because scope sounds structural, and the
 weaker version of it: a question asked where nothing about the destination is in doubt. *Which*
@@ -210,9 +211,11 @@ skip the question.
 
 ### 3. Sounds like a slice, is a spike
 
-**Starting state:** `fixtures/redrawn/` — the map redrawn against the public-cookbooks goal, `S0`–`S14`
-in `archive/`, `NOW` holding `S15`–`S20`, with `S17` being cross-cookbook search, promoted out of
-`LATER` because discovery is now the goal.
+**Starting state:** `fixtures/redrawn/` — the map redrawn against the public-cookbooks goal, `S0`–`S11`
+in `archive/`, `NOW` holding `S12`–`S16`, with `S13` being search across the whole public corpus. The
+candidate that got promoted was *ricettari pubblici tematici*, which is the goal now; *ricerca su
+tutti i ricettari di cui si è membri* stayed in `LATER` with a recorded verdict, because the set of
+cookbooks you are a member of and the public corpus are not the same set.
 
 **The author's opening sentence:** *Search has to work on the public corpus — thousands of recipes
 across cookbooks nobody curated together.*
@@ -221,9 +224,13 @@ across cookbooks nobody curated together.*
 
 **A correct session mints a spike.** Nothing about the destination is in doubt, so no question is
 asked and the spike is proposed in the block with everything else. The row carries `kind: spike`, the
-next free id — `S21` — an empty `Audience`, and `S17` gains `S21` in `Depends on`. Its `Verification`
+next free id — `S17` — an empty `Audience`, and `S13` gains `S17` in `Depends on`. Its `Verification`
 reads as a measurement: recall and latency for a shared index at that volume. The cap is checked and
-holds at seven rows.
+holds at six rows.
+
+`S13` already stands for search over the public corpus, which is what makes this scenario sharp: the
+volume the sentence carries — thousands of recipes nobody curated together — is evidence the map did
+not have, and widening `S13` on it is specifying an index shape nobody knows yet.
 
 That the spike's id is higher than the row waiting on it is not a wrinkle: ids are identity, the
 register's order is delivery order, and the spike is delivered first.
