@@ -9,7 +9,8 @@ Questo repo pubblica agent skill: ogni skill che sviluppa un vocabolario proprio
   register, slice, candidate, orizzonti. Il razionale sta in
   [`ROADMAP-GOAL.md`](./design/roadmap/ROADMAP-GOAL.md), che è l'autorità; tre sessioni camminate per
   intero su `recipe-app` stanno in [`WORKFLOWS.md`](./design/roadmap/WORKFLOWS.md) e illustrano
-  soltanto.
+  soltanto; [`PLAN-INPUTS.md`](./design/roadmap/PLAN-INPUTS.md) raccoglie ciò che appartiene al piano
+  implementativo.
 
 ## Relationships
 
