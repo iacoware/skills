@@ -215,6 +215,13 @@ taken silently does more damage than a question left visibly open. A generated r
 this the other way and drops semantic search is wrong; one that resolves it silently is worse than one
 that resolves it wrongly and says so.
 
+The second is the same failure in a quieter register, and it was missed on the first drawing of this
+reference: `concepts.md` draws manual entry as skipping extraction outright, while `arch-choices.md`
+lists *copia-incolla / manuale* together as reusing the same engine and schema. Manual entry is a
+plain form on both this map and every candidate drawn so far — which is to say the reading was taken
+by everybody and stated by nobody, and a reading taken that quietly is exactly what an `Assumptions`
+line exists to expose. `S7` reuses the edit form and never the extractor, and now says so.
+
 The three open questions are at map altitude because each changes the *shape* of the map: whether `S3`
 and `S4` exist as drawn, whether a row is needed for recovering from a failed import, whether moving
 recipes between cookbooks is a row or an exclusion. The provider question is not among them — it

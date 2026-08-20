@@ -39,6 +39,10 @@ questa è la mappa come è stata disegnata la prima volta contro il goal.
 - `ricerca-semantica`, `S4` — «mai embedding a runtime» nei sorgenti è un vincolo di costo, non di
   architettura: la query si embedda a ogni ricerca. I sorgenti si contraddicono su questo punto e la
   mappa sceglie la lettura economica.
+- `inserimento-manuale`, `S7` — `concepts.md` fa saltare l'estrazione all'inserimento manuale,
+  `arch-choices.md` gli fa riusare «lo stesso motore e schema». La mappa legge il diagramma: il form
+  manuale non attraversa l'estrattore, e «stesso schema» vale per la forma della `Recipe` che si
+  salva, non per un motore che quel percorso non tocca.
 - `S1` — Neon e Supabase sono intercambiabili ai fini della mappa: quale dei due si scelga non
   aggiunge né toglie righe.
 - `import-automatico`, `S9` — il JSON-LD copre i siti che i primi utenti incollano davvero.
