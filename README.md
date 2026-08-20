@@ -7,6 +7,7 @@ Agent skills installabili con la [Skills CLI](https://github.com/vercel-labs/ski
 | Skill | Descrizione |
 | --- | --- |
 | [`plan-slices`](skills/plan-slices) | Crea, rivede, splitta, unisce e riordina delivery plan per prodotti greenfield e capability rilevanti: slice verticali value-first e risk-first, con orizzonti NOW / LATER / OUT-OF-SCOPE. Si invoca esplicitamente (`/plan-slices`), l'agent non la attiva da solo. |
+| [`roadmap`](skills/roadmap) | Tiene viva la roadmap di un progetto rispetto a un goal dichiarato: le slice verticali e gli spike che ci arrivano, aggiornati man mano che il lavoro viene consegnato, scoperto, rimodellato o abbandonato. Vive in `.roadmap/`. Si invoca esplicitamente (`/roadmap`), l'agent non la attiva da solo. |
 
 ## Installazione
 
@@ -44,5 +45,17 @@ make list                     # elenca le skill scoperte, senza installare
 ## Test
 
 ```bash
-make test
+make test                 # entrambe le suite
+make test-plan-slices     # solo unittest Python
+make test-roadmap         # solo node:test
 ```
+
+## Validator
+
+```bash
+make validate PLAN=<plan.md>          # plan-slices
+make validate-roadmap ROADMAP=<dir>   # roadmap, default .roadmap
+```
+
+Il validator di `roadmap` è TypeScript eseguito da Node senza build step: serve Node 23.6 o successivo,
+oppure `--experimental-strip-types` fra 22.6 e 23.5.

@@ -10,7 +10,10 @@ Questo repo pubblica agent skill: ogni skill che sviluppa un vocabolario proprio
   [`ROADMAP-GOAL.md`](./design/roadmap/ROADMAP-GOAL.md), che è l'autorità; tre sessioni camminate per
   intero su `recipe-app` stanno in [`WORKFLOWS.md`](./design/roadmap/WORKFLOWS.md) e illustrano
   soltanto; [`PLAN-INPUTS.md`](./design/roadmap/PLAN-INPUTS.md) raccoglie ciò che appartiene al piano
-  implementativo.
+  implementativo. La skill che lo parla è [`skills/roadmap`](./skills/roadmap): il router in
+  [`SKILL.md`](./skills/roadmap/SKILL.md), le regole in
+  [`references/`](./skills/roadmap/references), il validator in
+  [`scripts/validate_roadmap.ts`](./skills/roadmap/scripts/validate_roadmap.ts).
 
 ## Relationships
 
