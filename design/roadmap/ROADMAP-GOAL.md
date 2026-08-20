@@ -219,10 +219,13 @@ in one row is noise, and it is the filename that resolves it anyway.
 
 **Ids are minted at promotion by monotonic increment.** The next one is the highest found across
 `.roadmap/slices/` and `.roadmap/archive/`, plus one — the filenames carry it, so it is two directory
-listings and no counter to keep in sync. Two operations follow from that. A **split** keeps the id on
-the half that keeps the learning target: retiring the original and minting two is cleaner in principle
-and worse in practice, since it invalidates every `Depends on` pointing at the original for no gain,
-and the learning target is already the invariant the split test rests on. **Retirement** spends the id
+listings and no counter to keep in sync. Three operations follow from that. A **split** keeps the id
+on the half that keeps the learning target: retiring the original and minting two is cleaner in
+principle and worse in practice, since it invalidates every `Depends on` pointing at the original for
+no gain, and the learning target is already the invariant the split test rests on. A **merge** is that
+same rule read backwards — the surviving row keeps the id of the learning target that survives, and
+the other id is spent — since a merge yields one learning target and identity follows it either way.
+**Retirement** spends the id
 and deletes the document: the archive means *delivered* and would start lying the moment it held
 something that was not, and git is the archive for things that never happened.
 
