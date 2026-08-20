@@ -30,6 +30,8 @@ three router scenarios, verdicts and all.
 | `recipe-app/REFERENCE-ROADMAP-RATIONALE.md` | Why each row is a row and sits where it sits — what the published map deliberately does not carry. |
 | `recipe-app/fixtures/validator/` | One minimal mutation of the oracle per validator check. Read by `validate_roadmap.test.ts`, not by a reviewer. |
 | `recipe-app/fixtures/mid-flight/`, `recipe-app/fixtures/redrawn/` | The starting states of router scenarios 1 and 3. Cut out of a real run and frozen. |
+| `recipe-app/fixtures/README.md` | What each of the three fixture directories is, who reads it, and which run it came from. |
+| `recipe-app/results/` | What the skill produced, one directory per run, each with the `PROMPT.md` that produced it. Never an input to a session. |
 | `../AGENTS.md` | Authorization rules for provider runs. Binding for every generation call below. |
 
 Four jobs, no overlap: a **procedure**, **rules** that hold across scenarios, **facts** about this
