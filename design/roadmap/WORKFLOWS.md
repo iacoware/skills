@@ -30,19 +30,20 @@ numbers `plan-slices` used, even where the underlying work is recognisably the s
 ## 1. A session of re-truing
 
 **Where we are.** The goal is the MVP one: a cookbook shared between family and friends, where a
-recipe is found by describing it, across languages. `S0`–`S7` are delivered and archived — repository
-and CI, walking skeleton, the embedding pipeline, cross-language semantic search, reading a recipe,
-Google sign-in, manual entry, import from a URL with JSON-LD. `NOW` holds `S8`–`S13`, and `S8` — the
-LLM fallback for pages without structured data — has just been finished but not yet closed out.
+recipe is found by describing it, across languages. `S0`–`S8` are delivered and archived — repository
+and CI, walking skeleton, the cross-language embedding spike, the embedding pipeline, cross-language
+semantic search, reading a recipe, Google sign-in, manual entry, import from a URL with JSON-LD.
+`NOW` holds `S9`–`S14`, and `S9` — the LLM fallback for pages without structured data — has just been
+finished but not yet closed out.
 
-**The author arrives with a situation, not a verb**: *S8 is done. The JSON-LD hit rate on the sites we
+**The author arrives with a situation, not a verb**: *S9 is done. The JSON-LD hit rate on the sites we
 actually use came out at 55%, far below what we assumed. And I want recipes extracted from a
 screenshot — nobody had thought of it.*
 
 Three operations are in there. The skill finds them; the author does not name them.
 
 **Close-out runs first**, because everything else is decided against a register that is already true.
-`S8`'s row leaves the register, its document moves to `.roadmap/archive/`, and its `ADRs` reference is
+`S9`'s row leaves the register, its document moves to `.roadmap/archive/`, and its `ADRs` reference is
 filled if the work produced a decision that cleared the bar — hard to reverse, surprising without
 context, the result of a real trade-off.
 
@@ -52,7 +53,7 @@ specific things, none of them a summary:
 - **Does it settle an open assumption?** `Assumptions` carried *JSON-LD covers the sites the pilot
   users actually paste*. Delivery refuted it at 55%. The line does not get annotated, it dies: it has
   been answered.
-- **Does it change another row?** This is where the value is. `S9` was sized `small` on the assumption
+- **Does it change another row?** This is where the value is. `S10` was sized `small` on the assumption
   the LLM fallback was an edge case. At 55% it is the main path, so its size is wrong and its
   readiness is now questionable.
 - **Does it unblock anything?** A `needs-decision` elsewhere that this delivery just decided, a
@@ -61,12 +62,12 @@ specific things, none of them a summary:
 Absorption is a state change on other rows. When it produces no state change anywhere, it produced
 nothing, and writing a paragraph to prove otherwise is the ceremony this tool refuses.
 
-**Revision, second**, because close-out just exposed it. `S8`'s learning target was *does JSON-LD
-carry the sites we care about*, and the answer reshapes `S9`. `S9` bundled two things that were one
+**Revision, second**, because close-out just exposed it. `S9`'s learning target was *does JSON-LD
+carry the sites we care about*, and the answer reshapes `S10`. `S10` bundled two things that were one
 thing while the fallback looked marginal: LLM extraction from unstructured HTML, and the paste path
-for pages that cannot be fetched at all — paywalls, JS-heavy sites. Split. `S9` **keeps its id**,
+for pages that cannot be fetched at all — paywalls, JS-heavy sites. Split. `S10` **keeps its id**,
 because it keeps the learning target — *an LLM extracts a recipe from unstructured HTML within
-budget* — and the paste path is minted as `S14`. Anything pointing at `S9` in a `Depends on` still
+budget* — and the paste path is minted as `S15`. Anything pointing at `S10` in a `Depends on` still
 resolves, which is the whole reason identity follows the learning target rather than the split.
 
 **Admission, last.** Screenshot extraction. Two questions, in order.
@@ -82,14 +83,14 @@ provenance is recorded when it is promoted, not before.
 
 The other branch is worth seeing, because it is the same input with different evidence. Had the author
 said *the pilot users photograph pages out of paper cookbooks and paste is useless to them*, the
-capability would be on the path, and it would be admitted straight into `NOW`: next id `S15`, and
-`Requested by: S8`, since what made it visible was a delivered slice and not a source document. Then
+capability would be on the path, and it would be admitted straight into `NOW`: next id `S16`, and
+`Requested by: S9`, since what made it visible was a delivered slice and not a source document. Then
 the cap gets checked — `NOW` would go from six rows to seven, comfortably inside it, so nothing is
 forced out. Had it been at nineteen, something would have had to merge or go back to `LATER`, and that
 pressure is the point.
 
-**One block, one confirmation.** The three operations are proposed together — close `S8`, kill the
-JSON-LD assumption, resize and split `S9` into `S9` + `S14`, file screenshot extraction as a
+**One block, one confirmation.** The three operations are proposed together — close `S9`, kill the
+JSON-LD assumption, resize and split `S10` into `S10` + `S15`, file screenshot extraction as a
 candidate — and the author confirms once. Not five files written one at a time with a question
 between each.
 
@@ -99,7 +100,7 @@ catches the case in example 3.
 
 ## 2. A redraw
 
-**Where we are.** The MVP goal is reached. `S0`–`S13` are delivered and archived, `NOW` is empty.
+**Where we are.** The MVP goal is reached. `S0`–`S14` are delivered and archived, `NOW` is empty.
 
 **The author arrives with:** *public themed cookbooks are the product — anyone should be able to
 discover and read one without being invited.*
@@ -116,8 +117,8 @@ of it), each with its first validator recomputed. The **ordering criteria**: the
 *minimum delivery path first, then conventions, then existential risk*, which are greenfield criteria,
 and repository, CI and skeleton now exist; the new ones start from a different risk, the public read
 boundary, which is a security surface that did not exist before. The **register**: emptied, refilled
-with the slices that reach the new goal — and the first of them is **`S14`, not `S0`**, because the
-archive reaches `S13` and the counter does not go back. **`Assumptions` and `Open questions`**: both
+with the slices that reach the new goal — and the first of them is **`S15`, not `S0`**, because the
+archive reaches `S14` and the counter does not go back. **`Assumptions` and `Open questions`**: both
 recomputed. The old entries died of delivery — *query embedding at runtime*, *Postgres provider* —
 and new ones appear, such as the assumption that *a public cookbook is read-only for non-members*,
 which the new goal does not say.
@@ -155,8 +156,8 @@ verdict:
 A candidate that survives without being re-read is one nobody chose, and `LATER` is a focus tool whose
 focus is relative to a goal.
 
-**The variant mid-flight.** Had the goal changed with `NOW` still full — say after `S9`, with
-`S10`–`S13` open — one thing differs: those four do not carry automatically. Each is re-justified
+**The variant mid-flight.** Had the goal changed with `NOW` still full — say after `S10`, with
+`S11`–`S14` open — one thing differs: those four do not carry automatically. Each is re-justified
 against the new goal. *Invitation and equal collaboration* still serves publication, so it stays and
 **keeps its id**; whatever does not serve the new goal is retired, dead or demoted to candidate.
 
@@ -183,7 +184,7 @@ The tell is worth stating plainly, because it is the trap: **how cheap something
 nothing about whether it moves the destination.** The cost of the change and the altitude of the
 change are unrelated, and the roadmap only cares about the second.
 
-**Sounds like a slice, is a spike.** We are inside the redrawn map: `NOW` holds `S14`–`S19`, and `S16`
+**Sounds like a slice, is a spike.** We are inside the redrawn map: `NOW` holds `S15`–`S20`, and `S17`
 is cross-cookbook search, promoted out of `LATER` because discovery is now the goal. The author
 arrives with *search has to work on the public corpus, thousands of recipes across cookbooks nobody
 curated together*. Admitting it as a slice is the natural move, and it is wrong for a reason nothing
@@ -195,14 +196,14 @@ It is nearly the sentence of the first case, one goal later, and the verdict dif
 unknown differs. There the capability was known and only its scope was in question, so promotion
 settled it. Here the capability is known too, and what is missing is a measurement.
 
-So a spike is minted, `S20`, `kind: spike`, and `S16` gains it in `Depends on`. That it carries a
+So a spike is minted, `S21`, `kind: spike`, and `S17` gains it in `Depends on`. That it carries a
 higher id than the slice waiting on it is not a wrinkle: ids are identity, the register's order is
 delivery order, and the spike is delivered first.
 
 The tell here is the honest `Verification`. Write it out and it reads *we can state recall and p95
 latency for a ten-thousand-recipe shared index* — a number, not a thing a user can do. **When the
 verification is a measurement rather than a capability, it is a spike.** `Audience` stays empty for
-the same reason: nobody is served, and who consumes the answer is `S16`, which is already written in
+the same reason: nobody is served, and who consumes the answer is `S17`, which is already written in
 the dependency.
 
 It is not a `wayfinder` decision either, which is the other plausible home. Nobody can settle this by
@@ -211,8 +212,8 @@ thinking about it; somebody has to build a throwaway index and measure it, so th
 here, but at nineteen the spike would displace a slice — the argument *is this research worth a slice
 of the path* happening where it can be had.
 
-When `S20` closes, the three questions of absorption are the whole point rather than a formality: the
-assumption *one index scales to public volume* dies, `S16` is resized from `small` to `large` and its
+When `S21` closes, the three questions of absorption are the whole point rather than a formality: the
+assumption *one index scales to public volume* dies, `S17` is resized from `small` to `large` and its
 shape settles, and the choice of index topology clears the ADR bar, so the archived spike's `ADRs`
 reference is where the thread continues. A spike that answered no to all three would have taught
 nothing, and that is a finding about the spike.
