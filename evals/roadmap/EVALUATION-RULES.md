@@ -32,9 +32,10 @@ number and no id is ever reused.
 
 **A `⚠ Has failed` mark carries the runs a check has already gone red on**, and a
 `⚠ Watch the opposite failure` mark sits on the rules whose overcorrection would cost more than the
-failure they guard. The first evidence arrived on 2026-08-20: one drawing and three router scenarios,
-recorded below on R-005, R-007, R-009 and R-015. One run is still a question — a mark says a check
-went red once, not that the skill is broken there.
+failure they guard. The first evidence arrived on 2026-08-20: one drawing and four router runs,
+recorded below on R-005, R-007, R-009, R-015 and R-034. One run is still a question — a mark says a
+check went red once, not that the skill is broken there. R-007 is the one check that has now gone red
+twice, and its mark says what the two runs have in common and what they do not.
 
 ## The situation
 
@@ -66,8 +67,10 @@ went red once, not that the skill is broken there.
   interview. The question is owed exactly when the reconciliation fails, and the slice-or-spike
   reading never owes one. **Observed, in its mildest form, on all three router scenarios of
   2026-08-20**: each owed question was asked correctly and each arrived with a second one attached to
-  it — conditional, hedged, and unasked for. Nothing was inferred and no session asked instead of
-  deciding, so no check went red; it is the direction to watch, not yet a failure.
+  it — conditional, hedged, and unasked for. `ROUTER-3-CC-2` did it a fourth time, attaching to the
+  owed close-out question a second one asking whether the input settled a goal-level open question.
+  Nothing was inferred and no session asked instead of deciding, so no check went red; it is the
+  direction to watch, not yet a failure.
 - **R-006** — A capability already sitting in `LATER` is **promoted**, not admitted anew: the
   candidate line goes, the row takes the next id, its document appears in `slices/`, and
   `Requested by` records what produced it. A candidate's presence is a licence to schedule and never
@@ -76,12 +79,24 @@ went red once, not that the skill is broken there.
   can exercise is minted as a spike, and proposed in the block without a question, since nothing
   about the destination is in doubt. `SKILL.md` § 2, *Slice or spike*;
   `references/slice-rules.md`, *The spike test*.
-  ⚠ **Has failed.** Router scenario 3, 2026-08-20. The session read the input correctly, found the
-  unknown, and split it out of the row that could not carry it — then minted it `kind: enabler`. The
-  row it wrote has a spike's `Verification` (every clause a declared number), a spike's
-  `Learning target`, and an `Audience` naming the people building it. Only the column disagreed. The
-  enabler definition in `references/slice-rules.md` also promises to *resolve one material
-  uncertainty*, which is the overlap to watch on the next run before anything is rewritten.
+  ⚠ **Has failed twice, and differently.** Router scenario 3, `ROUTER-3-CC-1` and `ROUTER-3-CC-2`,
+  both 2026-08-20, same fixture and the same prompt.
+  `ROUTER-3-CC-1` read the input correctly, found the unknown, and split it out of the row that could
+  not carry it — then minted it `kind: enabler`. The row it wrote has a spike's `Verification` (every
+  clause a declared number), a spike's `Learning target`, and an `Audience` naming the people building
+  it. Only the column disagreed.
+  `ROUTER-3-CC-2` minted nothing. It widened `S13` to carry the corpus — the seed bullet rewritten to
+  thousands of recipes across dozens of uncurated cookbooks, two observations appended to
+  `Verification`, the `Learning target` rewritten to cover recall at scale *and* first-page usability,
+  the executor moved to `mixed`. That is the first of the two failures scenario 3 names, in a milder
+  form than the one it describes: no index shape was specified, but the unknown was folded into a
+  slice rather than split out of it.
+  **What the second run settles.** The overlap hypothesis — that the enabler definition in
+  `references/slice-rules.md`, which also promises to *resolve one material uncertainty*, is what
+  pulled the column — was not reproduced, so nothing in that file has earned a rewrite. What the two
+  runs share is narrower and worse: on this input, by two different routes, the spike is not minted.
+  The clause is not doing its job; **where** it stops working is not located, and a rule change with
+  no third run behind it is a guess.
   ⚠ **Watch the opposite failure.** Every uncertain row turning into a spike. Uncertainty is the
   learning target of an ordinary row; what makes a spike is that there is no outcome to deliver.
 
@@ -218,3 +233,11 @@ went red once, not that the skill is broken there.
   an earlier session already clarified it and left no `needs-decision` and no `needs-info`; a spike
   to `/prototype` or `/wayfinder`, never to `/to-spec`. What the system does not have is said rather
   than invented. `SKILL.md` § 6.
+  *First evidence, `ROUTER-3-CC-2`, 2026-08-20, and unprompted.* No row was handed over — `S13`,
+  `S14` and `S15` all read `ready` but all depend on `S12`, which is `needs-decision` and
+  undelivered — and the session said so, then volunteered the derivation it would have made:
+  `ready` + `mixed` → `ready-for-human`, and `/grill-with-docs` before `/to-spec`. Both halves
+  correct, and it reported that `docs/agents/issue-tracker.md` was unreadable under this session's
+  constraint rather than inventing where a spec would live. No prompt has yet **asked** for a
+  handover, so the routing of a spike and of an already-clarified slice is still unread — see
+  [`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md).
