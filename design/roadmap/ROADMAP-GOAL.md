@@ -137,10 +137,10 @@ installed set, and that is the whole of what gets built here.
 ## Decisions taken
 
 **Artifact layout.** `.roadmap/roadmap.md` is the readable overview: the goal, sources, current state,
-ordering criteria, the theme table, `Assumptions and gaps`, `Cross-functional concerns`, then the
-three horizons — the register under `NOW`, the candidate list under `LATER`, the exclusions under
-`OUT-OF-SCOPE`. `.roadmap/slices/` holds one document per open slice, `.roadmap/archive/` one per
-delivered slice, both named `S<id>-<slug>.md`.
+ordering criteria, the theme table, `Assumptions`, `Open questions`, `Cross-functional concerns`,
+then the three horizons — the register under `NOW`, the candidate list under `LATER`, the exclusions
+under `OUT-OF-SCOPE`. `.roadmap/slices/` holds one document per open slice, `.roadmap/archive/` one
+per delivered slice, both named `S<id>-<slug>.md`.
 
 **One roadmap per project, serving one declared `Goal` at a time.** The goal comes from a goal
 document or from the invocation, and `roadmap.md` restates it at the top; without it there is nothing
@@ -155,8 +155,9 @@ or one of them is `LATER`.
 
 **A redraw rebuilds the map and keeps the ledger.** `.roadmap/` holds two kinds of thing, and only one
 of them is an opinion about the future. Redrawn from nothing: `Goal`, the themes, the register, the
-ordering criteria, `Assumptions and gaps`. Carried over: `archive/`, because a local tracker has no
-notion of *done* and it is the only durable record of what was delivered; the id high-water mark,
+ordering criteria, `Assumptions` and `Open questions`. Carried over: `archive/`, because a local
+tracker has no notion of *done* and it is the only durable record of what was delivered; the id
+high-water mark,
 because restarting at `S0` would make one number mean two things inside one archive;
 `OUT-OF-SCOPE`
 and `Cross-functional concerns`, because both are constraints the shipped code already obeys and
@@ -215,12 +216,22 @@ and the learning target is already the invariant the split test rests on. **Reti
 and deletes the document: the archive means *delivered* and would start lying the moment it held
 something that was not, and git is the archive for things that never happened.
 
-**`Assumptions and gaps` reports on the input.** Drawing the map forces the skill to resolve things
-the goal document left open; the section says which ones, so the author gets a second reading of the
-vision's completeness. Assumptions come first, because one taken silently does more damage than a
-question left visibly open. What lands here rather than on a slice is decided by what it blocks: a gap
+**Two sections report on the input: `Assumptions`, then `Open questions`.** Drawing the map forces
+the skill to resolve things the goal document left open, and these say which ones, so the author gets
+a second reading of the vision's completeness. They are separate because they ask different things and
+close differently: an assumption was taken as true *in order to* draw the map and asks to be
+corrected, and it usually dies at close-out, when delivery confirms or refutes it; an open question
+could not be settled and asks to be answered, and it dies when the author answers it. The order is
+fixed, which carries structurally what used to be a rule in prose — an assumption taken silently does
+more damage than a question left visibly open.
+
+Every line is traced to what it touches, a theme or a slice id. Neither section is a work queue and
+neither mints anything. What lands in them rather than on a slice is decided by what it blocks: a gap
 that puts the *shape of the map* in doubt cannot live on a slice, because it questions whether that
-slice exists at all.
+slice exists at all, while one that blocks a single slice is that slice's `Open decisions`, with
+`readiness: needs-decision`. That boundary is what makes the name safe to reuse: in `plan-slices`
+`Open questions` was the global catch-all precisely because there was no per-slice state to send
+anything to.
 
 **Dependencies get published**, as a `Depends on` column holding ids. The current skill forbids this —
 order carries the constraint — which holds only while the plan is written once. A later session that
@@ -305,9 +316,9 @@ close-out first, since everything else is decided against a register that has al
 not verbs the author types. `/roadmap promote S7` is precision where sense-making was wanted.
 
 **Absorbing the evidence is a state change, not a summary.** Closing a slice asks three questions of
-the map: whether the delivery settles a line in `Assumptions and gaps`, which then dies rather than
-being annotated; whether it changes another row — a size that was wrong, a readiness that can flip, a
-`Depends on` gone moot; and whether it produced a decision clearing the ADR bar,
+the map: whether the delivery settles a line in `Assumptions` or `Open questions`, which then dies
+rather than being annotated; whether it changes another row — a size that was wrong, a readiness
+that can flip, a `Depends on` gone moot; and whether it produced a decision clearing the ADR bar,
 which is what the archived slice's `ADRs` reference is for. When all three answers are no, nothing is
 written. A paragraph produced to prove the step happened is the ceremony this tool refuses.
 

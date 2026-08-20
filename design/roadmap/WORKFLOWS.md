@@ -49,9 +49,9 @@ context, the result of a real trade-off.
 Then *absorb the evidence*, which is the vaguest phrase in the design document and means three
 specific things, none of them a summary:
 
-- **Does it settle an open assumption?** `Assumptions and gaps` carried *assumed — JSON-LD covers the
-  sites the pilot users actually paste*. Delivery refuted it at 55%. The line does not get annotated,
-  it dies: it has been answered.
+- **Does it settle an open assumption?** `Assumptions` carried *JSON-LD covers the sites the pilot
+  users actually paste*. Delivery refuted it at 55%. The line does not get annotated, it dies: it has
+  been answered.
 - **Does it change another row?** This is where the value is. `S9` was sized `small` on the assumption
   the LLM fallback was an edge case. At 55% it is the main path, so its size is wrong and its
   readiness is now questionable.
@@ -117,10 +117,10 @@ of it), each with its first validator recomputed. The **ordering criteria**: the
 and repository, CI and skeleton now exist; the new ones start from a different risk, the public read
 boundary, which is a security surface that did not exist before. The **register**: emptied, refilled
 with the slices that reach the new goal — and the first of them is **`S14`, not `S0`**, because the
-archive reaches `S13` and the counter does not go back. **`Assumptions and gaps`**: recomputed. The
-old entries died of delivery — *query embedding at runtime*, *Postgres provider* — and new ones
-appear, such as *assumed: a public cookbook is read-only for non-members*, which the new goal does not
-say.
+archive reaches `S13` and the counter does not go back. **`Assumptions` and `Open questions`**: both
+recomputed. The old entries died of delivery — *query embedding at runtime*, *Postgres provider* —
+and new ones appear, such as the assumption that *a public cookbook is read-only for non-members*,
+which the new goal does not say.
 
 **Carried over, and this is where a redraw earns its keep over deleting the directory.**
 

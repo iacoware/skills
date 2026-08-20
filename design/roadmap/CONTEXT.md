@@ -71,14 +71,24 @@ _Avoid_: wontfix (è il ruolo di `triage` per una richiesta esterna rifiutata), 
 la knowledge base di `triage`); la sezione `Out of Scope` di una spec è il confine di quella spec,
 ereditato dalle esclusioni della slice
 
-**Assumptions and gaps**:
-La sezione di `roadmap.md` che riferisce sull'input: cosa la skill ha dovuto assumere per disegnare
-la mappa (*assumed*) e cosa non è riuscita a risolvere (*unresolved*), ogni riga tracciata al tema o
-all'id che tocca. Serve all'autore come seconda verifica sulla completezza della visione. Ci finisce
-solo ciò che mette in dubbio la *forma* della mappa; ciò che blocca una singola slice sta nelle sue
-`Open decisions`, con `readiness: needs-decision`. Non è una coda di lavoro: una voce muore quando
-riceve risposta.
-_Avoid_: Open questions, open issues
+**Assumptions**:
+La prima delle due sezioni di `roadmap.md` che riferiscono sull'input: cosa la skill ha preso per
+vero *per poter* disegnare la mappa, ogni riga tracciata al tema o all'id che tocca. Chiede di essere
+corretta, e di solito muore alla close-out, quando la consegna la conferma o la smentisce. Viene
+prima di `Open questions`: un'assunzione presa in silenzio fa più danno di una domanda lasciata
+visibilmente aperta. Insieme a `Open questions` dà all'autore una seconda lettura sulla completezza
+della visione.
+_Avoid_: Assumptions and gaps, assunzioni implicite
+
+**Open questions**:
+La seconda sezione che riferisce sull'input: cosa la skill non è riuscita a risolvere disegnando la
+mappa, ogni riga tracciata al tema o all'id che tocca. Chiede una risposta, e muore quando l'autore
+risponde. Nessuna delle due è una coda di lavoro e nessuna assegna id. Ci finisce solo ciò che mette
+in dubbio la *forma* della mappa; ciò che blocca una singola slice sta nelle sue `Open decisions`,
+con `readiness: needs-decision` — è quel confine a rendere il nome riutilizzabile, visto che in
+`plan-slices` `Open questions` era il raccoglitore globale proprio perché non esisteva uno stato per
+slice.
+_Avoid_: unresolved, gaps, open issues, backlog di domande
 
 **Requested by**:
 Il riferimento in entrata del documento di slice: cosa ha prodotto la slice — un documento sorgente,
@@ -135,11 +145,12 @@ _Avoid_: demotion (è il caso particolare, non il nome dell'operazione), wontfix
 
 **Redraw**:
 Il ridisegno della mappa quando viene dichiarato un goal nuovo. Si rifanno da zero `Goal`, temi,
-register, criteri di ordinamento e `Assumptions and gaps`; sopravvivono `.roadmap/archive/`, il
-massimo id raggiunto, `OUT-OF-SCOPE` e `Cross-functional concerns` — e un'esclusione che il goal
-nuovo contraddice si toglie in modo esplicito. Né `LATER` né le slice ancora aperte passano in
-automatico: ogni candidate si rilegge una per una contro il goal nuovo, ogni slice aperta si
-rigiustifica tenendo l'id oppure va in retirement. Non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input.
+register, criteri di ordinamento, `Assumptions` e `Open questions`; sopravvivono
+`.roadmap/archive/`, il massimo id raggiunto, `OUT-OF-SCOPE` e `Cross-functional concerns` — e
+un'esclusione che il goal nuovo contraddice si toglie in modo esplicito. Né `LATER` né le slice
+ancora aperte passano in automatico: ogni candidate si rilegge una per una contro il goal nuovo, ogni
+slice aperta si rigiustifica tenendo l'id oppure va in retirement. Non è un'operazione fra le cinque:
+è il ramo di disegno che riparte con più input.
 _Avoid_: reset, ricreazione, nuova roadmap
 
 **Learning target**:
