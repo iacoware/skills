@@ -158,7 +158,8 @@ Se porterebbe `NOW` oltre il limite, obbliga a fondere o a rimandare: la lista n
 **Revision**:
 L'operazione che rimaneggia slice esistenti senza aggiungerne né chiuderne: split, merge,
 riscrittura, riordino. Lo split conserva l'id sulla metà che eredita il learning target; l'altra
-metà ne riceve uno nuovo.
+metà ne riceve uno nuovo. Il merge segue la stessa regola all'incontrario: la riga che resta tiene
+l'id del learning target che sopravvive, e l'altro id è speso.
 _Avoid_: split/merge/reorder come nomi di operazioni distinte
 
 **Retirement**:
