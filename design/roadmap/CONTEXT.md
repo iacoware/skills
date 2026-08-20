@@ -50,7 +50,7 @@ slice `NOW` hanno id, riga nel register e documento. È limitato — da tre o qu
 quindici il numero a cui puntare — e il limite vincola la granularità, non il conteggio: un problema
 più grande non compra più righe, compra slice più ciccione. Non c'è gradiente di dettaglio al suo
 interno: il documento di `S12` è sottile quanto quello di `S1`, e la minore confidenza si manifesta
-in `Open decisions` e `readiness`, non in un campo.
+in `Open questions` e `readiness`, non in un campo.
 
 **LATER**:
 L'orizzonte di ciò che non serve per *questo* goal: speculazione, o materiale per il goal
@@ -81,14 +81,15 @@ della visione.
 _Avoid_: Assumptions and gaps, assunzioni implicite
 
 **Open questions**:
-La seconda sezione che riferisce sull'input: cosa la skill non è riuscita a risolvere disegnando la
-mappa, ogni riga tracciata al tema o all'id che tocca. Chiede una risposta, e muore quando l'autore
-risponde. Nessuna delle due è una coda di lavoro e nessuna assegna id. Ci finisce solo ciò che mette
-in dubbio la *forma* della mappa; ciò che blocca una singola slice sta nelle sue `Open decisions`,
-con `readiness: needs-decision` — è quel confine a rendere il nome riutilizzabile, visto che in
-`plan-slices` `Open questions` era il raccoglitore globale proprio perché non esisteva uno stato per
-slice.
-_Avoid_: unresolved, gaps, open issues, backlog di domande
+Ciò che è rimasto senza risposta, allo stesso nome a due altitudini: la seconda sezione di
+`roadmap.md`, e il campo del documento di slice. Chiede una risposta e muore quando la riceve. A
+deciderne l'altitudine è solo ciò che blocca — se mette in dubbio la *forma* della mappa sta in
+`roadmap.md`, tracciata al tema o all'id che tocca; se blocca una sola slice sta su quella slice, e
+si vede nel register come `readiness: needs-decision` oppure `needs-info`. Il nome è uno perché con
+due si instraderebbe a sensazione invece che per scope, e perché il campo di slice tiene entrambi gli
+stati: ciò che una slice aspetta da qualcun altro è una domanda, non una decisione di qualcuno. Non è
+una coda di lavoro e non assegna id.
+_Avoid_: Open decisions, unresolved, gaps, open issues, backlog di domande
 
 **Requested by**:
 Il riferimento in entrata del documento di slice: cosa ha prodotto la slice — un documento sorgente,

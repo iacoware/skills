@@ -197,7 +197,7 @@ silting up.
 **No gradient of detail inside `NOW`.** The last slice on the path is genuinely foggier than the
 first, but the fog has nowhere to accumulate: the detail of `S1` is born downstream, in the clarifying
 conversation and the spec, never in the roadmap. What differs between near and far is confidence, and
-confidence already has its expression — a fuller `Open decisions`, and `readiness: needs-decision`. No
+confidence already has its expression — a fuller `Open questions`, and `readiness: needs-decision`. No
 new field, no new rule, nothing to keep in sync.
 
 **The register holds the comparison metadata; the slice document holds the rest.** A field earns a
@@ -226,12 +226,21 @@ fixed, which carries structurally what used to be a rule in prose — an assumpt
 more damage than a question left visibly open.
 
 Every line is traced to what it touches, a theme or a slice id. Neither section is a work queue and
-neither mints anything. What lands in them rather than on a slice is decided by what it blocks: a gap
-that puts the *shape of the map* in doubt cannot live on a slice, because it questions whether that
-slice exists at all, while one that blocks a single slice is that slice's `Open decisions`, with
-`readiness: needs-decision`. That boundary is what makes the name safe to reuse: in `plan-slices`
-`Open questions` was the global catch-all precisely because there was no per-slice state to send
-anything to.
+neither mints anything.
+
+**`Open questions` is also the slice's field, and only scope tells the two apart.** What blocks the
+*shape of the map* cannot live on a slice, because it questions whether that slice exists at all;
+what blocks one slice lives on it, and shows in the register as `readiness: needs-decision` or
+`needs-info`. Sharing the name is deliberate: with two names the author can route by feel — *this one
+sounds like a decision, so it goes on the slice* — while with one, the only thing that decides is what
+the entry blocks, which is the rule. The name is safe to reuse because that per-slice state now
+exists: in `plan-slices` `Open questions` was the global catch-all precisely because there was nowhere
+else to send anything. It also stops the field from under-describing itself, since a slice waiting on
+somebody else records what it waits for in the same place, and that is a question, not a decision
+anybody owns.
+
+`Assumptions` has no counterpart on the slice, and should not get one: it reports on the input to
+*drawing the map*, and a slice draws nothing.
 
 **Dependencies get published**, as a `Depends on` column holding ids. The current skill forbids this —
 order carries the constraint — which holds only while the plan is written once. A later session that
@@ -255,7 +264,7 @@ places at once; as a column it also makes "an enabler may not be a theme's first
 instead of parseable.
 
 **The slice document holds no spec.** Its fields are `Audience`, `Includes`, `Verification`,
-`Learning target`, `Excludes`, `Open decisions`. Seams, user stories and contracts are born in
+`Learning target`, `Excludes`, `Open questions`. Seams, user stories and contracts are born in
 `to-spec` and live on the tracker; duplicating them yields two truths that diverge at the first
 ticket. There is no `Outcome` field either: the one-line outcome is a register column, and the
 register is where outcomes get compared.
@@ -393,7 +402,7 @@ The format diverges on every axis, which is why nothing is shared:
 | State | none | readiness × executor |
 | Horizons | three sections of slices | register + candidates + exclusions |
 | Deferral | `LATER` entry with a promotion trigger | candidate, no trigger, no id |
-| Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open decisions` + `Requested by` / `Spec` / `Tickets` / `ADRs` |
+| Slice fields | `Includes` / `Verification` / `Learning / risk` / `Outcome` | `Audience` / `Includes` / `Verification` / `Learning target` / `Excludes` / `Open questions` + `Requested by` / `Spec` / `Tickets` / `ADRs` |
 
 The validator also grows from checking one file to checking a graph.
 
