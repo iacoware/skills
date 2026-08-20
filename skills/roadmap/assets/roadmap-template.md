@@ -54,9 +54,10 @@ row owns stays in it.]
 [One row per open slice or spike, in delivery order. `Kind` is `product`, `enabler`, `release` or
 `spike`; `Size` is `small`, `medium` or `large`; `Readiness` is `ready`, `needs-decision` or
 `needs-info`; `Executor` is `agent`, `human` or `mixed`. `Theme` is `—` on a row that serves every
-promise and can be cancelled with none. `Depends on` holds ids, comma-separated, or `—`. Ids stay
-plain text in `Id` and in `Depends on`; the title is the only link, and it is the way into the row's
-document.]
+promise and can be cancelled with none, and `goal` on a `kind: spike` row that declares it validates
+the goal's feasibility — the one way a spike stands without a dependent naming it in `Depends on`.
+`Depends on` holds ids, comma-separated, or `—`. Ids stay plain text in `Id` and in `Depends on`;
+the title is the only link, and it is the way into the row's document.]
 
 ## LATER
 
