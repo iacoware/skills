@@ -7,14 +7,14 @@ const ARCHIVE_DIRECTORY = "archive"
 
 const ROADMAP_FIELDS = ["Goal", "Sources", "Current state"]
 const ROADMAP_SECTIONS = [
-  "Ordering criteria",
   "Themes",
-  "Assumptions",
-  "Open questions",
-  "Cross-functional concerns",
   "NOW",
   "LATER",
   "OUT-OF-SCOPE",
+  "Ordering criteria",
+  "Assumptions",
+  "Open questions",
+  "Cross-functional concerns",
 ]
 const LIST_ONLY_SECTIONS = [
   "Ordering criteria",

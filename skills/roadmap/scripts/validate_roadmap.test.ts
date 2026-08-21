@@ -228,31 +228,11 @@ const registerOf = (ids: number[]) => `# Roadmap — Prova
 
 **Current state:** niente di consegnato.
 
-## Ordering criteria
-
-1. **Percorso minimo di consegna prima.** Finché non si consegna, non si impara niente.
-
 ## Themes
 
 | Theme | Promise | First validator |
 |---|---|---|
 | \`tema\` | Si può fare la cosa promessa | \`S${ids[0]}\` |
-
-## Assumptions
-
-- \`tema\` — qualcosa preso per vero per poter disegnare la mappa.
-
-## Open questions
-
-- \`tema\` — qualcosa rimasto senza risposta.
-
-## Cross-functional concerns
-
-- **Authorization.** Regola condivisa.
-- **Validation and errors.** Regola condivisa.
-- **Operability.** Regola condivisa.
-- **Accessibility and security.** Regola condivisa.
-- **Data integrity and recovery.** Regola condivisa.
 
 ## NOW
 
@@ -272,6 +252,26 @@ ${ids
 ## OUT-OF-SCOPE
 
 - **Un problema dichiarato irrisolto.** La licenza che dà.
+
+## Ordering criteria
+
+1. **Percorso minimo di consegna prima.** Finché non si consegna, non si impara niente.
+
+## Assumptions
+
+- \`tema\` — qualcosa preso per vero per poter disegnare la mappa.
+
+## Open questions
+
+- \`tema\` — qualcosa rimasto senza risposta.
+
+## Cross-functional concerns
+
+- **Authorization.** Regola condivisa.
+- **Validation and errors.** Regola condivisa.
+- **Operability.** Regola condivisa.
+- **Accessibility and security.** Regola condivisa.
+- **Data integrity and recovery.** Regola condivisa.
 `
 
 const registerWith = (count: number) => {

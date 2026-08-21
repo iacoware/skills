@@ -30,7 +30,8 @@ documents, and that is worth a round trip.
 Read before deciding anything:
 
 - whether `.roadmap/roadmap.md` is there, and if it is, its `Goal`, its themes, its register,
-  `Assumptions`, `Open questions`, `Cross-functional concerns`, `LATER` and `OUT-OF-SCOPE`;
+  `LATER`, `OUT-OF-SCOPE`, `Ordering criteria`, `Assumptions`, `Open questions` and
+  `Cross-functional concerns`;
 - `.roadmap/slices/` and `.roadmap/archive/`, which give the open documents, what was delivered, and
   the id high-water mark — the highest id across both, and the next id is that plus one;
 - the sources the input points at, and `docs/agents/issue-tracker.md` when it is there.

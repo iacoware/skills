@@ -17,6 +17,74 @@ nessuna riga. L'autore ha dichiarato la forma del corpus su cui la ricerca deve 
 migliaia di ricette, ricettari che nessuno ha curato insieme — e il corpus è uscito da una riga di
 `Includes` di `S13` per diventare `S17`.
 
+## Themes
+
+| Theme | Promise | First validator |
+|---|---|---|
+| `pubblico` | Rendi pubblico un ricettario tematico e chiunque, senza account, lo apre e lo legge — e puoi tornare indietro. | `S12` |
+| `scoperta` | Cerchi con parole tue e trovi ricette in tutti i ricettari pubblici, anche scritte in un'altra lingua, senza account. | `S13` |
+| `trovabilita` | Una ricetta pubblica si trova da fuori: un motore di ricerca la indicizza, e il link incollato mostra di cosa parla. | `S14` |
+
+## NOW
+
+| Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |
+|---|---|---|---|---|---|---|---|
+| S12 | [Ricettario pubblico, leggibile senza account](slices/S12-ricettario-pubblico.md) | pubblico | product | medium | needs-decision | agent | — |
+| S17 | [Corpus di partenza: migliaia di ricette da ricettari non coordinati](slices/S17-corpus-di-partenza.md) | scoperta | enabler | medium | needs-decision | mixed | — |
+| S13 | [Ricerca su tutto il corpus pubblico](slices/S13-ricerca-corpus-pubblico.md) | scoperta | product | medium | ready | agent | S12, S17 |
+| S14 | [Pagine pubbliche indicizzabili e condivisibili](slices/S14-pagine-trovabili.md) | trovabilita | product | small | ready | mixed | S12 |
+| S15 | [Vetrina dei ricettari pubblici](slices/S15-vetrina-pubblica.md) | scoperta | product | small | ready | agent | S12 |
+| S16 | [Rilascio pubblico](slices/S16-rilascio-pubblico.md) | — | release | medium | needs-decision | mixed | S13 |
+
+## LATER
+
+- Filtri strutturati per tag e tempo, e ricerca ibrida semantica più full-text: più attraenti su un
+  corpus grande di quanto fossero dentro un ricettario, non necessarie per arrivarci.
+- Ricerca che attraversa tutti i ricettari di cui si è membri: è un'altra cosa dalla ricerca sul
+  corpus pubblico, e nessuna delle due porta l'altra.
+- Un concetto di gruppo sopra i ricettari, se ri-invitare in ognuno diventasse fastidioso.
+- Ruoli e permessi dentro un ricettario, oltre al solo `creatorId`.
+- Passkeys come secondo metodo d'accesso, quando il recupero da dispositivo perso sarà risolto.
+- Import da file esportati da altre app di ricette.
+- Un quarto ingresso di estrazione: la foto di una pagina di libro, via OCR.
+- Deduplica di due ricette linkate dallo stesso URL: in un corpus non coordinato è il caso normale, e
+  la promuove il numero dichiarato sui primi dieci risultati della ricerca pubblica, non il gusto.
+- IaC versionata al posto di `fly.toml` e CLI, se l'ambiente smettesse di essere ricostruibile a
+  mano.
+- Coda di moderazione e segnalazione del contenuto pubblico, sopra la sola via d'uscita che è
+  togliere dal pubblico.
+- Salvare nel proprio ricettario una ricetta trovata in pubblico.
+- Profilo pubblico di chi pubblica, e classificazione automatica dei temi.
+
+## OUT-OF-SCOPE
+
+- **Ingredienti strutturati in quantità e unità.** Poiché la normalizzazione fine è dichiarata non
+  necessaria — la ricerca è semantica e chi legge interpreta il testo — nessuna riga paga il costo di
+  un parser né di un modello di ingrediente. Il prezzo è che lista della spesa e scaling delle
+  porzioni restano preclusi, e che introdurli dopo costerà una migrazione dei dati esistenti.
+- **Review obbligatoria prima del salvataggio.** Poiché bloccare l'utente su un form a ogni aggiunta
+  è dichiarato inaccettabile, l'aggiunta può salvare estrazioni imperfette. Il prezzo era un
+  ricettario con qualche errore dentro casa; adesso è che un'estrazione imperfetta può diventare
+  leggibile da chiunque, e l'unico argine è che pubblicare resta un atto deliberato e reversibile.
+- **Provider email.** Poiché non si invia nessuna email, spariscono password, hashing e flusso di
+  reset, e chi legge non ha bisogno di niente. Il prezzo è la dipendenza da Google per chi scrive,
+  un invito che l'invitante consegna a mano, e nessun canale per raggiungere un lettore o per
+  ricevere da lui una segnalazione.
+- **Vector DB dedicato.** Poiché la scala dichiarata resta quella delle sorgenti, i vettori stanno in
+  Postgres con pgvector e si interrogano in transazione con i dati. Il prezzo è che oltre quella
+  scala la ricerca va ripensata e non soltanto scalata, e adesso quel conto lo presenta la scoperta,
+  che è il prodotto.
+- **Permessi per azione dentro un ricettario.** Poiché tutti i membri sono pari, nessuna riga porta
+  controlli oltre alla membership, e la lettura pubblica è una visibilità del ricettario, non un
+  ruolo. Il prezzo è che non si invita nessuno in sola lettura, e che non si pubblica una singola
+  ricetta senza pubblicare il ricettario che la contiene.
+- **Deduplica delle ricette.** Poiché i duplicati sono dichiarati consentiti, nessuna riga paga una
+  chiave di unicità né un confronto di similarità in scrittura. Il prezzo è cresciuto: lo stesso link
+  pubblicato in due ricettari pubblici esce due volte nei risultati, e i risultati sono il prodotto.
+- **Contributi da chi legge senza account.** Poiché leggere non costa un account, non c'è nessuno a
+  cui attaccare un commento, un voto o una correzione. Il prezzo è che la scoperta non ha nessun
+  segnale sociale con cui ordinare, e deve reggersi sulla sola somiglianza semantica.
+
 ## Ordering criteria
 
 1. **La piattaforma c'è già.** Nessun prerequisito da ridisegnare: repository, scheletro, datastore,
@@ -43,14 +111,6 @@ migliaia di ricette, ricettari che nessuno ha curato insieme — e il corpus è 
    aprono i tre temi, e solo dopo `S15` torna sulla scoperta. Questa mappa non deroga.
 8. **Dove finisce `NOW`.** Con la riga di rilascio più piccola che regge traffico anonimo e crawler a
    un costo dichiarato: `S16`.
-
-## Themes
-
-| Theme | Promise | First validator |
-|---|---|---|
-| `pubblico` | Rendi pubblico un ricettario tematico e chiunque, senza account, lo apre e lo legge — e puoi tornare indietro. | `S12` |
-| `scoperta` | Cerchi con parole tue e trovi ricette in tutti i ricettari pubblici, anche scritte in un'altra lingua, senza account. | `S13` |
-| `trovabilita` | Una ricetta pubblica si trova da fuori: un motore di ricerca la indicizza, e il link incollato mostra di cosa parla. | `S14` |
 
 ## Assumptions
 
@@ -119,63 +179,3 @@ migliaia di ricette, ricettari che nessuno ha curato insieme — e il corpus è 
   free tier senza dirlo qui. Il costo una tantum di costruire il corpus è di `S17`, dichiarato prima
   di spenderlo, e il volume delle foto è misurato contro il free tier di R2, che a migliaia di
   ricette è la voce che può saltare per prima.
-
-## NOW
-
-| Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |
-|---|---|---|---|---|---|---|---|
-| S12 | [Ricettario pubblico, leggibile senza account](slices/S12-ricettario-pubblico.md) | pubblico | product | medium | needs-decision | agent | — |
-| S17 | [Corpus di partenza: migliaia di ricette da ricettari non coordinati](slices/S17-corpus-di-partenza.md) | scoperta | enabler | medium | needs-decision | mixed | — |
-| S13 | [Ricerca su tutto il corpus pubblico](slices/S13-ricerca-corpus-pubblico.md) | scoperta | product | medium | ready | agent | S12, S17 |
-| S14 | [Pagine pubbliche indicizzabili e condivisibili](slices/S14-pagine-trovabili.md) | trovabilita | product | small | ready | mixed | S12 |
-| S15 | [Vetrina dei ricettari pubblici](slices/S15-vetrina-pubblica.md) | scoperta | product | small | ready | agent | S12 |
-| S16 | [Rilascio pubblico](slices/S16-rilascio-pubblico.md) | — | release | medium | needs-decision | mixed | S13 |
-
-## LATER
-
-- Filtri strutturati per tag e tempo, e ricerca ibrida semantica più full-text: più attraenti su un
-  corpus grande di quanto fossero dentro un ricettario, non necessarie per arrivarci.
-- Ricerca che attraversa tutti i ricettari di cui si è membri: è un'altra cosa dalla ricerca sul
-  corpus pubblico, e nessuna delle due porta l'altra.
-- Un concetto di gruppo sopra i ricettari, se ri-invitare in ognuno diventasse fastidioso.
-- Ruoli e permessi dentro un ricettario, oltre al solo `creatorId`.
-- Passkeys come secondo metodo d'accesso, quando il recupero da dispositivo perso sarà risolto.
-- Import da file esportati da altre app di ricette.
-- Un quarto ingresso di estrazione: la foto di una pagina di libro, via OCR.
-- Deduplica di due ricette linkate dallo stesso URL: in un corpus non coordinato è il caso normale, e
-  la promuove il numero dichiarato sui primi dieci risultati della ricerca pubblica, non il gusto.
-- IaC versionata al posto di `fly.toml` e CLI, se l'ambiente smettesse di essere ricostruibile a
-  mano.
-- Coda di moderazione e segnalazione del contenuto pubblico, sopra la sola via d'uscita che è
-  togliere dal pubblico.
-- Salvare nel proprio ricettario una ricetta trovata in pubblico.
-- Profilo pubblico di chi pubblica, e classificazione automatica dei temi.
-
-## OUT-OF-SCOPE
-
-- **Ingredienti strutturati in quantità e unità.** Poiché la normalizzazione fine è dichiarata non
-  necessaria — la ricerca è semantica e chi legge interpreta il testo — nessuna riga paga il costo di
-  un parser né di un modello di ingrediente. Il prezzo è che lista della spesa e scaling delle
-  porzioni restano preclusi, e che introdurli dopo costerà una migrazione dei dati esistenti.
-- **Review obbligatoria prima del salvataggio.** Poiché bloccare l'utente su un form a ogni aggiunta
-  è dichiarato inaccettabile, l'aggiunta può salvare estrazioni imperfette. Il prezzo era un
-  ricettario con qualche errore dentro casa; adesso è che un'estrazione imperfetta può diventare
-  leggibile da chiunque, e l'unico argine è che pubblicare resta un atto deliberato e reversibile.
-- **Provider email.** Poiché non si invia nessuna email, spariscono password, hashing e flusso di
-  reset, e chi legge non ha bisogno di niente. Il prezzo è la dipendenza da Google per chi scrive,
-  un invito che l'invitante consegna a mano, e nessun canale per raggiungere un lettore o per
-  ricevere da lui una segnalazione.
-- **Vector DB dedicato.** Poiché la scala dichiarata resta quella delle sorgenti, i vettori stanno in
-  Postgres con pgvector e si interrogano in transazione con i dati. Il prezzo è che oltre quella
-  scala la ricerca va ripensata e non soltanto scalata, e adesso quel conto lo presenta la scoperta,
-  che è il prodotto.
-- **Permessi per azione dentro un ricettario.** Poiché tutti i membri sono pari, nessuna riga porta
-  controlli oltre alla membership, e la lettura pubblica è una visibilità del ricettario, non un
-  ruolo. Il prezzo è che non si invita nessuno in sola lettura, e che non si pubblica una singola
-  ricetta senza pubblicare il ricettario che la contiene.
-- **Deduplica delle ricette.** Poiché i duplicati sono dichiarati consentiti, nessuna riga paga una
-  chiave di unicità né un confronto di similarità in scrittura. Il prezzo è cresciuto: lo stesso link
-  pubblicato in due ricettari pubblici esce due volte nei risultati, e i risultati sono il prodotto.
-- **Contributi da chi legge senza account.** Poiché leggere non costa un account, non c'è nessuno a
-  cui attaccare un commento, un voto o una correzione. Il prezzo è che la scoperta non ha nessun
-  segnale sociale con cui ordinare, e deve reggersi sulla sola somiglianza semantica.

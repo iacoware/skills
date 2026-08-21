@@ -10,40 +10,11 @@ project is going.]
 **Current state:** [What has been delivered so far and what this drawing stands on; on a first draw,
 that nothing has been.]
 
-## Ordering criteria
-
-1. **[Criterion, in a phrase.]** [What it decides about order, and where it loses to another
-   criterion.]
-
-[Numbered, because the ranking between the criteria is itself a decision this map takes.]
-
 ## Themes
 
 | Theme | Promise | First validator |
 |---|---|---|
 | `[theme-slug]` | [The promise, in product language: what somebody can do once it holds.] | `[Id of the NOW row that first validates it]` |
-
-## Assumptions
-
-- `[theme or id]` — [Something taken as true in order to draw the map, and that asks to be
-  corrected; where the sources contradict each other, which reading was taken and why.]
-
-## Open questions
-
-- `[theme or id]` — [Something that could not be settled and that asks to be answered; it belongs
-  here rather than on a row when the answer changes the shape of the map.]
-
-## Cross-functional concerns
-
-- **Authorization.** [Shared rule.]
-- **Validation and errors.** [Shared rule.]
-- **Operability.** [Logging, observability, timeout, and failure expectations.]
-- **Accessibility and security.** [Shared rule.]
-- **Data integrity and recovery.** [Invariants, derived data, and partial-failure recovery.]
-
-[Keep all five. Add a further concern — cost, privacy, compliance, latency, auditability, data
-migration — only when a source makes it a constraint that several rows must respect; a concern one
-row owns stays in it.]
 
 ## NOW
 
@@ -67,3 +38,32 @@ the title is the only link, and it is the way into the row's document.]
 
 - **[Excluded capability.]** [Written as the licence it gives: because this is declared unsolved,
   the solution may do without X, and the price it pays for that.]
+
+## Ordering criteria
+
+1. **[Criterion, in a phrase.]** [What it decides about order, and where it loses to another
+   criterion.]
+
+[Numbered, because the ranking between the criteria is itself a decision this map takes.]
+
+## Assumptions
+
+- `[theme or id]` — [Something taken as true in order to draw the map, and that asks to be
+  corrected; where the sources contradict each other, which reading was taken and why.]
+
+## Open questions
+
+- `[theme or id]` — [Something that could not be settled and that asks to be answered; it belongs
+  here rather than on a row when the answer changes the shape of the map.]
+
+## Cross-functional concerns
+
+- **Authorization.** [Shared rule.]
+- **Validation and errors.** [Shared rule.]
+- **Operability.** [Logging, observability, timeout, and failure expectations.]
+- **Accessibility and security.** [Shared rule.]
+- **Data integrity and recovery.** [Invariants, derived data, and partial-failure recovery.]
+
+[Keep all five. Add a further concern — cost, privacy, compliance, latency, auditability, data
+migration — only when a source makes it a constraint that several rows must respect; a concern one
+row owns stays in it.]

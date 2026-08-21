@@ -136,10 +136,11 @@ installed set, and that is the whole of what gets built here.
 
 ## Decisions taken
 
-**Artifact layout.** `.roadmap/roadmap.md` is the readable overview: the goal, sources, current state,
-ordering criteria, the theme table, `Assumptions`, `Open questions`, `Cross-functional concerns`,
-then the three horizons — the register under `NOW`, the candidate list under `LATER`, the exclusions
-under `OUT-OF-SCOPE`. `.roadmap/slices/` holds one document per open slice, `.roadmap/archive/` one
+**Artifact layout.** `.roadmap/roadmap.md` is the readable overview: the goal, sources and current
+state, the theme table, then the three horizons — the register under `NOW`, the candidate list under
+`LATER`, the exclusions under `OUT-OF-SCOPE` — and last what justifies and qualifies them: ordering
+criteria, `Assumptions`, `Open questions`, `Cross-functional concerns`. The horizons sit high because
+they are what every session reads; criteria justify an order nobody can judge before seeing it. `.roadmap/slices/` holds one document per open slice, `.roadmap/archive/` one
 per delivered slice, both named `S<id>-<slug>.md`.
 
 **One roadmap per project, serving one declared `Goal` at a time.** The goal comes from a goal

@@ -11,6 +11,65 @@ scritta in un'altra.
 sull'embedder, e il ricettario corrente con il form condiviso. Il tema `ricettario` è validato per
 intero e ha lasciato la tabella. `NOW` tiene le nove righe che restano.
 
+## Themes
+
+| Theme | Promise | First validator |
+|---|---|---|
+| `cattura` | Incolli il link di una ricetta e te la ritrovi salvata senza compilare niente; quando la pagina non si lascia leggere hai una via d'uscita che non ti fa ribattere tutto. | `S4` |
+| `ricerca` | Cerchi con parole tue e trovi la ricetta in tutti i ricettari di cui sei membro, anche se è scritta in un'altra lingua. | `S12` |
+| `accesso` | Entri con il tuo account Google e il ricettario che usi è il tuo: nessuna password, nessuna email. | `S8` |
+| `condivisione` | Inviti famiglia e amici in un ricettario con un link: chi entra legge e modifica tutto come te, e tu passi da un ricettario all'altro. | `S9` |
+| `foto` | Ogni ricetta si illustra con più foto; la prima è la copertina, e la copertina si cambia. | `S10` |
+
+## NOW
+
+| Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |
+|---|---|---|---|---|---|---|---|
+| S4 | [Aggiunta da link con JSON-LD e avanzamento reale](slices/S4-aggiunta-da-link.md) | cattura | product | medium | ready | agent | — |
+| S5 | [Fallback LLM quando il JSON-LD manca](slices/S5-fallback-llm.md) | cattura | product | medium | needs-decision | mixed | S4 |
+| S6 | [Copia-incolla per le pagine che non si lasciano leggere](slices/S6-copia-incolla.md) | cattura | product | small | ready | agent | S5 |
+| S7 | [Ricerca semantica cross-lingua nel ricettario corrente](slices/S7-ricerca-semantica.md) | ricerca | product | medium | needs-decision | agent | — |
+| S8 | [Accesso con Google e ricettario dell'utente](slices/S8-accesso-google.md) | accesso | product | medium | needs-decision | mixed | — |
+| S9 | [Ricettari condivisi: invito via link e più ricettari](slices/S9-ricettari-condivisi.md) | condivisione | product | large | ready | agent | S8 |
+| S10 | [Foto multiple e copertina su object storage](slices/S10-foto-e-copertina.md) | foto | product | medium | ready | mixed | S4 |
+| S12 | [Ricerca su tutti i ricettari di cui si è membri](slices/S12-ricerca-cross-ricettario.md) | ricerca | product | small | needs-decision | agent | S9 |
+| S11 | [Rilascio a famiglia e amici](slices/S11-rilascio.md) | — | release | small | needs-decision | mixed | S9 |
+
+## LATER
+
+- Filtri strutturati per tag e tempo, e ricerca ibrida semantica più full-text.
+- Ricettari pubblici tematici, come Cookbook con `visibility=public`.
+- Un concetto di gruppo sopra i ricettari, se ri-invitare in ognuno diventasse fastidioso.
+- Ruoli e permessi dentro un ricettario, oltre al solo `creatorId`.
+- Passkeys come secondo metodo d'accesso, quando il recupero da dispositivo perso sarà risolto.
+- Import da file esportati da altre app di ricette.
+- Un quarto ingresso di estrazione: la foto di una pagina di libro, via OCR.
+- Deduplica di due ricette linkate dallo stesso URL nello stesso ricettario.
+- IaC versionata al posto di `fly.toml` e CLI, se l'ambiente smettesse di essere ricostruibile a mano.
+
+## OUT-OF-SCOPE
+
+- **Ingredienti strutturati in quantità e unità.** Poiché la normalizzazione fine è dichiarata non
+  necessaria — la ricerca è semantica e chi legge interpreta il testo — nessuna riga paga il costo
+  di un parser né di un modello di ingrediente. Il prezzo è che lista della spesa e scaling delle
+  porzioni restano preclusi, e che introdurli dopo costerà una migrazione dei dati esistenti.
+- **Review obbligatoria prima del salvataggio.** Poiché bloccare l'utente su un form a ogni aggiunta
+  è dichiarato inaccettabile, l'aggiunta può salvare estrazioni imperfette. Il prezzo è che un
+  ricettario contiene errori finché qualcuno non li corregge, e che la correzione deve perciò essere
+  sempre a un clic — motivo per cui il form condiviso non è rimandabile.
+- **Provider email nell'MVP.** Poiché non si invia nessuna email, spariscono password, hashing e
+  flusso di reset. Il prezzo è la dipendenza da Google, l'esclusione di chi non ha un account
+  Google, e un invito che l'invitante deve consegnare a mano perché nessuno lo spedisce per lui.
+- **Vector DB dedicato.** Poiché la scala dichiarata è ≤10k ricette e centinaia per ricettario, i
+  vettori stanno in Postgres con pgvector e si interrogano in transazione con i dati. Il prezzo è
+  che oltre quella scala la ricerca va ripensata, non soltanto scalata.
+- **Permessi per azione dentro un ricettario.** Poiché tutti i membri sono pari, nessuna riga porta
+  controlli oltre alla membership. Il prezzo è che non si può invitare qualcuno in sola lettura, e
+  che chiunque entri può cancellare quello che hanno scritto gli altri.
+- **Deduplica delle ricette.** Poiché i duplicati sono dichiarati consentiti, nessuna riga paga una
+  chiave di unicità né un confronto di similarità in scrittura. Il prezzo è che lo stesso link
+  aggiunto da due membri produce due ricette, e che la ricerca le restituirà entrambe.
+
 ## Ordering criteria
 
 1. **Il percorso minimo di consegna.** Repository e scheletro prima di ogni promessa, e separati:
@@ -44,16 +103,6 @@ intero e ha lasciato la tabella. `NOW` tiene le nove righe che restano.
    che non ne dipende.
 8. **Dove finisce `NOW`.** Con la riga più piccola che mette il rilascio coerente in mano a famiglia
    e amici, `S11`, con la sola prontezza operativa che le sorgenti chiedono.
-
-## Themes
-
-| Theme | Promise | First validator |
-|---|---|---|
-| `cattura` | Incolli il link di una ricetta e te la ritrovi salvata senza compilare niente; quando la pagina non si lascia leggere hai una via d'uscita che non ti fa ribattere tutto. | `S4` |
-| `ricerca` | Cerchi con parole tue e trovi la ricetta in tutti i ricettari di cui sei membro, anche se è scritta in un'altra lingua. | `S12` |
-| `accesso` | Entri con il tuo account Google e il ricettario che usi è il tuo: nessuna password, nessuna email. | `S8` |
-| `condivisione` | Inviti famiglia e amici in un ricettario con un link: chi entra legge e modifica tutto come te, e tu passi da un ricettario all'altro. | `S9` |
-| `foto` | Ogni ricetta si illustra con più foto; la prima è la copertina, e la copertina si cambia. | `S10` |
 
 ## Assumptions
 
@@ -111,52 +160,3 @@ intero e ha lasciato la tabella. `NOW` tiene le nove righe che restano.
 - **Cost.** LLM ed embedding girano solo in fase di add e di edit, mai sul corpus a runtime. Il
   JSON-LD viene sempre tentato prima dell'LLM. Nessuna riga porta dentro un servizio che esca dal
   free tier senza dirlo qui.
-
-## NOW
-
-| Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |
-|---|---|---|---|---|---|---|---|
-| S4 | [Aggiunta da link con JSON-LD e avanzamento reale](slices/S4-aggiunta-da-link.md) | cattura | product | medium | ready | agent | — |
-| S5 | [Fallback LLM quando il JSON-LD manca](slices/S5-fallback-llm.md) | cattura | product | medium | needs-decision | mixed | S4 |
-| S6 | [Copia-incolla per le pagine che non si lasciano leggere](slices/S6-copia-incolla.md) | cattura | product | small | ready | agent | S5 |
-| S7 | [Ricerca semantica cross-lingua nel ricettario corrente](slices/S7-ricerca-semantica.md) | ricerca | product | medium | needs-decision | agent | — |
-| S8 | [Accesso con Google e ricettario dell'utente](slices/S8-accesso-google.md) | accesso | product | medium | needs-decision | mixed | — |
-| S9 | [Ricettari condivisi: invito via link e più ricettari](slices/S9-ricettari-condivisi.md) | condivisione | product | large | ready | agent | S8 |
-| S10 | [Foto multiple e copertina su object storage](slices/S10-foto-e-copertina.md) | foto | product | medium | ready | mixed | S4 |
-| S12 | [Ricerca su tutti i ricettari di cui si è membri](slices/S12-ricerca-cross-ricettario.md) | ricerca | product | small | needs-decision | agent | S9 |
-| S11 | [Rilascio a famiglia e amici](slices/S11-rilascio.md) | — | release | small | needs-decision | mixed | S9 |
-
-## LATER
-
-- Filtri strutturati per tag e tempo, e ricerca ibrida semantica più full-text.
-- Ricettari pubblici tematici, come Cookbook con `visibility=public`.
-- Un concetto di gruppo sopra i ricettari, se ri-invitare in ognuno diventasse fastidioso.
-- Ruoli e permessi dentro un ricettario, oltre al solo `creatorId`.
-- Passkeys come secondo metodo d'accesso, quando il recupero da dispositivo perso sarà risolto.
-- Import da file esportati da altre app di ricette.
-- Un quarto ingresso di estrazione: la foto di una pagina di libro, via OCR.
-- Deduplica di due ricette linkate dallo stesso URL nello stesso ricettario.
-- IaC versionata al posto di `fly.toml` e CLI, se l'ambiente smettesse di essere ricostruibile a mano.
-
-## OUT-OF-SCOPE
-
-- **Ingredienti strutturati in quantità e unità.** Poiché la normalizzazione fine è dichiarata non
-  necessaria — la ricerca è semantica e chi legge interpreta il testo — nessuna riga paga il costo
-  di un parser né di un modello di ingrediente. Il prezzo è che lista della spesa e scaling delle
-  porzioni restano preclusi, e che introdurli dopo costerà una migrazione dei dati esistenti.
-- **Review obbligatoria prima del salvataggio.** Poiché bloccare l'utente su un form a ogni aggiunta
-  è dichiarato inaccettabile, l'aggiunta può salvare estrazioni imperfette. Il prezzo è che un
-  ricettario contiene errori finché qualcuno non li corregge, e che la correzione deve perciò essere
-  sempre a un clic — motivo per cui il form condiviso non è rimandabile.
-- **Provider email nell'MVP.** Poiché non si invia nessuna email, spariscono password, hashing e
-  flusso di reset. Il prezzo è la dipendenza da Google, l'esclusione di chi non ha un account
-  Google, e un invito che l'invitante deve consegnare a mano perché nessuno lo spedisce per lui.
-- **Vector DB dedicato.** Poiché la scala dichiarata è ≤10k ricette e centinaia per ricettario, i
-  vettori stanno in Postgres con pgvector e si interrogano in transazione con i dati. Il prezzo è
-  che oltre quella scala la ricerca va ripensata, non soltanto scalata.
-- **Permessi per azione dentro un ricettario.** Poiché tutti i membri sono pari, nessuna riga porta
-  controlli oltre alla membership. Il prezzo è che non si può invitare qualcuno in sola lettura, e
-  che chiunque entri può cancellare quello che hanno scritto gli altri.
-- **Deduplica delle ricette.** Poiché i duplicati sono dichiarati consentiti, nessuna riga paga una
-  chiave di unicità né un confronto di similarità in scrittura. Il prezzo è che lo stesso link
-  aggiunto da due membri produce due ricette, e che la ricerca le restituirà entrambe.
