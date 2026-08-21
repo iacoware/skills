@@ -33,9 +33,10 @@ number and no id is ever reused.
 **A `⚠ Has failed` mark carries the runs a check has already gone red on**, and a
 `⚠ Watch the opposite failure` mark sits on the rules whose overcorrection would cost more than the
 failure they guard. The first evidence arrived on 2026-08-20: one drawing and four router runs,
-recorded below on R-005, R-007, R-009, R-015 and R-034. One run is still a question — a mark says a
-check went red once, not that the skill is broken there. R-007 is the one check that has now gone red
-twice, and its mark says what the two runs have in common and what they do not.
+recorded below on R-005, R-007, R-009, R-015 and R-034; a fifth router run followed on 2026-08-21.
+One run is still a question — a mark says a check went red once, not that the skill is broken there.
+R-007 is the one check that has now gone red three times out of three, and its mark says what the
+three runs have in common, what they do not, and why no rule was changed on the strength of it.
 
 ## The situation
 
@@ -69,7 +70,9 @@ twice, and its mark says what the two runs have in common and what they do not.
   2026-08-20**: each owed question was asked correctly and each arrived with a second one attached to
   it — conditional, hedged, and unasked for. `ROUTER-3-CC-2` did it a fourth time, attaching to the
   owed close-out question a second one asking whether the input settled a goal-level open question.
-  Nothing was inferred and no session asked instead of deciding, so no check went red; it is the
+  `ROUTER-3-CC-3` did it a fifth time, and with the same question as the fourth: five runs out of
+  five, which stops being a tendency and starts being what the skill produces.
+  Nothing was inferred and no session asked instead of deciding, so no check has gone red; it is the
   direction to watch, not yet a failure.
 - **R-006** — A capability already sitting in `LATER` is **promoted**, not admitted anew: the
   candidate line goes, the row takes the next id, its document appears in `slices/`, and
@@ -79,30 +82,47 @@ twice, and its mark says what the two runs have in common and what they do not.
   can exercise is minted as a spike, and proposed in the block without a question, since nothing
   about the destination is in doubt. `SKILL.md` § 2, *Slice or spike*;
   `references/slice-rules.md`, *The spike test*.
-  ⚠ **Has failed twice, and differently.** Router scenario 3, `ROUTER-3-CC-1` and `ROUTER-3-CC-2`,
-  both 2026-08-20, same fixture and the same prompt.
-  `ROUTER-3-CC-1` read the input correctly, found the unknown, and split it out of the row that could
-  not carry it — then minted it `kind: enabler`. The row it wrote has a spike's `Verification` (every
-  clause a declared number), a spike's `Learning target`, and an `Audience` naming the people building
-  it. Only the column disagreed.
+  ⚠ **Has failed three times.** Router scenario 3, `ROUTER-3-CC-1` and `ROUTER-3-CC-2` on
+  2026-08-20 and `ROUTER-3-CC-3` on 2026-08-21, same fixture and the same prompt each time. Three of
+  three, and the check has never gone green.
+  `ROUTER-3-CC-1` read the input correctly, found the unknown, and minted a row beside it —
+  `kind: enabler`, a test-bench corpus so that `S13`'s measurement would mean something. The
+  measurement itself stayed in `S13`, which the new row's `Excludes` says outright.
   `ROUTER-3-CC-2` minted nothing. It widened `S13` to carry the corpus — the seed bullet rewritten to
   thousands of recipes across dozens of uncurated cookbooks, two observations appended to
   `Verification`, the `Learning target` rewritten to cover recall at scale *and* first-page usability,
   the executor moved to `mixed`. That is the first of the two failures scenario 3 names, in a milder
   form than the one it describes: no index shape was specified, but the unknown was folded into a
   slice rather than split out of it.
-  **What the second run settles.** The overlap hypothesis — that the enabler definition in
-  `references/slice-rules.md`, which also promises to *resolve one material uncertainty*, is what
-  pulled the column — was not reproduced, so nothing in that file has earned a rewrite. What the two
-  runs share is narrower and worse: on this input, by two different routes, the spike is not minted.
-  The clause is not doing its job; **where** it stops working is not located.
-  **The hypothesis, unfalsified.** What the two runs share is not the mistake, it is the half that
-  worked: both sessions recognised the unknown and said so — one in its own row, one in the middle of
-  its own proposal. Neither carried that finding into the `Kind` column or into the decision to split.
-  So the suspicion is that the reading fires and the **routing** does not: the spike test says how to
-  recognise a spike and § 2 says the reading needs no question, but neither says that the recognised
-  unknown *leaves the row it was found in*. A hypothesis that explains two failures is exactly the
-  kind that survives on its own tidiness — a rule change with no third run behind it is a guess.
+  `ROUTER-3-CC-3` did the same thing on a different row: `S17`, *Corpus pubblico alla scala
+  dichiarata*, `kind: enabler`, `needs-decision`, `mixed`, with `S13` depending on it — the
+  production corpus, unattended and costed, and again `Excludes` hands the measurement back to `S13`.
+  **What the three runs settle.** The three failures are one failure: **in every run the unknown
+  stayed in `S13`**. Scenario 3's unknown is the measurement — recall and latency for a shared index
+  at that volume — and no run ever gave it a row. Runs one and three minted a row *beside* it, for
+  building the corpus the measurement would need; run two minted nothing and widened `S13`.
+  The hypothesis the first two runs supported — the reading fires and the **routing** does not —
+  therefore stands. What no session did is carry the recognised measurement out of the row it was
+  found in.
+  **A note on how this was read.** The two minted rows were first recorded as `kind` errors. Under
+  the definition of `enabler` as a **stepping stone** — an intermediate row that exists to make a
+  later row cost less — both are correctly labelled: they make `S13` cheaper and they leave something
+  `S13` uses. That definition was added to the skill *after* these runs, and is used here to locate
+  the defect, not to reread the runs as though they had it in front of them.
+  **The fix, written on 2026-08-21 and not revalidated.** `references/slice-rules.md` gained one
+  clause in *The spike test* — the measurement becomes its own row, and minting the row beside it
+  leaves the unknown where it was — and `kind: enabler` was rephrased as a **stepping stone**. The
+  three router scenarios were **deliberately not rerun**: comparative validation of a skill nobody
+  has used yet generates work to protect something real use has not appraised. What this check
+  records is therefore a defect diagnosed and a text changed, never a fix demonstrated.
+  **Where the fix landed.** `references/slice-rules.md`, *The spike test* — what the recognised
+  unknown obliges, not how to recognise it. Not `SKILL.md` § 2, which is doing its half in every run,
+  and not the enabler boundary, which these runs do not convict. **The rule change is licensed by the
+  definitions contradicting each other, not by this record**: R-007 has cost three runs on one
+  scenario, one model family, one harness. Do not run scenario 3 a fourth time.
+  **One caveat on the sample.** `ROUTER-3-CC-3` ran on `claude-opus-5[1m]`, where the first two are
+  recorded as `claude-opus-5` — same model, different context window. Everything else about the three
+  runs is identical.
   ⚠ **Watch the opposite failure.** Every uncertain row turning into a spike. Uncertainty is the
   learning target of an ordinary row; what makes a spike is that there is no outcome to deliver.
 
@@ -178,11 +198,11 @@ twice, and its mark says what the two runs have in common and what they do not.
   material claim in `Learning target` has an observation in `Verification` stated so that delivery
   can refute it. Checking that data exists does not demonstrate its quality, latency or cost.
   `references/slice-rules.md`, *What makes a slice* and *Verification maps to the learning target*.
-- **R-021** — Every `kind: enabler` passes the enabler tests: a real end-to-end production path,
-  evidence the next product row needs, one material uncertainty or one high-leverage delivery
-  pattern, tied to the product outcome it enables, and no speculative foundation beyond it.
-  Horizontal setup wearing the label is enabler camouflage. `references/slice-rules.md`,
-  *The columns* → `kind`.
+- **R-021** — Every `kind: enabler` is a stepping stone — a row that makes later rows cost less —
+  and passes the enabler tests: a real end-to-end production path, the executable evidence the row
+  depending on it needs, and no speculative foundation beyond that. Horizontal setup wearing the
+  label is enabler camouflage. `references/slice-rules.md`, *The columns* → `kind`.
+  *Rewritten on 2026-08-21 with the clauses it names: the check cannot outlive them.*
 - **R-022** — A row whose decision the sources leave open reads `needs-decision`, and its `Includes`
   and `Verification` are worded to defer to the pending decision rather than picking a side.
   Publishing one side unconditionally is silent contradiction. `references/slice-rules.md`,
