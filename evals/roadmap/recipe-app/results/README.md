@@ -10,6 +10,7 @@ three said nothing the first one did not; git holds them if the deletion ever ne
 
 | Run | Branch exercised | Starting state | Outcome |
 |---|---|---|---|
+| `manual-run-1` | Drawing | empty project | 11 rows, `S0`–`S10`, validator green |
 | `ROADMAP-CC-1` | Drawing | empty project | 12 rows, `S0`–`S11`, validator green — tree kept as `../fixtures/mid-flight/` |
 | `ROUTER-1-CC-1` | Re-truing — promotion | `fixtures/mid-flight/` | promoted into `S12`, no redraw, no question |
 | `ROUTER-2-CC-1` | Router — question | `reference-roadmap/` copied | ended in a question, wrote nothing — no tree to keep |
@@ -17,6 +18,10 @@ three said nothing the first one did not; git holds them if the deletion ever ne
 | `ROUTER-3-CC-1` | Re-truing — spike | `fixtures/redrawn/` | minted `S17`, `kind: enabler` — diverges, see R-007 |
 | `ROUTER-3-CC-2` | Re-truing — spike, second run | `fixtures/redrawn/` | minted nothing, widened `S13` — diverges again and differently, see R-007 |
 | `ROUTER-3-CC-3` | Re-truing — spike, third run | `fixtures/redrawn/` | minted `S17`, `kind: enabler` — run one's failure again, see R-007 |
+
+`manual-run-1` is the one run driven by a person in an interactive session rather than through a
+sub-agent, and the only one without its own `PROMPT.md`: what was sent is in
+[`../../PROMPTS.md`](../../PROMPTS.md).
 
 `REDRAW-CC-1` is the run `fixtures/redrawn/` was frozen from; it is not one of the three router
 scenarios. `ROUTER-2-CC-1` wrote nothing because the correct session for that scenario writes
