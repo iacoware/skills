@@ -1,6 +1,14 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { mkdirSync, mkdtempSync, readFileSync, readdirSync, symlinkSync, writeFileSync } from "node:fs"
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs"
 import { tmpdir } from "node:os"
 import { execFileSync } from "node:child_process"
 import { basename, join } from "node:path"
@@ -9,6 +17,7 @@ import { main, readRoadmapDirectory, validateRoadmap } from "./validate_roadmap.
 const SCENARIO = join(import.meta.dirname, "..", "..", "..", "evals", "roadmap", "recipe-app")
 const ORACLE = join(SCENARIO, "reference-roadmap")
 const FIXTURES = join(SCENARIO, "fixtures", "validator")
+const STATES = join(SCENARIO, "fixtures")
 
 const S2_ROW =
   "| `S2` | [Spike: quale embedding regge la ricerca cross-lingua](slices/S2-spike-embedding-cross-lingua.md) | `ricerca-semantica` | `spike` | `small` | `needs-info` | `agent` | — |"
@@ -66,6 +75,24 @@ const mutate = (mutation: {
 test("the oracle passes every check and raises no warning", () => {
   assert.deepEqual(validateRoadmap(readRoadmapDirectory(ORACLE)), [])
 })
+
+// The frozen states the router scenarios run on are complete `.roadmap/` directories that no session
+// and no other test reads, so nothing else would notice them drifting out of the shape the validator
+// enforces. Discovered rather than listed: a scenario that needs a new state gets this for free.
+const frozenStates = readdirSync(STATES, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && existsSync(join(STATES, entry.name, "roadmap.md")))
+  .map((entry) => entry.name)
+  .sort()
+
+test("there are frozen states to check", () => {
+  assert.notEqual(frozenStates.length, 0)
+})
+
+for (const state of frozenStates) {
+  test(`the ${state} fixture passes every check`, () => {
+    assert.deepEqual(errorsOf(readRoadmapDirectory(join(STATES, state))), [])
+  })
+}
 
 for (const filename of readdirSync(FIXTURES).filter((name) => name.endsWith(".json")).sort()) {
   const fixture = JSON.parse(readFileSync(join(FIXTURES, filename), "utf8"))

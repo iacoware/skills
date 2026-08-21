@@ -8,7 +8,7 @@ Three subdirectories, two different jobs.
 
 | Path | What it is | Who reads it |
 |---|---|---|
-| `validator/` | 21 JSON files. Each is one minimal mutation of the reference roadmap, plus the error it must produce. **Not roadmaps** — patches. | `skills/roadmap/scripts/validate_roadmap.test.ts`, which applies each one to the oracle in memory |
+| `validator/` | 20 JSON files. Each is one minimal mutation of the reference roadmap, plus the error it must produce. **Not roadmaps** — patches. | `skills/roadmap/scripts/validate_roadmap.test.ts`, which applies each one to the oracle in memory |
 | `mid-flight/` | A complete `.roadmap/` directory: the first drawing with `S0`–`S3` closed out into `archive/`. | Router scenario 1 of [`../../REVIEW-WORKFLOW.md`](../../REVIEW-WORKFLOW.md) |
 | `redrawn/` | A complete `.roadmap/` directory: the map redrawn against the public-cookbooks goal, `S0`–`S11` archived. | Router scenario 3 |
 
@@ -38,3 +38,9 @@ high-water mark changes, the ids in the scenario text are what get corrected, an
 `validator/` fixtures are anchored to the oracle by exact `find` strings: change
 `../reference-roadmap/roadmap.md` and run `make test-roadmap`, which fails on the fixture itself
 rather than passing for the wrong reason.
+
+The two complete states are anchored differently, because nothing derives them: `make test-roadmap`
+runs the validator over every directory here that holds a `roadmap.md`, so a change to the shape the
+validator enforces names them instead of leaving them to be found by the next session that copies
+one. The check discovers the directories rather than listing them — a scenario that needs a new
+frozen state is covered by adding it.
