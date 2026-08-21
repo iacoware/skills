@@ -54,8 +54,8 @@ toward whatever the model last produced. A frozen reference costs nothing per ru
 **Why the scenarios are not enough either.** A drawn map and a re-trued map fail in different ways.
 The oracle covers one state, the first drawing, and it is the only state that can be hand-written
 honestly; everything after it is a state some earlier session produced. The scenarios are how the
-other branch gets read at all, and they are cheap because every branch of the skill ends in a
-proposed block and one confirmation — a wrong turn costs a proposal, not a record.
+other branch gets read at all, and they are cheap: each starts from a map already standing, the
+branch that proposes before it writes, so a wrong turn costs a proposal and not a record.
 
 ## Language
 

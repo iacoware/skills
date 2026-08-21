@@ -19,8 +19,11 @@ The register holds rows, and a row is a slice or a spike. What makes a row valid
 [references/slice-rules.md](references/slice-rules.md); read it at the start of every session,
 whatever the input asks for.
 
-All of this is conversation, not generation. Nothing is written until the author has confirmed one
-block of changes.
+**A first map is written; a map that already stands is proposed.** With no `.roadmap/` there is
+nothing to lose and nothing to describe: the author argues with the file far faster than with an
+account of it, so it gets written straight away. Once a map exists, every change waits for one
+confirmation before it touches the record — a session rewrites rows other sessions wrote, and deletes
+documents, and that is worth a round trip.
 
 ## 1. Establish the situation
 
@@ -71,7 +74,7 @@ sits, ask which of the two holds. A question with a short answer, never an infer
 question in § 5 is what surfaces this, and it runs every session.
 
 The slice-or-spike reading needs no question: nothing about the destination is in doubt, so the spike
-is proposed in the block with everything else.
+goes in with the rest of the session's changes.
 
 ## 3. Draw the map
 
@@ -88,7 +91,11 @@ Write `roadmap.md` from [assets/roadmap-template.md](assets/roadmap-template.md)
 `NOW` row from [assets/slice-template.md](assets/slice-template.md). Keep the headings, field names
 and order; write the content in the author's language.
 
-**Drawing does not end when the files are written.** A first map is a proposal to argue with, and the
+**A first draw writes them; a redraw waits.** With nothing on disk the map goes down unasked. A redraw
+has a standing map underneath it — rows it retires, documents it deletes, a goal it replaces — so it
+is proposed under § 5 like any other change to an existing record, and written once confirmed.
+
+**Drawing does not end when the map is down.** A first map is a draft to argue with, and the
 argument produces exactly the operations of § 4 — split this one, drop that part, swap the order. So
 the first round of revision happens here, in the same session, before § 5.
 
@@ -138,14 +145,19 @@ candidate. The id is spent and never returns, and the document is **deleted, not
 
 ## 5. Close the session
 
-Both branches end the same way.
+Both branches close here, and only the writing step tells them apart.
 
 **Re-ask the coverage question:** does what is left in `NOW` still reach the goal? Usually the answer
 is one line. It is asked anyway, because it is also the trigger for the question in § 2.
 
-**Propose one block of changes and ask for confirmation once.** Every operation the session found,
-together — not five files written one at a time with a question between each. A wrong branch then
-costs a proposal and not a record.
+**Then write, or propose and write — according to what stood at the start of the session.**
+
+- **Nothing stood.** § 3 has already written the map. There is nothing to confirm; go straight to the
+  validator.
+- **A map stood** — a re-true, or a redraw against a new goal. Propose every operation the session
+  found in one block, ask for confirmation once, and write the block only then. Not five files written
+  one at a time with a question between each, and never one proposal split across several questions. A
+  wrong branch then costs a proposal and not a record.
 
 **Run the validator** after writing. Resolve `<skill-dir>` to the absolute path of the directory
 holding this `SKILL.md`; the working directory is the author's project.
@@ -159,6 +171,18 @@ structure and references — that every row resolves to its document and back, t
 resolves, that no id was recycled, that a spike has a dependent — and never judgement. Fix every
 `ERROR`. A `WARNING` is a signal to the author: the cap and the floor are findings to discuss, not
 defects to silence.
+
+**Then report the written map, and nothing else.** Four things, in this order, read off the files as
+they now stand:
+
+1. the `Themes` table;
+2. the `NOW` register;
+3. `Open questions`, or one line saying there are none;
+4. the path to `roadmap.md`.
+
+No retelling of what the documents already say, and no narration of the operations the session ran —
+the tables are the diff the author reads. Anything that genuinely needs an answer is a `WARNING` from
+the validator or a question from § 2, and it goes after the four.
 
 ## 6. Hand over a ready row
 
@@ -195,5 +219,8 @@ live. When it is not, say so and carry on.
 - every row obeys `references/slice-rules.md`, and every id was minted by increment and never
   recycled;
 - close-out asked the three questions of absorption, and wrote nothing where all three answered no;
-- the coverage question was re-asked, one block was proposed, one confirmation was given;
-- the validator reports no `ERROR`, and every `WARNING` was put to the author.
+- the coverage question was re-asked, a first map was written unasked, and a session that found a map
+  already standing proposed one block and got one confirmation before writing;
+- the validator reports no `ERROR`, and every `WARNING` was put to the author;
+- the session closed on the four-part report — themes, register, open questions, path — and nothing
+  else.

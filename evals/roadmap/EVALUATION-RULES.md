@@ -10,9 +10,9 @@ one. What is specific to a scenario lives beside its sources — for `recipe-app
 `recipe-app/EVALUATION-BRIEF.md`, which the workflow opens before these rules, and in
 `recipe-app/reference-roadmap/`, which it opens strictly after.
 
-**Half the evidence is not in the files.** The skill is a conversation that ends in one proposed
-block, so what it asked, what it declined to write and what it put to the author are as readable as
-what it wrote — and several rules below have no artifact at all. Read the transcript.
+**Half the evidence is not in the files.** What the skill asked, what it declined to write and what
+it put to the author are as readable as what it wrote — and several rules below have no artifact at
+all. Read the transcript.
 
 **This is not a grading rubric and produces no score.** A check that fails is a question — did the
 skill stop asking for this, or did the model have a bad day? One run cannot tell you. Two in a row
@@ -248,9 +248,11 @@ three runs have in common, what they do not, and why no rule was changed on the 
 
 - **R-031** — The coverage question was re-asked — does what is left in `NOW` still reach the goal —
   on both branches and whatever the input was. `SKILL.md` § 5.
-- **R-032** — One block of changes was proposed and one confirmation asked, with every operation the
-  session found in it. Not files written one at a time with a question between each, and nothing
-  written before the confirmation. `SKILL.md` § 5.
+- **R-032** — Writing followed what stood at the start of the session. With no `.roadmap/`, the map
+  was written straight away and no confirmation was asked for. With a map already standing — a
+  re-true, or a redraw against a new goal — one block was proposed with every operation the session
+  found in it, one confirmation was asked, and nothing was written before it came. Not files written
+  one at a time with a question between each, on either branch. `SKILL.md` § 5.
 - **R-033** — The validator was run after writing, every `ERROR` was fixed, and every `WARNING` was
   put to the author rather than silenced. `SKILL.md` § 5, *Run the validator*.
 - **R-034** — Handover happens only for a `ready` row, derives the `triage` label from readiness and
@@ -267,3 +269,7 @@ three runs have in common, what they do not, and why no rule was changed on the 
   constraint rather than inventing where a spec would live. No prompt has yet **asked** for a
   handover, so the routing of a spike and of an already-clarified slice is still unread — see
   [`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md).
+- **R-035** — The session closed on the four-part report and nothing else: the `Themes` table, the
+  `NOW` register, `Open questions` or a line saying there are none, and the path to `roadmap.md`. No
+  retelling of what the documents say and no narration of the operations run; a `WARNING` or an owed
+  question comes after the four. `SKILL.md` § 5.

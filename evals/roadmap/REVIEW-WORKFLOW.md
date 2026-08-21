@@ -76,9 +76,10 @@ scenarios, verdicts and all.
    The two differ only in the `@` prefixes, Claude Code's file-reference syntax, which has no Codex
    equivalent.
 
-   The session argues with its own first cut before it proposes anything, and ends in one block and
-   one confirmation. Confirm once, and answer nothing else: what it asked you and what it proposed
-   are both evidence, and answering more turns the run into a collaboration you cannot read.
+   A first drawing writes unasked — there is no `.roadmap/` to lose — and the session argues with
+   its own first cut in the same session, so what you read is what it did. Answer what it asks you
+   and nothing else: answering more turns the run into a collaboration you cannot read. The four-part
+   report it closes on — themes, register, open questions, path — is evidence too.
 
 2. **`make validate-roadmap ROADMAP=evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/.roadmap`** from
    the repository root — structural, deterministic, free. `ROADMAP` is the directory holding
@@ -126,8 +127,8 @@ scenarios, verdicts and all.
 ## The three router scenarios
 
 Each holds one input the router can read wrongly, in the two directions it can go wrong and on the
-axis underneath. They are cheap because every branch of the skill ends in a proposal: what you are
-reading is what the session offered to do, not what it did.
+axis underneath. They are cheap because each starts from a map already standing, and that branch
+proposes before it writes: what you are reading is what the session offered to do, not what it did.
 
 **Setting one up**, replacing `<N>` and the fixture:
 

@@ -68,9 +68,8 @@ up shaped like the thing it was supposed to catch. The same holds for the fixtur
 oracle. A fixture moves when the state it stands for moves. The oracle is rewritten when the sources
 change, never because a candidate argued well.
 
-**Half the evidence is not in the files.** The skill is a conversation that ends in one proposed
-block, so what the session asked, what it declined to write, and what it put to the author are
-evidence exactly as much as what it wrote. Several checks have no artifact at all. If you only read
+**Half the evidence is not in the files.** What the session asked, what it declined to write, and
+what it put to the author are evidence exactly as much as what it wrote. Several checks have no artifact at all. If you only read
 the diff, you are reading the smaller half.
 
 **A conclusion may be *inconclusive*, and saying so is a result.** A run that half-does the thing is
