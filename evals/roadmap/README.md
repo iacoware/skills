@@ -24,7 +24,7 @@ three router scenarios, verdicts and all.
 | `make validate-roadmap ROADMAP=<dir>` | Runs it, from the repository root. `ROADMAP` is the directory holding `roadmap.md`, not a file. |
 | `REVIEW-WORKFLOW.md` | How to run one review: the five steps, the generation prompts, and the three router scenarios. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks. Rules about the skill, portable to any scenario. |
-| `OPEN-VERIFICATION.md` | What the net has not caught yet, and how to close each hole. The intent, the epistemics, and one executable task per item. |
+| `OPEN-VERIFICATION.md` | What the net does not cover, and how to draw a conclusion from a run. The intent, the epistemics, and the two runs still owed. |
 | `recipe-app/sources/` | The only inputs a candidate roadmap is drawn from. Copied verbatim from `../plan-slices/recipe-app/sources/`: they are input, not `plan-slices` output. |
 | `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources: where the map may differ, what it must leave open, what only looks like a defect, what it must contain. Verifiable, no taste, entries with citable ids. Read at step 3. |
 | `recipe-app/reference-roadmap/` | One good answer, hand-written from the sources before any candidate existed: the map as it stands the first time it is drawn. Taste, not verifiable. Read at step 5, never earlier. |

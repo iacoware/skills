@@ -1,16 +1,16 @@
 # Open verification
 
-What the net has not caught yet. P8 ran the skill five times on 2026-08-20 and closed its ticket;
-this is the work those runs left open, written so a session that was not there can execute it. The
-second run of router scenario 3 has since been done — it is recorded on R-007 and in
-`recipe-app/results/ROUTER-3-CC-2/`, and what it left open is item 1 below.
+What the net does not catch, and how to conclude from a run that it did or did not.
+
+**This file carried four things to go and do, and on 2026-08-21 it was cut to two.** Closing a hole
+kept opening the next one while the skill had still never been used on a real project, and the net
+exists to protect something real use has not yet appraised. The two that survive finish work already
+started; the two that went are recorded below as holes, so that nobody re-derives them as tasks.
 
 Read [`REVIEW-WORKFLOW.md`](REVIEW-WORKFLOW.md) and [`EVALUATION-RULES.md`](EVALUATION-RULES.md)
-first — this file gives the tasks, those two give the procedure and the checks. You are the
+first — those give the procedure and the checks, this gives the epistemics. You are the
 **reviewer**: everything in this repository is open to you, including the oracle and the brief. What
 must stay blind is the session you drive, and § *Before any session* of the workflow says how.
-
-Ordered by what they buy per provider call. Item 1 is the one to do first.
 
 ## The intent
 
@@ -19,20 +19,27 @@ not here to prove the skill is good, and it produces no score. A skill made of p
 the only thing standing between a clause that got sharpened and a clause that quietly stopped firing
 is somebody running it and reading what came out.
 
-That is why the items below are worth provider calls at all. Each one is a place where the net
-currently has a hole, and a hole in the net is not neutral — it is a change nobody will notice.
+That is also why a hole in the net is not neutral: it is a change nobody will notice. Knowing where
+the holes are is what keeps a green run from meaning more than it does.
 
-Two of them, 1 and 2, are about the skill's reading. Two, 3 and 4, are about whether the skill loads
-and stays inert until invoked. Both kinds matter and they fail differently: a bad reading produces a
-map you have to argue with, a bad invocation produces a roadmap redrawn because an agent thought it
-was being helpful.
+**Two holes were left open on purpose on 2026-08-21**, and are stated here as facts rather than as
+work, so that a reviewer knows the width of what a green run means and does not turn them back into
+tasks:
 
-**Item 1 has a narrower intent than the rest.** Two runs have now failed R-007 and the question is no
-longer *whether* — it is **where**. Both sessions found the unknown; neither turned it into a spike,
-and they failed to by different routes. So item 1 is not *is the skill right about spikes* and no
-longer *did one session have a bad day*: it is **which clause stops working, the one that reads the
-input or the one that turns the reading into a row**. Lose hold of that and you will sharpen a clause
-that is already firing.
+- **§ 6 has never been asked for.** No prompt has requested a handover, and no fixture holds an open
+  spike to route — covering it means a fourth scenario *and* a new frozen state. One session
+  volunteered a correct fragment; see R-034. Left open because real use exercises handover the first
+  time an author asks for a row to pick up.
+- **Codex has never run this skill.** `agents/openai.yaml`, its `default_prompt`, and
+  `allow_implicit_invocation: false` are unexercised. Left open because the second harness matters
+  when somebody uses it, and nobody does yet.
+
+What reopens either is a change to `SKILL.md` that real use asked for and that would have fallen
+through the hole — never the hole itself. A net is worth extending when there is something it would
+have caught.
+
+**The two items below are different: they finish work already begun**, and both are cheap. Item 1 is
+one run and is bounded — it records and stops. Item 2 costs nothing but a person.
 
 ## How to draw a conclusion
 
@@ -51,8 +58,8 @@ three you are looking at:
 2. *The skill no longer states the clause the check names.* **Then the defect is in the check.**
    Rewrite it or delete it. The rules describe the skill; they do not govern it, and a check that
    outlives its clause turns into a rule nobody voted for.
-3. *The clause is stated but says two things that overlap.* This is item 1's suspect. It reads like
-   a model failure and is a writing failure. It needs two runs before it is anything at all.
+3. *The clause is stated but says two things that overlap.* It reads like a model failure and is a
+   writing failure. It needs two runs before it is anything at all.
 
 **Never change the skill to make a scenario pass.** This is the failure mode that quietly destroys an
 eval: the reviewer's sense of *good* drifts toward whatever the model last produced, and the net ends
@@ -70,11 +77,11 @@ not a red check and not a green one. Record what it did and what it did not, cit
 leave the mark off. Forcing an ambiguous run into a verdict is how a rule acquires a failure record
 it did not earn — and the next reviewer will act on that record without re-reading the run.
 
-**Know the width of your sample.** Everything below is one model, one harness, one scenario,
-`recipe-app`. A conclusion about the skill drawn from it is a conclusion about the skill *as read by
+**Know the width of your sample.** Everything recorded so far is one model, one harness, one
+scenario, `recipe-app`. A conclusion about the skill drawn from it is a conclusion about the skill *as read by
 that model on that scenario*. That is still worth having; it is just not the same sentence.
 
-## Before any of them
+## Before any run
 
 **Authorization is required and is not implied by this document.** [`../AGENTS.md`](../AGENTS.md)
 binds: report the exact external-call count and get explicit approval before sending a single
@@ -134,8 +141,14 @@ cp -R evals/roadmap/recipe-app/fixtures/redrawn/. evals/roadmap/recipe-app/resul
 make validate-roadmap ROADMAP=evals/roadmap/recipe-app/results/ROUTER-3-CC-3/.roadmap
 ```
 
-The same fixture again, and nothing about the skill changed in between. A third run against an edited
-skill answers a different question and cannot be composed with the first two.
+Those commands are idempotent: the directory may already be sitting there, prepared and green, and
+re-running them changes nothing. The installed copy was reinstalled and verified identical on
+2026-08-21 — check it again anyway, § *Before any run* says how.
+
+The same fixture again, and nothing a session reads changed in between: the payload moved once on
+2026-08-21, and only in `scripts/` (an exported constant and its tests). `SKILL.md`, `references/`
+and `assets/` are byte-identical to what runs one and two saw. A third run against an edited skill
+answers a different question and cannot be composed with the first two.
 
 ### The prompt
 
@@ -164,60 +177,13 @@ with an empty context; drive it any other way and you are not running it again.
 | No new row; `S13` widened again | The routing is where it fails | Two of three by the same route, and the fix lands in `references/slice-rules.md`, *The spike test* — what the recognised unknown obliges, not how to recognise it. Never in `SKILL.md` § 2, which is doing its half |
 | A new row with a wrong `Kind` again | The column is where it fails, and the overlap comes back into play | Then and only then reopen the enabler boundary in `references/slice-rules.md` |
 
-Whatever you write, re-run the scenario a fourth time against it. A rule change with no run behind it
-is a guess, and this rule has now cost three.
+**This run is bounded: record the verdict and stop.** Whatever the table says, do not change the
+skill on the strength of it and do not run a fourth time. The reading rows above name where a fix
+would land if one is ever written; what licenses writing it is real use hitting the same wall, not
+this scenario's record. R-007 has already cost two runs and it is not the skill's most expensive
+open question — that a real project has never used the skill is.
 
-## 2. R-034 has never been asked for
-
-**Cost: one run, on top of an existing state.** **Buys: the only deliberate reading of § 6 there will
-have been.**
-
-No prompt has ever asked for a row to be handed over. One session has since volunteered a fragment:
-`ROUTER-3-CC-2` closed by saying no row was pickable — `S13`, `S14` and `S15` all `ready` but all
-depending on an undelivered `S12` — and then derived, unasked, `ready` + `mixed` → `ready-for-human`
-with `/grill-with-docs` before `/to-spec`. Both halves correct. That is one row, one kind, one
-executor pair, arrived at by accident, and it leaves the rest of the paragraph — the routing of a
-spike, the `/to-spec` exception for an already-clarified slice, the refusal to hand over anything not
-`ready` — still unread.
-
-This is the largest hole in the net, and no scenario in `REVIEW-WORKFLOW.md` covers it. Closing it
-means **writing a fourth scenario**, not just running one. It needs to hold at least:
-
-- a `ready` + `agent` row and a `ready` + `human` row, so the label is derived twice and differently;
-- one row that is `needs-decision`, which must not be handed over at all;
-- one spike, which must go to `/prototype` or `/wayfinder` and never to `/to-spec`;
-- a slice with no recorded clarification, which owes `/grill-with-docs` rather than `/to-spec`.
-
-`fixtures/mid-flight/` already carries `ready` rows of both executors and a `needs-decision` row, so
-three of the four are covered. **The fourth is not: no fixture holds an open spike** — `S2` is a
-spike and it is in `archive/`, and `redrawn/` has none either. Either the scenario runs on a state
-frozen from a run that minted one, the way `redrawn/` itself was made, or it says out loud that the
-spike half of § 6 stays unread. What is new is the author's opening sentence — something like *give
-me the next thing I can actually pick up* — and the verdict it is read against.
-
-Write the scenario into `REVIEW-WORKFLOW.md` beside the other three before running it. A scenario
-invented after the result is not a scenario.
-
-## 3. Codex has never run this skill
-
-**Cost: one run per half you care about.** **Buys: evidence that the second harness works at all.**
-
-Every run so far was Claude Code. `skills/roadmap/agents/openai.yaml` sets
-`allow_implicit_invocation: false` and carries a `display_name`, a `short_description` and a
-`default_prompt` that nothing has ever exercised. `REVIEW-WORKFLOW.md` already holds the `$roadmap`
-prompts; the directories are `ROADMAP-CX-<N>` and `ROUTER-<n>-CX-<N>`.
-
-Two things are worth knowing and only one is about the skill's reading:
-
-- that the payload loads and the skill runs to a proposal on Codex at all;
-- that it does **not** activate on its own — which is what `allow_implicit_invocation: false` is for,
-  and which is tested by a session that never types the `$` prefix and must then come out without the
-  skill.
-
-The second is cheaper and catches the failure that matters more: a roadmap redrawn because an agent
-thought it was being helpful.
-
-## 4. The real invocation path is still unverified
+## 2. The real invocation path is still unverified
 
 **Cost: nothing, if a person does it once.**
 
@@ -238,7 +204,8 @@ it:
   or as a second date on a mark that is already there. A check that went green on the second run
   keeps its mark and gains the green — the history is the point.
 - **In the run directory**, as `PROMPT.md`. Non-negotiable, and the workflow says so.
-- **In this file**, by deleting the item you closed. An open list that only grows stops being read.
+- **In this file**, by deleting the item you closed, and without adding one. An open list that only
+  grows stops being read — this one was cut from four to two once already.
 
 And the rule that governs all of it: **a defect lands in the phase that owns it**, never in
 `SKILL.md` by default. A rule applied badly is P4. A field nobody can fill is P2. The map of phases is

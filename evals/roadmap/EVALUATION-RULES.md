@@ -95,8 +95,14 @@ twice, and its mark says what the two runs have in common and what they do not.
   `references/slice-rules.md`, which also promises to *resolve one material uncertainty*, is what
   pulled the column — was not reproduced, so nothing in that file has earned a rewrite. What the two
   runs share is narrower and worse: on this input, by two different routes, the spike is not minted.
-  The clause is not doing its job; **where** it stops working is not located, and a rule change with
-  no third run behind it is a guess.
+  The clause is not doing its job; **where** it stops working is not located.
+  **The hypothesis, unfalsified.** What the two runs share is not the mistake, it is the half that
+  worked: both sessions recognised the unknown and said so — one in its own row, one in the middle of
+  its own proposal. Neither carried that finding into the `Kind` column or into the decision to split.
+  So the suspicion is that the reading fires and the **routing** does not: the spike test says how to
+  recognise a spike and § 2 says the reading needs no question, but neither says that the recognised
+  unknown *leaves the row it was found in*. A hypothesis that explains two failures is exactly the
+  kind that survives on its own tidiness — a rule change with no third run behind it is a guess.
   ⚠ **Watch the opposite failure.** Every uncertain row turning into a spike. Uncertainty is the
   learning target of an ordinary row; what makes a spike is that there is no outcome to deliver.
 
