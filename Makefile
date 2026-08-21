@@ -19,7 +19,7 @@ test-plan-slices:
 	cd skills/plan-slices/scripts && python3 -m unittest
 
 test-roadmap:
-	node --test skills/roadmap/scripts/validate_roadmap.test.ts
+	node --test skills/roadmap/scripts/*.test.ts
 
 validate:
 	@test -n "$(PLAN)" || { echo "usage: make validate PLAN=<plan.md>"; exit 2; }

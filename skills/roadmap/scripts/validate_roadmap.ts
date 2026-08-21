@@ -52,6 +52,22 @@ const SIZES = ["small", "medium", "large"]
 const READINESSES = ["ready", "needs-decision", "needs-info"]
 const EXECUTORS = ["agent", "human", "mixed"]
 
+// The templates are what a session reads and these constants are what the validator enforces: the
+// same shape stated twice, in two files nothing else connects. validate_roadmap.shape.test.ts is
+// that connection.
+export const SHAPE = {
+  roadmapFields: ROADMAP_FIELDS,
+  roadmapSections: ROADMAP_SECTIONS,
+  registerColumns: REGISTER_COLUMNS,
+  themeColumns: THEME_COLUMNS,
+  sliceFields: SLICE_FIELDS,
+  sliceSections: SLICE_SECTIONS,
+  kinds: KINDS,
+  sizes: SIZES,
+  readinesses: READINESSES,
+  executors: EXECUTORS,
+}
+
 const SPIKE = "spike"
 const NONE = "—"
 const GOAL_THEME = "goal"
