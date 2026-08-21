@@ -22,12 +22,15 @@ Neither is hand-written, and that is deliberate — see the premise in
 write honestly from the sources alone. Every state after it is a state some earlier session produced,
 so these two were taken out of real runs:
 
-- **`mid-flight/`** is `../results/ROADMAP-CC-1/.roadmap/` with a close-out applied by hand: four
-  documents moved to `archive/`, their register rows removed, the theme they validated whole dropped
-  from the table, the dependencies they satisfied unpublished, and the two assumptions delivery
-  answered killed. The content is entirely the run's.
-- **`redrawn/`** is the whole of `../results/REDRAW-CC-1/.roadmap/`, unedited. A redraw is another
-  map and cannot be derived from the first drawing, so it took its own session.
+- **`mid-flight/`** is what `ROADMAP-CC-1` wrote, with a close-out applied by hand: four documents
+  moved to `archive/`, their register rows removed, the theme they validated whole dropped from the
+  table, the dependencies they satisfied unpublished, and the two assumptions delivery answered
+  killed. The content is entirely the run's.
+- **`redrawn/`** is the whole of what `REDRAW-CC-1` wrote, unedited. A redraw is another map and
+  cannot be derived from the first drawing, so it took its own session.
+
+Neither run keeps its own copy under `../results/`: the fixture *is* that copy, and a second one
+would be the same tree twice. `../results/README.md` keeps the row, and `PROMPT.md` the prompt.
 
 ## Changing one
 

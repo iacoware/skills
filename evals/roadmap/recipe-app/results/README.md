@@ -3,19 +3,24 @@
 What the skill actually produced, one directory per run. Never read by a generation session, and
 never the input to one: a session gets a copy.
 
+Three runs keep only their `PROMPT.md`. `ROADMAP-CC-1` and `REDRAW-CC-1` wrote what
+`../fixtures/mid-flight/` and `../fixtures/redrawn/` now hold, and `ROUTER-2-CC-1` wrote nothing at
+all, so its tree was a byte copy of `../reference-roadmap/`. Keeping a second copy of any of the
+three said nothing the first one did not; git holds them if the deletion ever needs undoing.
+
 | Run | Branch exercised | Starting state | Outcome |
 |---|---|---|---|
-| `ROADMAP-CC-1` | Drawing | empty project | 12 rows, `S0`–`S11`, validator green |
+| `ROADMAP-CC-1` | Drawing | empty project | 12 rows, `S0`–`S11`, validator green — tree kept as `../fixtures/mid-flight/` |
 | `ROUTER-1-CC-1` | Re-truing — promotion | `fixtures/mid-flight/` | promoted into `S12`, no redraw, no question |
-| `ROUTER-2-CC-1` | Router — question | `reference-roadmap/` copied | ended in a question, wrote nothing |
-| `REDRAW-CC-1` | Redraw | `fixtures/mid-flight/` | `S0`–`S11` archived, `S12`–`S16` drawn |
+| `ROUTER-2-CC-1` | Router — question | `reference-roadmap/` copied | ended in a question, wrote nothing — no tree to keep |
+| `REDRAW-CC-1` | Redraw | `fixtures/mid-flight/` | `S0`–`S11` archived, `S12`–`S16` drawn — tree kept as `../fixtures/redrawn/` |
 | `ROUTER-3-CC-1` | Re-truing — spike | `fixtures/redrawn/` | minted `S17`, `kind: enabler` — diverges, see R-007 |
 | `ROUTER-3-CC-2` | Re-truing — spike, second run | `fixtures/redrawn/` | minted nothing, widened `S13` — diverges again and differently, see R-007 |
 | `ROUTER-3-CC-3` | Re-truing — spike, third run | `fixtures/redrawn/` | minted `S17`, `kind: enabler` — run one's failure again, see R-007 |
 
 `REDRAW-CC-1` is the run `fixtures/redrawn/` was frozen from; it is not one of the three router
-scenarios. `ROUTER-2-CC-1` is identical to the oracle because the correct session for that scenario
-writes nothing — that it is unchanged *is* the result. `ROUTER-3-CC-2` and `ROUTER-3-CC-3` are
+scenarios. `ROUTER-2-CC-1` wrote nothing because the correct session for that scenario writes
+nothing — that the oracle was left unchanged *is* the result. `ROUTER-3-CC-2` and `ROUTER-3-CC-3` are
 `ROUTER-3-CC-1` run again on the same fixture with the same prompt, which is the only thing that
 makes the three comparable — and `ROUTER-3-CC-3` ran on `claude-opus-5[1m]` rather than
 `claude-opus-5`, which its `PROMPT.md` records. Scenario 3 is not run a fourth time; R-007 says why.
