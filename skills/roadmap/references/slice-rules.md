@@ -40,9 +40,11 @@ evidence.
 
 **When the verification is a measurement rather than a capability, it is a spike.** Write the honest
 `Verification` out and read it: *we can state recall and p95 latency for a shared index at that
-volume* is a number, not a thing somebody can do. A spike has a learning target and no vertical outcome, so it
-fails everything under *What makes a slice* by design, and the word *slice* does not stretch to cover
-it.
+volume* is a number, not a thing somebody can do. A spike has a learning target and no vertical
+outcome, so *What makes a slice* does not apply to it.
+
+**The measurement becomes its own row**, and the row it came from depends on it. Widening that row,
+or minting only the row that makes the measurement possible, leaves the unknown where it was.
 
 A spike carries `kind: spike`, and:
 
@@ -128,11 +130,10 @@ while reasoning inside one row lives in that row's document, and a column is nev
 **`kind`** — what the row is.
 
 - **`product`** delivers a capability to somebody who is not building it.
-- **`enabler`**'s primary user is a developer. It earns the kind only when it exercises a real
-  end-to-end production path rather than one isolated layer, produces executable evidence the next
-  product row needs, resolves one material uncertainty or establishes one high-leverage delivery
-  pattern, is immediately followed by or explicitly tied to the product outcome it enables, and
-  carries no speculative foundation beyond that path. Horizontal setup wearing the label without those
+- **`enabler`** is a **stepping stone**: an intermediate row for a developer that exists to make
+  later rows cost less. It earns the kind only when it exercises a real end-to-end production path
+  rather than one isolated layer, leaves the row depending on it the executable evidence it needs,
+  and carries no speculative foundation beyond that. Horizontal setup wearing the label without those
   is **enabler camouflage**.
 
   One enabler may answer several questions about a single subsystem — a datastore with its driver and
