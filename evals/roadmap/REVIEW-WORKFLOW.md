@@ -19,7 +19,7 @@ than a net you sized honestly. One run is a question, not a verdict — the same
 same answer is a verdict.
 
 What this net does **not** cover, and how to conclude from a run, is in
-[`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md). It carries two things left to do and no more: a hole
+[`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md). It carries one thing left to do and no more: a hole
 is closed when a change to `SKILL.md` that real use asked for would have fallen through it, never
 because it is a hole.
 
