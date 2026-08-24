@@ -75,9 +75,9 @@ R-006 alone.
 
 ## 2. Sounds like work, is a change of destination
 
-**Starting state:** the initial map, which is the oracle itself. This is the one session that reads
-the oracle, and it is not leakage: what the oracle answers is *how this map should be drawn*, and this
-card asks nothing of the sort. Copying is what keeps it frozen.
+**Starting state:** the initial map, which is the oracle itself — the one session that reads it, and
+not leakage, since the oracle answers *how this map should be drawn* and this card asks nothing of the
+sort. Copying is what keeps it frozen.
 
 ```bash
 mkdir -p evals/roadmap/recipe-app/results/ROUTER-2-CC-<N>

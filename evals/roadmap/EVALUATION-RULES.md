@@ -27,10 +27,9 @@ destroys an eval: the reviewer's sense of *good* drifts toward whatever the mode
 the net ends up shaped like the thing it was meant to catch. A fixture moves when the state it stands
 for moves; the oracle is rewritten when the sources change.
 
-**Ids are labels, never reused, and inherit nothing** from `evals/plan-slices/EVALUATION-RULES.md`,
-which numbers a different artifact. `⚠ failed` carries the runs a check has gone red on; `⚠ opposite`
-marks the rules whose overcorrection would cost more than the failure they guard. Every mark so far is
-one model family, one harness, one scenario — [`README.md`](README.md) says how narrow that is.
+**Ids are labels and are never reused.** `⚠ failed` marks a check the skill has gone red on and has
+not since been shown to pass; `⚠ opposite` marks the rules whose overcorrection would cost more than
+the failure they guard.
 
 ## The situation
 
@@ -56,9 +55,8 @@ one model family, one harness, one scenario — [`README.md`](README.md) says ho
   on file, what the input looks like from where the map sits, which of the two holds — never an
   inference and never a unilateral redraw. § 2, *When the input cannot be reconciled*.
   *⚠ opposite — a session that asks on every input turns a re-truing into an interview; the
-  slice-or-spike reading never owes a question. Observed in its mildest form on five router runs out
-  of five: each owed question was asked correctly and each arrived with a second, hedged, unasked-for
-  one attached. Nothing was inferred, so no check is red — it is the direction to watch.*
+  slice-or-spike reading never owes a question. The mild form to watch for is an owed question asked
+  correctly with a second, hedged, unasked-for one attached.*
 - **R-006** — A capability already in `LATER` is **promoted**, not admitted anew: the candidate line
   goes, the row takes the next id, its document appears in `slices/`, `Requested by` records what
   produced it. A candidate is a licence to schedule, never a licence to skip *does it serve the goal*.
@@ -66,14 +64,10 @@ one model family, one harness, one scenario — [`README.md`](README.md) says ho
 - **R-007** — Work whose honest `Verification` states a measurement rather than a capability somebody
   can exercise is minted as a spike, and proposed in the block without a question, since nothing about
   the destination is in doubt. § 2, *Slice or spike*; `slice-rules.md` *The spike test*.
-  *⚠ failed three times out of three, never green — scenario 3, `ROUTER-3-CC-1` and `-CC-2` on
-  2026-08-20, `-CC-3` on 2026-08-21, same fixture and prompt each time. The three failures are one:
-  in every run the unknown — recall and latency for a shared index at that volume — stayed in `S13`.
-  Two runs minted an `enabler` beside it for the corpus the measurement would need; one minted nothing
-  and widened `S13`. The reading fires and the routing does not. Fix written 2026-08-21 in
-  `slice-rules.md` *The spike test* — the recognised measurement becomes its own row, and minting a
-  row beside it leaves the unknown where it was — with `kind: enabler` rephrased as a stepping stone.
-  Diagnosed and rewritten, never demonstrated: **do not run scenario 3 a fourth time.***
+  *⚠ failed three times out of three on scenario 3, never green: the reading fires and the routing
+  does not — the measurement is recognised and then left inside the row it blocks. The fix is written
+  in `slice-rules.md` *The spike test* and has never been demonstrated; the card says not to run it
+  again.*
   *⚠ opposite — every uncertain row turning into a spike. Uncertainty is the learning target of an
   ordinary row; what makes a spike is that there is no outcome to deliver.*
 
@@ -86,10 +80,8 @@ one model family, one harness, one scenario — [`README.md`](README.md) says ho
   *complete* promise, and is not `kind: enabler` unless `Promise` says the promise is to a developer.
   `drawing-the-map.md` *Themes*. *Validator: that the reference resolves to a row. Reading: coverage
   and kind.*
-  *⚠ failed — first drawing, 2026-08-20. The `cattura` promise was written with two halves — paste a
-  link, and an escape hatch for pages that will not be read — and its first validator was the link row
-  alone, with the escape hatch two rows down. Either half of the promise was one too many, or the
-  validator was the wrong row; the map said neither.*
+  *⚠ failed — the shape to look for is a promise written with two halves whose first validator covers
+  one of them. Either half was one too many, or the validator is the wrong row.*
 - **R-010** — A row serving every promise and cancellable with none carries `theme: —` rather than
   being pinned to one. `drawing-the-map.md` *Themes*; `assets/roadmap-template.md`.
 - **R-011** — Greenfield draws the repository row and the walking skeleton as two rows. The skeleton
@@ -112,10 +104,8 @@ one model family, one harness, one scenario — [`README.md`](README.md) says ho
   line, or a spike before the first row it blocks — and every line traces to a theme or an id.
   Exposing is not resolving; scope is the only thing that routes an entry between map altitude and a
   row. `drawing-the-map.md` *What the map reports about its input*.
-  *⚠ failed — first drawing, 2026-08-20. The sweep found the embedding-at-runtime conflict and named
-  its reading, missed the manual-entry one, and took a side in an `Excludes` bullet with no line
-  anywhere. The hand-written reference had the same hole, closed in the same pass — which says the
-  entry is easy to walk past, not that the clause is weak.*
+  *⚠ failed — C1, manual entry and the extraction engine, is the entry easiest to walk past: the side
+  gets taken in an `Excludes` bullet with no line anywhere.*
   *⚠ opposite — a map that takes no reading and publishes everything as an open question. An
   assumption is what makes the map drawable.*
 - **R-016** — No `kind: enabler` row resolves uncertainties belonging to more than one `Subsystem` of
@@ -146,8 +136,7 @@ one model family, one harness, one scenario — [`README.md`](README.md) says ho
 - **R-021** — Every `kind: enabler` is a stepping stone — a row that makes later rows cost less — and
   passes the enabler tests: a real end-to-end production path, the executable evidence the row
   depending on it needs, and no speculative foundation beyond that. Horizontal setup wearing the label
-  is enabler camouflage. `slice-rules.md` *The columns* → `kind`. *Rewritten 2026-08-21 with the
-  clauses it names; the check cannot outlive them.*
+  is enabler camouflage. `slice-rules.md` *The columns* → `kind`.
 - **R-022** — A row whose decision the sources leave open reads `needs-decision`, and its `Includes`
   and `Verification` defer to the pending decision rather than picking a side. Publishing one side
   unconditionally is silent contradiction. `slice-rules.md` *The columns* → `readiness`.
@@ -202,12 +191,6 @@ one model family, one harness, one scenario — [`README.md`](README.md) says ho
   an earlier session already clarified it and left no `needs-decision` and no `needs-info`; a spike to
   `/prototype` or `/wayfinder`, never to `/to-spec`. What the system does not have is said rather than
   invented. § 6
-  *First evidence, `ROUTER-3-CC-2`, 2026-08-20, unprompted. No row was handed over — every `ready` row
-  depended on an undelivered `needs-decision` one — and the session said so, then volunteered the
-  derivation it would have made: `ready` + `mixed` → `ready-for-human`, `/grill-with-docs` before
-  `/to-spec`. Both halves correct, and it reported an unreadable path rather than inventing where a
-  spec would live. No prompt has yet asked for a handover; see `README.md`, what the net does not
-  cover.*
 - **R-035** — The session closed on the four-part report and nothing else: the `Themes` table, the
   `NOW` register, `Open questions` or a line saying there are none, and the path to `roadmap.md`. No
   retelling of what the documents say, no narration of the operations run; a `WARNING` or an owed

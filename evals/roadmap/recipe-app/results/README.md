@@ -3,10 +3,9 @@
 What the skill actually produced, one directory per run. Never read by a generation session, and
 never the input to one: a session gets a copy.
 
-Three runs keep only their `PROMPT.md`. `ROADMAP-CC-1` and `REDRAW-CC-1` wrote what
-`../fixtures/mid-flight/` and `../fixtures/redrawn/` now hold, and `ROUTER-2-CC-1` wrote nothing at
-all, so its tree was a byte copy of `../reference-roadmap/`. Keeping a second copy of any of the
-three said nothing the first one did not; git holds them if the deletion ever needs undoing.
+Three runs keep only their `PROMPT.md`, their tree being a copy of something already frozen:
+`ROADMAP-CC-1` and `REDRAW-CC-1` wrote what `../fixtures/mid-flight/` and `../fixtures/redrawn/` now
+hold, and `ROUTER-2-CC-1` wrote nothing at all.
 
 | Run | Branch exercised | Starting state | Outcome |
 |---|---|---|---|
@@ -34,16 +33,12 @@ Every run keeps its own `PROMPT.md`: the exact text sent, every answer given bac
 harness it ran on. Half the evidence about this skill is in what a session asked and what it declined
 to write, and none of that survives in the map alone.
 
-## These runs were driven by a sub-agent, not by a person
+## Every run but `manual-run-1` was driven by a sub-agent
 
 [`../../REVIEW-WORKFLOW.md`](../../REVIEW-WORKFLOW.md) is written for a human typing `/roadmap` into an
-interactive session. The runs of 2026-08-20 were driven differently, and each `PROMPT.md` carries the
-full text so the difference is readable rather than assumed. Three things were added to every prompt:
-how to reach the skill, since a sub-agent cannot type `/roadmap` and the skill sets
-`disable-model-invocation: true`; do not delegate, so the read restriction survives one level down;
-and stop at the proposal, since a sub-agent runs to completion where an interactive session stops for
-confirmation on its own.
+interactive session. Each of those `PROMPT.md` carries the full text, including the three additions a
+sub-agent needs: how to reach a skill it cannot type, do not delegate, and stop at the proposal.
 
 What that costs is the invocation path — anything depending on how the harness loads the skill is
 untested here. What it does not touch is the reading the session does or the block it proposes, which
-is what the rules are about. The prompts themselves are the workflow's, unchanged.
+is what the rules are about.

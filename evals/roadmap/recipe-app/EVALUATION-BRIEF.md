@@ -9,18 +9,11 @@ Read it first when reading a drawing, before the rules and with the candidate ma
 conflicts exist, which alternatives are acceptable, and which uncertainties are material. Open
 `sources/` only to verify a citation.
 
-The sections are ordered by what comparing a candidate against `reference-roadmap/` cannot surface.
-The reference holds one admissible choice per question, so the first three sections come first: the
-whole admissible set, the questions no map may answer silently, and the apparent conflict that is
-none. The last section is the one a careful comparison mostly reconstructs on its own — kept here
-because the reference shows its constraints without marking them as binding.
-
 Every entry carries a stable id — `A` accepted alternative, `C` conflict, `U` uncertainty, `N`
 non-defect, `H` hard constraint. **Cite the id in reviews and reports**, not a paraphrase. Ids are
-never reused; a new entry takes the next free number in its letter. **This brief's ids are its own**:
-`evals/plan-slices/recipe-app/EVALUATION-BRIEF.md` reads the same sources for a different artifact
-and its `A1` is not this one. The rules in `../EVALUATION-RULES.md` cite sections and never ids, so
-that they travel to a second scenario unchanged.
+never reused; a new entry takes the next free number in its letter. The rules in
+`../EVALUATION-RULES.md` cite sections and never ids, so that they travel to a second scenario
+unchanged.
 
 **What this brief does not decide.** The sources say nothing about themes, ids, register order, the
 cap, or where a spike goes: those are the skill's business, and they are checked by the rules and by

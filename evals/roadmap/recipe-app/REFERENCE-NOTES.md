@@ -79,9 +79,8 @@ useful the moment somebody asks why a trade-off was allowed.
 **Both conflicts are taken, and both are stated.** The reference resolves C2 — queries embedded at
 runtime — by reading the constraint as being about cost, where `arch-choices.md` also puts it; and C1
 — manual entry reusing the extraction engine — by having `S7` reuse the edit form and never the
-extractor. That second one was missed on the reference's own first drawing, which is what R-015 says
-about how easy the entry is to walk past. A candidate resolving either the other way is fine; one
-resolving silently is worse than one resolving wrongly and saying so.
+extractor. A candidate resolving either the other way is fine; one resolving silently is worse than
+one resolving wrongly and saying so.
 
 **Three open questions sit at map altitude because each changes the map's shape.** The Postgres
 provider is not among them: it blocks `S1` alone, so it lives on `S1` and shows as `needs-decision`.

@@ -19,9 +19,9 @@ A change rarely needs both.
 router is the cheaper place to see it. § 6 shows in whichever half you run, and only if the session
 gets as far as handing a row over.
 
-Run either after a change you believe is substantive, not after every commit: a net you skip is worse
-than a net you sized honestly. One run is a question; the same run twice with the same answer is a
-verdict. What the net does not cover, and how narrow the sample is, is in [`README.md`](README.md).
+Run either after a change you believe is substantive, not after every commit. One run is a question;
+the same run twice with the same answer is a verdict. What the net does not cover, and how narrow the
+sample is, is in [`README.md`](README.md).
 
 ## Before any session
 
@@ -41,9 +41,7 @@ diff -r skills/roadmap ~/.claude/skills/roadmap --exclude=.claude && echo "insta
 is the sandbox — rerun it outside.
 
 **The skill is invoked explicitly**, as `/roadmap`: the frontmatter sets `disable-model-invocation:
-true`, and dropping the prefix means reviewing the model instead of the skill. That path is the one
-thing still unverified end to end, because every recorded run but `manual-run-1` was driven through a
-sub-agent — `recipe-app/results/README.md` says what that cost.
+true`, and dropping the prefix means reviewing the model instead of the skill.
 
 **Model and effort are set in the session, never in the prompt.** Check what the session actually says
 before sending, and write down what it said rather than what you intended.
@@ -80,8 +78,8 @@ the three router scenarios, verdicts and all.
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
    is red, stop and fix before reading. The session runs the validator itself at § 5 and its run is
    not this one: it resolves `.roadmap` against the run directory rather than the repository root, so
-   a session that does not change directory first gets nothing. That is an artifact of this layout,
-   not a defect — R-033 reads that it ran at all and what it did with the `WARNING`s.
+   a session that does not change directory first gets nothing — an artifact of this layout, not a
+   defect. R-033 reads that it ran at all and what it did with the `WARNING`s.
 
 ## Reading a run: a drawing
 
