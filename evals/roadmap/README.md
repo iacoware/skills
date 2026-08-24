@@ -22,7 +22,7 @@ three router scenarios, verdicts and all.
 |---|---|
 | `../../skills/roadmap/scripts/validate_roadmap.ts` | Structural and referential validator. Deterministic, free, one second. |
 | `make validate-roadmap ROADMAP=<dir>` | Runs it, from the repository root. `ROADMAP` is the directory holding `roadmap.md`, not a file. |
-| `REVIEW-WORKFLOW.md` | How to review one fresh drawing: the preconditions every session runs under, the generation prompt, and the five steps. |
+| `REVIEW-WORKFLOW.md` | How to review one fresh drawing: the preconditions every session runs under, and the five steps. |
 | `recipe-app/ROUTER-SCENARIOS.md` | The other half of the net: three cases that hold the router, each with its starting state, its prompt and its verdict. Answer key — off limits to a generation session. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks. Rules about the skill, portable to any scenario. |
 | `OPEN-VERIFICATION.md` | What the net does not cover, and how to draw a conclusion from a run. The intent, the epistemics, and the one check still owed. |

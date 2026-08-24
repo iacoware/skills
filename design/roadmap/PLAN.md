@@ -82,7 +82,7 @@ skills/roadmap/
 
 evals/roadmap/
   README.md                         what is live, and for whom
-  REVIEW-WORKFLOW.md                the five steps and the generation prompt
+  REVIEW-WORKFLOW.md                the preconditions and the five steps
   EVALUATION-RULES.md               checks about the skill, portable across scenarios
   recipe-app/
     sources/                        copied verbatim from evals/plan-slices/recipe-app/sources/

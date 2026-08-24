@@ -62,15 +62,11 @@ answer key to the three router scenarios, verdicts and all.
 
 ## Drawing a map: the five steps
 
-1. **Draw one map from `recipe-app/sources/` alone**, in a fresh session with no other context. One
-   message, replacing `<N>` with the run number:
-
-   ```
-   /roadmap Read the markdown documents in @evals/roadmap/recipe-app/sources/, starting from @evals/roadmap/recipe-app/sources/goal.md, and draw the roadmap that reaches the goal they state. Treat evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/ as the project root: write the map to evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/.roadmap/. Read nothing else in this repository, in this session or in any session you delegate to: the sources are the only input, and everything else under evals/ and under design/ is off limits.
-   ```
-
-   `@` is Claude Code's file-reference syntax; on a harness that lacks it, drop the prefixes and
-   change nothing else.
+1. **Draw one map from `recipe-app/sources/` alone**, in a fresh session with no other context. Send
+   the most up-to-date drawing prompt in `PROMPTS.md`, with this run's directory substituted for the
+   one it names. What it carries beyond the request is the read restriction the run depends on: the
+   sources as the only input, no search that ranges over the rest of the repository, and the same
+   restriction on anything the session delegates to.
 
    A first drawing writes unasked — there is no `.roadmap/` to lose — and the session argues with
    its own first cut in the same session, so what you read is what it did. Answer what it asks you

@@ -16,8 +16,9 @@ per qualunque sub-agent a cui deleghi:
   evals/roadmap/recipe-app/sources/ e i file che scrivi tu stesso.
 - Tutto il resto di evals/ è off limits in lettura: puoi solo scriverci dentro.
   In particolare non cercare, non elencare e non aprire nulla che si
-  chiami reference-roadmap, fixtures, EVALUATION-\*, REVIEW-WORKFLOW, PROMPT.md,
-  README.md, AGENTS.md o altri results/ di run precedenti.
+  chiami reference-roadmap, fixtures, EVALUATION-\*, REVIEW-WORKFLOW,
+  ROUTER-SCENARIOS, PROMPT.md, README.md, AGENTS.md o altri results/ di run
+  precedenti.
 - Off limits anche design/, skills/, CONTEXT-MAP.md e AGENTS.md alla radice del repo.
 - Non eseguire find, ls -R, grep, glob o qualunque ricerca che spazi su quelle
   directory. Se un tuo comando restituisse per sbaglio contenuto proibito, ignoralo e
