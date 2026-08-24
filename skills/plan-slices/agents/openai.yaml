@@ -1,6 +1,0 @@
-interface:
-  display_name: "Plan Delivery Slices"
-  short_description: "Plan value-first, risk-first vertical delivery slices"
-  default_prompt: "Use $plan-slices to plan, review, or reshape a delivery roadmap into value-first, risk-first vertical slices."
-policy:
-  allow_implicit_invocation: false
