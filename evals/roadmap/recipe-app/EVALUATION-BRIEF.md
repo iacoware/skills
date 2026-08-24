@@ -2,10 +2,10 @@
 
 Four questions about `sources/`, answered once so that no review re-litigates them: where the map may
 differ, what it must leave open, what only looks like a defect, and what it must contain. Verifiable,
-no taste — the taste is in `reference-roadmap/` and its rationale.
+no taste — the taste is in `reference-roadmap/` and `REFERENCE-NOTES.md`.
 
-Read it at step 3 of [`../REVIEW-WORKFLOW.md`](../REVIEW-WORKFLOW.md), before walking the rules and
-with the candidate map in hand. **Here the brief is the authority, not `sources/`:** it decides which
+Read it first when reading a drawing, before the rules and with the candidate map in hand
+([`../REVIEW-WORKFLOW.md`](../REVIEW-WORKFLOW.md)). **Here the brief is the authority, not `sources/`:** it decides which
 conflicts exist, which alternatives are acceptable, and which uncertainties are material. Open
 `sources/` only to verify a citation.
 

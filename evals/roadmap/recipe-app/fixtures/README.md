@@ -9,7 +9,7 @@ Three subdirectories, two different jobs.
 | Path | What it is | Who reads it |
 |---|---|---|
 | `validator/` | 20 JSON files. Each is one minimal mutation of the reference roadmap, plus the error it must produce. **Not roadmaps** — patches. | `skills/roadmap/scripts/validate_roadmap.test.ts`, which applies each one to the oracle in memory |
-| `mid-flight/` | A complete `.roadmap/` directory: the first drawing with `S0`–`S3` closed out into `archive/`. | Router scenario 1 of [`../ROUTER-SCENARIOS.md`](../ROUTER-SCENARIOS.md) |
+| `mid-flight/` | A complete `.roadmap/` directory: the first drawing with `S0`–`S3` closed out into `archive/`. | Router scenario 1 of [`../SCENARIOS.md`](../SCENARIOS.md) |
 | `redrawn/` | A complete `.roadmap/` directory: the map redrawn against the public-cookbooks goal, `S0`–`S11` archived. | Router scenario 3 |
 
 `validator/` has [its own README](validator/README.md) explaining the patch format.
@@ -36,7 +36,7 @@ would be the same tree twice. `../results/README.md` keeps the row, and `PROMPT.
 
 A fixture moves when the state it stands for moves — never to make a scenario pass. If the
 high-water mark changes, the ids in the scenario text are what get corrected, and
-`../ROUTER-SCENARIOS.md` says so at the head of the scenarios.
+`../SCENARIOS.md` says so at the head of the scenarios.
 
 `validator/` fixtures are anchored to the oracle by exact `find` strings: change
 `../reference-roadmap/roadmap.md` and run `make test-roadmap`, which fails on the fixture itself
