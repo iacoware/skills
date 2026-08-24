@@ -9,8 +9,9 @@ are recorded below as holes, so that nobody re-derives them as tasks; the third 
 R-007's third run of router scenario 3, whose verdict now lives on R-007 in `EVALUATION-RULES.md` and
 whose record says not to run a fourth.
 
-Read [`REVIEW-WORKFLOW.md`](REVIEW-WORKFLOW.md) and [`EVALUATION-RULES.md`](EVALUATION-RULES.md)
-first — those give the procedure and the checks, this gives the epistemics. You are the
+Read [`REVIEW-WORKFLOW.md`](REVIEW-WORKFLOW.md) and
+[`recipe-app/ROUTER-SCENARIOS.md`](recipe-app/ROUTER-SCENARIOS.md) for the two procedures, and
+[`EVALUATION-RULES.md`](EVALUATION-RULES.md) for the checks; this gives the epistemics. You are the
 **reviewer**: everything in this repository is open to you, including the oracle and the brief. What
 must stay blind is the session you drive, and § *Before any session* of the workflow says how.
 

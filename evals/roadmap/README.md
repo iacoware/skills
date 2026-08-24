@@ -10,8 +10,8 @@ that skill in particular. They apply here unchanged, and they apply harder: this
 sessions, so a plan judged once is replaced by a map judged in a state some earlier session produced.
 
 **Audience: a human reviewer, or an agent in a review session.** Never a generation session — the
-oracle, its rationale and the brief are the answer key, which is why they live here and not beside
-the skill, where an agent exploring the directory could pick them up. The design set is off limits to
+oracle, its rationale, the brief and the router scenarios' verdicts are the answer key, which is why
+they live here and not beside the skill, where an agent exploring the directory could pick them up. The design set is off limits to
 a generation session too, for a sharper reason:
 [`../../design/roadmap/WORKFLOWS.md`](../../design/roadmap/WORKFLOWS.md) § 3 is the answer key to the
 three router scenarios, verdicts and all.
@@ -22,7 +22,8 @@ three router scenarios, verdicts and all.
 |---|---|
 | `../../skills/roadmap/scripts/validate_roadmap.ts` | Structural and referential validator. Deterministic, free, one second. |
 | `make validate-roadmap ROADMAP=<dir>` | Runs it, from the repository root. `ROADMAP` is the directory holding `roadmap.md`, not a file. |
-| `REVIEW-WORKFLOW.md` | How to run one review: the five steps, the generation prompts, and the three router scenarios. |
+| `REVIEW-WORKFLOW.md` | How to review one fresh drawing: the preconditions every session runs under, the generation prompt, and the five steps. |
+| `recipe-app/ROUTER-SCENARIOS.md` | The other half of the net: three cases that hold the router, each with its starting state, its prompt and its verdict. Answer key — off limits to a generation session. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks. Rules about the skill, portable to any scenario. |
 | `OPEN-VERIFICATION.md` | What the net does not cover, and how to draw a conclusion from a run. The intent, the epistemics, and the one check still owed. |
 | `recipe-app/sources/` | The only inputs a candidate roadmap is drawn from. Copied verbatim from `../plan-slices/recipe-app/sources/`: they are input, not `plan-slices` output. |
@@ -36,9 +37,10 @@ three router scenarios, verdicts and all.
 | `../AGENTS.md` | Authorization rules for provider runs. Binding for every generation call below. |
 
 Four jobs, no overlap: a **procedure**, **rules** that hold across scenarios, **facts** about this
-scenario's sources, **one worked answer** for this scenario with its reasoning. Add a second scenario
-and the rules travel unchanged, the procedure travels with a directory substituted, and the last two
-are written anew.
+scenario's sources, and **worked answers** for this scenario — the oracle with its rationale for the
+drawing branch, `ROUTER-SCENARIOS.md` for the other. Add a second scenario and the rules travel
+unchanged, the drawing procedure travels with a directory substituted, and everything under the
+scenario's own directory is written anew.
 
 **Nothing is inherited from `evals/plan-slices/`.** The rule ids here start a fresh sequence and the
 brief's entry ids are its own: `R-004` in `EVALUATION-RULES.md` and `R-004` in the `plan-slices` list

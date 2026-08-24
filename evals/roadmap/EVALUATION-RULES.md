@@ -2,8 +2,9 @@
 
 What to look for in a map produced by `skills/roadmap/SKILL.md`, and in the session that produced it,
 to notice that a change to the skill broke something it used to get right. How to run one review is
-in [`REVIEW-WORKFLOW.md`](REVIEW-WORKFLOW.md); these rules are walked at its step 4, and by the router
-scenarios that follow it.
+in [`REVIEW-WORKFLOW.md`](REVIEW-WORKFLOW.md), where these rules are walked at step 4, and in
+[`recipe-app/ROUTER-SCENARIOS.md`](recipe-app/ROUTER-SCENARIOS.md), where each scenario cites the
+ones it turns on.
 
 **These are rules about the skill, not about any one scenario.** They carry over unchanged to a new
 one. What is specific to a scenario lives beside its sources — for `recipe-app`, in
