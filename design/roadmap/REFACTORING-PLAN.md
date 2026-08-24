@@ -30,8 +30,8 @@ Three structural faults compound it:
                     reference-loading policy · the write-vs-propose invariant (once)
   1  Establish the situation
   2  Choose the door
-  3  Draw the map                    doors 1 and 2
-  4  Operations on the map           door 3, and the argument round that follows a draw
+  3  Draw the map                    the Drawing door
+  4  Operations on the map           the Revising door, and the argument round that follows a draw
   5  Close the session               write · validate · report
      Hand over a ready row           unnumbered: on demand, not in the progression
      The session holds when          one checklist per altitude; this is the session's
@@ -56,13 +56,12 @@ lying*, *the tracker has no notion of done*. Justificatory rationale defends a r
 objection and changes no decision — *a wrong branch then costs a proposal and not a record*. Cut that
 without mercy; it is roughly 8-12 lines.
 
-**D3 — Three doors, one operation table, one close.** What varies between sessions is only where the
+**D3 — Two doors, one operation table, one close.** What varies between sessions is only where the
 operations come from. What they are, and how the session closes, never varies.
 
 | Door | Condition | Operations come from | Section |
 |---|---|---|---|
-| `Drawing` | no map, and a goal is declared | `references/drawing-the-map.md` | *Draw the map* |
-| `Redraw` | the input contradicts the recorded `Goal` | the same, with the standing map as input | *Draw the map* |
+| `Drawing` | no map stands against a declared goal, **or** the input contradicts the recorded `Goal` | `references/drawing-the-map.md` | *Draw the map* |
 | `Revising` | everything else — the goal stands; the default, by a wide margin | the five | *Operations on the map* |
 
 `Revising` replaces `Re-truing`, which was the earlier candidate and failed on its leading word: to
@@ -71,10 +70,25 @@ and the arm's work is mutation — it closes rows, mints ids, deletes documents.
 check invites under-acting. `Revising` leads with change, and its breadth matches the arm's: half of
 what happens here changes membership rather than form, and *revising a document* covers both.
 
-Doors and sections are not in bijection, in either direction: two doors land in *Draw the map*, and
-*Operations on the map* is consulted by `Drawing` too, for the argument round. A door is a purpose and
-carries a purpose name; a section is a content and carries a content name. Never use one for the
-other.
+**`Redraw` is a condition, not a door.** A door determines exactly two things: which reference is
+loaded, and which section runs. On both, a redraw answers identically to a first draw, so a third door
+would branch on nothing. What genuinely differs on a redraw is keyed elsewhere and by a different
+discriminator: the extra input — archive, id high-water mark, exclusions, concerns, candidates, open
+rows — on *a map stands*, in `references/drawing-the-map.md`; propose-instead-of-write on *a record
+stands*, per D7. Making it a door would re-evaluate a discriminator two other places already evaluate,
+which is the fault this plan opens with.
+
+The two conditions stay visible as two, because they are tested in completely different ways: the
+first is a filesystem check, the second is the destination-vs-path judgement, the most error-prone
+reading in the document. Two lines in the condition column, one door.
+
+One asymmetry is real and survives: *Operations on the map* is consulted by `Drawing` too, for the
+argument round. Doors are not sections. A door is a purpose and carries a purpose name; a section is a
+content and carries a content name. Never use one for the other.
+
+`Redraw` survives as the name of the case and never of a door. `CONTEXT.md:144` already defines it that
+way — *il ramo di disegno che riparte con più input* — and `EVALUATION-RULES.md` R-018 and the
+`fixtures/redrawn/` scenario go on using the word.
 
 **D4 — Handover is not a door.** A session changes the map, hands over a row, or does both in that
 order. A handover-only session writes nothing, so it has no close, no validator and no report.
@@ -86,7 +100,7 @@ raises, in one round trip, and skipped when the input already answers it. Close-
 a question and is what it always was: an operation triggered by the answer. The *close-out first*
 ordering rule survives untouched.
 
-**D6 — The coverage question moves into *Operations on the map*.** On the draw and redraw doors it is
+**D6 — The coverage question moves into *Operations on the map*.** On the `Drawing` door it is
 vacuous: the theme ceremony, the first validators and `The map holds when` in
 `references/drawing-the-map.md` *are* that door's coverage check. It earns its keep only where `NOW`
 mutated under a fixed goal. Moving it also kills the § 2 ↔ § 5 cycle, because the question and the
@@ -164,19 +178,21 @@ destination, so it has no business in *Choose the door*. It belongs to *Operatio
 nothing about the destination is in doubt — travels with it.
 
 **D16 — `design/roadmap/WORKFLOWS.md` is deleted.** After the restructuring it holds nothing of its
-own: the three doors are the table in `SKILL.md` *Choose the door*, the scenario mapping is already at
+own: the doors are the table in `SKILL.md` *Choose the door*, the scenario mapping is already at
 the head of `evals/roadmap/recipe-app/SCENARIOS.md`, the intent is `ROADMAP-GOAL.md` and the terms are
 `CONTEXT.md`. It declares itself non-normative, so nothing fails when it rots — it is a fourth place
 describing the same structure, with no test on it. Deleting it leaves one edit: the sentence at
 `CONTEXT-MAP.md:11` that cites it.
 
-**D17 — `design/roadmap/CONTEXT.md` gains the two branch terms it is missing, and renames one entry.**
-The vocabulary defines the five operations and `Redraw`, which it already describes as a branch —
-*non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input*. It has no term
-for the default branch or for the first drawing, so every document that needs one invents it, which
-is the drift `CONTEXT.md` exists to stop. Add `Drawing` and `Revising` beside `Redraw`, in the same
-form as the entries around them, with the `_Avoid_` line each needs: `Revising` is not *update*, the
-name of the skill split this project rejected, and not *maintenance*. In the same pass rename the
+**D17 — `design/roadmap/CONTEXT.md` gains the two door terms it is missing, and renames one entry.**
+The vocabulary defines the five operations and `Redraw`, whose definition already agrees with D3 —
+*non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input*: the drawing
+branch, not one of its own. It has no term for the drawing door itself or for the default one, so
+every document that needs one invents it, which is the drift `CONTEXT.md` exists to stop. Add
+`Drawing` and `Revising` beside `Redraw`, in the same form as the entries around them, with the
+`_Avoid_` line each needs: `Revising` is not *update*, the name of the skill split this project
+rejected, and not *maintenance*. Add *porta* to `Redraw`'s own `_Avoid_` line, since under D3 it names
+a case and never a door. In the same pass rename the
 entry at line 134 from `Revision` to `Reshaping`, keeping its definition and its `_Avoid_` line, and
 add *revision* to that `_Avoid_` line — it is now the branch one altitude up.
 
@@ -201,7 +217,7 @@ anchors, not addresses.
 | 18 — *the register holds rows, and a row is a slice or a spike* | said again at `slice-rules.md`:6 — keep one |
 
 The reference-loading policy is stated once in the preamble: `slice-rules.md` on every session
-whatever the input asks for, `drawing-the-map.md` on the draw and redraw doors only.
+whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 
 ## Order of work
 
@@ -229,6 +245,6 @@ whatever the input asks for, `drawing-the-map.md` on the draw and redraw doors o
 - `SKILL.md` ends on `The session holds when`, and no item in it is checked by a reference checklist
   or by the validator;
 - `WORKFLOWS.md` is gone and nothing points at it;
-- the three branches carry the names `CONTEXT.md` defines, no section title is used as a branch name,
-  and no word names both a branch and an operation;
+- the two doors carry the names `CONTEXT.md` defines, `Redraw` names a case and never a door, no
+  section title is used as a branch name, and no word names both a branch and an operation;
 - the validator runs clean and one evaluation was run against the new file.
