@@ -59,11 +59,23 @@ without mercy; it is roughly 8-12 lines.
 **D3 — Three doors, one operation table, one close.** What varies between sessions is only where the
 operations come from. What they are, and how the session closes, never varies.
 
-| Door | Condition | Operations come from |
-|---|---|---|
-| Draw | no map, and a goal is declared | `references/drawing-the-map.md` |
-| Redraw | the input contradicts the recorded `Goal` | the same door, with the standing map as input |
-| Operate | everything else — the default, by a wide margin | the five, below |
+| Door | Condition | Operations come from | Section |
+|---|---|---|---|
+| `Drawing` | no map, and a goal is declared | `references/drawing-the-map.md` | *Draw the map* |
+| `Redraw` | the input contradicts the recorded `Goal` | the same, with the standing map as input | *Draw the map* |
+| everything else — the goal stands (`Re-truing`) | the default, by a wide margin | the five | *Operations on the map* |
+
+**The default arm is keyed on its condition, not on its name.** A default is never dispatched to; it
+is fallen through to, so the model has to recognise *not `Drawing`, not `Redraw`* and nothing more.
+`Re-truing` stays as vocabulary — one word for the evals, `CONTEXT-MAP.md` and prose to use instead of
+five — and never as the leading word of the arm. This matters because the metaphor pulls toward
+verification while the arm's work is mutation: it closes rows, mints ids and deletes documents, and a
+name read as *check it is still true* invites under-acting.
+
+Doors and sections are not in bijection, in either direction: two doors land in *Draw the map*, and
+*Operations on the map* is consulted by `Drawing` too, for the argument round. A door is a purpose and
+carries a purpose name; a section is a content and carries a content name. Never use one for the
+other.
 
 **D4 — Handover is not a door.** A session changes the map, hands over a row, or does both in that
 order. A handover-only session writes nothing, so it has no close, no validator and no report.
@@ -97,14 +109,13 @@ same derivation, under the same rules and the same close. Update `ROADMAP-GOAL.m
 content is a lookup table; it is rare vocabulary, so lexical retrieval is weak; and under D3 it is
 simply wrong, because the draw door consults the same table for its argument round. The five
 sub-headings — `Close-out`, `Promotion`, `Admission`, `Revision`, `Retirement` — stay verbatim: they
-are the anchors the evaluation rules already cite. `Re-truing` survives as a verb in prose and in
-prose. It is not kept as a named session shape anywhere: `WORKFLOWS.md` is deleted (D16) and
-`CONTEXT.md` defines `Redraw` but has no need of a term for the default.
+are the anchors the evaluation rules already cite. `Re-truing` survives as a verb in prose, and as
+the vocabulary term for the default arm (D17) — never as that arm's dispatch key.
 
 **D10 — Numbers mark the progression; anchors are titles.** Steps 1-5 run in order and carry numbers;
-`Hand over a ready row` and `Complete when` carry none, which is how the reader knows they are not in
-the sequence. Every reference from outside `SKILL.md` anchors on the section title and never on the
-number, so the next restructuring does not cascade. See `REFACTORING-POINTERS.md`.
+`Hand over a ready row` and `The session holds when` carry none, which is how the reader knows they
+are not in the sequence. Every reference from outside `SKILL.md` anchors on the section title and
+never on the number, so the next restructuring does not cascade. See `REFACTORING-POINTERS.md`.
 
 **D11 — `/wayfinder` goes; `/prototype` stays.** The distinction it carried is generative and stays,
 the name does not: a spike goes to `/prototype` when the question needs something built to answer it;
@@ -153,6 +164,15 @@ the head of `evals/roadmap/recipe-app/SCENARIOS.md`, the intent is `ROADMAP-GOAL
 describing the same structure, with no test on it. Deleting it leaves one edit: the sentence at
 `CONTEXT-MAP.md:11` that cites it.
 
+**D17 — `design/roadmap/CONTEXT.md` gains the two branch terms it is missing.**
+The vocabulary defines the five operations and `Redraw`, which it already describes as a branch —
+*non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input*. It has no term
+for the default branch or for the first drawing, so every document that needs one invents it, which
+is the drift `CONTEXT.md` exists to stop. Add `Drawing` and `Re-truing` beside `Redraw`, in the same
+form as the entries around them, with the `_Avoid_` line each needs: `Re-truing` is not *update* and
+not *Revision*, which is one of the five operations inside it. `Re-truing` is vocabulary for naming
+the session after the fact; the arm itself is keyed on its condition (D3).
+
 ## De-duplication list
 
 Cut from `SKILL.md`, keep where it already lives. Line numbers are against the current file and are
@@ -178,14 +198,15 @@ whatever the input asks for, `drawing-the-map.md` on the draw and redraw doors o
 
 ## Order of work
 
-1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D14.
+1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D15 and D17.
 2. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
 3. `design/roadmap/ROADMAP-GOAL.md` § *Roads not taken* — D8.
 4. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11`.
-5. The inbound references, per `REFACTORING-POINTERS.md`.
-6. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
+5. `design/roadmap/CONTEXT.md` — add `Drawing` and `Re-truing` beside `Redraw`, per D17.
+6. The inbound references, per `REFACTORING-POINTERS.md`.
+7. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
    documented invocation still matches.
-7. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
+8. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
 
 ## Done when
 
@@ -200,4 +221,6 @@ whatever the input asks for, `drawing-the-map.md` on the draw and redraw doors o
 - `SKILL.md` ends on `The session holds when`, and no item in it is checked by a reference checklist
   or by the validator;
 - `WORKFLOWS.md` is gone and nothing points at it;
+- the two matched doors carry the names `CONTEXT.md` defines, the default arm is keyed on its
+  condition, and no section title is used as a door name;
 - the validator runs clean and one evaluation was run against the new file.
