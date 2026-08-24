@@ -19,7 +19,12 @@ reference is to one.
 The rewrite may move these, but not rename them: something outside cites each one by name.
 
 `Destination or path` · `When the input cannot be reconciled` · `Close-out` · `Promotion` ·
-`Admission` · `Revision` · `Retirement` · `Then absorb the evidence` · `Run the validator`
+`Admission` · `Retirement` · `Then absorb the evidence` · `Run the validator`
+
+`Revision` is **not** on this list, and the omission is deliberate: nothing outside `SKILL.md` cites
+it. It occurs twice in the whole repository — `design/roadmap/CONTEXT.md:134` and
+`skills/roadmap/SKILL.md:139` — so D9 renames it to `Reshaping`, which frees the word for the branch
+name one altitude up.
 
 ## Section mapping
 

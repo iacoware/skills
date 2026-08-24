@@ -63,14 +63,13 @@ operations come from. What they are, and how the session closes, never varies.
 |---|---|---|---|
 | `Drawing` | no map, and a goal is declared | `references/drawing-the-map.md` | *Draw the map* |
 | `Redraw` | the input contradicts the recorded `Goal` | the same, with the standing map as input | *Draw the map* |
-| everything else — the goal stands (`Re-truing`) | the default, by a wide margin | the five | *Operations on the map* |
+| `Revising` | everything else — the goal stands; the default, by a wide margin | the five | *Operations on the map* |
 
-**The default arm is keyed on its condition, not on its name.** A default is never dispatched to; it
-is fallen through to, so the model has to recognise *not `Drawing`, not `Redraw`* and nothing more.
-`Re-truing` stays as vocabulary — one word for the evals, `CONTEXT-MAP.md` and prose to use instead of
-five — and never as the leading word of the arm. This matters because the metaphor pulls toward
-verification while the arm's work is mutation: it closes rows, mints ids and deletes documents, and a
-name read as *check it is still true* invites under-acting.
+`Revising` replaces `Re-truing`, which was the earlier candidate and failed on its leading word: to
+*true* a wheel is to bring it back into alignment, but the first reading is *check it is still true*,
+and the arm's work is mutation — it closes rows, mints ids, deletes documents. A name that reads as a
+check invites under-acting. `Revising` leads with change, and its breadth matches the arm's: half of
+what happens here changes membership rather than form, and *revising a document* covers both.
 
 Doors and sections are not in bijection, in either direction: two doors land in *Draw the map*, and
 *Operations on the map* is consulted by `Drawing` too, for the argument round. A door is a purpose and
@@ -105,12 +104,19 @@ which real sessions falsify: authors do say *split S12*, *merge these two*, *mov
 accurate rule: the verb is never **required**, and when it is **given** it is a shortcut through the
 same derivation, under the same rules and the same close. Update `ROADMAP-GOAL.md` in the same pass.
 
-**D9 — `Re-true the map` becomes `Operations on the map`.** The old name is a purpose name where the
-content is a lookup table; it is rare vocabulary, so lexical retrieval is weak; and under D3 it is
-simply wrong, because the draw door consults the same table for its argument round. The five
-sub-headings — `Close-out`, `Promotion`, `Admission`, `Revision`, `Retirement` — stay verbatim: they
-are the anchors the evaluation rules already cite. `Re-truing` survives as a verb in prose, and as
-the vocabulary term for the default arm (D17) — never as that arm's dispatch key.
+**D9 — `Re-true the map` becomes `Operations on the map`, and the operation `Revision` becomes
+`Reshaping`.** The old section name is a purpose name where the content is a lookup table; it is rare
+vocabulary, so lexical retrieval is weak; and under D3 it is simply wrong, because `Drawing` consults
+the same table for its argument round. The five sub-headings — `Close-out`, `Promotion`,
+`Admission`, `Retirement` — stay verbatim: they are the
+anchors the evaluation rules cite. `Revision` is the exception, and it is renamed rather than kept:
+nothing outside cites it — it appears at `CONTEXT.md:134` and `SKILL.md:139` and nowhere else — and it
+would otherwise collide with the branch name `Revising` one altitude up. `Reshaping` is already the
+verb `SKILL.md:139` defines it with, *reshapes rows without adding or closing any*, so the rename
+introduces no concept. The two words then match their altitudes: `Reshaping` denotes a change of form
+and that is exactly and only what the operation does, while `Revising` is broad enough to cover the
+changes of membership — a row closed out, a row admitted — that the branch also holds. `Re-truing` is
+dropped entirely.
 
 **D10 — Numbers mark the progression; anchors are titles.** Steps 1-5 run in order and carry numbers;
 `Hand over a ready row` and `The session holds when` carry none, which is how the reader knows they
@@ -164,14 +170,15 @@ the head of `evals/roadmap/recipe-app/SCENARIOS.md`, the intent is `ROADMAP-GOAL
 describing the same structure, with no test on it. Deleting it leaves one edit: the sentence at
 `CONTEXT-MAP.md:11` that cites it.
 
-**D17 — `design/roadmap/CONTEXT.md` gains the two branch terms it is missing.**
+**D17 — `design/roadmap/CONTEXT.md` gains the two branch terms it is missing, and renames one entry.**
 The vocabulary defines the five operations and `Redraw`, which it already describes as a branch —
 *non è un'operazione fra le cinque: è il ramo di disegno che riparte con più input*. It has no term
 for the default branch or for the first drawing, so every document that needs one invents it, which
-is the drift `CONTEXT.md` exists to stop. Add `Drawing` and `Re-truing` beside `Redraw`, in the same
-form as the entries around them, with the `_Avoid_` line each needs: `Re-truing` is not *update* and
-not *Revision*, which is one of the five operations inside it. `Re-truing` is vocabulary for naming
-the session after the fact; the arm itself is keyed on its condition (D3).
+is the drift `CONTEXT.md` exists to stop. Add `Drawing` and `Revising` beside `Redraw`, in the same
+form as the entries around them, with the `_Avoid_` line each needs: `Revising` is not *update*, the
+name of the skill split this project rejected, and not *maintenance*. In the same pass rename the
+entry at line 134 from `Revision` to `Reshaping`, keeping its definition and its `_Avoid_` line, and
+add *revision* to that `_Avoid_` line — it is now the branch one altitude up.
 
 ## De-duplication list
 
@@ -202,7 +209,8 @@ whatever the input asks for, `drawing-the-map.md` on the draw and redraw doors o
 2. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
 3. `design/roadmap/ROADMAP-GOAL.md` § *Roads not taken* — D8.
 4. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11`.
-5. `design/roadmap/CONTEXT.md` — add `Drawing` and `Re-truing` beside `Redraw`, per D17.
+5. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, and rename `Revision`
+   to `Reshaping`, per D17.
 6. The inbound references, per `REFACTORING-POINTERS.md`.
 7. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
    documented invocation still matches.
@@ -221,6 +229,6 @@ whatever the input asks for, `drawing-the-map.md` on the draw and redraw doors o
 - `SKILL.md` ends on `The session holds when`, and no item in it is checked by a reference checklist
   or by the validator;
 - `WORKFLOWS.md` is gone and nothing points at it;
-- the two matched doors carry the names `CONTEXT.md` defines, the default arm is keyed on its
-  condition, and no section title is used as a door name;
+- the three branches carry the names `CONTEXT.md` defines, no section title is used as a branch name,
+  and no word names both a branch and an operation;
 - the validator runs clean and one evaluation was run against the new file.
