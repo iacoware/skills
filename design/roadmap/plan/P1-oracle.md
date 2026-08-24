@@ -20,7 +20,7 @@ imports its slicing wholesale instead of cutting the map from the sources.
 - `evals/roadmap/recipe-app/sources/` — the four documents copied verbatim, not converted;
 - `evals/roadmap/recipe-app/reference-roadmap/` — `roadmap.md` and one document per row under
   `slices/`;
-- `evals/roadmap/recipe-app/REFERENCE-ROADMAP-RATIONALE.md`.
+- `evals/roadmap/recipe-app/REFERENCE-NOTES.md`.
 
 ## Work
 

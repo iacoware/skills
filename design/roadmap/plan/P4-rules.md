@@ -9,7 +9,7 @@ Read [`../PLAN.md`](../PLAN.md) first.
 
 - [`../ROADMAP-GOAL.md`](../ROADMAP-GOAL.md), [`../CONTEXT.md`](../CONTEXT.md);
 - `skills/plan-slices/SKILL.md`, steps 2–4 and its anti-patterns;
-- `evals/roadmap/recipe-app/REFERENCE-ROADMAP-RATIONALE.md`.
+- `evals/roadmap/recipe-app/REFERENCE-NOTES.md`.
 
 ## Produces
 
