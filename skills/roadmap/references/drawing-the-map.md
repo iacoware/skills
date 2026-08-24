@@ -177,7 +177,8 @@ non-public environment.
 
 Drawing forces the map to resolve things the sources left open. `Assumptions` and `Open questions` say
 which ones, so the author gets a second reading of the vision's completeness. Neither is a work queue,
-neither mints anything, and every line is traced to the theme or the id it touches.
+neither mints anything, and every line is traced to the themes and the ids it touches, or to `goal`
+where what it touches is the whole map and no theme or row owns it.
 
 Sweep the sources for two categories before the map is drawn, and give each entry a reference on both
 sides:
@@ -224,5 +225,5 @@ the trade-off was allowed.
 - the scope boundary ships with the first row that persists data, and any identity deferred past the
   second end-user row is justified in `Ordering criteria` against named evidence;
 - every conflict and every undecided choice left the sweep by one of the three doors;
-- every line of `Assumptions` and `Open questions` traces to a theme or an id;
+- every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - `NOW` fits under the cap without inventing detail the map cannot yet know.

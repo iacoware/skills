@@ -102,7 +102,8 @@ the failure they guard.
   *What makes a slice*.
 - **R-015** — Every conflict and every undecided choice the brief lists left the sweep by exactly one
   of the three doors — an `Assumptions` line naming the reading taken and why, an `Open questions`
-  line, or a spike before the first row it blocks — and every line traces to a theme or an id.
+  line, or a spike before the first row it blocks — and every line traces to the themes and ids it
+  touches, or to `goal` where it touches the whole map.
   Exposing is not resolving; scope is the only thing that routes an entry between map altitude and a
   row. `drawing-the-map.md` *What the map reports about its input*.
   *⚠ failed — C1, manual entry and the extraction engine, is the entry easiest to walk past: the side

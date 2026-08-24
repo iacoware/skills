@@ -48,13 +48,16 @@ the title is the only link, and it is the way into the row's document.]
 
 ## Assumptions
 
-- `[theme or id]` — [Something taken as true in order to draw the map, and that asks to be
+- `[theme, id or goal]` — [Something taken as true in order to draw the map, and that asks to be
   corrected; where the sources contradict each other, which reading was taken and why.]
 
 ## Open questions
 
-- `[theme or id]` — [Something that could not be settled and that asks to be answered; it belongs
-  here rather than on a row when the answer changes the shape of the map.]
+- `[theme, id or goal]` — [Something that could not be settled and that asks to be answered; it
+  belongs here rather than on a row when the answer changes the shape of the map.]
+
+[A line carries every theme and every id it touches, comma-separated, and `goal` when what it
+touches is the whole map and no theme or row owns it.]
 
 ## Cross-functional concerns
 
