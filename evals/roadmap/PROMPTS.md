@@ -26,6 +26,15 @@ per qualunque sub-agent a cui deleghi:
   directory. Se un tuo comando restituisse per sbaglio contenuto proibito, ignoralo e
   non usarlo.
 
+**Dopo la chiusura — non fa parte del prompt, e non si chiede alla sessione.** Appena la sessione ha
+dato il report finale, da un secondo terminale e prima di digitare altro lì dentro:
+
+```
+make capture-transcript RUN=evals/roadmap/recipe-app/results/ROADMAP-CC-<N>
+```
+
+Una sessione fresca per run, e cattura prima di `/clear`, che apre un file nuovo.
+
 ---
 
 ## Valutazione di un piano generato per recipe-app
@@ -48,8 +57,9 @@ Poi, in quest'ordine, che non va invertito:
    quello che ti sei dimenticato. Non è un target di diff: id, titoli, numero di temi e di righe
    possono differire; su ogni differenza chiedi quale delle due ha la ragione migliore.
 
-Di questo run non esiste il transcript: le regole che leggono la sessione — cosa ha chiesto, cosa ha
-proposto, se ha girato il validator, come ha chiuso — sono _inconclusive_, non rosse. Dillo.
+Se la directory del run contiene un TRANSCRIPT.jsonl, leggilo: è lì che sta la metà delle prove che la
+mappa non porta — cosa ha chiesto, cosa ha proposto, se ha girato il validator, come ha chiuso. Se non
+c'è, quelle regole sono _inconclusive_, non rosse, e il report lo dice.
 
 Report: una riga per violazione, con l'id (R-xxx, o H/C del brief), dove sta nella mappa, e cosa la
 falsifica. Nessun punteggio. In questa sessione non modificare SKILL.md, i fixture, l'oracolo né la

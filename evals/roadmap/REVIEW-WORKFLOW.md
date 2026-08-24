@@ -54,6 +54,11 @@ both are frozen and a session writes.
 model and harness it ran on — written from what the session received, not from the card. A run driven
 another way is still evidence, but only if the adaptation is readable.
 
+**And it keeps the session itself**, as `TRANSCRIPT.jsonl`. Half the rules have no artifact in
+`.roadmap/` — what the session asked, what it declined to write, what it put to the author — and
+against a run without one they are inconclusive by construction rather than green. Step 5 below says
+when and how; a run that skips it is half a net, and says so.
+
 **What a session may read** is `sources/` and its own copy of `.roadmap/`; the prompt says so.
 Off limits in particular: `reference-roadmap/` and `REFERENCE-NOTES.md`, `EVALUATION-RULES.md`,
 `EVALUATION-BRIEF.md` and `recipe-app/SCENARIOS.md`, which are the answer keys — the cards carry the
@@ -74,7 +79,19 @@ them.
    to lose — and argues with its own first cut in the same session. A map already standing proposes a
    block first: never confirm a proposal that redraws the map, since a redraw you let it write teaches
    nothing the proposal did not already say.
-5. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
+5. **Capture the transcript** — `make capture-transcript RUN=<the run directory>` from a second
+   terminal, the moment the session closes on its four-part report and before anything else is typed
+   into it. The target copies the newest `.jsonl` under `~/.claude/projects/<this repository>/`, which
+   the harness writes as the session runs, so the copy is the run as it stood at the report. **The
+   session never captures itself**: asked to, it would write a summary of what it believes it did, and
+   an instruction to produce one would spend R-035 — which reads that the session closed on the four
+   parts *and nothing else* — in every run after it. Two habits keep the file honest: **one fresh
+   session per run**, since `/clear` opens a new file and capturing before it is not optional; and,
+   where you carried on typing before remembering, a line in `PROMPT.md` saying where the run ends.
+   A sub-agent-driven run captures the driver's session, which carries the sub-agent's turns marked
+   `isSidechain: true`. A harness with no such file leaves `/export` inside the session, after the
+   report: it costs one turn, spent where there is nothing left to read.
+6. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
    is red, stop and fix before reading. The session runs the validator itself at § 5 and its run is
    not this one: it resolves `.roadmap` against the run directory rather than the repository root, so
