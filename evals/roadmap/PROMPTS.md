@@ -30,10 +30,10 @@ per qualunque sub-agent a cui deleghi:
 
 ## Valutazione di un piano generato per recipe-app
 
-Rivedi la mappa in @evals/roadmap/recipe-app/results/manual-run-1/.roadmap/ e scrivi il report
-in @evals/roadmap/recipe-app/results/manual-run-1/REVIEW.md.
+Rivedi la mappa in @evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/.roadmap/ e scrivi il report
+in @evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/REVIEW.md.
 
-Prima gira `make validate-roadmap ROADMAP=evals/roadmap/recipe-app/results/manual-run-1/.roadmap`
+Prima gira `make validate-roadmap ROADMAP=evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/.roadmap`
 dalla radice del repo. Se segnala ERROR, riportalo nel report e continua: la mappa è un reperto e non
 va corretta.
 
