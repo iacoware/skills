@@ -20,7 +20,7 @@ and not beside the skill. So is [`../../design/roadmap/WORKFLOWS.md`](../../desi
 | `recipe-app/reference-roadmap/` | The oracle: one good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Read last. |
 | `recipe-app/REFERENCE-NOTES.md` | The reasons the oracle does not publish. Read with it. |
 | `recipe-app/fixtures/` | Frozen starting states, and one minimal mutation of the oracle per validator check. |
-| `recipe-app/results/` | What the skill produced, one directory per run with the `PROMPT.md` that produced it. Never an input to a session. |
+| `recipe-app/results/` | What the skill produced, one directory per run, written by the run itself with the `PROMPT.md` that produced it. Never an input to a session. |
 | `../AGENTS.md` | Authorization rules for provider runs. Binding on every generation call. |
 
 Add a second scenario and only the last two jobs are written anew: a **procedure** and **rules** hold
