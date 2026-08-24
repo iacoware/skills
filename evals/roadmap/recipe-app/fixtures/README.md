@@ -16,10 +16,9 @@ Three subdirectories, two different jobs.
 
 ## Where the two roadmaps came from
 
-Neither is hand-written, and that is deliberate — see the premise in
-[`../../../../design/roadmap/PLAN.md`](../../../../design/roadmap/PLAN.md). The oracle in
-`../reference-roadmap/` covers one state, the first drawing, because it is the only state anybody can
-write honestly from the sources alone. Every state after it is a state some earlier session produced,
+Neither is hand-written, and that is deliberate. The oracle in `../reference-roadmap/` covers one
+state, the first drawing, because it is the only state anybody can write honestly from the sources
+alone. Every state after it is a state some earlier session produced,
 so these two were taken out of real runs:
 
 - **`mid-flight/`** is a first drawing with a close-out applied by hand: four documents moved to

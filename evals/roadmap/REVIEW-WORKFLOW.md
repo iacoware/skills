@@ -56,9 +56,9 @@ another way is still evidence, but only if the adaptation is readable.
 
 **What a session may read** is `sources/` and its own copy of `.roadmap/`; the prompt says so.
 Off limits in particular: `reference-roadmap/` and `REFERENCE-NOTES.md`, `EVALUATION-RULES.md`,
-`EVALUATION-BRIEF.md` and `recipe-app/SCENARIOS.md`, which are the answer keys, and the whole of
-`design/roadmap/`, whose [`WORKFLOWS.md`](../../design/roadmap/WORKFLOWS.md) § 3 is the answer key to
-the three router scenarios, verdicts and all.
+`EVALUATION-BRIEF.md` and `recipe-app/SCENARIOS.md`, which are the answer keys — the cards carry the
+router verdicts outright — and the whole of `design/roadmap/`, which argues the reasoning behind
+them.
 
 ## Producing a run
 

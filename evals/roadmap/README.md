@@ -5,8 +5,7 @@ One structural validator, one human reading list, and four scenarios. Kept to no
 
 **Audience: a human reviewer, or an agent in a review session** — never a generation session. The
 oracle, its notes, the brief and the scenario verdicts are the answer key, which is why they live here
-and not beside the skill. So is [`../../design/roadmap/WORKFLOWS.md`](../../design/roadmap/WORKFLOWS.md)
-§ 3, which answers the three router scenarios outright.
+and not beside the skill.
 
 | Path | Role |
 |---|---|

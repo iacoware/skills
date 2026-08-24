@@ -19,8 +19,9 @@ rewrite it or delete it. The list describes the skill, it does not govern it.
 **A red check is not permission to edit the skill.** Only one of three cases touches a clause — the
 skill states it and the session ignored it, where one run records and two mean the clause is not doing
 its job. The others are a check to rewrite, or a clause saying two things that overlap, which is a
-writing failure reading like a model failure. The fix lands in the phase that owns it
-([`../../design/roadmap/PLAN.md`](../../design/roadmap/PLAN.md)), never in `SKILL.md` by default.
+writing failure reading like a model failure. The fix lands in the artifact that owns it — a rule
+applied badly is a defect in `references/`, a field nobody can fill is a defect in the template —
+never in `SKILL.md` by default, which is how a router grows back into a monolith.
 
 **Never change the skill, the fixtures or the oracle to make a scenario pass.** This is what quietly
 destroys an eval: the reviewer's sense of *good* drifts toward whatever the model last produced, and
