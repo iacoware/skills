@@ -20,10 +20,10 @@ Run either after a change you believe is substantive, not after every commit: a 
 than a net you sized honestly. One run is a question, not a verdict — the same run twice with the
 same answer is a verdict.
 
-What this net does **not** cover, and how to conclude from a run, is in
-[`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md). It carries one thing left to do and no more: a hole
-is closed when a change to `SKILL.md` that real use asked for would have fallen through it, never
-because it is a hole.
+What this net does **not** cover — two holes left open on purpose and the width of the sample — is
+in [`README.md`](README.md); a hole closes when a change to `SKILL.md` that real use asked for would
+have fallen through it, never because it is a hole. How to conclude from a run, and what a red check
+does not license, is at the head of [`EVALUATION-RULES.md`](EVALUATION-RULES.md).
 
 The steps use `recipe-app`, today's only scenario. With a second one, substitute its directory
 everywhere; the steps do not change.
@@ -32,13 +32,30 @@ everywhere; the steps do not change.
 
 Binding on both halves: the router scenarios start their sessions the same way.
 
+**Authorization is required and is not implied by this document.** [`../AGENTS.md`](../AGENTS.md)
+binds: report the exact external-call count and get explicit approval before sending a single
+provider request. Approval of a plan is not approval to send.
+
 **Install the skill you mean to review.** `make add` copies the payload into `~/.agents/skills/`, and
 the agent reads the copy. Skip it and you are reviewing the version before your change. Restart the
-agent session afterwards, and check that the copy is the one you expect.
+agent session afterwards, and check that the copy is the one you expect:
+
+```bash
+diff -r skills/roadmap ~/.claude/skills/roadmap --exclude=.claude && echo "installed copy matches"
+```
+
+`~/.claude/skills/roadmap` is a symlink to that copy. If `make add` fails on `~/.npm` permissions, it
+is the sandbox — rerun it outside.
 
 **The skill is invoked explicitly**, as `/roadmap`. It never activates on its own — the frontmatter
 sets `disable-model-invocation: true`. Drop the prefix and the candidate is born without the skill,
 which means you are reviewing the model instead.
+
+That path is the one thing here still unverified end to end: every run recorded under
+`recipe-app/results/` but `manual-run-1` was driven through a sub-agent, which cannot type `/roadmap`
+and was told to call the skill by name instead — `recipe-app/results/README.md` says what that cost.
+The next interactive session settles it, and nothing needs recording beyond a line saying the payload
+loaded.
 
 **Model and effort are set in the session, never in the prompt.** Check what the session actually
 says before sending, and write down what it said rather than what you intended.

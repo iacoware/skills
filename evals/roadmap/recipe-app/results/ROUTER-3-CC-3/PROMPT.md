@@ -21,8 +21,8 @@ The directory was verified byte-identical to the fixture and validator-green bef
 sent, and `skills/roadmap/` was verified byte-identical to `~/.claude/skills/roadmap/`.
 
 This is `ROUTER-3-CC-2`'s prompt verbatim with `ROUTER-3-CC-2` changed to `ROUTER-3-CC-3` throughout
-and nothing else touched — the third run [`../../../OPEN-VERIFICATION.md`](../../../OPEN-VERIFICATION.md)
-asked for, to locate a defect two runs had already established.
+and nothing else touched — the third run the eval's open list asked for at the time, to locate a
+defect two runs had already established.
 
 ## Turn 1 — the prompt
 

@@ -12,8 +12,8 @@ cp -R evals/roadmap/recipe-app/fixtures/redrawn/. evals/roadmap/recipe-app/resul
 ```
 
 This is `ROUTER-3-CC-1`'s prompt verbatim with `ROUTER-3-CC-1` changed to `ROUTER-3-CC-2` throughout
-and nothing else touched — the second run [`../../../OPEN-VERIFICATION.md`](../../../OPEN-VERIFICATION.md)
-asked for, so that R-007 could stop being a question.
+and nothing else touched — the second run the eval's open list asked for at the time, so that R-007
+could stop being a question.
 
 ## Turn 1 — the prompt
 

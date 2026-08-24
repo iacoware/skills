@@ -45,9 +45,8 @@ say.
 The ids below are the ones the frozen states make correct. If a fixture's high-water mark moves, the
 ids move with it and the scenario text is what gets corrected.
 
-What a run does and does not license concluding is in
-[`../OPEN-VERIFICATION.md`](../OPEN-VERIFICATION.md); the rules each scenario cites are in
-[`../EVALUATION-RULES.md`](../EVALUATION-RULES.md).
+What a run does and does not license concluding is at the head of
+[`../EVALUATION-RULES.md`](../EVALUATION-RULES.md), where the rules each scenario cites also live.
 
 ## 1. Sounds like a change of destination, is work
 

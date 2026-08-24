@@ -25,7 +25,6 @@ three router scenarios, verdicts and all.
 | `REVIEW-WORKFLOW.md` | How to review one fresh drawing: the preconditions every session runs under, and the five steps. |
 | `recipe-app/ROUTER-SCENARIOS.md` | The other half of the net: three cases that hold the router, each with its starting state, its prompt and its verdict. Answer key — off limits to a generation session. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks. Rules about the skill, portable to any scenario. |
-| `OPEN-VERIFICATION.md` | What the net does not cover, and how to draw a conclusion from a run. The intent, the epistemics, and the one check still owed. |
 | `recipe-app/sources/` | The only inputs a candidate roadmap is drawn from. Copied verbatim from `../plan-slices/recipe-app/sources/`: they are input, not `plan-slices` output. |
 | `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources: where the map may differ, what it must leave open, what only looks like a defect, what it must contain. Verifiable, no taste, entries with citable ids. Read at step 3. |
 | `recipe-app/reference-roadmap/` | One good answer, hand-written from the sources before any candidate existed: the map as it stands the first time it is drawn. Taste, not verifiable. Read at step 5, never earlier. |
@@ -58,6 +57,27 @@ The oracle covers one state, the first drawing, and it is the only state that ca
 honestly; everything after it is a state some earlier session produced. The scenarios are how the
 other branch gets read at all, and they are cheap: each starts from a map already standing, the
 branch that proposes before it writes, so a wrong turn costs a proposal and not a record.
+
+## What the net does not cover
+
+Two holes are open on purpose, stated as facts rather than as work so that a reviewer knows the width
+of what a green run means and does not turn them back into tasks:
+
+- **§ 6 has never been asked for.** No prompt has requested a handover, and no fixture holds an open
+  spike to route — covering it means a fourth scenario *and* a new frozen state. One session
+  volunteered a correct fragment unprompted; see R-034 in `EVALUATION-RULES.md`.
+- **Codex has never run this skill.** `../../skills/roadmap/agents/openai.yaml`, its
+  `default_prompt` and `allow_implicit_invocation: false` are unexercised. The second harness matters
+  when somebody uses it, and nobody does yet.
+
+What reopens either is a change to `SKILL.md` that real use asked for and that would have fallen
+through the hole — never the hole itself. A net is worth extending when there is something it would
+have caught.
+
+**Know the width of the sample too.** Everything recorded so far is one model family —
+`claude-opus-5`, and once its 1M-context variant — one harness, one scenario, `recipe-app`. A
+conclusion drawn from it is a conclusion about the skill *as read by that model on that scenario*.
+That is still worth having; it is just not the same sentence.
 
 ## Language
 

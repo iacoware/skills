@@ -25,6 +25,24 @@ clause. Where the clause lives in `references/`, the reference is named with the
 session to them. **If a check fails against a clause the skill no longer states, the defect is in the
 check.** Rewrite it or delete it. The list describes the skill, it does not govern it.
 
+**A red check is not permission to edit the skill.** Before touching a clause, decide which of three
+you are looking at. *The skill states it and the session ignored it*: one run records and stops, two
+runs mean the clause is not doing its job and the fix goes where the clause lives. *The skill no
+longer states it*: the defect is in the check, above. *The clause is stated but says two things that
+overlap*: it reads like a model failure and is a writing failure, and it is nothing at all until two
+runs say so.
+
+**Never change the skill to make a scenario pass** — nor the fixtures, nor the oracle. This is the
+failure mode that quietly destroys an eval: the reviewer's sense of *good* drifts toward whatever the
+model last produced, and the net ends up shaped like the thing it was supposed to catch. A fixture
+moves when the state it stands for moves; the oracle is rewritten when the sources change, never
+because a candidate argued well.
+
+**A conclusion may be *inconclusive*, and saying so is a result.** A run that half-does the thing is
+neither a red check nor a green one. Record what it did and what it did not, cite the id, and leave
+the mark off. Forcing an ambiguous run into a verdict is how a rule acquires a failure record it did
+not earn — and the next reviewer acts on that record without re-reading the run.
+
 **The ids are a fresh sequence and inherit nothing.** `evals/plan-slices/EVALUATION-RULES.md` carries
 its own `R-` numbers, inherited from a ledger that retired on 2026-08-11 and that was about a plan
 document; nothing in it was about this format. The two lists are unrelated and must be cited with
@@ -38,6 +56,15 @@ recorded below on R-005, R-007, R-009, R-015 and R-034; a fifth router run follo
 One run is still a question — a mark says a check went red once, not that the skill is broken there.
 R-007 is the one check that has now gone red three times out of three, and its mark says what the
 three runs have in common, what they do not, and why no rule was changed on the strength of it.
+
+**A run that changes nothing still changed the record**, and this list is where it lands: a new mark
+carrying the run and the date, or a second date on a mark already there. A check that went green on
+the second run keeps its mark and gains the green — the history is the point. What the net does not
+cover, and how narrow the sample behind every mark is, is in [`README.md`](README.md).
+
+**A defect lands in the phase that owns it**, never in `SKILL.md` by default. A rule applied badly is
+P4; a field nobody can fill is P2. The map of phases is
+[`../../design/roadmap/PLAN.md`](../../design/roadmap/PLAN.md).
 
 ## The situation
 
@@ -268,8 +295,8 @@ three runs have in common, what they do not, and why no rule was changed on the 
   `ready` + `mixed` → `ready-for-human`, and `/grill-with-docs` before `/to-spec`. Both halves
   correct, and it reported that `docs/agents/issue-tracker.md` was unreadable under this session's
   constraint rather than inventing where a spec would live. No prompt has yet **asked** for a
-  handover, so the routing of a spike and of an already-clarified slice is still unread — see
-  [`OPEN-VERIFICATION.md`](OPEN-VERIFICATION.md).
+  handover, so the routing of a spike and of an already-clarified slice is still unread — see *What
+  the net does not cover* in [`README.md`](README.md).
 - **R-035** — The session closed on the four-part report and nothing else: the `Themes` table, the
   `NOW` register, `Open questions` or a line saying there are none, and the path to `roadmap.md`. No
   retelling of what the documents say and no narration of the operations run; a `WARNING` or an owed
