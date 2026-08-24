@@ -81,12 +81,12 @@ directly does not remove the dependency on the production computation of that da
 nothing else — no grades, no counterfactuals. What every row depends on is not published: fifteen
 edges that all say *after the skeleton* bury the four that carry information.
 
-**What used to stay in reasoning is published now.** `plan-slices` kept its dependency map, its
-horizon ledger and its row-to-source traceability out of the document, which works exactly once — a
-plan written in one sitting can hold them in the session that writes it. A living map cannot: the
-previous session's reasoning no longer exists. So dependencies are a column and provenance is
-`Requested by` on the row's document. What stays unpublished is the reasoning *behind* the order:
-`Ordering criteria` states the rules once and the register's order carries the rest.
+**What used to stay in reasoning is published now.** A one-shot delivery plan can keep its dependency
+map, its horizon ledger and its row-to-source traceability out of the document, which works exactly
+once — the session that writes the plan holds them. A living map cannot: the previous session's
+reasoning no longer exists. So dependencies are a column and provenance is `Requested by` on the
+row's document. What stays unpublished is the reasoning *behind* the order: `Ordering criteria`
+states the rules once and the register's order carries the rest.
 
 ## The two prerequisites
 
