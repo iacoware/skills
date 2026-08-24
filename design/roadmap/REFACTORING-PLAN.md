@@ -196,6 +196,34 @@ a case and never a door. In the same pass rename the
 entry at line 134 from `Revision` to `Reshaping`, keeping its definition and its `_Avoid_` line, and
 add *revision* to that `_Avoid_` line — it is now the branch one altitude up.
 
+**D18 — `references/drawing-the-map.md` states its scope by door, and its first section stops arguing
+routing.** Three edits, all small, all consequences of D3.
+
+- **The preamble contradicts its own second section.** Line 3 says *loaded when a goal is declared and
+  no map stands against it*; line 10 says *a new goal declared against a map that already exists is
+  drawn here*. The declared condition excludes half the cases that load the file, and that — not the
+  file boundary — is what makes the redraw content read as foreign matter in a document named for
+  drawing. Restate it by door: loaded on `Drawing`, whether or not a map stands; everything here
+  decides the shape of the whole map, and none of it fires on `Revising`.
+- **`## A redraw is this branch with more input` becomes `## What carries when a map already stands`.**
+  The old title argues a routing decision inside a content document — router vocabulary one altitude
+  down — and under D3 the router already settles the condition. Cut *There is no separate mode and no
+  reconciliation logic* in the same pass: justificatory under D2. The rest of the section is generative
+  and stays verbatim, the word *redraw* in its body included.
+- **`door` is the router's word now, so the reference stops using it for something else.** *What the
+  map reports about its input* has *every entry then leaves by one of three doors* for a disposition —
+  an `Assumptions` line, an `Open questions` line, a spike. Same word, two altitudes, two files, one
+  skill. Say *exits* there.
+
+**The file is not split.** The redraw content is not a parallel procedure but a modifier of the inputs
+of every section downstream — the archive constrains the themes, the high-water mark constrains the
+ids, `OUT-OF-SCOPE` and the concerns constrain the ordering, `LATER` constrains promotion, the open
+rows constrain retirement. A cross-cutting preface extracted into a sibling raises distance on high
+integration strength, and the sibling would never be loaded alone: the `Drawing` door would load both
+files every time, which makes it a chapter and not a module. Distributing it into the five sections it
+modifies is worse still — one check read once becomes five checks scattered. Conditional sections are
+already the norm in that file: *The two prerequisites* fires only on greenfield.
+
 ## De-duplication list
 
 Cut from `SKILL.md`, keep where it already lives. Line numbers are against the current file and are
@@ -207,7 +235,7 @@ anchors, not addresses.
 | 34-36 — id minting, high-water mark | `slice-rules.md` § *Identity* |
 | 39-42 — the tracker has no notion of *done* | keep in the router; it is the reason for D5 |
 | 67-71 — the spike test | `slice-rules.md` § *The spike test* |
-| 86-89 — a redraw is this branch with more input | `drawing-the-map.md`, same title |
+| 86-89 — a redraw is this branch with more input | `drawing-the-map.md` § *What carries when a map already stands* (D18) |
 | 136-137 — the cap | `drawing-the-map.md` § *The cap is a finding, not a budget* |
 | 139-141 — split/merge, id follows the learning target | `slice-rules.md` § *Splitting and merging a row* |
 | 143-146 — retirement deletes and does not archive | `slice-rules.md` § *Identity* |
@@ -222,15 +250,16 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 ## Order of work
 
 1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D15 and D17.
-2. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
-3. `design/roadmap/ROADMAP-GOAL.md` § *Roads not taken* — D8.
-4. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11`.
-5. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, and rename `Revision`
-   to `Reshaping`, per D17.
-6. The inbound references, per `REFACTORING-POINTERS.md`.
-7. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
+2. `skills/roadmap/references/drawing-the-map.md` — D18: the preamble, the section title, *exits*.
+3. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
+4. `design/roadmap/ROADMAP-GOAL.md` § *Roads not taken* — D8.
+5. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11`.
+6. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
+   `_Avoid_`, and rename `Revision` to `Reshaping`, per D17.
+7. The inbound references, per `REFACTORING-POINTERS.md`.
+8. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
    documented invocation still matches.
-8. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
+9. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
 
 ## Done when
 
@@ -247,4 +276,6 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 - `WORKFLOWS.md` is gone and nothing points at it;
 - the two doors carry the names `CONTEXT.md` defines, `Redraw` names a case and never a door, no
   section title is used as a branch name, and no word names both a branch and an operation;
+- `drawing-the-map.md` opens by naming the door it serves, its first section no longer contradicts
+  that opening, and `door` appears in the skill at one altitude only;
 - the validator runs clean and one evaluation was run against the new file.
