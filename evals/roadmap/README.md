@@ -34,12 +34,10 @@ written anew. **Nothing is inherited from `evals/plan-slices/`**: the rule ids a
 ids start fresh sequences, so `R-004` there and `R-004` here are unrelated — cite the file with the id
 when both are open.
 
-**Why both the oracle and the scenarios.** The brief is the reference map with the answer removed —
-everything mechanically checkable kept, everything requiring judgement dropped — and what it drops is
-the only defence against the reviewer's sense of *good* drifting toward whatever the model last
-produced. But the oracle covers one state, the first drawing, which is the only state anybody can
-hand-write honestly; the router cards are how the other branch gets read at all, and they are cheap
-because a map already standing proposes before it writes.
+**Why both the oracle and the cards.** The brief is the oracle with the judgement removed, so only
+the oracle defends against the reviewer's sense of *good* drifting toward whatever the model last
+produced. But it covers one state, the first drawing — the only state anybody can hand-write honestly
+— and the router cards are how the other branch gets read at all.
 
 ## What the net does not cover
 
@@ -60,9 +58,8 @@ about the skill *as read by that model on that scenario*.
 
 ## Language
 
-English, as the rest of the project since 2026-08-06. Three permanent exclusions: `recipe-app/sources/`,
-because converting them is a new scenario rather than a translation; `recipe-app/reference-roadmap/`,
-because the skill writes in the author's language; and whatever lands under `recipe-app/results/`,
-because it is the record of what was generated. Field, column and state names are English everywhere,
-including inside the Italian map, and quotations stay in their original language because they are
-evidence.
+English, as the rest of the project since 2026-08-06. Three permanent exclusions, all Italian:
+`recipe-app/sources/`, because converting them is a new scenario and not a translation;
+`recipe-app/reference-roadmap/`, because the skill writes in the author's language; and
+`recipe-app/results/`, because it is the record of what was generated. Field, column and state names
+are English everywhere, and quotations stay in their original language, being evidence.

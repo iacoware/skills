@@ -42,9 +42,8 @@ is the sandbox — rerun it outside.
 
 **The skill is invoked explicitly**, as `/roadmap`: the frontmatter sets `disable-model-invocation:
 true`, and dropping the prefix means reviewing the model instead of the skill. That path is the one
-thing still unverified end to end — every recorded run but `manual-run-1` was driven through a
-sub-agent, which cannot type `/roadmap` and was told to call the skill by name;
-`recipe-app/results/README.md` says what that cost. The next interactive session settles it.
+thing still unverified end to end, because every recorded run but `manual-run-1` was driven through a
+sub-agent — `recipe-app/results/README.md` says what that cost.
 
 **Model and effort are set in the session, never in the prompt.** Check what the session actually says
 before sending, and write down what it said rather than what you intended.
@@ -80,10 +79,9 @@ the three router scenarios, verdicts and all.
 5. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
    is red, stop and fix before reading. The session runs the validator itself at § 5 and its run is
-   not this one: § 5 resolves `.roadmap` against the author's project, which here is the run directory
-   and not the repository root, so a session that does not change directory first gets nothing. That
-   is an artifact of this layout, not a defect — R-033 reads that it ran at all and what it did with
-   the `WARNING`s.
+   not this one: it resolves `.roadmap` against the run directory rather than the repository root, so
+   a session that does not change directory first gets nothing. That is an artifact of this layout,
+   not a defect — R-033 reads that it ran at all and what it did with the `WARNING`s.
 
 ## Reading a run: a drawing
 
