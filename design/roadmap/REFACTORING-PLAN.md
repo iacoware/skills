@@ -249,11 +249,11 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 
 ## Order of work
 
-1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D15 and D17.
+1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D15.
 2. `skills/roadmap/references/drawing-the-map.md` — D18: the preamble, the section title, *exits*.
 3. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
 4. `design/roadmap/ROADMAP-GOAL.md` § *Roads not taken* — D8.
-5. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11`.
+5. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11` — D16.
 6. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
    `_Avoid_`, and rename `Revision` to `Reshaping`, per D17.
 7. The inbound references, per `REFACTORING-POINTERS.md`.
