@@ -82,14 +82,14 @@ skills/roadmap/
 
 evals/roadmap/
   README.md                         what is live, and for whom
-  REVIEW-WORKFLOW.md                the preconditions and the five steps
+  REVIEW-WORKFLOW.md                the procedure: preconditions, producing a run, reading one
   EVALUATION-RULES.md               checks about the skill, portable across scenarios
   recipe-app/
     sources/                        copied verbatim from evals/plan-slices/recipe-app/sources/
     EVALUATION-BRIEF.md             facts about those sources, for a roadmap rather than a plan
-    ROUTER-SCENARIOS.md             the three router scenarios, starting states and verdicts
+    SCENARIOS.md                    the four cards: starting states, prompts and verdicts
     reference-roadmap/              the oracle: roadmap.md + slices/
-    REFERENCE-ROADMAP-RATIONALE.md  why each row sits where it sits
+    REFERENCE-NOTES.md              the reasons the oracle does not publish
     fixtures/                       starting states for the router scenarios, frozen in P8
     results/                        generated output, never read by a generation session
 ```

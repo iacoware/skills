@@ -36,21 +36,14 @@ to write, and none of that survives in the map alone.
 
 ## These runs were driven by a sub-agent, not by a person
 
-[`../../REVIEW-WORKFLOW.md`](../../REVIEW-WORKFLOW.md) is written for a human typing `/roadmap` into
-an interactive session. The runs of 2026-08-20 were driven differently, and each `PROMPT.md` carries
-the full text so the difference is readable rather than assumed. What was added, in every run:
+[`../../REVIEW-WORKFLOW.md`](../../REVIEW-WORKFLOW.md) is written for a human typing `/roadmap` into an
+interactive session. The runs of 2026-08-20 were driven differently, and each `PROMPT.md` carries the
+full text so the difference is readable rather than assumed. Three things were added to every prompt:
+how to reach the skill, since a sub-agent cannot type `/roadmap` and the skill sets
+`disable-model-invocation: true`; do not delegate, so the read restriction survives one level down;
+and stop at the proposal, since a sub-agent runs to completion where an interactive session stops for
+confirmation on its own.
 
-- **how to reach the skill.** A sub-agent cannot type `/roadmap`, and the skill sets
-  `disable-model-invocation: true`, so the prompt tells it to call the skill by name and to fall back
-  to reading `~/.claude/skills/roadmap/SKILL.md` as its instructions. The installed copy was verified
-  byte-identical to `skills/roadmap/` first.
-- **do not delegate.** The workflow's read restriction has to survive one level down.
-- **stop at the proposal.** An interactive session stops for confirmation on its own; a sub-agent
-  runs to completion, so it was told explicitly to return the block and write nothing until answered.
-
-What this costs: the invocation path is not the one a real author uses, so anything that depends on
-how the harness loads the skill is untested here. What it does not touch is the reading the session
-does or the block it proposes, which is what the rules are about.
-
-The prompts themselves — the request, the read restriction, and the author's opening sentence — are
-the workflow's, unchanged.
+What that costs is the invocation path — anything depending on how the harness loads the skill is
+untested here. What it does not touch is the reading the session does or the block it proposes, which
+is what the rules are about. The prompts themselves are the workflow's, unchanged.
