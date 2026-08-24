@@ -7,6 +7,10 @@ never the input to one: a session gets a copy.
 and harness it ran on. Half the evidence about this skill is in what a session asked and what it
 declined to write, and none of that survives in the map alone.
 
+A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`. It cites rule
+ids, brief ids and the oracle, so it is answer key: a generation session pointed at a run directory
+may not read it, and no run directory that holds one is reused for generation.
+
 | Run | Branch exercised | Starting state | Outcome |
 |---|---|---|---|
 | `manual-run-1` | Drawing | empty project | 11 rows, `S0`–`S10`, validator green |
