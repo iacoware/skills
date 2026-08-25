@@ -33,7 +33,7 @@ Three structural faults compound it:
   3  Draw the map                    the Drawing door
   4  Operations on the map           the Revising door, and the argument round that follows a draw
   5  Close the session               write · validate · report
-     Hand over a ready row           unnumbered: on demand, not in the progression
+     Hand over a ready row           unnumbered: dispatched from step 2, not in the progression
      The session holds when          one checklist per altitude; this is the session's
 ```
 
@@ -62,7 +62,7 @@ operations come from. What they are, and how the session closes, never varies.
 | Door | Condition | Operations come from | Section |
 |---|---|---|---|
 | `Drawing` | no map stands against a declared goal, **or** the input contradicts the recorded `Goal` | `references/drawing-the-map.md` | *Draw the map* |
-| `Revising` | everything else — the goal stands; the default, by a wide margin | the five | *Operations on the map* |
+| `Revising` | everything else **that changes the map** — the goal stands; the default, by a wide margin | the five | *Operations on the map* |
 
 `Revising` replaces `Re-truing`, which was the earlier candidate and failed on its leading word: to
 *true* a wheel is to bring it back into alignment, but the first reading is *check it is still true*,
@@ -102,8 +102,30 @@ fault the de-duplication list exists to close. A one-line pointer costs less.
 way — *il ramo di disegno che riparte con più input* — and `EVALUATION-RULES.md` R-018 and the
 `fixtures/redrawn/` scenario go on using the word.
 
-**D4 — Handover is not a door.** A session changes the map, hands over a row, or does both in that
-order. A handover-only session writes nothing, so it has no close, no validator and no report.
+**D4 — Handover is not a door, and *Choose the door* asks two questions.** A session changes the map,
+hands over a row, or does both in that order. Handover therefore **composes**, where a door is an
+**exclusive alternative**, and the composed case has nowhere to sit in a three-door table: either it is
+lost, or it runs through `Revising` and ends in handover, and the same activity is then reached two
+ways — the fault this plan opens with. Handover also decides neither of the two things D3 says a door
+decides: it loads no reference — no new file per D12, and `slice-rules.md` is loaded every session
+regardless — and it is not an alternative to the map-changing section.
+
+The gap is elsewhere. *Choose the door* answers one question where two are needed, and the two are
+independent:
+
+1. **Does the input change the map?** No → the session goes straight to *Hand over a ready row*: no
+   close, no validator, no report. Yes → pick `Drawing` or `Revising` from the table.
+2. **Does the input ask for a row to hand over?** Yes → *Hand over a ready row* runs after the close.
+
+`Revising`'s condition narrows to match — *everything else that changes the map* — and the first item
+of D14 is conditional on a session that changed it. A handover-only session writes nothing, so the
+close, the validator and the report never fire, which is what this decision claimed and the routing
+did not deliver.
+
+**A known hole opens here.** `evals/roadmap/README.md:33` records that no prompt has ever requested a
+handover and no fixture holds an open row to hand over. The handover-only arm is born uncovered by the
+evaluation net, and the run at the end of the order of work will not exercise it. Declared, not
+discovered later.
 
 **D5 — There is one delivery question, and it belongs to *Establish the situation*.** Today it is
 written twice: § 1 (*what has been delivered is asked, never read off a tracker*) and § 4 (*ask what
@@ -174,8 +196,9 @@ the session here — each in the document that owns that altitude, and the rule 
 item goes. What survives is only what nothing else checks: the validator checks structure, the two
 references check rows and maps, and neither checks a session.
 
-- the door was chosen by what the input claims about, work by default, and an input that cannot be
-  reconciled with the recorded goal produced a question rather than an inference;
+- on a session that changes the map, the door was chosen by what the input claims about, work by
+  default, and an input that cannot be reconciled with the recorded goal produced a question rather
+  than an inference;
 - what was delivered was asked, never read off a tracker;
 - a first map was written unasked, and a standing record was proposed in one block and confirmed once
   before being written;
@@ -280,7 +303,10 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 - the branch condition is evaluated once, at *Choose the door*, and nowhere else;
 - no section of `SKILL.md` references another by number, and no cycle remains between sections;
 - the delivery question appears once, and `Close-out` is an operation and not a question;
-- the coverage question is in *Operations on the map*;
+- the coverage question is last in *Operations on the map*, and a failed one produces a question and
+  never a change of door;
+- a session that changes nothing reaches *Hand over a ready row* from *Choose the door*, without a
+  close, a validator or a report;
 - generative rationale is intact — spot-check the four examples named in D2;
 - no reference from outside `SKILL.md` cites a section number;
 - `SKILL.md` ends on `The session holds when`, and no item in it is checked by a reference checklist
