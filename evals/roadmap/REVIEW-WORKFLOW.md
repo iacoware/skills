@@ -95,10 +95,26 @@ them.
    report: it costs one turn, spent where there is nothing left to read.
 6. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
-   is red, stop and fix before reading. The session runs the validator itself at *Close the session*
-   and its run is not this one: it resolves `.roadmap` against the run directory rather than the
-   repository root, so a session that does not change directory first gets nothing — an artifact of
-   this layout, not a defect. R-033 reads that it ran at all and what it did with the `WARNING`s.
+   is red, that is a finding and not a repair: the map is the artifact under judgement, and nothing
+   in the run directory is edited to make it pass. Record it against R-033 and read on — where it
+   points usually explains half of what the reading finds next. A red that is the harness's rather
+   than the session's — the wrong `ROADMAP` path, a copy that did not complete — means the run is
+   broken instead of failed, and it is produced again. The session runs the validator itself at
+   *Close the session* and its run is not this one: it resolves `.roadmap` against the run directory
+   rather than the repository root, so a session that does not change directory first gets nothing —
+   an artifact of this layout, not a defect. R-033 reads that it ran at all and what it did with the
+   `WARNING`s.
+
+## And the session, in either reading
+
+`TRANSCRIPT.jsonl` holds the half of the evidence that is not in `.roadmap/`, and the rules that read
+it say so themselves. It is read **alongside** whichever of the two readings below applies, never
+instead of one: walking the rules without it leaves every such rule *inconclusive*, and the report
+says that rather than green.
+
+It is the harness's log and not prose — filter it to the `user` and `assistant` turns and their tool
+calls. Those calls are also the only place the read restriction of *Producing a run* step 2 can be
+checked: a search ranging over `evals/` shows there and nowhere else.
 
 ## Reading a run: a drawing
 
