@@ -192,9 +192,12 @@ and that is exactly and only what the operation does, while `Revising` is broad 
 changes of membership — a row closed out, a row admitted — that the branch also holds. `Re-truing` is
 dropped entirely.
 
-**D10 — Numbers mark the progression; anchors are titles.** Steps 1-5 run in order and carry numbers;
-`Hand over a ready row` and `The session holds when` carry none, which is how the reader knows they
-are not in the sequence. Every reference from outside `SKILL.md` anchors on the section title and
+**D10 — Numbers mark position; anchors are titles.** They mark position in the document and reading
+order, **not a sequence every session runs**: steps 3 and 4 are the two doors' alternatives, so nothing
+executes 1-2-3-4-5. `Drawing` runs 1, 2, 3, consults 4 for the argument round, then 5; `Revising` runs
+1, 2, 4, 5 and never enters 3; a handover-only session leaves after 2. *Choose the door* is what says
+which of 3 and 4 runs. Steps carry numbers; `Hand over a ready row` and `The session holds when` carry
+none, which is how the reader knows they are not in the sequence. Every reference from outside `SKILL.md` anchors on the section title and
 never on the number, so the next restructuring does not cascade. See `REFACTORING-POINTERS.md`.
 
 **D11 — `/wayfinder` goes; `/prototype` stays.** The distinction it carried is generative and stays,

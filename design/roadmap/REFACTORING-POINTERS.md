@@ -8,8 +8,9 @@ worked through and then deleted.
 
 **Anchor on the section title, never on the number.** `EVALUATION-RULES.md` already cites most
 sections as number *plus* title — `§ 4, *Retirement*` — so dropping the number costs nothing and buys
-immunity from the next restructuring. Numbers stay inside `SKILL.md`, where they signal that steps 1
-to 5 run in order; they do not travel.
+immunity from the next restructuring. Numbers stay inside `SKILL.md`, where they mark position and
+reading order — not a sequence every session runs, since steps 3 and 4 are the two doors'
+alternatives (D10); they do not travel.
 
 Write `*Operations on the map*, *Retirement*` — the section title, then the sub-heading when the
 reference is to one.
