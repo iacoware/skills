@@ -30,8 +30,8 @@ across scenarios, **facts** about the sources and **worked answers** do not.
 Two holes are open on purpose. What reopens either is a change to `SKILL.md` that real use asked for
 and that would have fallen through the hole — never the hole itself.
 
-- **§ 6 has never been asked for.** No prompt has requested a handover and no fixture holds an open
-  spike to route; covering it means a fifth card *and* a new frozen state.
+- **A handover has never been asked for.** No prompt has requested one and no fixture holds an open
+  spike to route; covering *Hand over a ready row* means a fifth card *and* a new frozen state.
 - **Codex has never run this skill.** `../../skills/roadmap/agents/openai.yaml` and its
   `allow_implicit_invocation: false` are unexercised. The second harness matters when somebody uses
   it, and nobody does yet.

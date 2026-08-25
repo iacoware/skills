@@ -37,34 +37,36 @@ the failure they guard.
 - **R-001** — The session **asked** what was delivered and established the standing state —
   `roadmap.md` with its goal, themes, register, `Assumptions`, `Open questions`,
   `Cross-functional concerns`, both horizons, plus `slices/` and `archive/` — rather than reading it
-  off a tracker or inferring it from the working tree. § 1
+  off a tracker or inferring it from the working tree. *Establish the situation*.
 - **R-002** — Every id minted by increment from the high-water mark across `slices/` and `archive/`,
-  and none recycled: not after a retirement, not across a redraw. § 1, § 4; `slice-rules.md`
-  *Identity*. *Validator: recycling. Reading: that the mint was the high-water mark plus one.*
+  and none recycled: not after a retirement, not across a redraw. `slice-rules.md` *Identity*.
+  *Validator: recycling. Reading: that the mint was the high-water mark plus one.*
 
 ## What the input claims about
 
 - **R-003** — An input that widens the reach of a capability the goal already promises is treated as
-  work: `Goal`, themes and `Ordering criteria` untouched, nothing redrawn. § 2, *Destination or path*.
+  work: `Goal`, themes and `Ordering criteria` untouched, nothing redrawn. *Choose the door*,
+  *Destination or path*.
   *⚠ opposite — work is the default by a wide margin, and a session that reads everything as work
   never redraws anything. What distinguishes the two is what the input contradicts, never how large it
   sounds.*
 - **R-004** — An input contradicting an invariant under `Cross-functional concerns` or an exclusion
   under `OUT-OF-SCOPE` is not admitted as a row on the strength of how small the change is. Cost and
-  altitude are unrelated. § 2, *Destination or path*.
+  altitude are unrelated. *Choose the door*, *Destination or path*.
 - **R-005** — An input that cannot be reconciled with the recorded goal produces a question — the goal
   on file, what the input looks like from where the map sits, which of the two holds — never an
-  inference and never a unilateral redraw. § 2, *When the input cannot be reconciled*.
-  *⚠ opposite — a session that asks on every input turns a re-truing into an interview; the
+  inference and never a unilateral redraw. *Choose the door*, *When the input cannot be reconciled*.
+  *⚠ opposite — a session that asks on every input turns a `Revising` session into an interview; the
   slice-or-spike reading never owes a question. The mild form to watch for is an owed question asked
   correctly with a second, hedged, unasked-for one attached.*
 - **R-006** — A capability already in `LATER` is **promoted**, not admitted anew: the candidate line
   goes, the row takes the next id, its document appears in `slices/`, `Requested by` records what
   produced it. A candidate is a licence to schedule, never a licence to skip *does it serve the goal*.
-  § 4, *Promotion* and *Admission*.
+  *Operations on the map*, *Promotion* and *Admission*.
 - **R-007** — Work whose honest `Verification` states a measurement rather than a capability somebody
   can exercise is minted as a spike, and proposed in the block without a question, since nothing about
-  the destination is in doubt. § 2, *Slice or spike*; `slice-rules.md` *The spike test*.
+  the destination is in doubt. *Operations on the map*, *Admission*; `slice-rules.md`
+  *The spike test*.
   *⚠ failed three times out of three on scenario 3, never green: the reading fires and the routing
   does not — the measurement is recognised and then left inside the row it blocks. The fix is written
   in `slice-rules.md` *The spike test* and has never been demonstrated; the card says not to run it
@@ -76,7 +78,7 @@ the failure they guard.
 
 - **R-008** — Every theme is a product promise in product language, every boundary carries a recorded
   split or merge verdict, and no two independently schedulable value areas were merged to keep the
-  count down. § 3 → `drawing-the-map.md` *Themes*.
+  count down. *Draw the map* → `drawing-the-map.md` *Themes*.
 - **R-009** — Every theme's `First validator` is an existing `NOW` row that validates the theme's
   *complete* promise, and is not `kind: enabler` unless `Promise` says the promise is to a developer.
   `drawing-the-map.md` *Themes*. *Validator: that the reference resolves to a row. Reading: coverage
@@ -101,7 +103,7 @@ the failure they guard.
   a user who cannot exist yet. `drawing-the-map.md` *The identity seam*; `slice-rules.md`
   *What makes a slice*.
 - **R-015** — Every conflict and every undecided choice the brief lists left the sweep by exactly one
-  of the three doors — an `Assumptions` line naming the reading taken and why, an `Open questions`
+  of the three exits — an `Assumptions` line naming the reading taken and why, an `Open questions`
   line, or a spike before the first row it blocks — and every line traces to the themes and ids it
   touches, or to `goal` where it touches the whole map.
   Exposing is not resolving; scope is the only thing that routes an entry between map altitude and a
@@ -122,8 +124,8 @@ the failure they guard.
   `Cross-functional concerns` forward, lifts explicitly and with its cost stated any the new goal
   contradicts, gives every candidate its own verdict one at a time, re-justifies every row still open,
   and does not restart the counter. Goal, themes, register, ordering criteria, `Assumptions` and
-  `Open questions` are drawn from nothing. § 3 and `drawing-the-map.md`, *A redraw is this branch with
-  more input*.
+  `Open questions` are drawn from nothing. *Draw the map* and `drawing-the-map.md`, *What carries when
+  a map already stands*.
 
 ## What makes a row
 
@@ -152,48 +154,52 @@ the failure they guard.
 ## The horizons
 
 - **R-025** — A `LATER` line is what does not serve *this* goal, never what is merely unfinished, and
-  it carries no id, no columns and no document. § 4 *Admission*; `slice-rules.md` *Named failures* →
-  horizon dumping. *Validator: ids in the horizon sections.*
+  it carries no id, no columns and no document. *Operations on the map*, *Admission*;
+  `slice-rules.md` *Named failures* → horizon dumping. *Validator: ids in the horizon sections.*
 - **R-026** — Every `OUT-OF-SCOPE` entry is written as the licence it gives — because this stays
   unsolved, the implementation may do without X, and this is the price — rather than as a line saying
   what will not be done. `drawing-the-map.md` *What the map reports about its input*.
 
-## Re-truing an existing map
+## Revising an existing map
 
 - **R-027** — Close-out ran first, before anything else was decided: the row left the register, its
   document moved to `archive/` unchanged, and `ADRs` was filled only for a decision that cleared the
-  bar — hard to reverse, surprising without context, the result of a real trade-off. § 4,
-  *Close-out first*.
+  bar — hard to reverse, surprising without context, the result of a real trade-off.
+  *Operations on the map*, *Close-out first*.
 - **R-028** — Absorption produced a state change or nothing. A line of `Assumptions` or
   `Open questions` that delivery answered **died** rather than being annotated; a row whose size,
   readiness, dependency or shape the evidence changed was changed. Three noes wrote nothing, and on a
-  spike three noes were reported as a finding about the spike. § 4, *Then absorb the evidence*,
-  *Three noes write nothing*.
+  spike three noes were reported as a finding about the spike. *Operations on the map*,
+  *Then absorb the evidence*, *Three noes write nothing*.
 - **R-029** — Retirement spent the id and **deleted** the document; nothing undelivered reached
-  `archive/`. § 4, *Retirement*.
+  `archive/`. *Operations on the map*, *Retirement*.
 - **R-030** — The cap was checked whenever a row was added, and an addition that would overflow it
   forced a merge or a deferral instead of a longer list. Below the floor and past the cap are findings
-  put to the author, not defects silenced. § 4 *Admission*; `drawing-the-map.md` *The cap is a finding,
-  not a budget*. *Validator: both bounds, as warnings.*
+  put to the author, not defects silenced. *Operations on the map*, *Admission*;
+  `drawing-the-map.md` *The cap is a finding, not a budget*. *Validator: both bounds, as warnings.*
+- **R-031** — The coverage question was asked, last and after the operations — does what is left in
+  `NOW` still reach the goal — and a failed answer produced a question carried to the close, never a
+  change of door mid-session. Vacuous on `Drawing`, where the theme ceremony and the first validators
+  are that door's coverage check. *Operations on the map*, *Last, the coverage question*.
 
 ## Closing the session, and handing over
 
-- **R-031** — The coverage question was re-asked — does what is left in `NOW` still reach the goal — on
-  both branches and whatever the input was. § 5
 - **R-032** — Writing followed what stood at the start of the session. With no `.roadmap/`, the map was
   written straight away and no confirmation was asked for. With a map already standing, one block was
   proposed with every operation the session found, one confirmation was asked, and nothing was written
-  before it came. Not files written one at a time with a question between each, on either branch. § 5
+  before it came. Not files written one at a time with a question between each, on either door. The
+  preamble.
 - **R-033** — The validator was run after writing, every `ERROR` fixed, every `WARNING` put to the
-  author rather than silenced. § 5, *Run the validator*. *What this reads is that it ran and what it
-  did with the `WARNING`s, never where it pointed.*
+  author rather than silenced. *Close the session*, *Run the validator*. *What this reads is that it
+  ran and what it did with the `WARNING`s, never where it pointed.*
 - **R-034** — Handover happens only for a `ready` row, derives the `triage` label from readiness and
   executor and stores it nowhere, and routes by kind: a slice to the clarifying conversation —
-  `/grill-with-docs`, or `/wayfinder` when it is big and foggy — and straight to `/to-spec` only when
-  an earlier session already clarified it and left no `needs-decision` and no `needs-info`; a spike to
-  `/prototype` or `/wayfinder`, never to `/to-spec`. What the system does not have is said rather than
-  invented. § 6
+  `/grill-with-docs` where the system has it — and straight to `/to-spec` only when an earlier session
+  already clarified it and left no `needs-decision` and no `needs-info`; a spike to `/prototype` when
+  the question needs something built, and to a conversation with the author when it is a choice to be
+  made, never to `/to-spec`. What the system does not have is said rather than invented.
+  *Hand over a ready row*; `slice-rules.md` *The spike test*, *The columns* → `readiness`.
 - **R-035** — The session closed on the four-part report and nothing else: the `Themes` table, the
   `NOW` register, `Open questions` or a line saying there are none, and the path to `roadmap.md`. No
   retelling of what the documents say, no narration of the operations run; a `WARNING` or an owed
-  question comes after the four. § 5
+  question comes after the four. *Close the session*.

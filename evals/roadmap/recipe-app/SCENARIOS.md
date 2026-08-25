@@ -39,7 +39,7 @@ same session. Whatever it asks, answer only what it needs to proceed.
 [`../REVIEW-WORKFLOW.md`](../REVIEW-WORKFLOW.md), *Reading a run: a drawing*, says why the order is the
 whole discipline and how binding the reference is.
 
-**Rules:** all of them except *Re-truing an existing map*, R-006 and R-018.
+**Rules:** all of them except *Revising an existing map*, R-006 and R-018.
 
 ## 1. Sounds like a change of destination, is work
 
@@ -71,7 +71,7 @@ search reaches is the reach of a promise the goal already makes. Admitting it st
 without noticing the candidate gets the altitude right and the operation wrong — a finding against
 R-006 alone.
 
-**Rules:** R-003, R-006, R-002, R-025, R-030.
+**Rules:** R-003, R-006, R-002, R-025, R-030, R-031.
 
 ## 2. Sounds like work, is a change of destination
 
@@ -105,7 +105,7 @@ and altitude are unrelated, and only altitude is the roadmap's business.
 promotion look like the obvious move. Promotion asks whether the candidate serves the goal, and this
 one replaces it.
 
-**Rules:** R-004, R-005, R-006, R-031.
+**Rules:** R-004, R-005, R-006.
 
 ## 3. Sounds like a slice, is a spike
 

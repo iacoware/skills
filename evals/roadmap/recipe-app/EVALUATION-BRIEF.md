@@ -30,14 +30,14 @@ A candidate that chooses otherwise here is not wrong; judge it on its stated rea
 - **A5** — Controlled inputs may validate extraction, embeddings or search before their final user entry point when they traverse the production computation (`sources/goal.md`, “Principi guida”; `sources/concepts.md`, “Pipeline di estrazione”). A seed corpus that lets semantic search be measured before anybody can add a recipe is this entry, not fake verticality.
 - **A6** — A changeable cover may sit in `NOW` inside the photo row, or in `LATER` as a candidate. The source declares it without making it MVP-mandatory (`sources/goal.md:74`).
 - **A7** — Choosing which photos to keep during import may be deferred, or kept in `NOW` only as an optional step: a mandatory one would contradict “nessun passo di review nel flusso di add” (`sources/concepts.md:143`).
-- **A8** — The cross-language embedding uncertainty (U3) may leave by any of the three doors: a spike before the rows it blocks, an `Open questions` line at map altitude, or an `Assumptions` line naming the reading taken. Which door was taken is a choice to judge on its stated reason, not a defect. Naming a model as decided is not one of the doors.
+- **A8** — The cross-language embedding uncertainty (U3) may leave by any of the three exits: a spike before the rows it blocks, an `Open questions` line at map altitude, or an `Assumptions` line naming the reading taken. Which exit was taken is a choice to judge on its stated reason, not a defect. Naming a model as decided is not one of the exits.
 - **A9** — The same holds for the JSON-LD hit rate (U4): it may be measured by a spike, or by delivering the structured path and reading the miss rate at close-out, which makes the fallback an ordinary row with a measurable learning target.
 - **A10** — Manual entry and edit may be one row or two. They share one form (`sources/goal.md`, “Aggiunta ricetta”; `sources/concepts.md`, “Pipeline di estrazione”), which is a merge argument and not a merge obligation; what is owed is the recorded verdict, either way.
 - **A11** — A capability the sources describe may be delivered before or after identity, provided the rows before it name their own audience. Nothing in `sources/` fixes where Google sign-in lands.
 
 ## What it must leave open (known conflicts and material uncertainties)
 
-The map has three doors out of the sweep — an `Assumptions` line, an `Open questions` line, or a spike
+The map has three exits out of the sweep — an `Assumptions` line, an `Open questions` line, or a spike
 — and a fourth for what blocks one row alone, which is that row's own `Open questions` with
 `needs-decision` in the register. **Taking a side is allowed; taking it silently is the defect.** An
 `Assumptions` line that names the reading and why is a resolution the map is entitled to; an

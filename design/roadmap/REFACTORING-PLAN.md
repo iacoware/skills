@@ -147,7 +147,7 @@ vacuous: the theme ceremony, the first validators and `The map holds when` in
 `references/drawing-the-map.md` *are* that door's coverage check. It earns its keep only where `NOW`
 mutated under a fixed goal. Moving it does not by itself kill the § 2 ↔ § 5 cycle. The
 destination-vs-path question stays in *Choose the door* — D3's table, D14's first item and
-`REFACTORING-POINTERS.md` lines 48, 54 and 57 all put it there — so an unqualified move renames the
+the pointers file S4 burnt down all put it there — so an unqualified move renames the
 cycle *Operations on the map* ↔ *Choose the door* and changes nothing else.
 
 What kills it is a rule on the backward edge: **a failed coverage check never reopens the door
@@ -222,7 +222,7 @@ executes 1-2-3-4-5. `Drawing` runs 1, 2, 3, consults 4 for the argument round, t
 1, 2, 4, 5 and never enters 3; a handover, when the input asks for one, follows 5. *Choose the door* is what says
 which of 3 and 4 runs. Steps carry numbers; `Hand over a ready row` and `The session holds when` carry
 none, which is how the reader knows they are not in the sequence. Every reference from outside `SKILL.md` anchors on the section title and
-never on the number, so the next restructuring does not cascade. See `REFACTORING-POINTERS.md`.
+never on the number, so the next restructuring does not cascade.
 
 **D11 — `/wayfinder` goes; `/prototype` stays.** The distinction it carried is generative and stays,
 the name does not: a spike goes to `/prototype` when the question needs something built to answer it;
@@ -376,10 +376,29 @@ decisions that row names, not this whole file.
 | S1 ✅ | `design/roadmap/CONTEXT.md`, `ROADMAP-GOAL.md`, `WORKFLOWS.md` (deleted), `CONTEXT-MAP.md:11` | D17, D8, D11 at lines 78 and 103, D16 | done | `SKILL.md` still carries `Re-truing`, `Revision` and `/wayfinder`, and has no *Choose the door* for `CONTEXT-MAP.md:11` to point at — S3; `slice-rules.md:68` names `/wayfinder` — S2; `EVALUATION-RULES.md:192` and `:194` name it — S4 |
 | S2 ✅ | `skills/roadmap/references/drawing-the-map.md`, `references/slice-rules.md` | D18, D11, the rationale D2 sends to § *Identity* | done | `EVALUATION-RULES.md:103` and `:125` — S4; `recipe-app/EVALUATION-BRIEF.md:33` and `:40` also say *three doors*, and the pointers file does not list them — S4 |
 | S3 ✅ | `skills/roadmap/SKILL.md`, `skills/roadmap/agents/openai.yaml:4` | D1 to D15 | done | every anchor `evals/` cites, plus `Re-truing`, `/wayfinder` and *three doors* wherever `evals/` still says them — S4 |
-| S4 | `evals/roadmap/EVALUATION-RULES.md`, `REVIEW-WORKFLOW.md`, `PROMPTS.md`, `recipe-app/SCENARIOS.md`, `README.md:33` | every reference table in `REFACTORING-POINTERS.md` bar the `CONTEXT-MAP.md` sentence S1 fixed, and the six edits below | no rule cites a section number or a moved anchor, and `Re-truing` survives nowhere outside `recipe-app/results/` | — |
+| S4 ✅ | `evals/roadmap/EVALUATION-RULES.md`, `REVIEW-WORKFLOW.md`, `PROMPTS.md`, `recipe-app/SCENARIOS.md`, `README.md:33`, `recipe-app/EVALUATION-BRIEF.md` | every reference table in `REFACTORING-POINTERS.md` bar the `CONTEXT-MAP.md` sentence S1 fixed, and the six edits below | done | — |
 | S5 | none — it runs, it does not edit | — | the validator is clean and one evaluation was run against the new file | — |
 
-`REFACTORING-POINTERS.md` is burnt down and deleted at the end of S4; this file at the end of S5.
+`REFACTORING-POINTERS.md` was burnt down and deleted at the end of S4; this file goes at the end of
+S5.
+
+**S4 made four calls the pointers file left open, and one it did not foresee.** It took the
+`EVALUATION-BRIEF.md` edit the pointers file left to this session — A8 and line 40 now say *exits*,
+so a judge reads the map against the word `drawing-the-map.md` carries; nothing A8 licenses changed.
+It found a fifth *door* at the reference altitude, `REVIEW-WORKFLOW.md:124-125`, which the pointers
+file did not list, and followed it. It moved **R-031 into `## Revising an existing map`**, because
+D6 makes the coverage question vacuous on `Drawing` and that section is exactly what a first drawing
+skips — so the rule's placement now carries the scope its text used to overstate. And it moved
+**R-031 from card 2 to card 1** in `SCENARIOS.md`: a correct scenario-2 session asks the
+reconciliation question and stops, so it never reaches the operations the coverage question runs
+after, and citing it there would judge the correct session red — the *check to rewrite* case
+`EVALUATION-RULES.md:15` names, not an oracle bent to make a card pass. Card 1 is a `Revising`
+session that runs `Promotion`, so the check fires there.
+
+**One claim in the pointers file was wrong and was not carried over.** It said no fixture holds an
+open `ready` row to hand over; `fixtures/redrawn/` holds three — `S13`, `S14`, `S15`. What is true is
+`README.md`'s own narrower claim, which survives: no prompt has requested a handover and no fixture
+holds an open **spike** to route. The hole D12 declares is still open, on the accurate ground.
 
 **S3 departed from the de-duplication list on one row, and missed the size target.** The cap at
 136-137 is not wholly cut: `drawing-the-map.md` is not loaded on `Revising`, so cutting the clause

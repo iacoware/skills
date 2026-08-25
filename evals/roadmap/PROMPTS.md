@@ -52,7 +52,7 @@ Poi, in quest'ordine, che non va invertito:
    sources: apri @evals/roadmap/recipe-app/sources/ solo per verificare una citazione. Le voci A e N
    licenziano differenze e non sono violazioni; lo sono le H mancanti e le C risolte in silenzio.
 2. @evals/roadmap/EVALUATION-RULES.md, regola per regola. Questo è un primo disegno: salta la sezione
-   "Re-truing an existing map", R-006 e R-018. Leggi il register e i documenti in slices/ insieme.
+   "Revising an existing map", R-006 e R-018. Leggi il register e i documenti in slices/ insieme.
 3. Solo alla fine @evals/roadmap/recipe-app/reference-roadmap/ con REFERENCE-NOTES.md, per trovare
    quello che ti sei dimenticato. Non è un target di diff: id, titoli, numero di temi e di righe
    possono differire; su ogni differenza chiedi quale delle due ha la ragione migliore.

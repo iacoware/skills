@@ -10,14 +10,16 @@ scenario unchanged.
 
 A change rarely needs both.
 
-- **A drawing — scenario 0.** Half an hour, one provider call. Run it after a change to § 1, § 3, § 5,
-  to `references/drawing-the-map.md` or to either template.
+- **A drawing — scenario 0.** Half an hour, one provider call. Run it after a change to *Establish
+  the situation*, *Draw the map* or *Close the session*, to `references/drawing-the-map.md` or to
+  either template.
 - **The router — scenarios 1, 2, 3.** Ten minutes and one provider call each. Run them after a change
-  to § 2, § 4 or `references/slice-rules.md`, where the router and the five operations live.
+  to *Choose the door*, *Operations on the map* or `references/slice-rules.md`, where the router and
+  the five operations live.
 
 `references/slice-rules.md` is read on every session, so a change to it shows in both halves and the
-router is the cheaper place to see it. § 6 shows in whichever half you run, and only if the session
-gets as far as handing a row over.
+router is the cheaper place to see it. *Hand over a ready row* shows in whichever half you run, and
+only if the session gets as far as handing a row over.
 
 Run either after a change you believe is substantive, not after every commit. One run is a question;
 the same run twice with the same answer is a verdict. What the net does not cover, and how narrow the
@@ -72,9 +74,9 @@ them.
 2. **Send the card's prompt**, with this run's directory substituted. What it carries beyond the
    request is the read restriction: the sources as the only input, no search ranging over the rest of
    the repository, and the same restriction on anything the session delegates to.
-3. **Answer what it asks and nothing else.** § 1 obliges the session to ask what was delivered, and a
-   tracker cannot answer it; each card says what to answer. Answering more turns the run into a
-   collaboration you cannot read.
+3. **Answer what it asks and nothing else.** *Establish the situation* obliges the session to ask
+   what was delivered — the only place it is asked — and a tracker cannot answer it; each card says
+   what to answer. Answering more turns the run into a collaboration you cannot read.
 4. **Confirm only where the card says so.** A first drawing writes unasked — there is no `.roadmap/`
    to lose — and argues with its own first cut in the same session. A map already standing proposes a
    block first: never confirm a proposal that redraws the map, since a redraw you let it write teaches
@@ -93,10 +95,10 @@ them.
    report: it costs one turn, spent where there is nothing left to read.
 6. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
-   is red, stop and fix before reading. The session runs the validator itself at § 5 and its run is
-   not this one: it resolves `.roadmap` against the run directory rather than the repository root, so
-   a session that does not change directory first gets nothing — an artifact of this layout, not a
-   defect. R-033 reads that it ran at all and what it did with the `WARNING`s.
+   is red, stop and fix before reading. The session runs the validator itself at *Close the session*
+   and its run is not this one: it resolves `.roadmap` against the run directory rather than the
+   repository root, so a session that does not change directory first gets nothing — an artifact of
+   this layout, not a defect. R-033 reads that it ran at all and what it did with the `WARNING`s.
 
 ## Reading a run: a drawing
 
@@ -106,7 +108,7 @@ them.
    and the slice documents together — a row whose document contradicts it is a defect the register
    alone cannot show, and half the rules are about a field the table does not carry.
 2. **Walk [`EVALUATION-RULES.md`](EVALUATION-RULES.md)**, keeping the brief's uncertainty table open
-   for R-016. On a first drawing skip *Re-truing an existing map*, R-006 and R-018. The four-part
+   for R-016. On a first drawing skip *Revising an existing map*, R-006 and R-018. The four-part
    report the session closes on is evidence too.
 3. **Only now** open `recipe-app/reference-roadmap/` and `recipe-app/REFERENCE-NOTES.md`. Forming your
    verdict first is what keeps the reference a memory aid instead of a diff target — the order is the
@@ -121,8 +123,8 @@ How binding the reference is:
   `Cross-functional concerns`, whose five headings are owed but not their content.
 - A source may support a `LATER` or `OUT-OF-SCOPE` classification other than the reference's, and the
   brief says where.
-- The reference takes one door out of the sweep for each conflict and each undecided choice. Another
-  door is a different choice and not a defect; **no** door is R-015.
+- The reference takes one exit out of the sweep for each conflict and each undecided choice. Another
+  exit is a different choice and not a defect; **no** exit is R-015.
 
 ## Reading a run: a router scenario
 
