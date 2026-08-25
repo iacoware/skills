@@ -241,13 +241,13 @@ moves the message's own parts out. The destination by `kind` comes from `slice-r
 test*, the destination by `size` from § `size`, the `triage` label from § `readiness`; the delegation
 is safe only because that file is loaded on every session, and what has to survive in `SKILL.md` is
 the instruction to assemble them into one message. It is descriptive, not generative, except for one
-clause. What survives, ~6 lines: the `readiness: ready`
+clause. What survives, ~5 lines: the `readiness: ready`
 precondition; a slice goes to the clarifying conversation and **not** straight to `/to-spec` — the one
 generative clause, it stops the capture step inventing decisions nobody took — with the exception of a
 slice already clarified in an earlier session with the outcome recorded on it; a spike goes to
-`/prototype`; read `docs/agents/issue-tracker.md` when it is there. Cut: the `triage` derivation
-(in `slice-rules.md` § readiness), the spike routing (`slice-rules.md` § *The spike test*), the
-`size: large` routing (`slice-rules.md` § `size`).
+`/prototype`. Cut: `docs/agents/issue-tracker.md`, which *Establish the situation* already reads; the
+`triage` derivation (in `slice-rules.md` § readiness), the spike routing (`slice-rules.md` § *The
+spike test*), the `size: large` routing (`slice-rules.md` § `size`).
 
 **D13 — Do not redefine the downstream chain.** `CONTEXT-MAP.md`: *the terms of that chain are defined
 by the installed skills and are not redefined here*. So `/to-spec`, `/to-tickets`, `/grill-with-docs`
