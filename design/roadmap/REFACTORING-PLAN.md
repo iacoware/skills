@@ -95,7 +95,9 @@ exactly the operations of § 4* is false: `Close-out` never fires on a draw, and
 row* and § *Identity*, both loaded on this door anyway. What the table alone holds is `Admission` —
 the two questions *does it serve the goal* and *path or speculation*, stated nowhere else — and, on a
 redraw, `Promotion`: `drawing-the-map.md` gives the verdict on a `LATER` candidate and not the
-mechanics of minting it. Write the pointer without *exactly*, and name the exclusion.
+mechanics of minting it. The coverage question D6 puts at the end of that section is excluded on the
+same ground as `Close-out`: on this door it is vacuous. Write the pointer without *exactly*, and name
+both exclusions.
 
 The alternative is to make the doors disjoint by moving what the round needs into
 `drawing-the-map.md`. That duplicates `Admission` and `Promotion` across two documents, which is the
