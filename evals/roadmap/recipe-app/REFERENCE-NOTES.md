@@ -7,7 +7,8 @@ re-derive from the map and `sources/` together.
 
 Read last, with the reference itself, when the verdict on the candidate is already formed. On every
 difference, ask which of the two has the better reason; this file holds the reference's. **The
-reference is frozen**: rewritten when the sources change, never because a candidate argued well.
+reference is frozen**: rewritten when the sources change or when `skills/roadmap/` changes what a
+map owes, never because a candidate argued well.
 
 **Language.** The map is in Italian, because the skill writes in the author's language and the sources
 are Italian; the reasoning about the skill is in the project's. Field, column and state names are

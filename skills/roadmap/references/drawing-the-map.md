@@ -193,7 +193,9 @@ Sweep the sources for two categories before the map is drawn, and give each entr
 sides:
 
 - **conflicts** — pairs of incompatible statements, whether or not either names a provider, model,
-  service or adapter. Sweep per behaviour the map will cut, not per component named;
+  service or adapter. Sweep per behaviour the map will cut, not per component named, and sweep within
+  a document as well as across two: the sharpest pair is often a reason contradicting its own
+  conclusion a few lines below it;
 - **undecided choices** — a provider, model, service or adapter named without a source that selects
   it. A qualifying adjective — *cheap*, *multilingual*, *managed* — is not a choice.
 
@@ -213,6 +215,17 @@ Every entry then leaves by one of three exits, and no other:
 
 Exposing is not resolving. Only a source that selects resolves an entry: a published question and a
 scheduled spike both leave it open, because neither has produced its answer when the map is drawn.
+The reverse costs as much — an entry a source selects is answered, and publishing it as an open
+question leaves the map less drawable than its own input.
+
+Two tests on an `Assumptions` line once it is written:
+
+- **Delivery can refute it.** A line restating what a source already says is true by construction and
+  resolves nothing: either it quotes the source, and goes, or it holds a constraint whose mechanism is
+  still missing, and the entry is still open.
+- **It lands in a row.** A reading about *how* something works appears as a bullet of the row it is
+  traced to. An assumption landing nowhere either was not needed or was not applied, and the row is
+  where the map says what it assumed.
 
 `OUT-OF-SCOPE` holds what the solution declares it will never solve, never what is merely far off, and
 each exclusion is written as the licence it gives: *because this stays unsolved, the implementation
@@ -237,4 +250,6 @@ the trade-off was allowed.
   second end-user row is justified in `Ordering criteria` against named evidence;
 - every conflict and every undecided choice left the sweep by one of the three exits;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
+- delivery can refute every `Assumptions` line, and every reading about how something works lands in
+  a bullet of the row it is traced to;
 - `NOW` fits under the cap without inventing detail the map cannot yet know.

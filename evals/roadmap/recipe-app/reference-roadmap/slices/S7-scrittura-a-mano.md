@@ -31,6 +31,7 @@ subito un'estrazione imperfetta invece di far rivedere l'estratto all'utente.
 
 ## Excludes
 
+- Il motore di estrazione: quello che si scrive nel form si salva così com'è, senza JSON-LD e senza LLM.
 - Parsing di quantità e unità: gli ingredienti strutturati sono fuori scope.
 - Un passo di review dentro il flusso di aggiunta.
 - Le foto, che sono `S11`.
