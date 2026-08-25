@@ -132,8 +132,8 @@ resynchronisation the skill has.
 
 **Handover stays uncovered by the evaluation net either way.** `evals/roadmap/README.md:33` records
 that no prompt has ever requested a handover and no fixture holds an open row to hand over, so the run
-at the end of the order of work will not exercise this section. That is the reason D12 shrinks it
-rather than elaborating it. Declared, not discovered later.
+in S5 will not exercise this section. That is the reason D12 shrinks it rather than elaborating it.
+Declared, not discovered later.
 
 **D5 — There is one delivery question, and it belongs to *Establish the situation*.** Today it is
 written twice: § 1 (*what has been delivered is asked, never read off a tracker*) and § 4 (*ask what
@@ -361,33 +361,57 @@ about the register, which `slice-rules.md`:6 already carries.
 The reference-loading policy is stated once in the preamble: `slice-rules.md` on every session
 whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 
-## Order of work
+## Sessions
 
-1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D15.
-2. `skills/roadmap/references/drawing-the-map.md` — D18: the preamble, the section title, *exits*.
-3. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
-4. `design/roadmap/ROADMAP-GOAL.md` — § *Roads not taken* for D8, and lines 78 and 103 for D11.
-5. `evals/roadmap/EVALUATION-RULES.md` — everything the rewrite falsifies, and **before** the run at
-   11: line 26 forbids touching the rules once a scenario has gone red, so a rule left stale here has
-   no legal repair later.
-   - `:161` — `## Re-truing an existing map` → `## Revising an existing map`, and with it the three
-     citations by name at `REVIEW-WORKFLOW.md:109`, `PROMPTS.md:55` and `recipe-app/SCENARIOS.md:42`
-     (D9). Leave `recipe-app/results/` alone.
-   - `:58` — R-005, *re-truing* in the `⚠ opposite` note (D9).
-   - `:181` — R-031, the coverage question: it holds on `Revising`, not *on both branches and whatever
-     the input was*, and its anchor moves with it (D6).
-   - `:103-108` — R-015, *three doors* → *three exits* (D18).
-   - `:125-126` — R-018, the `drawing-the-map.md` section title D18 renames.
-   - `:190` — R-034, `/wayfinder` twice, the rule that judges the handover (D11).
-6. `skills/roadmap/agents/openai.yaml:4` — the `default_prompt` says *draw or re-true*; the one file
-   D9 reaches that no other item covers.
-7. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11` — D16.
-8. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
-   `_Avoid_`, and rename `Revision` to `Reshaping`, per D17.
-9. The inbound references, per `REFACTORING-POINTERS.md`.
-10. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
-    documented invocation still matches.
-11. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
+Five sessions, run in order. The seam is not the decision list — D1 to D18 are transversal and no
+session owns one cleanly — but **the direction of the pointers**: the vocabulary first, then the
+files that receive what the router sheds, then the router, then everything that points at the router,
+then the verification. Each session leaves the names it touches in agreement, and **closes by ticking
+its row and recording what it knowingly leaves stale**, so the next one reads its own row and the
+decisions that row names, not this whole file.
+
+| # | Files | Decisions | Done when | Left stale, closed by |
+|---|---|---|---|---|
+| S1 | `design/roadmap/CONTEXT.md`, `ROADMAP-GOAL.md`, `WORKFLOWS.md` (deleted), `CONTEXT-MAP.md:11` | D17, D8, D11 at lines 78 and 103, D16 | `Drawing` and `Revising` stand beside `Redraw`, `Revision` is `Reshaping`, `/wayfinder` is gone from `design/`, nothing points at `WORKFLOWS.md` | `SKILL.md` still carries the old vocabulary — S3 |
+| S2 | `skills/roadmap/references/drawing-the-map.md`, `references/slice-rules.md` | D18, D11, the rationale D2 sends to § *Identity* | the preamble states its scope by door, the redraw section is *What carries when a map already stands*, `door` has become *exits* | `EVALUATION-RULES.md:103` and `:125` — S4 |
+| S3 | `skills/roadmap/SKILL.md`, `skills/roadmap/agents/openai.yaml:4` | D1 to D15 | every item of *Done when* that judges `SKILL.md` | every anchor `evals/` cites — S4 |
+| S4 | `evals/roadmap/EVALUATION-RULES.md`, `REVIEW-WORKFLOW.md`, `PROMPTS.md`, `recipe-app/SCENARIOS.md`, `README.md:33` | every reference table in `REFACTORING-POINTERS.md` bar the `CONTEXT-MAP.md` sentence S1 fixed, and the six edits below | no rule cites a section number or a moved anchor, and `Re-truing` survives nowhere outside `recipe-app/results/` | — |
+| S5 | none — it runs, it does not edit | — | the validator is clean and one evaluation was run against the new file | — |
+
+`REFACTORING-POINTERS.md` is burnt down and deleted at the end of S4; this file at the end of S5.
+
+**S3 does not split.** The three faults this plan opens with are transversal: the branch condition
+cannot be made to evaluate once while half the document still evaluates it, and a cycle cannot be cut
+from one side. What makes it a small session is not a seam but an empty in-tray — S1 has settled the
+vocabulary and S2 has already taken delivery — leaving ~150 lines written against tables that are
+closed: *Target shape*, D3, the de-duplication list. If a seam is forced anyway, the only honest one
+is *Hand over a ready row*: D12 shrinks it to ~5 lines, it is unnumbered, and it touches no part of
+the door logic.
+
+**S4 does not split either**, and it must precede S5: `EVALUATION-RULES.md:26` forbids touching the
+rules once a scenario has gone red, so a rule left stale here has no legal repair later. Its six
+edits, beyond the anchor retargeting the pointers file tabulates:
+
+- `:161` — `## Re-truing an existing map` → `## Revising an existing map`, and with it the three
+  citations by name at `REVIEW-WORKFLOW.md:109`, `PROMPTS.md:55` and `recipe-app/SCENARIOS.md:42`
+  (D9). Leave `recipe-app/results/` alone.
+- `:58` — R-005, *re-truing* in the `⚠ opposite` note (D9).
+- `:181` — R-031, the coverage question: it holds on `Revising`, not *on both branches and whatever
+  the input was*, and its anchor moves with it (D6).
+- `:103-108` — R-015, *three doors* → *three exits* (D18).
+- `:125-126` — R-018, the `drawing-the-map.md` section title D18 renames.
+- `:190` — R-034, `/wayfinder` twice, the rule that judges the handover (D11).
+
+**S5 is a session of its own by rule, not by preference.** `PROMPTS.md:65` forbids editing `SKILL.md`
+during an evaluation session. It runs the validator against an existing fixture, to confirm the
+documented invocation still matches —
+
+```bash
+node skills/roadmap/scripts/validate_roadmap.ts .roadmap
+```
+
+— and then one evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names
+moved. A red scenario is repaired in `SKILL.md` by a session after this one, never in the rules.
 
 ## Done when
 
