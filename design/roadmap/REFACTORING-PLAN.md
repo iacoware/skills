@@ -205,8 +205,15 @@ verb `SKILL.md:139` defines it with, *reshapes rows without adding or closing an
 de-duplication list therefore keeps — so the rename
 introduces no concept. The two words then match their altitudes: `Reshaping` denotes a change of form
 and that is exactly and only what the operation does, while `Revising` is broad enough to cover the
-changes of membership — a row closed out, a row admitted — that the branch also holds. `Re-truing` is
-dropped entirely.
+changes of membership — a row closed out, a row admitted — that the branch also holds.
+
+**`Re-truing` is dropped entirely, and that reaches past the skill.** Beyond `SKILL.md` and
+`drawing-the-map.md:5`, which D18 rewrites anyway, the word is load-bearing in four places: the
+section heading `## Re-truing an existing map` at `EVALUATION-RULES.md:161`, cited by name from
+`REVIEW-WORKFLOW.md:109`, `PROMPTS.md:55` and `recipe-app/SCENARIOS.md:42`; the `⚠ opposite` note of
+R-005; and the `default_prompt` at `skills/roadmap/agents/openai.yaml:4`. Past evaluation results
+under `recipe-app/results/` keep the word: they are records of what a session was judged against, not
+pointers.
 
 **D10 — Numbers mark position; anchors are titles.** They mark position in the document and reading
 order, **not a sequence every session runs**: steps 3 and 4 are the two doors' alternatives, so nothing
@@ -305,7 +312,8 @@ routing.** Three edits, all small, all consequences of D3.
 - **`door` is the router's word now, so the reference stops using it for something else.** *What the
   map reports about its input* has *every entry then leaves by one of three doors* for a disposition —
   an `Assumptions` line, an `Open questions` line, a spike. Same word, two altitudes, two files, one
-  skill. Say *exits* there.
+  skill. Say *exits* there, and at line 227 in *The map holds when*, which repeats *the three doors*;
+  `EVALUATION-RULES.md` R-015 quotes the phrase and follows.
 
 **The file is not split.** The redraw content is not a parallel procedure but a modifier of the inputs
 of every section downstream — the archive constrains the themes, the high-water mark constrains the
@@ -357,16 +365,27 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 2. `skills/roadmap/references/drawing-the-map.md` — D18: the preamble, the section title, *exits*.
 3. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
 4. `design/roadmap/ROADMAP-GOAL.md` — § *Roads not taken* for D8, and lines 78 and 103 for D11.
-5. `evals/roadmap/EVALUATION-RULES.md` — R-034 for D11, which names `/wayfinder` twice and is the rule
-   that judges the handover.
-6. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11` — D16.
-7. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
+5. `evals/roadmap/EVALUATION-RULES.md` — everything the rewrite falsifies, and **before** the run at
+   11: line 26 forbids touching the rules once a scenario has gone red, so a rule left stale here has
+   no legal repair later.
+   - `:161` — `## Re-truing an existing map` → `## Revising an existing map`, and with it the three
+     citations by name at `REVIEW-WORKFLOW.md:109`, `PROMPTS.md:55` and `recipe-app/SCENARIOS.md:42`
+     (D9). Leave `recipe-app/results/` alone.
+   - `:58` — R-005, *re-truing* in the `⚠ opposite` note (D9).
+   - `:181` — R-031, the coverage question: it holds on `Revising`, not *on both branches and whatever
+     the input was*, and its anchor moves with it (D6).
+   - `:103-108` — R-015, *three doors* → *three exits* (D18).
+   - `:125-126` — R-018, the `drawing-the-map.md` section title D18 renames.
+   - `:190` — R-034, `/wayfinder` twice, the rule that judges the handover (D11).
+6. `skills/roadmap/agents/openai.yaml:4` — the `default_prompt` says *draw or re-true*; the one file
+   D9 reaches that no other item covers.
+7. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11` — D16.
+8. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
    `_Avoid_`, and rename `Revision` to `Reshaping`, per D17.
-8. The inbound references, per `REFACTORING-POINTERS.md`, its own line 13 included: it repeats the
-   *steps 1-5 run in order* claim D10 now corrects.
-9. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
-   documented invocation still matches.
-10. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
+9. The inbound references, per `REFACTORING-POINTERS.md`.
+10. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
+    documented invocation still matches.
+11. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
 
 ## Done when
 
@@ -383,6 +402,9 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 - generative rationale is intact — spot-check the four examples named in D2, three in `SKILL.md` and
   the fourth in `slice-rules.md` § *Identity*;
 - no reference from outside `SKILL.md` cites a section number;
+- no rule in `EVALUATION-RULES.md` asserts something the rewritten skill contradicts, and none cites
+  an anchor that moved;
+- `Re-truing` survives nowhere outside `recipe-app/results/`;
 - `SKILL.md` ends on `The session holds when`, and no item in it is checked by a reference checklist
   or by the validator;
 - `WORKFLOWS.md` is gone and nothing points at it;
