@@ -86,6 +86,18 @@ One asymmetry is real and survives: *Operations on the map* is consulted by `Dra
 argument round. Doors are not sections. A door is a purpose and carries a purpose name; a section is a
 content and carries a content name. Never use one for the other.
 
+**The round consults two of the five, and `SKILL.md:100` overstates it.** *The argument produces
+exactly the operations of § 4* is false: `Close-out` never fires on a draw, and `Reshaping` and
+`Retirement` are already answered one altitude down, by `slice-rules.md` § *Splitting and merging a
+row* and § *Identity*, both loaded on this door anyway. What the table alone holds is `Admission` —
+the two questions *does it serve the goal* and *path or speculation*, stated nowhere else — and, on a
+redraw, `Promotion`: `drawing-the-map.md` gives the verdict on a `LATER` candidate and not the
+mechanics of minting it. Write the pointer without *exactly*, and name the exclusion.
+
+The alternative is to make the doors disjoint by moving what the round needs into
+`drawing-the-map.md`. That duplicates `Admission` and `Promotion` across two documents, which is the
+fault the de-duplication list exists to close. A one-line pointer costs less.
+
 `Redraw` survives as the name of the case and never of a door. `CONTEXT.md:144` already defines it that
 way — *il ramo di disegno che riparte con più input* — and `EVALUATION-RULES.md` R-018 and the
 `fixtures/redrawn/` scenario go on using the word.
@@ -276,6 +288,8 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 - `WORKFLOWS.md` is gone and nothing points at it;
 - the two doors carry the names `CONTEXT.md` defines, `Redraw` names a case and never a door, no
   section title is used as a branch name, and no word names both a branch and an operation;
+- the pointer from *Draw the map* to *Operations on the map* names the operation the argument round
+  excludes, and does not claim it runs all five;
 - `drawing-the-map.md` opens by naming the door it serves, its first section no longer contradicts
   that opening, and `door` appears in the skill at one altitude only;
 - the validator runs clean and one evaluation was run against the new file.
