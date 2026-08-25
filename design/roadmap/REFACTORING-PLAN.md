@@ -174,6 +174,13 @@ presents one block of proposed writes and collects one yes.** *One confirmation,
 several questions* governs the second, not the number of times the session speaks to the author. A
 session that finds nothing to change never reaches the second, because it has no block to confirm.
 
+**These are the two round trips a session has, not a cap on what it may ask.** The reconciliation
+question of *Choose the door* — the goal on file, what the input looks like from where the map sits,
+which of the two holds — is a third stop and it blocks, because it is the one case where proceeding
+under either reading destroys a standing record. It stays the exception it already is: R-005's
+`⚠ opposite` warns that a session asking on every input turns a revising into an interview, and
+nothing else in the document is licensed to stop.
+
 **D8 — Operations are derived from the situation, or named by the author.** `ROADMAP-GOAL.md` §
 *Roads not taken* currently asserts the stronger claim, that the skill refuses to ask the author to
 pick the verb, and § 4 turns it into a claim about the input — *the author names none of them* —
