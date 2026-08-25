@@ -11,6 +11,9 @@ and not beside the skill.
 |---|---|
 | `../../skills/roadmap/scripts/validate_roadmap.ts` | Structural and referential validator. Deterministic, free, one second. |
 | `make validate-roadmap ROADMAP=<dir>` | Runs it from the repository root. `ROADMAP` is the directory holding `roadmap.md`, not a file. |
+| `scripts/run_metrics.ts` | Reads a run's `TRANSCRIPT.jsonl` and writes its `METRICS.md`: time, tokens, API calls, tools. |
+| `make run-metrics RUN=<dir>` | Runs it from the repository root. `RUN` is the run directory, not the transcript. |
+| `make capture-run RUN=<dir>` | Both halves of closing a run: captures the transcript, then writes the metrics from it. |
 | `REVIEW-WORKFLOW.md` | The procedure: which half to run, the preconditions, producing a run, reading one. Travels to a new scenario unchanged. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks about the skill. Portable too. |
 | `recipe-app/SCENARIOS.md` | The four cards: a drawing from nothing, and three inputs that hold the router. Starting state, prompt, answer, verdict. Answer key. |
@@ -19,7 +22,7 @@ and not beside the skill.
 | `recipe-app/reference-roadmap/` | The oracle: one good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Read last. |
 | `recipe-app/REFERENCE-NOTES.md` | The reasons the oracle does not publish. Read with it. |
 | `recipe-app/fixtures/` | Frozen starting states, and one minimal mutation of the oracle per validator check. |
-| `recipe-app/results/` | What the skill produced, one directory per run, written by the run itself with the `PROMPT.md` that produced it. Never an input to a session. |
+| `recipe-app/results/` | What the skill produced, one directory per run, written by the run itself, with the transcript that produced it and a `PROMPT.md` only where the prompt is under test. Never an input to a session. |
 | `../AGENTS.md` | Authorization rules for provider runs. Binding on every generation call. |
 
 Add a second scenario and only the last two jobs are written anew: a **procedure** and **rules** hold

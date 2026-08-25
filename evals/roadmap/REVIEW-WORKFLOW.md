@@ -52,9 +52,11 @@ before sending, and write down what it said rather than what you intended.
 directory as if it were the project. Never point a session at `reference-roadmap/` or at `fixtures/`:
 both are frozen and a session writes.
 
-**Every run directory keeps a `PROMPT.md`** with the exact text sent, every answer given back, and the
-model and harness it ran on — written from what the session received, not from the card. A run driven
-another way is still evidence, but only if the adaptation is readable.
+**A run directory keeps a `PROMPT.md` where the prompt is the thing under test** — the three router
+cards — or where the run departs from the card: another model or harness, a sub-agent driving, a run
+that ends before the transcript does. Written from what the session received, not from the card. A
+drawing run that follows its card writes none: the card is the prompt, and the text the session
+actually received is in the transcript with every answer given back.
 
 **And it keeps the session itself**, as `TRANSCRIPT.jsonl`. Half the rules have no artifact in
 `.roadmap/` — what the session asked, what it declined to write, what it put to the author — and
@@ -81,18 +83,21 @@ them.
    to lose — and argues with its own first cut in the same session. A map already standing proposes a
    block first: never confirm a proposal that redraws the map, since a redraw you let it write teaches
    nothing the proposal did not already say.
-5. **Capture the transcript** — `make capture-transcript RUN=<the run directory>` from a second
-   terminal, the moment the session closes on its four-part report and before anything else is typed
-   into it. The target copies the newest `.jsonl` under `~/.claude/projects/<this repository>/`, which
-   the harness writes as the session runs, so the copy is the run as it stood at the report. **The
-   session never captures itself**: asked to, it would write a summary of what it believes it did, and
-   an instruction to produce one would spend R-035 — which reads that the session closed on the four
-   parts *and nothing else* — in every run after it. Two habits keep the file honest: **one fresh
-   session per run**, since `/clear` opens a new file and capturing before it is not optional; and,
-   where you carried on typing before remembering, a line in `PROMPT.md` saying where the run ends.
-   A sub-agent-driven run captures the driver's session, which carries the sub-agent's turns marked
-   `isSidechain: true`. A harness with no such file leaves `/export` inside the session, after the
-   report: it costs one turn, spent where there is nothing left to read.
+5. **Capture the transcript** — `make capture-run RUN=<the run directory>` from a second terminal,
+   the moment the session closes on its four-part report and before anything else is typed into it.
+   It copies the newest `.jsonl` under `~/.claude/projects/<this repository>/`, which the harness
+   writes as the session runs, so the copy is the run as it stood at the report, and then writes the
+   run's `METRICS.md` from it. `capture-transcript` and `run-metrics` still run on their own, the
+   second on any run whose transcript is already there. **The session never captures itself**: asked
+   to, it would write a summary of what it believes it did, and an instruction to produce one would
+   spend R-035 — which reads that the session closed on the four parts *and nothing else* — in every
+   run after it. Two habits keep the file honest: **one fresh session per run**, since `/clear` opens
+   a new file and capturing before it is not optional; and, where you carried on typing before
+   remembering, a line in `PROMPT.md` saying where the run ends — on a run that would otherwise keep
+   none, that line is the whole file. A sub-agent-driven run captures the driver's session, which
+   carries the sub-agent's turns marked `isSidechain: true`. A harness with no such file leaves
+   `/export` inside the session, after the report: it costs one turn, spent where there is nothing
+   left to read.
 6. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
    is red, that is a finding and not a repair: the map is the artifact under judgement, and nothing
