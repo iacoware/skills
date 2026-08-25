@@ -117,18 +117,24 @@ the failure they guard.
   decision to revisit. Several entries of one subsystem are one question. `slice-rules.md`
   *The columns* → `kind: enabler`.
 - **R-017** — Every published `Depends on` names a predecessor no controlled input and no narrower real
-  precursor can stand in for, no edge restates a reason `Ordering criteria` already gives, and what
-  every row depends on — the repository, the skeleton — is not published. `drawing-the-map.md`
+  precursor can stand in for, no edge restates a reason `Ordering criteria` already gives, what
+  every row depends on — the repository, the skeleton — is not published, and no row that builds on a
+  table, resolver or adapter another `NOW` row delivers carries `—`. `drawing-the-map.md`
   *Hard dependencies*. *Validator: that the ids resolve and close no cycle. Reading: that the edge is
-  hard.*
+  hard, and that no hard edge is missing.*
   *⚠ failed — published order: the shape to look for is an edge whose reason is already written in a
   criterion, and an edge to a feeder wider than the outcome needs. Both survived one run because the
   closing checklist tested one half of the rule; the halves it dropped — the narrower real precursor,
   and preferred order — are what every false edge fell on. The checklist now carries all three, the
   failure is named in `drawing-the-map.md` *Hard dependencies*, and the template makes `—` the
-  default. Not yet demonstrated.*
+  default. Fixed: the run after carried two published edges, both hard, and none restating a
+  criterion.*
   *⚠ opposite — a column of `—` that drops the edges a reorder would break with nobody noticing.
-  Publishing nothing costs more than publishing three too many.*
+  Publishing nothing costs more than publishing three too many. This is what the fix for the failure
+  above bought: the same run dropped a hard edge onto a row whose `Includes` builds on the tables and
+  the resolver its predecessor delivers. The mirror is now named in `drawing-the-map.md` as
+  **dropped edge**, the template no longer says most rows carry `—`, and the clause above carries the
+  omission test. Not yet demonstrated.*
 - **R-018** — A redraw leaves `archive/` untouched, carries `OUT-OF-SCOPE` and
   `Cross-functional concerns` forward, lifts explicitly and with its cost stated any the new goal
   contradicts, gives every candidate its own verdict one at a time, re-justifies every row still open,

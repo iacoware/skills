@@ -80,6 +80,10 @@ Before publishing an edge, name the stand-in: an input the row can control, or a
 precursor already in `NOW`. Naming one settles it — there is no edge, and the sequence belongs to
 `Ordering criteria`. The default cell is `—`.
 
+The stand-in has to be nameable, not merely conceivable. Where the dependent's `Includes` builds on a
+table, a migration, a resolver or an adapter that another `NOW` row delivers, no fixture supplies it
+without bypassing the production path: the edge is hard and stays published.
+
 `Depends on` publishes what a reorder would otherwise break with nobody noticing, and it holds ids and
 nothing else — no grades, no counterfactuals. What every row depends on is not published: fifteen
 edges that all say *after the skeleton* bury the four that carry information.
@@ -96,6 +100,9 @@ rather than an outcome nothing else can make verifiable. Its tell is that the re
 already written in `Ordering criteria` — when a criterion says a shared pipeline follows every row
 that feeds it, the edge from the pipeline row to the last feeder adds nothing, and forbids the reorder
 the criterion was there to argue about.
+
+**Dropped edge** is its mirror, and the more expensive half: an edge too many is noise a reader
+discounts, a missing one is the reorder that breaks with nobody noticing.
 
 ## The two prerequisites
 
@@ -218,7 +225,7 @@ scheduled spike both leave it open, because neither has produced its answer when
 The reverse costs as much — an entry a source selects is answered, and publishing it as an open
 question leaves the map less drawable than its own input.
 
-Two tests on an `Assumptions` line once it is written:
+Three tests on an `Assumptions` line once it is written:
 
 - **Delivery can refute it.** A line restating what a source already says is true by construction and
   resolves nothing: either it quotes the source, and goes, or it holds a constraint whose mechanism is
@@ -226,6 +233,12 @@ Two tests on an `Assumptions` line once it is written:
 - **It lands in a row.** A reading about *how* something works appears as a bullet of the row it is
   traced to. An assumption landing nowhere either was not needed or was not applied, and the row is
   where the map says what it assumed.
+- **Its reason survives its citations.** Read each cited line inside the section that holds it: a
+  reading the cited text will not bear is a misreading, not an assumption, and delivery cannot refute
+  what the sources already refuted. Where two sources state a constraint together, splitting them
+  needs a source that splits them. When the text will not bear the reading, either the entry is still
+  open or another reading is available — and the one the sources support is usually a few lines from
+  the quote already taken.
 
 `OUT-OF-SCOPE` holds what the solution declares it will never solve, never what is merely far off, and
 each exclusion is written as the licence it gives: *because this stays unsolved, the implementation
@@ -242,14 +255,15 @@ the trade-off was allowed.
 - greenfield draws the repository row and the skeleton separately, and the skeleton reaches the
   datastore through the real driver and runs a migration;
 - every published `Depends on` survives the substitution test — no controlled input and no narrower
-  real precursor already in `NOW` can stand in — and no edge restates a reason `Ordering criteria`
-  already gives;
+  real precursor already in `NOW` can stand in — no edge restates a reason `Ordering criteria`
+  already gives, and no row that builds on a table, resolver or adapter another `NOW` row delivers
+  carries `—`;
 - `Ordering criteria` is ranked, and every departure from breadth is named in the criterion that
   concedes it;
 - the scope boundary ships with the first row that persists data, and any identity deferred past the
   second end-user row is justified in `Ordering criteria` against named evidence;
 - every conflict and every undecided choice left the sweep by one of the three exits;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
-- delivery can refute every `Assumptions` line, and every reading about how something works lands in
-  a bullet of the row it is traced to;
+- delivery can refute every `Assumptions` line, every reading about how something works lands in a
+  bullet of the row it is traced to, and no reading is contradicted by the lines it cites;
 - `NOW` fits under the cap without inventing detail the map cannot yet know.
