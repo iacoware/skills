@@ -49,10 +49,13 @@ and a reference say the same thing, the router points and the reference keeps it
 
 **D2 — Rationale is kept where it is generative, cut where it is justificatory.** The test: *does
 removing this sentence change what the agent would do on a case the document does not cover?* If yes
-it stays. Generative rationale is what lets the model act in the intended direction without an
-explicit instruction, and this file is mostly that — *cost and altitude are unrelated*, *a document
-invites specifying and a candidate is vague on purpose*, *`archive/` means delivered and would start
-lying*, *the tracker has no notion of done*. Justificatory rationale defends a rule against a human
+it stays **in the skill**, which is not the same as staying in `SKILL.md`: per D1 rationale travels
+with the rule it bears on. Generative rationale is what lets the model act in the intended direction
+without an explicit instruction, and this file is mostly that — *cost and altitude are unrelated*, *a
+document invites specifying and a candidate is vague on purpose*, *`archive/` means delivered and
+would start lying*, *the tracker has no notion of done*. Three of the four stay in `SKILL.md`; the
+third travels to `slice-rules.md` § *Identity*, where the retirement rule it explains already lives.
+Justificatory rationale defends a rule against a human
 objection and changes no decision — *a wrong branch then costs a proposal and not a record*. Cut that
 without mercy; it is roughly 8-12 lines.
 
@@ -368,7 +371,8 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
   never a change of door;
 - *Hand over a ready row* runs after the close and never instead of it, and a session that changes
   nothing writes nothing, so no confirmation and no validator fire;
-- generative rationale is intact — spot-check the four examples named in D2;
+- generative rationale is intact — spot-check the four examples named in D2, three in `SKILL.md` and
+  the fourth in `slice-rules.md` § *Identity*;
 - no reference from outside `SKILL.md` cites a section number;
 - `SKILL.md` ends on `The session holds when`, and no item in it is checked by a reference checklist
   or by the validator;
