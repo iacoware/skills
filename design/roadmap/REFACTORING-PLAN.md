@@ -310,7 +310,6 @@ anchors, not addresses.
 |---|---|
 | 22-26, 95-97, 154-161, 224 — write-vs-propose, four times | preamble, once (D7) |
 | 34-36 — id minting, high-water mark | `slice-rules.md` § *Identity* |
-| 39-42 — the tracker has no notion of *done* | keep in the router; it is the reason for D5 |
 | 67-71 — the spike test | `slice-rules.md` § *The spike test* |
 | 86-89 — a redraw is this branch with more input | `drawing-the-map.md` § *What carries when a map already stands* (D18) |
 | 136-137 — the cap | `drawing-the-map.md` § *The cap is a finding, not a budget* |
@@ -319,7 +318,15 @@ anchors, not addresses.
 | 192-196 — `triage` derivation | `slice-rules.md` § `readiness` |
 | 206-208 — spike routing | `slice-rules.md` § *The spike test* |
 | 213-227 — the part of `Complete when` the reference checklists already cover | `A row holds when`, `The map holds when` |
-| 18 — *the register holds rows, and a row is a slice or a spike* | said again at `slice-rules.md`:6 — keep one |
+| 18 — the sentence introducing the register, minus the row vocabulary | `slice-rules.md`:6 says the rest |
+
+**Two things in this section are not cuts, and the table no longer implies they are.** *The tracker
+has no notion of `done`* at 39-42 stays in the router: it is the reason D5 puts the delivery question
+at *Establish the situation*, and no reference states it. And *a row is a slice or a spike* stays in
+the preamble rather than being pointed at, per *Target shape*: it is the vocabulary the door table and
+the operations are written in, needed before any reference is loaded, and one sentence of duplication
+is cheaper than the pointer that would replace it. What leaves 18 is only the surrounding sentence
+about the register, which `slice-rules.md`:6 already carries.
 
 The reference-loading policy is stated once in the preamble: `slice-rules.md` on every session
 whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
