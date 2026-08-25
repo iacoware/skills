@@ -233,7 +233,9 @@ are the obvious pair. The other two are `evals/roadmap/EVALUATION-RULES.md` R-03
 `/wayfinder` twice — for the big-and-foggy slice and for the spike that is a choice rather than an
 experiment — and which judges the handover, so leaving it would fail the rewritten `SKILL.md` at the
 evaluation run and read as a defect of the work; and `design/roadmap/ROADMAP-GOAL.md` at line 78
-(*`needs-decision` feeds `wayfinder`*) and line 103 (the downstream chain diagram).
+(*`needs-decision` feeds `wayfinder`*) and line 103 (the downstream chain diagram). Line 78 pairs each
+state with a tool downstream, so it has to say what `needs-decision` feeds now: the conversation with
+the author, which is the whole of what this decision leaves there.
 
 **D12 — Handover is reduced to the bone and stays in `SKILL.md`.** No new reference file. **What it
 produces is a message to the author: it suggests and never drives** — say so, because this decision
