@@ -13,17 +13,30 @@ percentage complete, no field nobody re-reads.
 
 It lives in `.roadmap/`: `roadmap.md` is the readable overview, `slices/S<id>-<slug>.md` one document
 per open row, `archive/S<id>-<slug>.md` one per delivered row. One roadmap per project, serving one
-declared `Goal` at a time.
+declared `Goal` at a time. A row is a slice or a spike.
 
-The register holds rows, and a row is a slice or a spike. What makes a row valid is in
-[references/slice-rules.md](references/slice-rules.md); read it at the start of every session,
-whatever the input asks for.
+**Two references carry the rules.** [references/slice-rules.md](references/slice-rules.md) says what
+makes a row valid; read it at the start of every session, whatever the input asks for.
+[references/drawing-the-map.md](references/drawing-the-map.md) says what makes a map; it is loaded on
+the `Drawing` door and on no other.
 
-**A first map is written; a map that already stands is proposed.** With no `.roadmap/` there is
+**Nothing on disk is written unasked, and nothing that stands is overwritten unconfirmed.** The
+discriminator is not the door but whether a record already stands. With no `.roadmap/` there is
 nothing to lose and nothing to describe: the author argues with the file far faster than with an
-account of it, so it gets written straight away. Once a map exists, every change waits for one
-confirmation before it touches the record — a session rewrites rows other sessions wrote, and deletes
-documents, and that is worth a round trip.
+account of it, so it goes down straight away. Where a record stands, everything that would overwrite
+or delete it is proposed in one block and confirmed once — a session rewrites rows other sessions
+wrote, and deletes documents, and that is worth a round trip.
+
+**A session against a standing map stops twice, and the two stops have different jobs.** The
+situation round trip gathers facts, writes nothing, and is skipped when the input already answers it.
+The confirmation round trip presents one block of proposed writes and collects one yes; *one
+confirmation, never split across several questions* governs that block, not the number of times the
+session speaks to the author. Neither stands in for the other: the delivery question cannot wait for
+the close, because `Close-out` is the first operation and everything after it is decided against a
+register already trued up, and the confirmation cannot come early, because the block it confirms does
+not exist yet. A session that finds nothing to change never reaches the second. The one further
+question licensed to block is the reconciliation question of *Choose the door*, where proceeding
+under either reading would destroy a standing record; nothing else here may stop the session.
 
 ## 1. Establish the situation
 
@@ -32,25 +45,33 @@ Read before deciding anything:
 - whether `.roadmap/roadmap.md` is there, and if it is, its `Goal`, its themes, its register,
   `LATER`, `OUT-OF-SCOPE`, `Ordering criteria`, `Assumptions`, `Open questions` and
   `Cross-functional concerns`;
-- `.roadmap/slices/` and `.roadmap/archive/`, which give the open documents, what was delivered, and
-  the id high-water mark — the highest id across both, and the next id is that plus one;
+- `.roadmap/slices/` and `.roadmap/archive/`, which give the open documents and what was delivered;
 - the sources the input points at, and `docs/agents/issue-tracker.md` when it is there.
 
 **What has been delivered since the last session is asked, never read off a tracker.** A local
 tracker has no notion of *done*: nothing writes it, and a board of open tickets says nothing about
 what shipped. Close-out is an explicitly manual resynchronisation, and asking is the only thing that
-works.
+works. It is asked here, in one round trip with everything else the situation raises, and skipped
+when the input already answers it.
 
 When there is no `.roadmap/` and no goal in the input either, the goal is what to ask for first.
 There is nothing to draw a map against and nothing to ask *do these rows arrive anywhere* of.
 
-## 2. Read what the input claims about
+## 2. Choose the door
 
-Two readings run on the same input.
+One door, chosen from the input at the start and never reopened mid-session. It decides two things:
+which reference is loaded, and which section runs next.
+
+| Door | Taken when | Section |
+|---|---|---|
+| `Drawing` | no map stands against a declared goal, **or** the input contradicts the recorded `Goal` | *Draw the map* |
+| `Revising` | everything else — the goal stands. The default, by a wide margin | *Operations on the map* |
+
+The first condition is a filesystem check. The second is the reading below.
 
 **Destination or path.** A claim about *where we are going* that contradicts the recorded `Goal`
 draws the map again. A claim about *how we get there* is work, and leaves the goal alone. Work is the
-default and by a wide margin: admission, promotion, revision, close-out and retirement all leave the
+default and by a wide margin: admission, promotion, reshaping, close-out and retirement all leave the
 goal where it is. A new capability extends the existing roadmap; it does not open a second one.
 
 Two traps, one in each direction:
@@ -64,55 +85,40 @@ Two traps, one in each direction:
   concerns`, or an exclusion under `OUT-OF-SCOPE`, neither of which a small feature is entitled to
   overrule on its own.
 
-**Slice or spike.** Work that produces an outcome is a slice; work that produces knowledge is a
-spike. The tell is the honest `Verification`: when it states a measurement rather than a capability
-somebody can exercise, it is a spike. `references/slice-rules.md` holds the test and what a spike
-owes — an empty `Audience`, and a dependent.
-
-**When the input cannot be reconciled with the recorded goal — it does not serve it, and it is not an
-exclusion either — ask.** State the goal on file, state what the input looks like from where the map
-sits, ask which of the two holds. A question with a short answer, never an inference. The coverage
-question in § 5 is what surfaces this, and it runs every session.
-
-The slice-or-spike reading needs no question: nothing about the destination is in doubt, so the spike
-goes in with the rest of the session's changes.
+**When the input cannot be reconciled with the recorded goal** — it does not serve it, and it is not
+an exclusion either — **ask.** State the goal on file, state what the input looks like from where the
+map sits, ask which of the two holds. A question with a short answer, never an inference.
 
 ## 3. Draw the map
 
-When a goal is declared and no map stands against it. Load
-[references/drawing-the-map.md](references/drawing-the-map.md) — themes, the two prerequisites,
-ordering, the identity seam, and what the map reports about its own input — and follow it.
-
-A **redraw** is this branch with more input, not a separate mode: what the previous goal left behind
-— the archive, the id high-water mark, the exclusions, the concerns, the candidates, the rows still
-open — enters as a constraint exactly the way a source document does. That reference says what
-carries and what is redrawn from nothing.
+The `Drawing` door. Follow [references/drawing-the-map.md](references/drawing-the-map.md) — themes,
+the two prerequisites, ordering, the identity seam, what the map reports about its own input, and
+what carries when a map already stands.
 
 Write `roadmap.md` from [assets/roadmap-template.md](assets/roadmap-template.md) and one document per
 `NOW` row from [assets/slice-template.md](assets/slice-template.md). Keep the headings, field names
 and order; write the content in the author's language.
 
-**A first draw writes them; a redraw waits.** With nothing on disk the map goes down unasked. A redraw
-has a standing map underneath it — rows it retires, documents it deletes, a goal it replaces — so it
-is proposed under § 5 like any other change to an existing record, and written once confirmed.
+**Drawing does not end when the map is down.** A first map is a draft to argue with, and the argument
+runs operations from *Operations on the map* — split this one, drop that part, swap the order — here,
+in the same session, before the close. Two things in that section do not fire on this door:
+`Close-out`, which has nothing to resynchronise against a map just drawn, and the coverage question
+that closes it, which the theme ceremony and `The map holds when` have already asked.
 
-**Drawing does not end when the map is down.** A first map is a draft to argue with, and the
-argument produces exactly the operations of § 4 — split this one, drop that part, swap the order. So
-the first round of revision happens here, in the same session, before § 5.
+## 4. Operations on the map
 
-## 4. Re-true the map
+Five operations, derived from the situation the author arrives with — *that one is finished, it
+turned out the numbers are nothing like we assumed, and here is something nobody had thought of*. The
+verb is never required of the author; when one is given — *split S12*, *merge these two* — it is a
+shortcut through the same derivation, under the same rules and the same close.
 
-Every session after. Five operations, and **the author names none of them**: they arrive with a
-situation — *that one is finished, it turned out the numbers are nothing like we assumed, and here is
-something nobody had thought of* — and which of the five apply is derived from it. The names below
-are internal vocabulary, enough to order the work. Nothing here is a verb anybody types.
+**Close-out first**, because everything else is decided against a register already trued up. What was
+delivered was asked at *Establish the situation*; this is the operation the answer triggers. The row
+leaves the register, its document moves to `.roadmap/archive/` unchanged, and its `ADRs` reference is
+filled when the work produced a decision that cleared the bar: hard to reverse, surprising without
+context, the result of a real trade-off.
 
-**Close-out first**, because everything else is decided against a register already trued up. Ask what
-was delivered. Its row leaves the register, its document moves to `.roadmap/archive/` unchanged, and
-its `ADRs` reference is filled when the work produced a decision that cleared the bar: hard to
-reverse, surprising without context, the result of a real trade-off.
-
-Then absorb the evidence, which is a state change and never a summary. Three questions:
+**Then absorb the evidence**, which is a state change and never a summary. Three questions:
 
 1. **Does it settle a line in `Assumptions` or `Open questions`?** The line then dies rather than
    being annotated — it has been answered.
@@ -133,32 +139,32 @@ not, it is an `OUT-OF-SCOPE` line with its licence, or nothing at all. *Is it on
 speculation?* Speculation is a `LATER` line and nothing more — no id, no columns, no document,
 because a document invites specifying and a candidate is vague on purpose, and no `Requested by`
 either, since provenance is recorded at promotion. On the path, it is admitted straight into `NOW`
-with an id. Then check the cap: an admission that would overflow it forces a merge or a deferral, and
-the list does not grow.
+with an id, and an admission that would put `NOW` over the cap forces a merge or a deferral.
 
-**Revision** reshapes rows without adding or closing any: split, merge, rewrite, reorder. The id
-stays with the learning target through a split or a merge, and the behaviour set is conserved — see
-`references/slice-rules.md`.
+Whether the row admitted is a slice or a spike is read here, by `slice-rules.md` § *The spike test*.
+That reading needs no question: nothing about the destination is in doubt, so it goes in with the
+rest of the session's changes.
+
+**Reshaping** changes the form of existing rows without adding or closing any: split, merge, rewrite,
+reorder.
 
 **Retirement** takes a row out of `NOW` undelivered: it dies, or it goes back to `LATER` as a
-candidate. The id is spent and never returns, and the document is **deleted, not archived** —
-`archive/` means delivered and would start lying the moment it held something that was not.
+candidate.
+
+**Last, the coverage question:** does what is left in `NOW` still reach the goal? Usually the answer
+is one line; it is asked anyway, because `NOW` moved under a fixed goal. A failed check never reopens
+the door mid-session — it produces a question, the question is delivered at the close, and the next
+session takes `Drawing` if the answer requires it. What makes an answer a failure is the criterion in
+*Choose the door*.
 
 ## 5. Close the session
 
-Both branches close here, and only the writing step tells them apart.
+Both doors close here, and the same way: what varies is only whether a record already stood.
 
-**Re-ask the coverage question:** does what is left in `NOW` still reach the goal? Usually the answer
-is one line. It is asked anyway, because it is also the trigger for the question in § 2.
-
-**Then write, or propose and write — according to what stood at the start of the session.**
-
-- **Nothing stood.** § 3 has already written the map. There is nothing to confirm; go straight to the
-  validator.
-- **A map stood** — a re-true, or a redraw against a new goal. Propose every operation the session
-  found in one block, ask for confirmation once, and write the block only then. Not five files written
-  one at a time with a question between each, and never one proposal split across several questions. A
-  wrong branch then costs a proposal and not a record.
+**Write.** A first map goes down as it was drawn. Everything that would touch a standing record is
+proposed in one block, confirmed once, and written then, per the invariant in the preamble. A session
+that found nothing to change writes nothing, and the rest of this section degrades with it: no block
+to confirm, and nothing for the validator to check.
 
 **Run the validator** after writing. Resolve `<skill-dir>` to the absolute path of the directory
 holding this `SKILL.md`; the working directory is the author's project.
@@ -182,46 +188,34 @@ they now stand:
 4. the path to `roadmap.md`.
 
 No retelling of what the documents already say, and no narration of the operations the session ran —
-the tables are the diff the author reads. Anything that genuinely needs an answer is a `WARNING` from
-the validator or a question from § 2, and it goes after the four.
+the tables are the diff the author reads. Anything that genuinely needs an answer goes after the
+four: a `WARNING` from the validator, or a question the session produced rather than answered.
 
-## 6. Hand over a ready row
+## Hand over a ready row
 
-Only for a row whose readiness is `ready`. The skill hands over; it does not drive.
+Runs after the close when the input asks for it, never instead of it, and only for a row whose
+`readiness` is `ready`. It produces one message to the author: it suggests and never drives.
 
-**Derive the `triage` label, never store it.** `ready` + `agent` → `ready-for-agent`; `ready` +
-`human` or `mixed` → `ready-for-human`. The register keeps readiness and executor apart, and the
-label is computed here and written nowhere. Do not extend the vocabulary in either direction:
-`needs-decision` is a roadmap state and never a tracker label.
+`slice-rules.md` holds the parts — the `triage` label at § `readiness`, where a spike goes at § *The
+spike test*, what `size: large` routes through at § `size` — and this step assembles them into the
+message. A slice goes to the clarifying conversation, `/grill-with-docs` where the system has it, and
+**not** straight to `/to-spec`: skip the conversation and the capture step has to invent decisions
+nobody took. The exception is a slice already clarified in an earlier session with the outcome
+recorded on it — no `needs-decision` and no `needs-info` — where `@slice.md` with `/to-spec` is
+honest, because the conversation happened, it just happened earlier.
 
-Suggest the next step when it is available on the system, and stop there:
+## The session holds when
 
-- **a slice** goes to the clarifying conversation — `/grill-with-docs` normally, `/wayfinder` when it
-  is big and foggy. Not `/to-spec` directly: the slice is thin by design, a spec wants seams, user
-  stories and decisions, and the delta between the two *is* that conversation. Skip it and the
-  capture step has to invent decisions nobody took. The one exception is a slice already clarified in
-  an earlier session with the outcome recorded on it — no `needs-decision` and no `needs-info` — and
-  then `@slice.md` with `/to-spec` is honest, because the conversation happened, it just happened
-  earlier. Further down, `size: large` is what routes through `/to-tickets`;
-- **a spike** goes to `/prototype` when the question needs something built to answer it, and to
-  `/wayfinder` when it is a choice to be made rather than an experiment to run. Never to `/to-spec`,
-  which has no spec to write.
+One checklist per altitude: the row in `slice-rules.md` (*A row holds when*), the map in
+`drawing-the-map.md` (*The map holds when*), the session here. A new item goes into the document that
+owns its altitude.
 
-Read `docs/agents/issue-tracker.md` when it is there, to know where the spec and the tickets will
-live. When it is not, say so and carry on.
-
-## Complete when
-
-- the situation was established from `.roadmap/` and from asking what was delivered, never from a
-  tracker;
-- the branch follows what the input claims about, work by default, and an input that cannot be
+- the door was chosen by what the input claims about, work by default, and an input that cannot be
   reconciled with the recorded goal produced a question rather than an inference;
-- a drawn map obeys `references/drawing-the-map.md` and was argued with in the same session;
-- every row obeys `references/slice-rules.md`, and every id was minted by increment and never
-  recycled;
-- close-out asked the three questions of absorption, and wrote nothing where all three answered no;
-- the coverage question was re-asked, a first map was written unasked, and a session that found a map
-  already standing proposed one block and got one confirmation before writing;
-- the validator reports no `ERROR`, and every `WARNING` was put to the author;
+- what was delivered was asked, never read off a tracker;
+- a first map was written unasked, and a standing record was proposed in one block and confirmed once
+  before being written;
+- on `Revising`, the coverage question was asked, and it produced a question rather than a change of
+  door;
 - the session closed on the four-part report — themes, register, open questions, path — and nothing
   else.

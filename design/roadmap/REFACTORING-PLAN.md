@@ -375,11 +375,22 @@ decisions that row names, not this whole file.
 |---|---|---|---|---|
 | S1 ✅ | `design/roadmap/CONTEXT.md`, `ROADMAP-GOAL.md`, `WORKFLOWS.md` (deleted), `CONTEXT-MAP.md:11` | D17, D8, D11 at lines 78 and 103, D16 | done | `SKILL.md` still carries `Re-truing`, `Revision` and `/wayfinder`, and has no *Choose the door* for `CONTEXT-MAP.md:11` to point at — S3; `slice-rules.md:68` names `/wayfinder` — S2; `EVALUATION-RULES.md:192` and `:194` name it — S4 |
 | S2 ✅ | `skills/roadmap/references/drawing-the-map.md`, `references/slice-rules.md` | D18, D11, the rationale D2 sends to § *Identity* | done | `EVALUATION-RULES.md:103` and `:125` — S4; `recipe-app/EVALUATION-BRIEF.md:33` and `:40` also say *three doors*, and the pointers file does not list them — S4 |
-| S3 | `skills/roadmap/SKILL.md`, `skills/roadmap/agents/openai.yaml:4` | D1 to D15 | every item of *Done when* that judges `SKILL.md` | every anchor `evals/` cites — S4 |
+| S3 ✅ | `skills/roadmap/SKILL.md`, `skills/roadmap/agents/openai.yaml:4` | D1 to D15 | done | every anchor `evals/` cites, plus `Re-truing`, `/wayfinder` and *three doors* wherever `evals/` still says them — S4 |
 | S4 | `evals/roadmap/EVALUATION-RULES.md`, `REVIEW-WORKFLOW.md`, `PROMPTS.md`, `recipe-app/SCENARIOS.md`, `README.md:33` | every reference table in `REFACTORING-POINTERS.md` bar the `CONTEXT-MAP.md` sentence S1 fixed, and the six edits below | no rule cites a section number or a moved anchor, and `Re-truing` survives nowhere outside `recipe-app/results/` | — |
 | S5 | none — it runs, it does not edit | — | the validator is clean and one evaluation was run against the new file | — |
 
 `REFACTORING-POINTERS.md` is burnt down and deleted at the end of S4; this file at the end of S5.
+
+**S3 departed from the de-duplication list on one row, and missed the size target.** The cap at
+136-137 is not wholly cut: `drawing-the-map.md` is not loaded on `Revising`, so cutting the clause
+outright would leave the default door with no statement of the cap at all, and `CONTEXT.md` defines
+`Admission` as including it. What survives in `Admission` is the consequence — *an admission that
+would put `NOW` over the cap forces a merge or a deferral* — and the rationale, *the cap binds
+granularity rather than count*, stays in `drawing-the-map.md`. And `SKILL.md` is 221 lines, not the
+~150 of *Target shape*: D7's preamble, D6's relocated coverage question and D14's altitude principle
+add back roughly what the de-duplication list removes, so the saving that survives is structural
+rather than in lines. Nothing in *Done when* measures the file, and no cut was skipped to keep the
+count.
 
 **S3 does not split.** The three faults this plan opens with are transversal: the branch condition
 cannot be made to evaluate once while half the document still evaluates it, and a cycle cannot be cut
