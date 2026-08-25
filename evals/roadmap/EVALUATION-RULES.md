@@ -117,9 +117,18 @@ the failure they guard.
   decision to revisit. Several entries of one subsystem are one question. `slice-rules.md`
   *The columns* → `kind: enabler`.
 - **R-017** — Every published `Depends on` names a predecessor no controlled input and no narrower real
-  precursor can stand in for, and what every row depends on — the repository, the skeleton — is not
-  published. `drawing-the-map.md` *Hard dependencies*. *Validator: that the ids resolve and close no
-  cycle. Reading: that the edge is hard.*
+  precursor can stand in for, no edge restates a reason `Ordering criteria` already gives, and what
+  every row depends on — the repository, the skeleton — is not published. `drawing-the-map.md`
+  *Hard dependencies*. *Validator: that the ids resolve and close no cycle. Reading: that the edge is
+  hard.*
+  *⚠ failed — published order: the shape to look for is an edge whose reason is already written in a
+  criterion, and an edge to a feeder wider than the outcome needs. Both survived one run because the
+  closing checklist tested one half of the rule; the halves it dropped — the narrower real precursor,
+  and preferred order — are what every false edge fell on. The checklist now carries all three, the
+  failure is named in `drawing-the-map.md` *Hard dependencies*, and the template makes `—` the
+  default. Not yet demonstrated.*
+  *⚠ opposite — a column of `—` that drops the edges a reorder would break with nobody noticing.
+  Publishing nothing costs more than publishing three too many.*
 - **R-018** — A redraw leaves `archive/` untouched, carries `OUT-OF-SCOPE` and
   `Cross-functional concerns` forward, lifts explicitly and with its cost stated any the new goal
   contradicts, gives every candidate its own verdict one at a time, re-justifies every row still open,

@@ -76,6 +76,10 @@ Controlled inputs may stand in for unfinished UI or administration, and they mus
 production path whose correctness materially affects the outcome. A fixture that injects derived data
 directly does not remove the dependency on the production computation of that data.
 
+Before publishing an edge, name the stand-in: an input the row can control, or a narrower real
+precursor already in `NOW`. Naming one settles it — there is no edge, and the sequence belongs to
+`Ordering criteria`. The default cell is `—`.
+
 `Depends on` publishes what a reorder would otherwise break with nobody noticing, and it holds ids and
 nothing else — no grades, no counterfactuals. What every row depends on is not published: fifteen
 edges that all say *after the skeleton* bury the four that carry information.
@@ -86,6 +90,12 @@ once — the session that writes the plan holds them. A living map cannot: the p
 reasoning no longer exists. So dependencies are a column and provenance is `Requested by` on the
 row's document. What stays unpublished is the reasoning *behind* the order: `Ordering criteria`
 states the rules once and the register's order carries the rest.
+
+**Published order** is the failure to watch for: an edge that records the sequence the author prefers
+rather than an outcome nothing else can make verifiable. Its tell is that the reason for the edge is
+already written in `Ordering criteria` — when a criterion says a shared pipeline follows every row
+that feeds it, the edge from the pipeline row to the last feeder adds nothing, and forbids the reorder
+the criterion was there to argue about.
 
 ## The two prerequisites
 
@@ -218,7 +228,9 @@ the trade-off was allowed.
   keep the count down;
 - greenfield draws the repository row and the skeleton separately, and the skeleton reaches the
   datastore through the real driver and runs a migration;
-- every published `Depends on` names a predecessor no controlled input can stand in for;
+- every published `Depends on` survives the substitution test — no controlled input and no narrower
+  real precursor already in `NOW` can stand in — and no edge restates a reason `Ordering criteria`
+  already gives;
 - `Ordering criteria` is ranked, and every departure from breadth is named in the criterion that
   concedes it;
 - the scope boundary ships with the first row that persists data, and any identity deferred past the
