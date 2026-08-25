@@ -137,8 +137,21 @@ ordering rule survives untouched.
 **D6 — The coverage question moves into *Operations on the map*.** On the `Drawing` door it is
 vacuous: the theme ceremony, the first validators and `The map holds when` in
 `references/drawing-the-map.md` *are* that door's coverage check. It earns its keep only where `NOW`
-mutated under a fixed goal. Moving it also kills the § 2 ↔ § 5 cycle, because the question and the
-destination-vs-path question it triggers end up in the same place.
+mutated under a fixed goal. Moving it does not by itself kill the § 2 ↔ § 5 cycle. The
+destination-vs-path question stays in *Choose the door* — D3's table, D14's first item and
+`REFACTORING-POINTERS.md` lines 48, 54 and 57 all put it there — so an unqualified move renames the
+cycle *Operations on the map* ↔ *Choose the door* and changes nothing else.
+
+What kills it is a rule on the backward edge: **a failed coverage check never reopens the door
+mid-session.** It produces a question, the question is delivered at the close, and the next session
+picks `Drawing` if the answer requires it. The door is decided once, on the input, at the start.
+*Operations on the map* may then cite *Choose the door* for where the criterion comes from, and
+*Choose the door* cites nothing forward.
+
+**The question runs last in *Operations on the map*, after all five operations**, because it
+interrogates the state `NOW` was left in. That section is the only one with a declared internal order
+— *Close-out first* — so the position of a question arriving into it is stated rather than left to
+fall where it may.
 
 **D7 — Write-vs-propose is one invariant, stated once in the preamble.** Its discriminator is not the
 door but *does a record already stand* — nothing on disk is written unasked, anything that would
@@ -202,7 +215,8 @@ references check rows and maps, and neither checks a session.
 - what was delivered was asked, never read off a tracker;
 - a first map was written unasked, and a standing record was proposed in one block and confirmed once
   before being written;
-- the coverage question was re-asked;
+- on `Revising`, the coverage question was asked, and it produced a question rather than a change of
+  door;
 - the session closed on the four-part report — themes, register, open questions, path — and nothing
   else.
 
