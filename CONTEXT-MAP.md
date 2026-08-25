@@ -7,10 +7,9 @@ Questo repo pubblica agent skill: ogni skill che sviluppa un vocabolario proprio
 
 - [Roadmap](./design/roadmap/CONTEXT.md) — l'artefatto vivente che decide cosa fare dopo: roadmap,
   register, slice, candidate, orizzonti. Il razionale sta in
-  [`ROADMAP-GOAL.md`](./design/roadmap/ROADMAP-GOAL.md), che è l'autorità;
-  [`WORKFLOWS.md`](./design/roadmap/WORKFLOWS.md) mappa le quattro forme di sessione e rimanda a dove
-  ognuna è scritta. La skill che lo parla è [`skills/roadmap`](./skills/roadmap): il router in
-  [`SKILL.md`](./skills/roadmap/SKILL.md), le regole in
+  [`ROADMAP-GOAL.md`](./design/roadmap/ROADMAP-GOAL.md), che è l'autorità. La skill che lo parla è
+  [`skills/roadmap`](./skills/roadmap): il router in [`SKILL.md`](./skills/roadmap/SKILL.md), dove
+  *Choose the door* dice quale ramo prende una sessione, le regole in
   [`references/`](./skills/roadmap/references), il validator in
   [`scripts/validate_roadmap.ts`](./skills/roadmap/scripts/validate_roadmap.ts).
 

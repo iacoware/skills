@@ -37,12 +37,14 @@ is not an escape hatch to be written into the skill; it is the chain used withou
 ## Roads not taken
 
 **One skill, not two.** An earlier draft split it into `roadmap-create` and `roadmap-update`, by what
-each reads. That split asks the author to pick the verb before describing the situation, which is
-what the skill refuses to do one level down with its five operations — and the situation is legible
-without asking: `.roadmap/` exists or it does not, the goal is new or it is not. The cost the split
-was avoiding is real but misattributed: dragging the theme ceremony into a routine update would make
-the tool unbearable where it should be lightest, and that is fixed by loading the roadmap rules on
-one branch only. Two skills would also have created a problem of their own, since `skills add` copies
+each reads. That split makes picking the verb a precondition of describing the situation, which one
+level down the skill never requires: the five operations are derived from the situation, and an
+author who does name one — *split S12*, *merge these two* — takes a shortcut through the same
+derivation, under the same rules and the same close. The situation is legible without asking anyway:
+`.roadmap/` exists or it does not, the goal is new or it is not. The cost the split was avoiding is
+real but misattributed: dragging the theme ceremony into a routine update would make the tool
+unbearable where it should be lightest, and that is fixed by loading the roadmap rules on one branch
+only. Two skills would also have created a problem of their own, since `skills add` copies
 one folder at a time.
 
 **No concurrency, so no machinery to buy it.** Every way of serving two goals at once — a `Goal`
@@ -75,8 +77,8 @@ twice in one row is noise, and it is the filename that resolves it anyway.
 **Readiness and executor do not reuse the `triage` label strings.** Deriving `ready-for-agent` and
 `ready-for-human` at handover keeps `ready` + `mixed` meaningful; storing the labels instead would
 have made `ready-for-agent` + `mixed` writable and meaningless. Each state also has its own tool
-downstream — `needs-info` feeds `to-questionnaire`, `needs-decision` feeds `wayfinder`, a `human` or
-`mixed` executor feeds `wizard`.
+downstream — `needs-info` feeds `to-questionnaire`, `needs-decision` feeds the conversation with the
+author and no skill, a `human` or `mixed` executor feeds `wizard`.
 
 **The slice document holds no spec.** Seams, user stories and contracts are born in `to-spec` and
 live on the tracker; duplicating them yields two truths that diverge at the first ticket. Its fields
@@ -100,7 +102,7 @@ different question.
 
 ```
 .roadmap/                   ROADMAP   themes, the register, order for learning
-      ↓                     CLARIFY   conversation: /grill-with-docs, /wayfinder when big and foggy
+      ↓                     CLARIFY   conversation: /grill-with-docs, /prototype to build an answer
 spec, on the issue tracker  HOW       seams, user stories, implementation decisions
       ↓ to-tickets                    only when the work exceeds one session
 tickets                     EXECUTION blocking edges, one context window each

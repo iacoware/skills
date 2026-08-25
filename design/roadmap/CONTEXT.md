@@ -131,21 +131,35 @@ _Avoid_: reconcile, absorb (restano verbi nella definizione, mai nomi dell'opera
 L'operazione con cui lavoro nuovo entra in roadmap, come candidate in `LATER` o come riga in `NOW`.
 Se porterebbe `NOW` oltre il limite, obbliga a fondere o a rimandare: la lista non cresce.
 
-**Revision**:
+**Reshaping**:
 L'operazione che rimaneggia righe esistenti senza aggiungerne né chiuderne: split, merge, riscrittura,
 riordino. L'id resta al learning target sia nello split sia nel merge.
-_Avoid_: split/merge/reorder come nomi di operazioni distinte
+_Avoid_: split/merge/reorder come nomi di operazioni distinte; revision (è il ramo un'altitudine
+sopra)
 
 **Retirement**:
 L'operazione con cui una riga esce da `NOW` senza essere stata consegnata: muore, o retrocede a
 candidate in `LATER`. L'id è speso; il documento viene cancellato, non archiviato.
 _Avoid_: demotion (è il caso particolare, non il nome dell'operazione), wontfix
 
+**Drawing**:
+La porta che decide la forma della mappa intera: si prende quando nessuna mappa regge un goal
+dichiarato, oppure quando l'input contraddice il `Goal` registrato. È la sola che carica
+`references/drawing-the-map.md`, e vale tanto al primo disegno quanto al redraw.
+_Avoid_: create, creation, primo disegno come nome del ramo (il redraw è la stessa porta)
+
+**Revising**:
+La porta di default, quella di quasi tutte le sessioni: il goal regge, e ciò che va fatto sulla mappa
+si deriva dalla situazione come una o più delle cinque operazioni. Cambia forma e appartenenza —
+chiude righe, assegna id, cancella documenti — quindi non è un controllo.
+_Avoid_: update (è la divisione in due skill che questo progetto ha rifiutato), maintenance,
+manutenzione
+
 **Redraw**:
 Il ridisegno della mappa quando viene dichiarato un goal nuovo. Non è un'operazione fra le cinque: è
 il ramo di disegno che riparte con più input — l'archivio, il massimo id raggiunto, le esclusioni, i
 concern, le candidate e le righe ancora aperte.
-_Avoid_: reset, ricreazione, nuova roadmap
+_Avoid_: reset, ricreazione, nuova roadmap; porta (nomina un caso, mai un ramo: il ramo è `Drawing`)
 
 **Horizon**:
 Nome collettivo in prosa dei tre orizzonti `NOW`, `LATER`, `OUT-OF-SCOPE`. Mai un campo, mai una

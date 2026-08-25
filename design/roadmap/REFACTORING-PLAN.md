@@ -372,7 +372,7 @@ decisions that row names, not this whole file.
 
 | # | Files | Decisions | Done when | Left stale, closed by |
 |---|---|---|---|---|
-| S1 | `design/roadmap/CONTEXT.md`, `ROADMAP-GOAL.md`, `WORKFLOWS.md` (deleted), `CONTEXT-MAP.md:11` | D17, D8, D11 at lines 78 and 103, D16 | `Drawing` and `Revising` stand beside `Redraw`, `Revision` is `Reshaping`, `/wayfinder` is gone from `design/`, nothing points at `WORKFLOWS.md` | `SKILL.md` still carries the old vocabulary — S3 |
+| S1 ✅ | `design/roadmap/CONTEXT.md`, `ROADMAP-GOAL.md`, `WORKFLOWS.md` (deleted), `CONTEXT-MAP.md:11` | D17, D8, D11 at lines 78 and 103, D16 | done | `SKILL.md` still carries `Re-truing`, `Revision` and `/wayfinder`, and has no *Choose the door* for `CONTEXT-MAP.md:11` to point at — S3; `slice-rules.md:68` names `/wayfinder` — S2; `EVALUATION-RULES.md:192` and `:194` name it — S4 |
 | S2 | `skills/roadmap/references/drawing-the-map.md`, `references/slice-rules.md` | D18, D11, the rationale D2 sends to § *Identity* | the preamble states its scope by door, the redraw section is *What carries when a map already stands*, `door` has become *exits* | `EVALUATION-RULES.md:103` and `:125` — S4 |
 | S3 | `skills/roadmap/SKILL.md`, `skills/roadmap/agents/openai.yaml:4` | D1 to D15 | every item of *Done when* that judges `SKILL.md` | every anchor `evals/` cites — S4 |
 | S4 | `evals/roadmap/EVALUATION-RULES.md`, `REVIEW-WORKFLOW.md`, `PROMPTS.md`, `recipe-app/SCENARIOS.md`, `README.md:33` | every reference table in `REFACTORING-POINTERS.md` bar the `CONTEXT-MAP.md` sentence S1 fixed, and the six edits below | no rule cites a section number or a moved anchor, and `Re-truing` survives nowhere outside `recipe-app/results/` | — |
