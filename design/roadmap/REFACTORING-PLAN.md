@@ -201,7 +201,8 @@ the same table for its argument round. The five sub-headings — `Close-out`, `P
 anchors the evaluation rules cite. `Revision` is the exception, and it is renamed rather than kept:
 nothing outside cites it — it appears at `CONTEXT.md:134` and `SKILL.md:139` and nowhere else — and it
 would otherwise collide with the branch name `Revising` one altitude up. `Reshaping` is already the
-verb `SKILL.md:139` defines it with, *reshapes rows without adding or closing any*, so the rename
+verb `SKILL.md:139` defines it with, *reshapes rows without adding or closing any* — the line the
+de-duplication list therefore keeps — so the rename
 introduces no concept. The two words then match their altitudes: `Reshaping` denotes a change of form
 and that is exactly and only what the operation does, while `Revising` is broad enough to cover the
 changes of membership — a row closed out, a row admitted — that the branch also holds. `Re-truing` is
@@ -320,6 +321,11 @@ already the norm in that file: *The two prerequisites* fires only on greenfield.
 Cut from `SKILL.md`, keep where it already lives. Line numbers are against the current file and are
 anchors, not addresses.
 
+**Every operation keeps the sentence that says what it is**; only the rules of detail leave. That is
+D1 read at sub-heading altitude — the router names the operation, the reference says how to do it well
+— and without it two of the five sub-headings D9 preserves as anchors would survive with no text under
+them, while the other three stayed whole.
+
 | Cut from `SKILL.md` | Kept in |
 |---|---|
 | 22-26, 95-97, 154-161, 224 — write-vs-propose, four times | preamble, once (D7) |
@@ -327,8 +333,8 @@ anchors, not addresses.
 | 67-71 — the spike test | `slice-rules.md` § *The spike test* |
 | 86-89 — a redraw is this branch with more input | `drawing-the-map.md` § *What carries when a map already stands* (D18) |
 | 136-137 — the cap | `drawing-the-map.md` § *The cap is a finding, not a budget* |
-| 139-141 — split/merge, id follows the learning target | `slice-rules.md` § *Splitting and merging a row* |
-| 143-146 — retirement deletes and does not archive | `slice-rules.md` § *Identity* |
+| 140-141 — split/merge, id follows the learning target; 139 defines `Reshaping` and stays | `slice-rules.md` § *Splitting and merging a row* |
+| 144-146 — retirement deletes and does not archive; 143 defines `Retirement` and stays | `slice-rules.md` § *Identity* |
 | 192-196 — `triage` derivation | `slice-rules.md` § `readiness` |
 | 206-208 — spike routing | `slice-rules.md` § *The spike test* |
 | 213-227 — the part of `Complete when` the reference checklists already cover | `A row holds when`, `The map holds when` |
@@ -373,6 +379,7 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
   never a change of door;
 - *Hand over a ready row* runs after the close and never instead of it, and a session that changes
   nothing writes nothing, so no confirmation and no validator fire;
+- every operation sub-heading carries the sentence that says what it is;
 - generative rationale is intact — spot-check the four examples named in D2, three in `SKILL.md` and
   the fourth in `slice-rules.md` § *Identity*;
 - no reference from outside `SKILL.md` cites a section number;
