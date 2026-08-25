@@ -158,6 +158,19 @@ door but *does a record already stand* — nothing on disk is written unasked, a
 overwrite or delete a standing record is proposed in one block and confirmed once. `Close the
 session` applies it and does not restate it.
 
+**The preamble also separates the two round trips, by purpose and not by count.** A `Revising` session
+against a standing map stops twice, and must: the delivery question of D5 cannot wait for the close,
+because `Close-out` is the first operation and everything else is decided against a register already
+trued up; and the confirmation cannot come early, because the block it confirms does not exist yet.
+Stated as *one confirmation* alone, the invariant reads as *one interaction* and fails silently in
+either direction — the delivery question folded into the closing block, so the whole session was
+decided against a stale register; or the situation round trip taken for the confirmation, so a
+standing record is overwritten with nobody having said yes. So: **the situation round trip gathers
+facts, writes nothing, and is skipped when the input already answers it; the confirmation round trip
+presents one block of proposed writes and collects one yes.** *One confirmation, never split across
+several questions* governs the second, not the number of times the session speaks to the author. A
+handover-only session has neither, because it writes nothing to confirm.
+
 **D8 — Operations are derived from the situation, or named by the author.** `ROADMAP-GOAL.md` §
 *Roads not taken* currently asserts the stronger claim, that the skill refuses to ask the author to
 pick the verb, and § 4 turns it into a claim about the input — *the author names none of them* —
