@@ -1,8 +1,9 @@
-# Inbound references to `SKILL.md`
+# Inbound references to the roadmap skill
 
-Everything outside `skills/roadmap/SKILL.md` that points into it, and where each pointer lands after
-the restructuring in [`REFACTORING-PLAN.md`](./REFACTORING-PLAN.md). A burn-down list: it exists to be
-worked through and then deleted.
+Everything outside `skills/roadmap/` that points into it — `SKILL.md` for the most part, and
+`references/` where D18 moves an anchor — and where each pointer lands after the restructuring in
+[`REFACTORING-PLAN.md`](./REFACTORING-PLAN.md). A burn-down list: it exists to be worked through and
+then deleted.
 
 ## The convention this establishes
 
@@ -22,6 +23,10 @@ The rewrite may move these, but not rename them: something outside cites each on
 `Destination or path` · `When the input cannot be reconciled` · `Close-out` · `Promotion` ·
 `Admission` · `Retirement` · `Then absorb the evidence` · `Run the validator`
 
+Two more are cited as if they were sub-headings and are in fact bolded phrases inside one:
+`Close-out first` (R-027) and `Three noes write nothing` (R-028). Keep the wording, or retarget those
+two rules in the same pass.
+
 `Revision` is **not** on this list, and the omission is deliberate: nothing outside `SKILL.md` cites
 it. It occurs twice in the whole repository — `design/roadmap/CONTEXT.md:134` and
 `skills/roadmap/SKILL.md:139` — so D9 renames it to `Reshaping`, which frees the word for the branch
@@ -40,7 +45,7 @@ name one altitude up.
 
 ## The references
 
-### `evals/roadmap/EVALUATION-RULES.md` — 19 references
+### `evals/roadmap/EVALUATION-RULES.md` — 19 references into `SKILL.md`
 
 | Line | Cites | Becomes |
 |---|---|---|
@@ -82,6 +87,16 @@ router grows back into a monolith*. Nothing to change; it is the standard the re
 Line 33: *§ 6 has never been asked for* → *Hand over a ready row*. The observation stands: no prompt
 requests a handover and no fixture holds an open `ready` row, which is why D12 shrinks it rather than
 elaborating it.
+
+### Into `references/` — 2 references
+
+D18 renames a section of `drawing-the-map.md` and takes the word `door` back for the router; two rules
+point at exactly what moves. This is the class the file's earlier scope missed.
+
+| Where | Cites | Becomes |
+|---|---|---|
+| `EVALUATION-RULES.md:125` | `drawing-the-map.md`, *A redraw is this branch with more input* | *What carries when a map already stands* |
+| `EVALUATION-RULES.md:103` | *left the sweep by exactly one of the three doors* | *three exits*, the word the reference will carry |
 
 ### `design/roadmap/WORKFLOWS.md` — 3 references, all deleted with the file
 
