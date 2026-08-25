@@ -88,15 +88,24 @@ Line 33: *§ 6 has never been asked for* → *Hand over a ready row*. The observ
 requests a handover and no fixture holds an open `ready` row, which is why D12 shrinks it rather than
 elaborating it.
 
-### Into `references/` — 2 references
+### Into `references/` — 4 references
 
-D18 renames a section of `drawing-the-map.md` and takes the word `door` back for the router; two rules
-point at exactly what moves. This is the class the file's earlier scope missed.
+D18 renames a section of `drawing-the-map.md` and takes the word `door` back for the router; four
+places point at exactly what moved. This is the class the file's earlier scope missed, and S2 found
+the last two of them while doing the rename.
 
 | Where | Cites | Becomes |
 |---|---|---|
 | `EVALUATION-RULES.md:125` | `drawing-the-map.md`, *A redraw is this branch with more input* | *What carries when a map already stands* |
-| `EVALUATION-RULES.md:103` | *left the sweep by exactly one of the three doors* | *three exits*, the word the reference will carry |
+| `EVALUATION-RULES.md:103` | *left the sweep by exactly one of the three doors* | *three exits*, the word the reference now carries |
+| `EVALUATION-BRIEF.md:33` | A8, *may leave by any of the three doors* … *not one of the doors* | *exits* |
+| `EVALUATION-BRIEF.md:40` | *The map has three doors out of the sweep* | *three exits* |
+
+The brief is oracle-side, and `EVALUATION-RULES.md:26` forbids moving the oracle to make a scenario
+pass. This is not that: the sweep, its three dispositions and every verdict A8 licenses are unchanged,
+and only the noun for a disposition follows the reference. Leaving it is also legal — the brief is not
+the skill, so `door` at one altitude only is already satisfied without it — but then a judge reads the
+map against a word `drawing-the-map.md` no longer uses. S4 decides.
 
 ### `design/roadmap/WORKFLOWS.md` — 3 references, all deleted with the file
 

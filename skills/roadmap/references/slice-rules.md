@@ -1,7 +1,7 @@
 # Slice rules
 
-True on every operation — drawing, promotion, admission, revision, close-out, retirement. Nothing here
-goes inert between goals.
+True on every operation — drawing, promotion, admission, reshaping, close-out, retirement.
+Nothing here goes inert between goals.
 
 The register holds **rows**, and a row is a slice or a spike. Themes, the two prerequisites, order,
 hard dependencies and the identity seam are the shape of the map rather than the rules of a row;
@@ -64,8 +64,9 @@ executor, a document in `slices/`, and close-out into `archive/` — a spike tha
 was delivered. Its `Excludes` says what becomes of the experimental code, which is usually that none
 of it survives the spike.
 
-Downstream a spike goes to `/prototype` when the question needs something built to answer it and to
-`/wayfinder` when it is a choice to be made; never to `/to-spec`, which has no spec to write.
+Downstream a spike goes to `/prototype` when the question needs something built to answer it; when it
+is a choice to be made rather than an experiment to run, it is a conversation with the author and no
+skill carries it. Never `/to-spec`, which has no spec to write.
 
 Scheduling a spike does not resolve a conflict between sources. It schedules the work that will.
 

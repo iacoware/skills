@@ -1,16 +1,15 @@
 # Drawing the map
 
-Loaded when a goal is declared and no map stands against it. Everything here decides the shape of the
-whole map — themes, prerequisites, order, the seam, and what the map reports about its own input —
-and none of it fires on a session that re-trues a map already standing.
+Loaded on the `Drawing` door, whether or not a map already stands. Everything here decides the shape
+of the whole map — themes, prerequisites, order, the seam, and what the map reports about its own
+input — and none of it fires on `Revising`.
 
 The rules for a single row hold here too, and they are in [`slice-rules.md`](./slice-rules.md).
 
-## A redraw is this branch with more input
+## What carries when a map already stands
 
-A new goal declared against a map that already exists is drawn here. There is no separate mode and no
-reconciliation logic: what the previous goal leaves behind enters as input, exactly the way a source
-document does.
+A new goal declared against a map that already exists is drawn here. What the previous goal leaves
+behind enters as input, exactly the way a source document does.
 
 - **`.roadmap/archive/`.** The only durable record of what was delivered, because the tracker has no
   notion of *done*. Drawing without reading it is drawing as if the project had never started, and a
@@ -188,7 +187,7 @@ sides:
 - **undecided choices** — a provider, model, service or adapter named without a source that selects
   it. A qualifying adjective — *cheap*, *multilingual*, *managed* — is not a choice.
 
-Every entry then leaves by one of three doors, and no other:
+Every entry then leaves by one of three exits, and no other:
 
 - **An `Assumptions` line.** The map takes a reading in order to be drawable, and says which reading
   and why. This is what an assumption is: taken as true *in order to* draw the map, asking to be
@@ -224,6 +223,6 @@ the trade-off was allowed.
   concedes it;
 - the scope boundary ships with the first row that persists data, and any identity deferred past the
   second end-user row is justified in `Ordering criteria` against named evidence;
-- every conflict and every undecided choice left the sweep by one of the three doors;
+- every conflict and every undecided choice left the sweep by one of the three exits;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - `NOW` fits under the cap without inventing detail the map cannot yet know.

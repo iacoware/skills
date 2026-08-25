@@ -67,3 +67,14 @@ mappa valutata: l'unico file che scrivi è REVIEW.md, e la decisione su cosa cam
 report.
 
 ---
+
+## Rifattorizza lo skill
+
+Leggi @skills/roadmap/SKILL.md. Vorrei renderlo il più lean possibile rimuovendo contenuto superficiale e duplicazioni.
+La ristrutturazione deve rendere efficace per un LLM usare lo skill, non renderlo chiaro per un umano.
+
+Proponimi delle opzioni di ristrutturazione suddividendole in due opzioni: coraggiose e di piccoli miglioramenti.
+
+Tieni sempre in mente l'intento dello skill dichiarato in ROADMAP-GOAL.md.
+
+---

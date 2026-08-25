@@ -199,8 +199,9 @@ vocabulary, so lexical retrieval is weak; and under D3 it is simply wrong, becau
 the same table for its argument round. The five sub-headings — `Close-out`, `Promotion`,
 `Admission`, `Retirement` — stay verbatim: they are the
 anchors the evaluation rules cite. `Revision` is the exception, and it is renamed rather than kept:
-nothing outside cites it — it appears at `CONTEXT.md:134` and `SKILL.md:139` and nowhere else — and it
-would otherwise collide with the branch name `Revising` one altitude up. `Reshaping` is already the
+nothing outside cites it — it appears at `CONTEXT.md:134`, `SKILL.md:139` and `slice-rules.md:3`, the
+last two lowercase in a list of the five, and nowhere else; S1 and S2 have taken the first and the
+third — and it would otherwise collide with the branch name `Revising` one altitude up. `Reshaping` is already the
 verb `SKILL.md:139` defines it with, *reshapes rows without adding or closing any* — the line the
 de-duplication list therefore keeps — so the rename
 introduces no concept. The two words then match their altitudes: `Reshaping` denotes a change of form
@@ -373,7 +374,7 @@ decisions that row names, not this whole file.
 | # | Files | Decisions | Done when | Left stale, closed by |
 |---|---|---|---|---|
 | S1 ✅ | `design/roadmap/CONTEXT.md`, `ROADMAP-GOAL.md`, `WORKFLOWS.md` (deleted), `CONTEXT-MAP.md:11` | D17, D8, D11 at lines 78 and 103, D16 | done | `SKILL.md` still carries `Re-truing`, `Revision` and `/wayfinder`, and has no *Choose the door* for `CONTEXT-MAP.md:11` to point at — S3; `slice-rules.md:68` names `/wayfinder` — S2; `EVALUATION-RULES.md:192` and `:194` name it — S4 |
-| S2 | `skills/roadmap/references/drawing-the-map.md`, `references/slice-rules.md` | D18, D11, the rationale D2 sends to § *Identity* | the preamble states its scope by door, the redraw section is *What carries when a map already stands*, `door` has become *exits* | `EVALUATION-RULES.md:103` and `:125` — S4 |
+| S2 ✅ | `skills/roadmap/references/drawing-the-map.md`, `references/slice-rules.md` | D18, D11, the rationale D2 sends to § *Identity* | done | `EVALUATION-RULES.md:103` and `:125` — S4; `recipe-app/EVALUATION-BRIEF.md:33` and `:40` also say *three doors*, and the pointers file does not list them — S4 |
 | S3 | `skills/roadmap/SKILL.md`, `skills/roadmap/agents/openai.yaml:4` | D1 to D15 | every item of *Done when* that judges `SKILL.md` | every anchor `evals/` cites — S4 |
 | S4 | `evals/roadmap/EVALUATION-RULES.md`, `REVIEW-WORKFLOW.md`, `PROMPTS.md`, `recipe-app/SCENARIOS.md`, `README.md:33` | every reference table in `REFACTORING-POINTERS.md` bar the `CONTEXT-MAP.md` sentence S1 fixed, and the six edits below | no rule cites a section number or a moved anchor, and `Re-truing` survives nowhere outside `recipe-app/results/` | — |
 | S5 | none — it runs, it does not edit | — | the validator is clean and one evaluation was run against the new file | — |
