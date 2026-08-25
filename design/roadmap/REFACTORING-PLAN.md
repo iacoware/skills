@@ -203,10 +203,22 @@ never on the number, so the next restructuring does not cascade. See `REFACTORIN
 **D11 — `/wayfinder` goes; `/prototype` stays.** The distinction it carried is generative and stays,
 the name does not: a spike goes to `/prototype` when the question needs something built to answer it;
 when it is a choice to be made rather than an experiment to run, it is a conversation with the author
-and no skill carries it. Applies in `SKILL.md` and in `references/slice-rules.md` § *The spike test*.
+and no skill carries it.
 
-**D12 — Handover is reduced to the bone and stays in `SKILL.md`.** No new reference file. It is
-descriptive, not generative, except for one clause. What survives, ~6 lines: the `readiness: ready`
+**It applies in four files, not two.** `SKILL.md` and `references/slice-rules.md` § *The spike test*
+are the obvious pair. The other two are `evals/roadmap/EVALUATION-RULES.md` R-034, which names
+`/wayfinder` twice — for the big-and-foggy slice and for the spike that is a choice rather than an
+experiment — and which judges the handover, so leaving it would fail the rewritten `SKILL.md` at the
+evaluation run and read as a defect of the work; and `design/roadmap/ROADMAP-GOAL.md` at line 78
+(*`needs-decision` feeds `wayfinder`*) and line 103 (the downstream chain diagram).
+
+**D12 — Handover is reduced to the bone and stays in `SKILL.md`.** No new reference file. **What it
+produces is a message to the author: it suggests and never drives** — say so, because this decision
+moves the message's own parts out. The destination by `kind` comes from `slice-rules.md` § *The spike
+test*, the destination by `size` from § `size`, the `triage` label from § `readiness`; the delegation
+is safe only because that file is loaded on every session, and what has to survive in `SKILL.md` is
+the instruction to assemble them into one message. It is descriptive, not generative, except for one
+clause. What survives, ~6 lines: the `readiness: ready`
 precondition; a slice goes to the clarifying conversation and **not** straight to `/to-spec` — the one
 generative clause, it stops the capture step inventing decisions nobody took — with the exception of a
 slice already clarified in an earlier session with the outcome recorded on it; a spike goes to
@@ -317,14 +329,17 @@ whatever the input asks for, `drawing-the-map.md` on the `Drawing` door only.
 1. `skills/roadmap/SKILL.md` — the restructuring, D1 to D15.
 2. `skills/roadmap/references/drawing-the-map.md` — D18: the preamble, the section title, *exits*.
 3. `skills/roadmap/references/slice-rules.md` — D11 only (`/wayfinder`).
-4. `design/roadmap/ROADMAP-GOAL.md` § *Roads not taken* — D8.
-5. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11` — D16.
-6. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
+4. `design/roadmap/ROADMAP-GOAL.md` — § *Roads not taken* for D8, and lines 78 and 103 for D11.
+5. `evals/roadmap/EVALUATION-RULES.md` — R-034 for D11, which names `/wayfinder` twice and is the rule
+   that judges the handover.
+6. Delete `design/roadmap/WORKFLOWS.md` and fix the sentence citing it at `CONTEXT-MAP.md:11` — D16.
+7. `design/roadmap/CONTEXT.md` — add `Drawing` and `Revising` beside `Redraw`, adjust `Redraw`'s
    `_Avoid_`, and rename `Revision` to `Reshaping`, per D17.
-7. The inbound references, per `REFACTORING-POINTERS.md`.
-8. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
+8. The inbound references, per `REFACTORING-POINTERS.md`, its own line 13 included: it repeats the
+   *steps 1-5 run in order* claim D10 now corrects.
+9. `node skills/roadmap/scripts/validate_roadmap.ts` against an existing fixture, to confirm the
    documented invocation still matches.
-9. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
+10. One evaluation run per `evals/roadmap/REVIEW-WORKFLOW.md`, since every section it names moved.
 
 ## Done when
 
