@@ -76,7 +76,50 @@ const thousands = (value: number) => value.toLocaleString("en-US").replace(/,/g,
 const share = (part: number, whole: number) =>
   whole === 0 ? "—" : `${Math.round((part / whole) * 100)}%`
 
+// One provider request reaches the transcript as one assistant entry per content block — a thinking
+// block, a text block, a tool call — and every one of them repeats the request's `usage`. Summing per
+// entry counts the same tokens two or three times, so the request is the unit here and `requestId` is
+// what groups it. Older entries that carry none stand alone under their own uuid.
+const requestKey = (entry: unknown) => stringAt(entry, "requestId") ?? `uuid:${stringAt(entry, "uuid")}`
+
+const WRITES = /(^|[^0-9&>])>>?[^&]|\btee\b|\bsed\b[^|;&]*\s-i\b|\b(mv|cp|rm|install)\b/
+// Running the validator, not reading it: the session opens `validate_roadmap.ts` with `sed` and
+// `grep` too, and that is reading the payload like any other file.
+const VALIDATES = /(^|[\s&|;])node\b[^|;&]*validate_roadmap/
+const READS = /\b(cat|sed|head|tail|less|more|grep|rg|find|ls|wc|diff|awk|jq|file|stat|tree)\b/
+const WRITE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"])
+const READ_TOOLS = new Set(["Read", "Grep", "Glob", "NotebookRead", "WebFetch", "WebSearch"])
+
+const PHASES = [
+  ["thinking", "Thinking"],
+  ["writing", "Scrittura dei documenti"],
+  ["reading", "Lettura"],
+  ["validating", "Validazione"],
+  ["talking", "Parola all'autore"],
+  ["other", "Altro"],
+] as const
+
+type Phase = (typeof PHASES)[number][0]
+
+// What the request did, at its strongest: a turn that wrote a file was producing the map even when it
+// also listed a directory. `talking` is the turn that called no tool at all — the questions the
+// session asks and the four-part report it closes on.
+const phaseOf = (calls: { name: string; command: string }[]): Exclude<Phase, "thinking"> => {
+  if (calls.length === 0) return "talking"
+  if (calls.some(({ name, command }) => WRITE_TOOLS.has(name) || WRITES.test(command))) return "writing"
+  if (calls.some(({ command }) => VALIDATES.test(command))) return "validating"
+  if (calls.some(({ name, command }) => READ_TOOLS.has(name) || READS.test(command))) return "reading"
+  return "other"
+}
+
 type Totals = Record<string, number>
+
+type Request = {
+  side: "main" | "sidechain"
+  entries: unknown[]
+  tokens: Totals
+  phase: Exclude<Phase, "thinking">
+}
 
 type Metrics = {
   run: string
@@ -91,6 +134,53 @@ type Metrics = {
   models: string[]
   tokens: { main: Totals; sidechain: Totals }
   tools: Map<string, number>
+  phases: Record<Phase, number>
+  overhead: number
+}
+
+const emptyTotals = (): Totals => ({
+  thinking: 0,
+  ...Object.fromEntries(TOKEN_FIELDS.map(([key]) => [key, 0])),
+})
+
+const collectRequests = (stamped: unknown[]): Request[] => {
+  const byKey = new Map<string, Request>()
+  const order: Request[] = []
+
+  for (const entry of stamped) {
+    if (stringAt(entry, "type") !== "assistant" || !isRecord(at(entry, "message"))) continue
+    const key = requestKey(entry)
+    const existing = byKey.get(key)
+    if (existing) {
+      existing.entries.push(entry)
+      continue
+    }
+    const message = at(entry, "message")
+    const tokens = emptyTotals()
+    for (const [field] of TOKEN_FIELDS) tokens[field] = numberAt(message, "usage", field)
+    tokens.thinking = numberAt(message, "usage", "output_tokens_details", "thinking_tokens")
+    const request: Request = {
+      side: at(entry, "isSidechain") === true ? "sidechain" : "main",
+      entries: [entry],
+      tokens,
+      phase: "other",
+    }
+    byKey.set(key, request)
+    order.push(request)
+  }
+
+  for (const request of order) {
+    const calls = request.entries
+      .flatMap((entry) => arrayAt(at(entry, "message"), "content"))
+      .filter((block) => stringAt(block, "type") === "tool_use")
+      .map((block) => ({
+        name: stringAt(block, "name") ?? "",
+        command: stringAt(block, "input", "command") ?? "",
+      }))
+    request.phase = phaseOf(calls)
+  }
+
+  return order
 }
 
 const collect = (run: string, lines: string[]): Metrics => {
@@ -106,32 +196,67 @@ const collect = (run: string, lines: string[]): Metrics => {
   const to = stamped[stamped.length - 1]
 
   let idle = 0
-  let slowest = 0
   for (const [index, entry] of stamped.entries()) {
     // Whatever happened before the request that started the run is not the run.
     if (index === 0 || millis(entry) <= millis(from)) continue
-    const gap = millis(entry) - millis(stamped[index - 1])
     // Waiting for the person to type is not the skill being slow, so it leaves the active time.
-    if (isPrompt(entry)) idle += gap
-    else slowest = Math.max(slowest, gap)
+    if (isPrompt(entry)) idle += millis(entry) - millis(stamped[index - 1])
   }
 
-  const empty = (): Totals => ({ thinking: 0, ...Object.fromEntries(TOKEN_FIELDS.map(([key]) => [key, 0])) })
-  const tokens = { main: empty(), sidechain: empty() }
+  const requests = collectRequests(stamped)
+
+  // A sub-agent runs beside the session rather than after it, so its requests overlap the driver's
+  // wall-clock and adding them to the phases would count the same seconds twice. The phases are the
+  // main chain; what a sub-agent costs the driver is the tool wait, which lands in the overhead row.
+  const mainChain = stamped.filter((entry) => at(entry, "isSidechain") !== true)
+  const position = new Map(mainChain.map((entry, index) => [entry, index]))
+
+  const phases: Record<Phase, number> = {
+    thinking: 0,
+    writing: 0,
+    reading: 0,
+    validating: 0,
+    talking: 0,
+    other: 0,
+  }
+  let measured = 0
+  let slowest = 0
+
+  for (const request of requests) {
+    if (request.side !== "main") continue
+    const index = position.get(request.entries[0])
+    if (index === undefined || index === 0) continue
+    const start = Math.max(millis(mainChain[index - 1]), millis(from))
+    const elapsed = millis(request.entries[request.entries.length - 1]) - start
+    if (elapsed <= 0) continue
+
+    measured += elapsed
+    slowest = Math.max(slowest, elapsed)
+
+    // Wall-clock is output tokens over a rate this session holds within a few per cent on every
+    // request long enough to swamp the time to first token, so a request's seconds divide between its
+    // thinking and its work exactly as its tokens do. Measured seconds are what is split: the phases
+    // then add up to what the clock says, with no modelled rate and no residual to explain.
+    const output = request.tokens.output_tokens
+    const thought = output === 0 ? 0 : (elapsed * request.tokens.thinking) / output
+    phases.thinking += thought
+    phases[request.phase] += elapsed - thought
+  }
+
+  const empty = emptyTotals()
+  const tokens = { main: { ...empty }, sidechain: { ...empty } }
   const calls = { main: 0, sidechain: 0 }
   const models = new Set<string>()
   const tools = new Map<string, number>()
 
+  for (const request of requests) {
+    calls[request.side] += 1
+    const model = stringAt(at(request.entries[0], "message"), "model")
+    if (model) models.add(model)
+    for (const key of Object.keys(empty)) tokens[request.side][key] += request.tokens[key]
+  }
+
   for (const entry of entries) {
-    const side = at(entry, "isSidechain") === true ? "sidechain" : "main"
-    if (stringAt(entry, "type") === "assistant" && isRecord(at(entry, "message"))) {
-      const message = at(entry, "message")
-      calls[side] += 1
-      const model = stringAt(message, "model")
-      if (model) models.add(model)
-      for (const [key] of TOKEN_FIELDS) tokens[side][key] += numberAt(message, "usage", key)
-      tokens[side].thinking += numberAt(message, "usage", "output_tokens_details", "thinking_tokens")
-    }
     for (const block of arrayAt(at(entry, "message"), "content")) {
       if (stringAt(block, "type") !== "tool_use") continue
       const label = toolLabel(block)
@@ -140,12 +265,13 @@ const collect = (run: string, lines: string[]): Metrics => {
   }
 
   const span = millis(to) - millis(from)
+  const active = span - idle
   return {
     run,
     lines: lines.length,
     session: { from: stringAt(stamped[0], "timestamp")!, to: stringAt(to, "timestamp")! },
     span,
-    active: span - idle,
+    active,
     idle,
     prompts: entries.filter(isPrompt).length,
     calls,
@@ -153,6 +279,8 @@ const collect = (run: string, lines: string[]): Metrics => {
     models: [...models],
     tokens,
     tools,
+    phases,
+    overhead: active - measured,
   }
 }
 
@@ -170,6 +298,7 @@ const render = (metrics: Metrics) => {
   const totalOutput = main.output_tokens + sidechain.output_tokens
   const totalThinking = main.thinking + sidechain.thinking
   const totalRead = main.cache_read_input_tokens + sidechain.cache_read_input_tokens
+  const rate = metrics.active === 0 ? 0 : Math.round(main.output_tokens / (metrics.active / 1000))
 
   return [
     `# Metrics — ${metrics.run}`,
@@ -179,6 +308,10 @@ const render = (metrics: Metrics) => {
     "",
     `**Transcript:** ${metrics.lines} righe · **Modello:** ${metrics.models.map((model) => `\`${model}\``).join(", ") || "—"} · **Sessione:** ${metrics.session.from} → ${metrics.session.to}`,
     "",
+    "L'unità è la **richiesta al provider**, non la riga di transcript: una richiesta arriva come una",
+    "entry per blocco di contenuto — thinking, testo, chiamata di tool — e ognuna ripete lo stesso",
+    "`usage`. Il raggruppamento è per `requestId`.",
+    "",
     "## Tempo",
     "",
     "| | |",
@@ -186,8 +319,26 @@ const render = (metrics: Metrics) => {
     `| Dal primo prompt all'ultimo evento | ${duration(metrics.span)} |`,
     `| Di cui attesa dell'utente | ${duration(metrics.idle)} |`,
     `| **Tempo attivo** | **${duration(metrics.active)}** |`,
-    `| Chiamata più lenta | ${duration(metrics.slowest)} |`,
-    `| Media per chiamata | ${totalCalls === 0 ? "—" : duration(metrics.active / totalCalls)} |`,
+    `| Richiesta più lenta | ${duration(metrics.slowest)} |`,
+    `| Media per richiesta | ${totalCalls === 0 ? "—" : duration(metrics.active / totalCalls)} |`,
+    "",
+    "## Dove va il tempo",
+    "",
+    "Il tempo di ogni richiesta è ripartito fra il pensiero e il lavoro che ha prodotto, in proporzione",
+    "ai token emessi; la fase di una richiesta è la cosa più forte che ha fatto, e `Parola all'autore` è",
+    "il turno che non ha chiamato nessun tool. Le righe sommano al tempo attivo. Le richieste di un",
+    "sub-agent corrono accanto alla sessione e non entrano nelle fasi: quel che costano al driver è",
+    "l'attesa del tool, che sta nell'ultima riga.",
+    "",
+    "| Fase | Tempo | Quota |",
+    "|---|---|---|",
+    ...PHASES.map(
+      ([key, label]) =>
+        `| ${label} | ${duration(metrics.phases[key])} | ${share(metrics.phases[key], metrics.active)} |`,
+    ),
+    `| Tool, sub-agent e I/O | ${duration(metrics.overhead)} | ${share(metrics.overhead, metrics.active)} |`,
+    "",
+    `Token di output al secondo, sul main: **${rate}**.`,
     "",
     "## Token",
     "",
@@ -196,14 +347,14 @@ const render = (metrics: Metrics) => {
     ...TOKEN_FIELDS.map(([key, label]) => tokenRow(label, key)),
     tokenRow("↳ di cui thinking", "thinking"),
     "",
-    `Thinking sull'output: **${share(totalThinking, totalOutput)}**. Cache read per chiamata: **${totalCalls === 0 ? "—" : thousands(Math.round(totalRead / totalCalls))}**.`,
+    `Thinking sull'output: **${share(totalThinking, totalOutput)}**. Cache read per richiesta: **${totalCalls === 0 ? "—" : thousands(Math.round(totalRead / totalCalls))}**.`,
     "",
     "## Turni",
     "",
     "| | |",
     "|---|---|",
     `| Prompt dell'utente | ${metrics.prompts} |`,
-    `| Chiamate API | ${withSidechain ? `${totalCalls} (${metrics.calls.main} main, ${metrics.calls.sidechain} sub-agent)` : totalCalls} |`,
+    `| Richieste al provider | ${withSidechain ? `${totalCalls} (${metrics.calls.main} main, ${metrics.calls.sidechain} sub-agent)` : totalCalls} |`,
     "",
     "## Tool",
     "",
