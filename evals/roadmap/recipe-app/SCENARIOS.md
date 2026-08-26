@@ -2,15 +2,18 @@
 
 Four starting states the skill is run against: one map drawn from nothing, and three inputs the router
 can read wrongly, each in the two directions it can go wrong. Every card carries its starting state,
-the sentence to send, the answer to give back, and what to read the result against.
+the answer to give back, and what to read the result against. The text sent is not here: it is one
+file per card in [`prompts/`](prompts/), so that a card can be read without reading the input and the
+input has exactly one copy.
 
 **Answer key.** Off limits to a generation session, the way `reference-roadmap/` is. How to run a card
 is in [`../REVIEW-WORKFLOW.md`](../REVIEW-WORKFLOW.md); what a run does and does not license
 concluding is at the head of [`../EVALUATION-RULES.md`](../EVALUATION-RULES.md).
 
-**The prompt** carries the request, the read restriction and the author's opening sentence, and
-nothing else — no verdict, no hint that the input is a test. `@` is Claude Code's file-reference
-syntax; on a harness that lacks it, drop the prefixes and change nothing else.
+**Each prompt** carries the request, the read restriction and the author's opening sentence, and
+nothing else — no verdict, no hint that the input is a test. `{{RUN_DIR}}` is this run's directory and
+`render_prompt.ts` resolves it. `@` is Claude Code's file-reference syntax; on a harness that lacks it,
+drop the prefixes and change nothing else.
 
 **Commands run from the repository root**, and the ids below are the ones the frozen states make
 correct. If a fixture's high-water mark moves, the ids move with it and this text is what gets
@@ -51,11 +54,7 @@ mkdir -p evals/roadmap/recipe-app/results/ROUTER-1-CC-<N>
 cp -R evals/roadmap/recipe-app/fixtures/mid-flight/. evals/roadmap/recipe-app/results/ROUTER-1-CC-<N>/.roadmap/
 ```
 
-**The prompt:**
-
-```
-/roadmap Treat evals/roadmap/recipe-app/results/ROUTER-1-CC-<N>/ as the project root; the roadmap is in its .roadmap/, and the documents it names as sources are in @evals/roadmap/recipe-app/sources/. Search has to work across every cookbook I belong to, not just the current one. Read nothing else in this repository, in this session or in any session you delegate to: everything else under evals/ and under design/ is off limits.
-```
+**The prompt:** [`prompts/router-1.prompt.md`](prompts/router-1.prompt.md).
 
 **When it asks what was delivered:** nothing since the last session.
 
@@ -83,9 +82,9 @@ mkdir -p evals/roadmap/recipe-app/results/ROUTER-2-CC-<N>
 cp -R evals/roadmap/recipe-app/reference-roadmap/. evals/roadmap/recipe-app/results/ROUTER-2-CC-<N>/.roadmap/
 ```
 
-**The prompt:** as scenario 1, with the directory replaced and this opening sentence — *Let us add a
-`visibility=public` flag on Cookbook — it is already modelled anyway, it is one column and an
-afternoon.*
+**The prompt:** [`prompts/router-2.prompt.md`](prompts/router-2.prompt.md) — scenario 1's frame, with
+the opening sentence that makes this card: *Let us add a `visibility=public` flag on Cookbook — it is
+already modelled anyway, it is one column and an afternoon.*
 
 **When it asks what was delivered:** nothing; the map has just been drawn.
 
@@ -119,8 +118,9 @@ mkdir -p evals/roadmap/recipe-app/results/ROUTER-3-CC-<N>
 cp -R evals/roadmap/recipe-app/fixtures/redrawn/. evals/roadmap/recipe-app/results/ROUTER-3-CC-<N>/.roadmap/
 ```
 
-**The prompt:** as scenario 1, with the directory replaced and this opening sentence — *Search has to
-work on the public corpus — thousands of recipes across cookbooks nobody curated together.*
+**The prompt:** [`prompts/router-3.prompt.md`](prompts/router-3.prompt.md) — scenario 1's frame, with
+the opening sentence that makes this card: *Search has to work on the public corpus — thousands of
+recipes across cookbooks nobody curated together.*
 
 **When it asks what was delivered:** nothing since the redraw.
 
