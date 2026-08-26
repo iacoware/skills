@@ -40,9 +40,10 @@ make add                 # install the skill under review, then restart the sess
 diff -r skills/roadmap ~/.claude/skills/roadmap --exclude=.claude && echo "installed copy matches"
 ```
 
-`make eval-cycle` asks before each of the two sessions and sends nothing until you answer:
-[`../AGENTS.md`](../AGENTS.md) binds, and approval of a plan is never approval to send. It works in
-`recipe-app/results/ROADMAP-CC-<N>`, `<N>` being the next free number, and writes there in this order:
+`make eval-cycle` asks once, listing both sessions, and sends nothing until you answer — the review
+does not come back to ask a second time: [`../AGENTS.md`](../AGENTS.md) binds, and approval of a plan
+is never approval to send. It works in `recipe-app/results/ROADMAP-CC-<N>`, `<N>` being the next free
+number, and writes there in this order:
 
 | File | Written by | What it is |
 |---|---|---|

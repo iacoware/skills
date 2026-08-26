@@ -77,8 +77,49 @@ const claudeArgs = (prompt: string, sessionId: string, model: string, effort: st
   "--verbose",
 ]
 
-const authorize = async (plan: string, assumed: boolean) => {
-  console.log(plan)
+type Planned = {
+  step: Step
+  runDir: string
+  model: string
+  effort: string
+  sessionId: string
+}
+
+const plan = (step: Step, runDir: string, model: string, effort: string): Planned => ({
+  step,
+  runDir,
+  model,
+  effort,
+  sessionId: randomUUID(),
+})
+
+// Chi lancia autorizza una volta sola, davanti all'elenco completo dei passi: tornare a chiedere a
+// metà ciclo non aggiungerebbe una decisione, perché la decisione su quelle sessioni è già presa qui.
+const authorize = async (planned: Planned[], assumed: boolean) => {
+  const count = planned.length === 1 ? "1 sessione" : `${planned.length} sessioni`
+  console.log(`\n── autorizzazione: ${count} ──`)
+  for (const { step, runDir, model, effort, sessionId } of planned)
+    console.log(
+      [
+        "",
+        STEPS[step].label,
+        `run       ${runDir}`,
+        `modello   ${model}    effort ${effort}`,
+        `sessione  ${sessionId}`,
+        `scrive    ${runDir}/${STEPS[step].writes}`,
+      ].join("\n"),
+    )
+
+  console.log(
+    [
+      "",
+      "Una sessione per passo, ognuna a contesto vuoto. Quante richieste al provider faccia non è noto",
+      "in anticipo: ROADMAP-CC-3 ne ha fatte 16. `evals/AGENTS.md` vuole questa autorizzazione",
+      "esplicita, ed è l'unica che il ciclo chiede: i passi seguenti partono senza chiedere ancora.",
+      "",
+    ].join("\n"),
+  )
+
   if (assumed) return console.log("Autorizzato da riga di comando (--yes).\n")
 
   const ask = createInterface({ input: process.stdin, output: process.stdout })
@@ -203,24 +244,10 @@ ${prompt}
 ~~~
 `
 
-const runStep = async (step: Step, runDir: string, model: string, effort: string, yes: boolean) => {
-  const sessionId = randomUUID()
+const runStep = async ({ step, runDir, model, effort, sessionId }: Planned) => {
   const prompt = render(readFileSync(`${PROMPTS}/${STEPS[step].prompt}`, "utf8"), { RUN_DIR: runDir })
 
-  await authorize(
-    [
-      `\n── ${STEPS[step].label} ──`,
-      `run       ${runDir}`,
-      `modello   ${model}    effort ${effort}`,
-      `sessione  ${sessionId}`,
-      `scrive    ${runDir}/${STEPS[step].writes}`,
-      "",
-      "Una sessione, a contesto vuoto. Quante richieste al provider faccia non è noto in anticipo:",
-      "ROADMAP-CC-3 ne ha fatte 16. `evals/AGENTS.md` vuole questa autorizzazione esplicita.",
-      "",
-    ].join("\n"),
-    yes,
-  )
+  console.log(`\n── ${STEPS[step].label} ──`)
 
   if (step === "run") {
     mkdirSync(runDir, { recursive: true })
@@ -276,23 +303,32 @@ const main = async () => {
     return given!
   }
 
-  switch (values.step) {
-    case "run":
-      return runStep("run", nextRunDir(), model, effort, yes)
-    case "review":
-      return runStep("review", needsRun("review"), reviewModel, reviewEffort, yes)
-    case "improve":
-      return runStep("improve", needsRun("improve"), reviewModel, reviewEffort, yes)
-    case "cycle": {
-      const runDir = nextRunDir()
-      await runStep("run", runDir, model, effort, yes)
-      await runStep("review", runDir, reviewModel, reviewEffort, yes)
-      console.log(`\nCiclo finito su ${runDir}. improve resta da lanciare a mano.`)
-      return
+  const planned = ((): Planned[] => {
+    switch (values.step) {
+      case "run":
+        return [plan("run", nextRunDir(), model, effort)]
+      case "review":
+        return [plan("review", needsRun("review"), reviewModel, reviewEffort)]
+      case "improve":
+        return [plan("improve", needsRun("improve"), reviewModel, reviewEffort)]
+      case "cycle": {
+        const runDir = nextRunDir()
+        return [
+          plan("run", runDir, model, effort),
+          plan("review", runDir, reviewModel, reviewEffort),
+        ]
+      }
+      default:
+        return fail(`--step sconosciuto: ${values.step}. Sono run, review, improve, cycle.`)
     }
-    default:
-      return fail(`--step sconosciuto: ${values.step}. Sono run, review, improve, cycle.`)
-  }
+  })()
+
+  await authorize(planned, yes)
+
+  for (const step of planned) await runStep(step)
+
+  if (values.step === "cycle")
+    console.log(`\nCiclo finito su ${planned[0]!.runDir}. improve resta da lanciare a mano.`)
 }
 
 await main()
