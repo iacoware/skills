@@ -62,12 +62,11 @@ touches is the whole map and no theme or row owns it.]
 
 ## Cross-functional concerns
 
-- **Authorization.** [Shared rule.]
-- **Validation and errors.** [Shared rule.]
-- **Operability.** [Logging, observability, timeout, and failure expectations.]
-- **Accessibility and security.** [Shared rule.]
-- **Data integrity and recovery.** [Invariants, derived data, and partial-failure recovery.]
+- **[Concern].** [The rule every row it touches obeys, and that this map decided.]
 
-[Keep all five. Add a further concern — cost, privacy, compliance, latency, auditability, data
-migration — only when a source makes it a constraint that several rows must respect; a concern one
-row owns stays in it.]
+[Five dimensions are swept on every map, and a line is written only where a `NOW` row could plausibly
+have done otherwise: a dimension the map decided nothing about carries no line. The dimensions, and
+the labels a published line uses — **Authorization**, **Validation and errors**, **Operability**,
+**Accessibility and security**, **Data integrity and recovery**. A further concern — cost, privacy,
+compliance, latency, auditability, data migration — is swept on the same test when a source makes it
+a constraint several rows must respect; a concern one row owns stays in it.]

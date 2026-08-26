@@ -252,6 +252,24 @@ may do without X, and this is the price it pays*. Written as *we will not do X* 
 graveyard; written as a licence it still answers the question somebody asks a year later, which is why
 the trade-off was allowed.
 
+## Cross-functional concerns
+
+Five dimensions are swept on every map: authorization, validation and errors, operability,
+accessibility and security, data integrity and recovery. A sixth is swept when a source makes it a
+constraint several rows must respect — cost, privacy, compliance, latency, auditability, data
+migration. The sweep is not the section: it is what has to be thought before the section is written,
+and the list is fixed here so a later session can re-run it.
+
+**A concern is published when a `NOW` row could plausibly have done otherwise.** A rule the rows
+would obey whether or not the map named it — a house convention, a framework default, a standing
+instruction the project already carries — is not a constraint this map decided. Publishing it costs
+twice: it drifts against the document that really governs it, and it leaves the reader unable to tell
+what binds because the map chose it from what binds anyway.
+
+**Ambient restatement** is the failure to watch for, and its tell is mechanical: the line survives
+being moved to another project unchanged. A dimension the sweep finds nothing in carries no line, and
+the absence is information — nothing about it was decided here.
+
 ## The map holds when
 
 - every theme has a promise in product language and one first validator that is an existing `NOW` row,
@@ -270,4 +288,6 @@ the trade-off was allowed.
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - delivery can refute every `Assumptions` line, every reading about how something works lands in a
   bullet of the row it is traced to, and no reading is contradicted by the lines it cites;
+- no published cross-functional concern survives being moved to another project unchanged, and a
+  dimension the sweep found nothing in carries no line;
 - `NOW` fits under the cap without inventing detail the map cannot yet know.

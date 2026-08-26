@@ -164,7 +164,9 @@ How binding the reference is:
 - **Ids, titles, slugs, theme count, row count and register order may all differ.** On each
   difference, ask which of the two has the better reason; `REFERENCE-NOTES.md` holds the reference's.
 - Each `Verification` shows one way a row could be demonstrated, not the only one. The same holds for
-  `Cross-functional concerns`, whose five headings are owed but not their content.
+  `Cross-functional concerns`: the five dimensions are owed to the sweep, a published line is not —
+  the reference publishes what it decided, and a candidate that decided nothing on one of them owes
+  no line.
 - A source may support a `LATER` or `OUT-OF-SCOPE` classification other than the reference's, and the
   brief says where.
 - The reference takes one exit out of the sweep for each conflict and each undecided choice. Another
