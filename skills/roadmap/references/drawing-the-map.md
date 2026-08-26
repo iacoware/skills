@@ -35,7 +35,7 @@ that matters, and git has the rest.
 A theme is a product promise that can be deferred or cancelled whole, stated in product language: what
 somebody can do once it holds.
 
-Run both tests explicitly, and record the verdict:
+Run both tests explicitly on every boundary between adjacent themes:
 
 - **Split test.** Two capabilities are two themes when either can be cancelled, deferred or reordered
   without invalidating the other's evidence. A shared entity, form, pipeline or implementation is not
@@ -43,6 +43,11 @@ Run both tests explicitly, and record the verdict:
 - **Merge test.** They are one theme when they share the same interaction, invariant and learning
   target, and neither produces useful feedback alone. Separate names or modes are not a reason to
   split one coherent promise.
+
+**Record each verdict under the table, one line per boundary: the pair, `split` or `merge`, and the
+one fact that decided it — and nothing more.** Not the argument that reached it, not the test that
+produced it, and not the counter-argument the test already dismissed. A boundary the reader has to
+re-litigate is a boundary the map has not decided.
 
 **Theme compression** is the failure to watch for: merging independently schedulable value areas to
 keep the theme count small. Do not optimise for fewer themes. A user-facing identity or access
