@@ -14,10 +14,10 @@ and not beside the skill.
 | `scripts/run_metrics.ts` | Reads a run's `TRANSCRIPT.jsonl` and writes its `METRICS.md`: time, tokens, API calls, tools. |
 | `make run-metrics RUN=<dir>` | Runs it from the repository root. `RUN` is the run directory, not the transcript. |
 | `make capture-run RUN=<dir>` | Both halves of closing a run: captures the transcript, then writes the metrics from it. |
-| `recipe-app/prompts/` | The four inputs the cycle sends, one file per session: the drawing, its review, and the two readings of that review — what the map got wrong, and what it cost. A file *is* the prompt, word for word, unwrapped inside paragraphs because a markdown source's wrap never reaches the model. |
+| `recipe-app/prompts/` | Every prompt a session is sent, one file each: the drawing, its review, the two readings of that review — what the map got wrong, and what it cost — and one per router card. A file *is* the prompt, word for word, unwrapped inside paragraphs because a markdown source's wrap never reaches the model. |
 | `scripts/render_prompt.ts` | Resolves `{{RUN_DIR}}` in a prompt file, and refuses to render one with a placeholder left. |
 | `scripts/run_cycle.ts` | Drives the cycle: renders, asks for authorization, sends through `claude -p`, captures, refuses to go on where the run did not exercise the skill. |
-| `make eval-cycle` | The drawing and its review, in two sessions with empty context. `make eval-run` and `make eval-review RUN=<dir>` are each half. |
+| `make eval-cycle` | The drawing and its review, in two sessions with empty context. `make eval-run` and `make eval-review RUN=<dir>` are each half. The router cards are driven by hand. |
 | `REVIEW-WORKFLOW.md` | The procedure: which half to run, the preconditions, producing a run, reading one. Travels to a new scenario unchanged. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks about the skill. Portable too. |
 | `recipe-app/SCENARIOS.md` | The four cards: a drawing from nothing, and three inputs that hold the router. Starting state, prompt, answer, verdict. Answer key. |
