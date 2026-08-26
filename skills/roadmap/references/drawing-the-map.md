@@ -44,10 +44,10 @@ Run both tests explicitly on every boundary between adjacent themes:
   target, and neither produces useful feedback alone. Separate names or modes are not a reason to
   split one coherent promise.
 
-**Record each verdict under the table, one line per boundary: the pair, `split` or `merge`, and the
-one fact that decided it — and nothing more.** Not the argument that reached it, not the test that
-produced it, and not the counter-argument the test already dismissed. A boundary the reader has to
-re-litigate is a boundary the map has not decided.
+**Record each verdict under the `Theme boundaries` label, one line per boundary: the pair, `split`
+or `merge`, and the one fact that decided it — and nothing more.** Not the argument that reached it,
+not the test that produced it, and not the counter-argument the test already dismissed. A boundary the
+reader has to re-litigate is a boundary the map has not decided.
 
 **Theme compression** is the failure to watch for: merging independently schedulable value areas to
 keep the theme count small. Do not optimise for fewer themes. A user-facing identity or access
@@ -58,6 +58,10 @@ that validates one capability inside a broader promise is not it, and neither is
 row — an enabler may precede the validator and may never substitute for it. The one exception is a
 theme whose promise is itself to a developer; then the enabler that validates it is the first
 validator, and the `Promise` column says whose promise it is.
+
+**A promise names only what its first validator delivers.** Where that row excludes a capability the
+promise names, the promise is holding two: either the validator is the wrong row, or the capability
+is a theme the table compressed.
 
 **`theme: —` is legal and carries information.** A row that serves every promise and can be cancelled
 with none — the repository, the skeleton, the release into users' hands — attaches to no theme.
@@ -252,8 +256,8 @@ the trade-off was allowed.
 
 - every theme has a promise in product language and one first validator that is an existing `NOW` row,
   and no enabler validates a theme whose promise is not to a developer;
-- every theme boundary has a recorded split or merge verdict, and no two value areas were merged to
-  keep the count down;
+- every theme boundary has a recorded split or merge verdict, and no first validator excludes a
+  capability its own theme's promise names;
 - greenfield draws the repository row and the skeleton separately, and the skeleton reaches the
   datastore through the real driver and runs a migration;
 - every published `Depends on` survives the substitution test — no controlled input and no narrower
