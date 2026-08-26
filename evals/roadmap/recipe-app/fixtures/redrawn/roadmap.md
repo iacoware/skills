@@ -81,28 +81,6 @@ e il contatore degli id riparte da dove l'hanno lasciato.
   cui attaccare un commento, un voto o una correzione. Il prezzo è che la scoperta non ha nessun
   segnale sociale con cui ordinare, e deve reggersi sulla sola somiglianza semantica.
 
-## Ordering criteria
-
-1. **La piattaforma c'è già.** Nessun prerequisito da ridisegnare: repository, scheletro, datastore,
-   storage e identità sono consegnati, quindi la prima riga di questa mappa è già una promessa e non
-   un enabler.
-2. **Il confine di visibilità prima di tutto ciò che lo sfrutta.** Il rischio esistenziale di questa
-   mappa non è il recall, è la fuga: una ricetta privata letta da un anonimo non si recupera dopo.
-   `S12` possiede quel confine da solo, e ogni riga che segue lo consuma senza riaprirlo.
-3. **Il differenziatore, che ora si misura su un corpus e non su un ricettario.** Perde una volta
-   sola, contro il n. 2: la ricerca su tutto il pubblico non è misurabile finché il pubblico non
-   esiste, e nessun input controllato può sostituirlo senza aggirare proprio l'autorizzazione in
-   prova.
-4. **Il rimedio nasce con lo stato che lo rende necessario.** Togliere dal pubblico non è una riga
-   successiva né un'aggiunta operativa: sta dentro `S12`, la riga che sa pubblicare.
-5. **Un solo proprietario per confine condiviso.** `S14` aggiunge metadati alla pagina pubblica e non
-   riapre mai l'autorizzazione stabilita da `S12`; `S13` applica la visibilità dentro la query e non
-   ne inventa una seconda.
-6. **Un esito sottile da ogni tema prima del secondo sullo stesso tema.** `S12`, `S13` e `S14`
-   aprono i tre temi, e solo dopo `S15` torna sulla scoperta. Questa mappa non deroga.
-7. **Dove finisce `NOW`.** Con la riga di rilascio più piccola che regge traffico anonimo e crawler a
-   un costo dichiarato: `S16`.
-
 ## Assumptions
 
 - `pubblico` — Pubblico è il **ricettario**, non la singola ricetta: `Cookbook.visibility`, che `S8`

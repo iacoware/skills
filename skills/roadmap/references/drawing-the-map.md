@@ -26,9 +26,9 @@ behind enters as input, exactly the way a source document does.
 - **Rows still open in `NOW`.** Each is re-justified against the new goal; the ones that still serve
   it keep their ids, the rest are retired.
 
-Redrawn from nothing: the `Goal`, the themes, the register, the ordering criteria, `Assumptions` and
-`Open questions`. No history of superseded goals is kept — `Current state` has room for the sentence
-that matters, and git has the rest.
+Redrawn from nothing: the `Goal`, the themes, the register, `Assumptions` and `Open questions`. No
+history of superseded goals is kept — `Current state` has room for the sentence that matters, and git
+has the rest.
 
 ## Themes
 
@@ -82,8 +82,8 @@ production path whose correctness materially affects the outcome. A fixture that
 directly does not remove the dependency on the production computation of that data.
 
 Before publishing an edge, name the stand-in: an input the row can control, or a narrower real
-precursor already in `NOW`. Naming one settles it — there is no edge, and the sequence belongs to
-`Ordering criteria`. The default cell is `—`.
+precursor already in `NOW`. Naming one settles it — there is no edge, and the sequence is order, not
+dependency. The default cell is `—`.
 
 The stand-in has to be nameable, not merely conceivable. Where the dependent's `Includes` builds on a
 table, a migration, a resolver or an adapter that another `NOW` row delivers, no fixture supplies it
@@ -97,14 +97,14 @@ edges that all say *after the skeleton* bury the four that carry information.
 map, its horizon ledger and its row-to-source traceability out of the document, which works exactly
 once — the session that writes the plan holds them. A living map cannot: the previous session's
 reasoning no longer exists. So dependencies are a column and provenance is `Requested by` on the
-row's document. What stays unpublished is the reasoning *behind* the order: `Ordering criteria`
-states the rules once and the register's order carries the rest.
+row's document. The reasoning *behind* the order stays unpublished entirely: the register's order
+carries it, and a reader is free to take a different one wherever no hard edge forbids it.
 
 **Published order** is the failure to watch for: an edge that records the sequence the author prefers
-rather than an outcome nothing else can make verifiable. Its tell is that the reason for the edge is
-already written in `Ordering criteria` — when a criterion says a shared pipeline follows every row
-that feeds it, the edge from the pipeline row to the last feeder adds nothing, and forbids the reorder
-the criterion was there to argue about.
+rather than an outcome nothing else can make verifiable. Its tell is the substitution test itself — a
+controlled input or a narrower real precursor could stand in, and the edge is published because
+someone preferred that sequence. A shared pipeline already follows every row that feeds it; the edge
+from the pipeline row to the last feeder adds nothing, and forbids a reorder no hard edge forbids.
 
 **Dropped edge** is its mirror, and the more expensive half: an edge too many is noise a reader
 discounts, a missing one is the reorder that breaks with nobody noticing.
@@ -141,8 +141,8 @@ Two failures have names:
 
 ## Ordering for learning
 
-**The map declares its own ranking.** `Ordering criteria` is a numbered list because the ranking
-between criteria is itself a decision this map takes, and the criteria below are what it ranks:
+**The map declares its own ranking.** The ranking between the criteria is itself a decision this map
+takes, and the register's order is where the ranking shows. The criteria it ranks:
 
 - the minimum delivery path — until something is delivered, nothing is learned;
 - conventions born inside the first row that needs them, never in a workshop of their own;
@@ -152,15 +152,12 @@ between criteria is itself a decision this map takes, and the criteria below are
 - business frequency, and one thin outcome from each remaining theme;
 - cohesive variants and deeper workflows, in risk order.
 
-Where one criterion loses to another, the criterion that loses says so in itself, rather than leaving
-the reader to notice a row out of place.
-
 Four things are not up for ranking:
 
 - **Breadth before depth.** Once the existential risks are validated, deliver one thin validating row
   from each remaining theme before a second row from one theme. Depart only for another
-  differentiator, a material risk, required recovery, or a materially higher-frequency behaviour, and
-  state the departure once in `Ordering criteria`.
+  differentiator, a material risk, required recovery, or a materially higher-frequency behaviour: the
+  departure has to be one of the four, and the order is what shows it.
 - **Required recovery outranks breadth.** When a row names a failure mode in its `Verification` and
   another `NOW` row is its remedy, the remedy comes before a different theme opens. A remedy the
   sources declare a fallback of a delivered path closes that path; it is not optional depth. Where the
@@ -188,11 +185,11 @@ will not have to be rewritten when the real one arrives.
 Never defer the boundary itself, and never defer identity when no such seam exists.
 
 Once the evidence that justified deferring identity exists, identity comes before further user-facing
-rows whose acceptance depends on real ownership or membership. Past the second `NOW` row that delivers
-behaviour to an end user, justify the remaining deferral once in `Ordering criteria`, naming the
-evidence that still requires it. Every row preceding identity names its own audience: an `Outcome`
-promising *a user* who cannot exist yet belongs to a developer or to a tester on the declared
-non-public environment.
+rows whose acceptance depends on real ownership or membership. Where identity is deferred past the
+second `NOW` row that delivers behaviour to an end user, the rows that produce the evidence the
+deferral rests on come before it in the register. Every row preceding identity names its own
+audience: an `Outcome` promising *a user* who cannot exist yet belongs to a developer or to a tester
+on the declared non-public environment.
 
 ## What the map reports about its input
 
@@ -260,13 +257,11 @@ the trade-off was allowed.
 - greenfield draws the repository row and the skeleton separately, and the skeleton reaches the
   datastore through the real driver and runs a migration;
 - every published `Depends on` survives the substitution test — no controlled input and no narrower
-  real precursor already in `NOW` can stand in — no edge restates a reason `Ordering criteria`
-  already gives, and no row that builds on a table, resolver or adapter another `NOW` row delivers
-  carries `—`;
-- `Ordering criteria` is ranked, and every departure from breadth is named in the criterion that
-  concedes it;
-- the scope boundary ships with the first row that persists data, and any identity deferred past the
-  second end-user row is justified in `Ordering criteria` against named evidence;
+  real precursor already in `NOW` can stand in — and no row that builds on a table, resolver or
+  adapter another `NOW` row delivers carries `—`;
+- every departure from breadth before depth is one of the four the skill licenses;
+- the scope boundary ships with the first row that persists data, and identity deferred past the
+  second end-user row is preceded in the register by the rows producing the evidence for it;
 - every conflict and every undecided choice left the sweep by one of the three exits;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - delivery can refute every `Assumptions` line, every reading about how something works lands in a

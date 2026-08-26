@@ -63,11 +63,7 @@ posizione dell'identità, **N1**…**N6** non producono findings.
 - **R-017** — `S4 Depends on: S2, S3` — l'edge su `S3` non è hard. `S2 Excludes` dichiara che «del
   codice dello spike non sopravvive niente tranne il corpus e l'insieme di query, che diventano la
   fixture di regressione che la riga di ricerca riusa»: è precisamente il controlled input che, per
-  la regola, impedisce a un predecessore di essere hard. Lo falsifica anche la ragione con cui
-  `Ordering criteria` 2 concede la deroga — «senza righe da cercare la ricerca non è consegnabile» —
-  smentita dalla riga `S2` della mappa stessa, da `references/drawing-the-map.md` *Ordering for
-  learning* («A seed corpus that lets the one uncertain promise be measured before four themes lean
-  on it costs a line of `Includes` and buys the whole order»), e dal brief **A5**/**N3**.
+  la regola, impedisce a un predecessore di essere hard.
 - **R-017** — sono pubblicate le dipendenze che ogni riga ha: `S1 ← S0`, `S2 ← S1`, `S3 ← S1`. La
   regola dice che «what every row depends on — the repository, the skeleton — is not published», e
   `drawing-the-map.md` *Hard dependencies* spiega perché. Nel reference `S1`, `S2`, `S6` e `S8`
@@ -111,8 +107,7 @@ Letto per ultimo, non come target di diff. Su ogni differenza, quale delle due h
   candidata la rinvia a `S7` e istituisce il seam in `S3`. **A11** licenzia entrambe, e la ragione
   della candidata è migliore per la mappa che ha disegnato: `drawing-the-map.md` *The identity seam*
   prescrive esattamente quel seam, la candidata lo consegna con la prima riga che persiste dati, lo
-  dichiara in `Cross-functional concerns`, giustifica il rinvio in `Ordering criteria` 6 e ne
-  verifica il costo in `S7`.
+  dichiara in `Cross-functional concerns` e ne verifica il costo in `S7`.
 - **Import in due righe.** Il reference separa `S8` JSON-LD da `S9` fallback LLM per due learning
   target distinti; la candidata li fonde in `S5`. Il reference ha la ragione migliore, e la
   conseguenza è già registrata sopra come **R-020** (il learning target fuso porta un claim che

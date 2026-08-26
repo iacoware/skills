@@ -79,40 +79,6 @@ e documentate nelle fonti; questa mappa è il primo disegno del percorso che le 
   tenere in sincrono; il prezzo è che oltre l'ordine di grandezza previsto (~10k ricette) la ricerca
   andrà rimisurata prima di crescere ancora.
 
-## Ordering criteria
-
-1. **Prima si consegna, poi si impara.** Finché non esiste un percorso deployato, nessuna misura vale
-   niente: S0 e S1 precedono qualunque promessa, e sono due righe perché una CI verde non dice nulla
-   sull'ipotesi di hosting e aprire account non fallisce come fallisce un deploy che non risale.
-2. **Il differenziatore e il rischio esistenziale, appena c'è dove misurarli.** Senza ricerca semantica
-   cross-lingua il prodotto è una riscrittura di Mealie: S2 la misura subito dopo lo scheletro, sul
-   corpus più economico che la renda misurabile — ricette italiane e inglesi caricate direttamente nel
-   database — invece di aspettare che l'import le produca. Perde solo contro il criterio 1.
-3. **Il recupero richiesto batte l'ampiezza.** S5 è il fallback che le fonti dichiarano per il
-   fallimento di S4 (paywall, siti JS-heavy, JSON-LD assente): chiude quel percorso prima che si apra
-   un altro tema. È l'unica ragione per cui `import` prende due righe di fila, ed è anche la ragione
-   per cui S3 precede S4: la correzione dopo l'estrazione è il recupero dichiarato dell'aggiunta
-   automatica, e va consegnata prima della prima riga che può produrre una ricetta da correggere.
-4. **Le convenzioni nascono nella prima riga che ne ha bisogno.** Non c'è nessuna riga di sola
-   impalcatura: il modello di dominio nasce in S3, lo schema di estrazione in S4, l'adapter LLM in S5,
-   quello degli embedding in S6, quello di R2 in S8, ognuno dentro la riga che per prima lo usa
-   davvero.
-5. **L'identità si rinvia solo finché l'evidenza lo richiede.** S3–S6 hanno per pubblico l'autore e chi
-   prova l'app sull'ambiente non pubblico su Fly, e girano su uno scope configurato: l'evidenza che
-   giustifica il rinvio è la qualità della ricerca cross-lingua, che l'autenticazione non rende né più
-   né meno vera. Appena S6 la produce, S7 arriva prima di qualunque altra riga rivolta a utenti veri.
-   Perde contro i criteri 2 e 3, e vince su tutto il resto.
-6. **Chi apre una pipeline condivisa viene dopo tutti quelli che la alimentano, e la possiede da
-   solo.** S6 possiede la generazione degli embedding per tutti e tre i percorsi di aggiunta (S3, S4,
-   S5); S8 possiede l'object storage sia per l'upload manuale sia per il download della foto da un
-   link. Nessuna delle due riesce prima dei propri alimentatori senza lasciare un contratto
-   provvisorio da riaprire.
-7. **Ampiezza prima di profondità.** Dopo S6 arriva una riga sottile per ciascun tema rimasto —
-   `accesso` in S7, `foto` in S8, `condivisione` in S9 — prima di una seconda riga sullo stesso tema
-   (S10). Le uniche deviazioni sono quelle concesse ai criteri 3 e 5.
-8. **Il rilascio chiude.** S11 mette il prodotto coerente in mano alla famiglia e non aggiunge
-   capacità: quello che non è entrato entro S10 diventa un candidato, non un allargamento di S11.
-
 ## Assumptions
 
 - `goal`, `S1`, `S11` — Il target di costo è **pochi centesimi al mese**, non zero. `goal.md` dice

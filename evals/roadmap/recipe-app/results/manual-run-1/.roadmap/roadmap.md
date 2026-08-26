@@ -78,41 +78,6 @@ nessuna è ancora stata messa alla prova.
   stanno in una query sola; il prezzo è che il tetto di scala è quello di pgvector su un'istanza free
   tier, e superarlo vorrebbe dire cambiare infrastruttura.
 
-## Ordering criteria
-
-1. **Prima si consegna, poi si impara.** Il repository con la CI e lo scheletro deployato vengono
-   prima di qualunque promessa, e sono due righe distinte: una CI verde non dice niente
-   sull'argomento hosting, e aprire account è lavoro umano con un modo di fallire diverso da un
-   deploy che non si alza.
-2. **Il differenziatore prima di tutto il resto.** La ricerca semantica cross-lingua è l'unica cosa
-   che separa questo prodotto da Mealie: se non regge, il progetto è una riscrittura. Si misura su un
-   corpus reale appena l'infrastruttura esiste, prima che quattro promesse ci si appoggino sopra, e
-   poi si consegna come prodotto. Questo criterio cede una volta sola, a favore del criterio 3: il
-   ricettario a mano viene prima della ricerca, perché senza righe da cercare la ricerca non è
-   consegnabile.
-3. **Le convenzioni nascono nella prima riga che ne ha bisogno.** Nessuna riga di sole convenzioni:
-   la forma di `Recipe`, il form condiviso fra creazione e modifica, il seam del ricettario corrente
-   e le convenzioni di test nascono dentro la prima riga che li usa davvero.
-4. **L'incertezza costosa prima della frequenza, e la frequenza prima del resto.** L'estrazione da
-   link è insieme il rischio tecnico maggiore (hit-rate del JSON-LD, qualità dell'LLM, latenza
-   sincrona) e il modo più frequente di aggiungere: viene subito dopo il differenziatore.
-   L'autenticazione, che è lavoro senza incertezza, cede il posto — vedi il criterio 6.
-5. **Il recupero richiesto batte l'ampiezza.** Le fonti dichiarano il copia-incolla la via d'uscita
-   di quando il link non si legge: chiude il percorso che la riga precedente apre, quindi passa
-   davanti all'apertura di un'altra promessa.
-6. **Ampiezza prima di profondità, con un rinvio dichiarato.** Una riga sottile per ogni promessa
-   prima di una seconda riga sulla stessa promessa. L'identità è rinviata oltre la seconda riga che
-   consegna comportamento, e questa è la giustificazione: le due incertezze vere — recupero
-   cross-lingua ed estrazione — si validano entrambe su un unico ricettario configurato, e nessuna
-   delle loro verifiche cambia quando lo scope passa da configurato ad autenticato. Il seam che rende
-   il rinvio non distruttivo è consegnato da `S3`, la prima riga che persiste dati; le righe che lo
-   precedono nominano come pubblico chi costruisce e prova l'app, mai un utente che non può esistere.
-7. **Chi apre un adapter condiviso viene dopo chi lo alimenta.** Le foto aprono l'object storage e lo
-   posseggono da sole: stanno dopo l'inserimento a mano e dopo l'import da link, che sono le due
-   strade che ci scrivono dentro. È l'altra deroga all'ampiezza, e vale solo per questo.
-8. **La release chiude.** L'ultima riga mette il rilascio coerente in mano a famiglia e amici, con la
-   sola prontezza operativa che le fonti chiedono e niente altro.
-
 ## Assumptions
 
 - `S1` — Le fonti nominano «Neon o Supabase» senza sceglierne uno. La mappa legge **Neon**, perché

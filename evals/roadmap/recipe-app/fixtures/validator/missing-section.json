@@ -3,9 +3,9 @@
   "edits": [
     {
       "in": "roadmap.md",
-      "find": "## Assumptions\n\n- `ricerca-semantica`, `S4` —",
-      "replace": "- `ricerca-semantica`, `S4` —"
+      "find": "## Open questions\n\n- `ricerca-semantica`, `import-automatico` — se",
+      "replace": "- `ricerca-semantica`, `import-automatico` — se"
     }
   ],
-  "expect": "missing the 'Assumptions' section"
+  "expect": "missing the 'Open questions' section"
 }

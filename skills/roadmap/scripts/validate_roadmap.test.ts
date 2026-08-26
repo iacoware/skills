@@ -159,6 +159,24 @@ test("a section roadmap.md has no business carrying", () => {
   assert.deepEqual(errorsOf(contents), ["roadmap.md: 'Backlog' is not a section of the roadmap"])
 })
 
+// `Ordering criteria` was a section of the roadmap until the order stopped publishing its reasoning.
+// A map written under that format is rejected rather than tolerated, and SKILL.md § *Operations on
+// the map* is where the session is told to delete it.
+test("a map still carrying the Ordering criteria the format dropped", () => {
+  const contents = mutate({
+    edits: [
+      edit(
+        "## Assumptions\n",
+        "## Ordering criteria\n\n1. **Percorso minimo di consegna.**\n\n## Assumptions\n",
+      ),
+    ],
+  })
+
+  assert.deepEqual(errorsOf(contents), [
+    "roadmap.md: 'Ordering criteria' is not a section of the roadmap",
+  ])
+})
+
 test("two register rows carrying the same id", () => {
   const contents = mutate({ edits: [edit(S3_ROW, `${S3_ROW}\n${S3_ROW}`)] })
 
@@ -252,10 +270,6 @@ ${ids
 ## OUT-OF-SCOPE
 
 - **Un problema dichiarato irrisolto.** La licenza che dà.
-
-## Ordering criteria
-
-1. **Percorso minimo di consegna prima.** Finché non si consegna, non si impara niente.
 
 ## Assumptions
 

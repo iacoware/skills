@@ -64,19 +64,6 @@ questa è la mappa come è stata disegnata la prima volta contro il goal.
 - **Password, recupero account ed email.** L'identità è delegata a Google e l'app non manda email. È
   la licenza per non avere alcuna infrastruttura di posta.
 
-## Ordering criteria
-
-1. **Percorso minimo di consegna prima.** Repository e skeleton in produzione vengono prima di
-   qualunque contenuto: finché non si consegna, non si impara niente.
-2. **Convenzioni nella prima riga che le richiede.** Servizi Effect, errori tipizzati, accesso a
-   Postgres con Drizzle nascono dentro la slice che ne ha bisogno, mai in un cantiere a parte.
-3. **Rischio esistenziale prima del resto.** La ricerca semantica cross-lingua è ciò che distingue
-   questo prodotto da un ricettario qualsiasi: si misura e si valida prima che l'import, le foto e la
-   condivisione le si appoggino sopra.
-4. **Ampiezza prima della profondità**, tranne dove la consegna di una riga cambia la riga
-   successiva. L'unica eccezione è l'import automatico, che riceve due righe di fila perché la prima
-   misura quanto serve la seconda.
-
 ## Assumptions
 
 - `ricerca-semantica`, `S4` — «mai embedding a runtime» nei sorgenti è un vincolo di costo, non di

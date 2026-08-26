@@ -100,38 +100,6 @@ Verdetti sui confini fra temi:
   configurazione più la CLI del provider, nessuna riga deve mantenere moduli Terraform o simili:
   il prezzo è che ricreare l'ambiente da zero è manuale e documentato a mano.
 
-## Ordering criteria
-
-1. **Percorso minimo di consegna.** Prima il repository con la CI verde, poi lo scheletro
-   deployato che tocca davvero il database: finché non arriva qualcosa in ambiente non si impara
-   niente, e ogni altro criterio si applica a valle di questi due.
-2. **Il differenziatore e il rischio esistenziale per primi.** La ricerca semantica cross-lingua
-   è il nord dichiarato: senza di essa il prodotto è la riscrittura di qualcosa che esiste già.
-   Per questo la misura sull'embedder è la prima riga dopo lo scheletro, e la ricerca apre prima
-   di import, identità, condivisione e foto. Perde solo contro il criterio 1.
-3. **Il percorso di correzione prima dello stato correggibile.** L'estrazione salva senza review,
-   quindi il form che corregge una ricetta esiste prima della prima riga capace di produrne una
-   sbagliata. È la ragione per cui il ricettario scritto a mano precede l'import.
-4. **Il recupero richiesto batte l'ampiezza.** Il copia-incolla è dichiarato dalle sorgenti come
-   fallback del link, non come modo alternativo: chiude il percorso da link prima che si apra un
-   altro tema. È l'unica deroga all'ampiezza-prima-della-profondità di questa mappa, e vale una
-   riga sola.
-5. **Identità differita finché il differenziatore non è provato.** Le righe che precedono
-   l'accesso Google girano su un ricettario configurato dietro un unico resolver, e dichiarano
-   come pubblico sviluppatori e tester su ambiente non pubblico. La deroga si regge su
-   un'evidenza precisa: finché la misura sull'embedder e la ricerca sul corpus reale non hanno
-   dimostrato il cross-lingua, attrezzare OAuth, membership e inviti significherebbe pagare
-   infrastruttura di condivisione per un prodotto che potrebbe dover cambiare destinazione.
-   Cade appena quell'evidenza esiste, e infatti l'identità è la prima riga dopo l'import.
-6. **Ampiezza prima della profondità.** Superati i rischi, un solo taglio sottile per ciascun
-   tema rimasto — identità, condivisione, foto — prima di tornare ad approfondirne uno.
-7. **Chi apre un adapter condiviso segue tutte le righe che lo alimentano, e lo possiede da
-   solo.** L'estrattore LLM è alimentato dal link senza JSON-LD e dal testo incollato, quindi
-   arriva dopo il percorso da link e li possiede entrambi. L'object storage è alimentato dalla
-   foto presa dal link e dall'upload manuale, quindi arriva dopo l'import.
-8. **La release chiude.** L'ultima riga è la più piccola che porta il rilascio coerente
-   nell'ambiente in cui gli utenti reali lo useranno, e non aggiunge capacità.
-
 ## Assumptions
 
 - `S1, goal` — Il datastore è **Neon**: `arch-choices.md` lascia aperto «Neon o Supabase», ma

@@ -45,8 +45,7 @@ the failure they guard.
 ## What the input claims about
 
 - **R-003** — An input that widens the reach of a capability the goal already promises is treated as
-  work: `Goal`, themes and `Ordering criteria` untouched, nothing redrawn. *Choose the door*,
-  *Destination or path*.
+  work: `Goal` and themes untouched, nothing redrawn. *Choose the door*, *Destination or path*.
   *⚠ opposite — work is the default by a wide margin, and a session that reads everything as work
   never redraws anything. What distinguishes the two is what the input contradicts, never how large it
   sounds.*
@@ -91,14 +90,16 @@ the failure they guard.
   reaches the datastore at runtime through the real driver and connection mode and applies one
   non-domain migration; it carries no domain entity, no authentication, no tenancy.
   `drawing-the-map.md` *The two prerequisites* — the `Oversized` and `Hollow skeleton` failures.
-- **R-012** — `Ordering criteria` is a ranked numbered list, and every departure from breadth before
-  depth is named in the criterion that concedes it rather than left for the reader to notice.
-  `drawing-the-map.md` *Ordering for learning*.
+- **R-012** — Once the existential risks are validated the register delivers one thin row per
+  remaining theme before a second row from one theme, and any departure is one the skill licenses —
+  another differentiator, a material risk, required recovery, or a materially higher-frequency
+  behaviour. Read from the rows, never from a statement about them. `drawing-the-map.md`
+  *Ordering for learning*.
 - **R-013** — The scope boundary ships with the first row that persists data, one named resolver owns
   the current scope, the seam is stated under `Cross-functional concerns`, and `Assumptions` records
   what the rows before it may ignore. Identity deferred past the second row delivering behaviour to an
-  end user is justified once in `Ordering criteria`, against named evidence. `drawing-the-map.md`
-  *The identity seam*.
+  end user is preceded in the register by the rows that produce the evidence the deferral rests on.
+  `drawing-the-map.md` *The identity seam*.
 - **R-014** — Every row preceding identity names its own audience, and no `Outcome` before it promises
   a user who cannot exist yet. `drawing-the-map.md` *The identity seam*; `slice-rules.md`
   *What makes a slice*.
@@ -117,18 +118,17 @@ the failure they guard.
   decision to revisit. Several entries of one subsystem are one question. `slice-rules.md`
   *The columns* → `kind: enabler`.
 - **R-017** — Every published `Depends on` names a predecessor no controlled input and no narrower real
-  precursor can stand in for, no edge restates a reason `Ordering criteria` already gives, what
-  every row depends on — the repository, the skeleton — is not published, and no row that builds on a
-  table, resolver or adapter another `NOW` row delivers carries `—`. `drawing-the-map.md`
-  *Hard dependencies*. *Validator: that the ids resolve and close no cycle. Reading: that the edge is
-  hard, and that no hard edge is missing.*
-  *⚠ failed — published order: the shape to look for is an edge whose reason is already written in a
-  criterion, and an edge to a feeder wider than the outcome needs. Both survived one run because the
-  closing checklist tested one half of the rule; the halves it dropped — the narrower real precursor,
-  and preferred order — are what every false edge fell on. The checklist now carries all three, the
-  failure is named in `drawing-the-map.md` *Hard dependencies*, and the template makes `—` the
-  default. Fixed: the run after carried two published edges, both hard, and none restating a
-  criterion.*
+  precursor can stand in for, what every row depends on — the repository, the skeleton — is not
+  published, and no row that builds on a table, resolver or adapter another `NOW` row delivers carries
+  `—`. `drawing-the-map.md` *Hard dependencies*. *Validator: that the ids resolve and close no cycle.
+  Reading: that the edge is hard, and that no hard edge is missing.*
+  *⚠ failed — published order: the shape to look for is an edge a controlled input or a narrower real
+  precursor could stand in for, published because someone preferred that sequence, and an edge to a
+  feeder wider than the outcome needs. Both survived one run because the closing checklist tested one
+  half of the rule; the halves it dropped — the narrower real precursor, and preferred order — are
+  what every false edge fell on. The checklist now carries both, the failure is named in
+  `drawing-the-map.md` *Hard dependencies*, and the template makes `—` the default. Fixed: the run
+  after carried two published edges, both hard, and both surviving the substitution test.*
   *⚠ opposite — a column of `—` that drops the edges a reorder would break with nobody noticing.
   Publishing nothing costs more than publishing three too many. This is what the fix for the failure
   above bought: the same run dropped a hard edge onto a row whose `Includes` builds on the tables and
@@ -138,8 +138,8 @@ the failure they guard.
 - **R-018** — A redraw leaves `archive/` untouched, carries `OUT-OF-SCOPE` and
   `Cross-functional concerns` forward, lifts explicitly and with its cost stated any the new goal
   contradicts, gives every candidate its own verdict one at a time, re-justifies every row still open,
-  and does not restart the counter. Goal, themes, register, ordering criteria, `Assumptions` and
-  `Open questions` are drawn from nothing. *Draw the map* and `drawing-the-map.md`, *What carries when
+  and does not restart the counter. Goal, themes, register, `Assumptions` and `Open questions` are
+  drawn from nothing. *Draw the map* and `drawing-the-map.md`, *What carries when
   a map already stands*.
 
 ## What makes a row

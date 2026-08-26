@@ -42,10 +42,6 @@ scannable at all. The register names the row the way a person names it out loud.
 **Fifteen rows** because the problem fits at this granularity, not because fifteen is a target. The cap
 binds granularity: had it not fitted, the finding would have been about the goal's width.
 
-**`Ordering criteria` ranks what the skill leaves as siblings** — minimum delivery path, conventions,
-existential risk, breadth. Breadth loses exactly once, and the exception is named inside the criterion
-that concedes it.
-
 **The differentiator goes first, on seeded data.** `S3` and `S4` land before any user can add a recipe
 — manual entry is `S7`, import `S8`. `goal.md` calls cross-language semantic search *il vero elemento
 distintivo* and says the project is otherwise largely a rewrite of tools that exist; the seed corpus

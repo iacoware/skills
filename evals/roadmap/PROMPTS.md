@@ -147,3 +147,11 @@ Due tattiche che voglio siano valutate esplicitamente, accettate o scartate con 
 Un documento in design/roadmap/PERFORMANCE-OPTIONS.md, in inglese come il resto di design/.
 Non toccare SKILL.md, references/, assets/, scripts/ né alcunché sotto evals/.
 Chiudi con le domande aperte che bloccano la scelta fra le opzioni, se ce ne sono.
+
+---
+
+## Riflettere su PERFORMANCE-OPTIONS
+
+Leggi @design/roadmap/PERFORMANCE-OPTIONS.md e @evals/roadmap/recipe-app/results/ROADMAP-CC-3/PERF-SUGGESTIONS.md . Vorrei discutere del suggerimento S1 "Scrivere meno prosa". Sono d'accordo sul mettere in campo questo fix. Se prendo la roadmap di CC-3, la tabella dei Themes di Now, di Later e out-of-scope vanno bene, mentre le altre sezioni come ordering criteria, assumptions, cross functional concerns sono molto lunghe, lì forse si può ridurre qualcosa. Non mi è chiaro come poterlo fare però.
+
+Sei d'accordo con il mio assesment? Mi suggerisci una strategia per attuare la riduzione?

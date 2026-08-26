@@ -70,37 +70,6 @@ intero e ha lasciato la tabella. `NOW` tiene le otto righe che restano.
   chiave di unicità né un confronto di similarità in scrittura. Il prezzo è che lo stesso link
   aggiunto da due membri produce due ricette, e che la ricerca le restituirà entrambe.
 
-## Ordering criteria
-
-1. **Il percorso minimo di consegna.** Repository e scheletro prima di ogni promessa, e separati:
-   una CI verde non dice niente sull'ipotesi di hosting, e aprire account è lavoro umano con un modo
-   di fallire diverso da un deploy che non si alza.
-2. **Il rischio esistenziale e il differenziatore.** La ricerca semantica cross-lingua è il motivo
-   per cui questo progetto non è Mealie: si misura per prima, su `S2`, su un corpus di prova, senza
-   aspettare che esista un prodotto. Questo criterio perde una volta sola, contro il n. 5: la *riga*
-   di ricerca `S7` segue tutti i produttori che alimentano gli embedding. Lo spike è ciò che compra
-   l'anticipo che la riga non può prendersi.
-3. **La correzione prima dello stato correggibile.** L'aggiunta non ha review: la prima riga che può
-   salvare una ricetta imperfetta deve già saperla correggere. Per questo il form condiviso `S3`
-   arriva prima dell'aggiunta da link `S4`, benché il link sia il caso più frequente — la frequenza
-   (n. 6) perde qui.
-4. **La catena di recupero dichiarata dalle sorgenti, prima che si apra un altro tema.** Le sorgenti
-   dichiarano il fallback LLM il recupero automatico del path da link e il copia-incolla la sua via
-   d'uscita manuale: `S5` e `S6` chiudono quel path prima che un altro tema si apra. È l'unica
-   deroga a *breadth before depth* di questa mappa, e sta qui.
-5. **Un solo proprietario per ogni pipeline condivisa.** La riga che apre una pipeline segue tutte
-   le righe che la alimentano: `S7` segue le tre righe di cattura e il form, `S10` segue le righe
-   che producono ricette e un `og:image`.
-6. **La frequenza d'uso, e un esito sottile da ogni tema che resta.** Dopo i rischi esistenziali, un
-   esito da ogni promessa prima di una seconda riga sulla stessa. Perde contro il n. 3 e il n. 4.
-7. **L'identità appena l'evidenza lo consente.** `S8` è rimandata oltre la seconda riga d'uso perché
-   l'evidenza che ancora manca — il tasso di successo della cascata di estrazione e il recall
-   cross-lingua — si raccoglie su un unico proprietario implicito, e Auth.js non ne aggiunge un
-   grammo. Appena `S7` ha misurato, l'accesso arriva: prima di `S9` che ne dipende, e prima di `S10`
-   che non ne dipende.
-8. **Dove finisce `NOW`.** Con la riga più piccola che mette il rilascio coerente in mano a famiglia
-   e amici, `S11`, con la sola prontezza operativa che le sorgenti chiedono.
-
 ## Assumptions
 
 - `S7` — "embedding mai a runtime sulle query di ricerca" e `similarity(embedding, embedding(query))`

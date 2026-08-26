@@ -11,13 +11,11 @@ const ROADMAP_SECTIONS = [
   "NOW",
   "LATER",
   "OUT-OF-SCOPE",
-  "Ordering criteria",
   "Assumptions",
   "Open questions",
   "Cross-functional concerns",
 ]
 const LIST_ONLY_SECTIONS = [
-  "Ordering criteria",
   "Assumptions",
   "Open questions",
   "Cross-functional concerns",

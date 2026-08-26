@@ -45,13 +45,6 @@ edge a reorder would break. Ids stay plain text in `Id` and in `Depends on`; the
 - **[Excluded capability.]** [Written as the licence it gives: because this is declared unsolved,
   the solution may do without X, and the price it pays for that.]
 
-## Ordering criteria
-
-1. **[Criterion, in a phrase.]** [What it decides about order, and where it loses to another
-   criterion.]
-
-[Numbered, because the ranking between the criteria is itself a decision this map takes.]
-
 ## Assumptions
 
 - `[theme, id or goal]` — [Something taken as true in order to draw the map, and that asks to be

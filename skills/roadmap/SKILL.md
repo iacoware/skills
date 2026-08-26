@@ -43,8 +43,7 @@ under either reading would destroy a standing record; nothing else here may stop
 Read before deciding anything:
 
 - whether `.roadmap/roadmap.md` is there, and if it is, its `Goal`, its themes, its register,
-  `LATER`, `OUT-OF-SCOPE`, `Ordering criteria`, `Assumptions`, `Open questions` and
-  `Cross-functional concerns`;
+  `LATER`, `OUT-OF-SCOPE`, `Assumptions`, `Open questions` and `Cross-functional concerns`;
 - `.roadmap/slices/` and `.roadmap/archive/`, which give the open documents and what was delivered;
 - the sources the input points at, and `docs/agents/issue-tracker.md` when it is there.
 
@@ -150,6 +149,10 @@ reorder.
 
 **Retirement** takes a row out of `NOW` undelivered: it dies, or it goes back to `LATER` as a
 candidate.
+
+**A section the format no longer has** — `Ordering criteria`, left by a session that wrote the map
+under an older format — is deleted with the rest of the block. The validator rejects it as a section
+the roadmap does not have, and what it held is the register's order.
 
 **Last, the coverage question:** does what is left in `NOW` still reach the goal? Usually the answer
 is one line; it is asked anyway, because `NOW` moved under a fixed goal. A failed check never reopens
