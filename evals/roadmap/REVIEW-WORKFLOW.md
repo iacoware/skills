@@ -46,7 +46,9 @@ is the sandbox — rerun it outside.
 true`, and dropping the prefix means reviewing the model instead of the skill.
 
 **Model and effort are set in the session, never in the prompt.** Check what the session actually says
-before sending, and write down what it said rather than what you intended.
+before sending, and write down what it said rather than what you intended. A headless run sets both on
+the command line, which is outside the prompt in the same sense, and records what it set in its
+`PROMPT.md`.
 
 **Every run gets its own directory** under `recipe-app/results/`, and the session is pointed at that
 directory as if it were the project. Never point a session at `reference-roadmap/` or at `fixtures/`:
@@ -55,8 +57,11 @@ both are frozen and a session writes.
 **A run directory keeps a `PROMPT.md` where the prompt is the thing under test** — the three router
 cards — or where the run departs from the card: another model or harness, a sub-agent driving, a run
 that ends before the transcript does. Written from what the session received, not from the card. A
-drawing run that follows its card writes none: the card is the prompt, and the text the session
-actually received is in the transcript with every answer given back.
+drawing run driven by hand and following its card writes none: the card is the prompt, and the text
+the session actually received is in the transcript with every answer given back. **A headless run
+always writes one**, because it departs on the harness and because the prompt it renders is a file
+under version control that changes between runs — the argument for treating it as a constant does not
+hold there.
 
 **And it keeps the session itself**, as `TRANSCRIPT.jsonl`. Half the rules have no artifact in
 `.roadmap/` — what the session asked, what it declined to write, what it put to the author — and
@@ -75,7 +80,9 @@ them.
    Scenario 0 starts from an empty directory.
 2. **Send the card's prompt**, with this run's directory substituted. What it carries beyond the
    request is the read restriction: the sources as the only input, no search ranging over the rest of
-   the repository, and the same restriction on anything the session delegates to.
+   the repository, and the same restriction on anything the session delegates to. On scenario 0 the
+   text lives in [`recipe-app/prompts/run.prompt.md`](recipe-app/prompts/run.prompt.md) and
+   `make eval-run` renders and sends it; see *A run driven headless* below for what that costs.
 3. **Answer what it asks and nothing else.** *Establish the situation* obliges the session to ask
    what was delivered — the only place it is asked — and a tracker cannot answer it; each card says
    what to answer. Answering more turns the run into a collaboration you cannot read.
@@ -97,7 +104,9 @@ them.
    none, that line is the whole file. A sub-agent-driven run captures the driver's session, which
    carries the sub-agent's turns marked `isSidechain: true`. A harness with no such file leaves
    `/export` inside the session, after the report: it costs one turn, spent where there is nothing
-   left to read.
+   left to read. **A headless run has already done this step**: the driver chooses the
+   session id, so it copies that session's file by name instead of the newest one, and neither habit
+   above has anything to guard — there is no second terminal, no `/clear`, and nothing typed after.
 6. **`make validate-roadmap ROADMAP=<the run directory>/.roadmap`** from the repository root —
    structural, deterministic, free. `ROADMAP` is the directory holding `roadmap.md`, not a file. If it
    is red, that is a finding and not a repair: the map is the artifact under judgement, and nothing
@@ -109,6 +118,26 @@ them.
    rather than the repository root, so a session that does not change directory first gets nothing —
    an artifact of this layout, not a defect. R-033 reads that it ran at all and what it did with the
    `WARNING`s.
+
+## A run driven headless
+
+`make eval-run` sends scenario 0 through `claude -p` instead of a person typing into an interactive
+session, and `make eval-cycle` follows it with the review in a second session whose context is empty.
+This is a departure and each run records it in its own `PROMPT.md`: harness, model, effort, session id.
+
+**What licenses it is particular to scenario 0.** Step 3 above obliges whoever drives a run to answer
+what the session asks, and on this card there is nothing to answer: the prompt already says the
+project is greenfield and that the directory is to be created, which is the one question *Establish
+the situation* obliges the session to ask. `ROADMAP-CC-3` bears it out — one user turn in the whole
+run, and R-001 green. No other card is like this, and scenario 2 ends in a question by design.
+
+**What it does not put to the test** is the interactive invocation path. The driver refuses to go on
+where that matters: a transcript with no `Skill(roadmap)` call means the run exercised the model
+rather than the skill, and the review is not sent. A session that wrote no `roadmap.md` stops it too.
+
+**It is not the same run as an interactive one.** Same prompt text, different harness — so a headless
+run is read against `ROADMAP-CC-3` as well as against the oracle, at least until one has shown the
+behaviour did not move.
 
 ## And the session, in either reading
 

@@ -14,6 +14,10 @@ and not beside the skill.
 | `scripts/run_metrics.ts` | Reads a run's `TRANSCRIPT.jsonl` and writes its `METRICS.md`: time, tokens, API calls, tools. |
 | `make run-metrics RUN=<dir>` | Runs it from the repository root. `RUN` is the run directory, not the transcript. |
 | `make capture-run RUN=<dir>` | Both halves of closing a run: captures the transcript, then writes the metrics from it. |
+| `recipe-app/prompts/` | The four inputs the cycle sends, one file per session: the drawing, its review, and the two readings of that review — what the map got wrong, and what it cost. A file *is* the prompt, word for word, unwrapped inside paragraphs because a markdown source's wrap never reaches the model. |
+| `scripts/render_prompt.ts` | Resolves `{{RUN_DIR}}` in a prompt file, and refuses to render one with a placeholder left. |
+| `scripts/run_cycle.ts` | Drives the cycle: renders, asks for authorization, sends through `claude -p`, captures, refuses to go on where the run did not exercise the skill. |
+| `make eval-cycle` | The drawing and its review, in two sessions with empty context. `make eval-run` and `make eval-review RUN=<dir>` are each half. |
 | `REVIEW-WORKFLOW.md` | The procedure: which half to run, the preconditions, producing a run, reading one. Travels to a new scenario unchanged. |
 | `EVALUATION-RULES.md` | What to look for, as numbered checks about the skill. Portable too. |
 | `recipe-app/SCENARIOS.md` | The four cards: a drawing from nothing, and three inputs that hold the router. Starting state, prompt, answer, verdict. Answer key. |
@@ -22,7 +26,7 @@ and not beside the skill.
 | `recipe-app/reference-roadmap/` | The oracle: one good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Read last. |
 | `recipe-app/REFERENCE-NOTES.md` | The reasons the oracle does not publish. Read with it. |
 | `recipe-app/fixtures/` | Frozen starting states, and one minimal mutation of the oracle per validator check. |
-| `recipe-app/results/` | What the skill produced, one directory per run, written by the run itself, with the transcript that produced it and a `PROMPT.md` only where the prompt is under test. Never an input to a session. |
+| `recipe-app/results/` | What the skill produced, one directory per run, written by the run itself, with the transcript that produced it and — always, for a headless run — the `PROMPT.md` it was sent. Never an input to a session. |
 | `../AGENTS.md` | Authorization rules for provider runs. Binding on every generation call. |
 
 Add a second scenario and only the last two jobs are written anew: a **procedure** and **rules** hold

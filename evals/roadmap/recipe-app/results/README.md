@@ -3,15 +3,17 @@
 What the skill actually produced, one directory per run. Never read by a generation session, and
 never the input to one: a session gets a copy.
 
-**A run keeps its own `PROMPT.md` only where the prompt is what is under test** — the three router
-cards, whose sentence is the input the router reads, and where a paraphrase is a different run.
-Elsewhere the card in [`../../PROMPTS.md`](../../PROMPTS.md) *is* the prompt, and copying a constant
-into every directory buys nothing: the text the session received and every answer given back are in
-`TRANSCRIPT.jsonl` verbatim, which is where the rules read them anyway.
+**A run driven headless keeps a `PROMPT.md`, always.** `make eval-run` writes it before sending:
+harness, model, effort, session id, and the prompt word for word. The prompt is no longer a constant
+— it is [`../prompts/run.prompt.md`](../prompts/run.prompt.md), a file under version control that the
+improvement cycle may change between one run and the next — so a directory that did not carry its own
+copy would leave nothing saying which version it was sent.
 
-**Write one anyway where the run departs from the card**, since the transcript shows the departure
-without explaining it: a model or harness other than the card assumes, a sub-agent driving instead of
-a person, or a point where the run ends before the file does.
+**A run driven by hand keeps one where the prompt is what is under test** — the three router cards,
+whose sentence is the input the router reads, and where a paraphrase is a different run — **or where
+the run departs from the card**, since the transcript shows the departure without explaining it: a
+model or harness other than the card assumes, a sub-agent driving instead of a person, or a point
+where the run ends before the file does.
 
 **Every run keeps its own `TRANSCRIPT.jsonl`**: the session as the harness recorded it, copied out by
 whoever drove the run and never written by the session itself. Half the evidence about this skill is
@@ -27,16 +29,20 @@ RUN=<dir>` regenerates it — so it is derived and not evidence: where the two d
 wins. It serves the work on speed and token cost, not the judgement: no rule in
 `EVALUATION-RULES.md` reads it.
 
-A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`. It cites rule
-ids, brief ids and the oracle, so it is answer key: a generation session pointed at a run directory
-may not read it, and no run directory that holds one is reused for generation.
+A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`, and where the
+cycle went on to propose changes to the skill, `IMPROVEMENTS.md` beside it. Both cite rule ids, brief
+ids and the oracle, so both are answer key: a generation session pointed at a run directory may not
+read either, and no run directory that holds one is reused for generation. `IMPROVEMENTS.md` is
+anchored to its run but reads every other run's `REVIEW.md` too — what it ranks by is which violations
+recur, which one report cannot show.
 
 | Run | Branch exercised | Starting state | Outcome | Net |
 |---|---|---|---|---|
 | `manual-run-1` | Drawing | empty project | 11 rows, `S0`–`S10`, validator green | half — no transcript |
 
 `manual-run-1` is the one run driven by a person in an interactive session rather than through a
-sub-agent, and what was sent is the drawing card in [`../../PROMPTS.md`](../../PROMPTS.md). It has no
+sub-agent, and what was sent is the drawing prompt, which lived in `../../PROMPTS.md` then and is
+[`../prompts/run.prompt.md`](../prompts/run.prompt.md) now. It has no
 transcript either — it predates the obligation — so
 the nine rules that read the session are inconclusive against it, and its `REVIEW.md` says so.
 
