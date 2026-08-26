@@ -25,11 +25,10 @@ and the only state anybody can write an oracle for honestly.
 mkdir -p evals/roadmap/recipe-app/results/ROADMAP-CC-<N>
 ```
 
-**The prompt:**
-
-```
-/roadmap Read the markdown documents in @evals/roadmap/recipe-app/sources/, starting from goal.md, and draw the roadmap that reaches the goal they state. Treat evals/roadmap/recipe-app/results/ROADMAP-CC-<N>/ as the project root: write the map to its .roadmap/. Read nothing else in this repository, in this session or in any session you delegate to: the sources are the only input, and everything else under evals/ and under design/ is off limits.
-```
+**The prompt** is [`prompts/run.prompt.md`](prompts/run.prompt.md), with `{{RUN_DIR}}` resolved to
+this run's directory. That file is the text word for word and this card no longer repeats it: it used
+to carry a second version, which had already drifted from the one every run was actually sent.
+`make eval-run` renders it and sends it; `mkdir` above is what a run driven by hand still needs.
 
 **It writes unasked** — there is no `.roadmap/` to lose — and argues with its own first cut in the
 same session. Whatever it asks, answer only what it needs to proceed.
