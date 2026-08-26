@@ -26,14 +26,17 @@ net does not cover is in [`README.md`](README.md).
 ## Scenario 0, in order
 
 ```bash
-make add                 # install the skill under review, then restart the session
-make eval-cycle          # the drawing, then its review: two sessions, empty context each
+make eval-cycle          # install, then the drawing and its review: two sessions, empty context each
 ```
 
-`make add` is not optional. The agent reads `~/.claude/skills/roadmap`, a symlink to the installed
-copy, so skipping it reviews the version before your change:
+**The cycle installs the skill itself** — `make add`, before it asks to send anything — and stops if
+`~/.claude/skills/roadmap` still differs from `skills/roadmap` afterwards. That symlink points at a
+copy of the skill and not at this repository, and it is what the agent reads: a run that skipped the
+step would review the version before your change, and nothing in its report would say so. The
+by-hand path installs nothing for you, so the router scenarios still start here:
 
 ```bash
+make add                 # install the skill under review, then restart the session
 diff -r skills/roadmap ~/.claude/skills/roadmap --exclude=.claude && echo "installed copy matches"
 ```
 
@@ -84,6 +87,8 @@ same run as an interactive one: same prompt text, different harness. Read one ag
 as well as against the oracle, at least until a run has shown the behaviour did not move.
 
 ## The router scenarios, by hand
+
+`make add` first, and the diff above to check it took: nothing below installs the skill for you.
 
 1. **Copy the card's starting state** into a fresh `recipe-app/results/ROUTER-<n>-CC-<N>`, with the
    command the card gives. Never point a session at `reference-roadmap/` or at `fixtures/`: both are

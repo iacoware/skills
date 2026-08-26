@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process"
+import { spawn, spawnSync } from "node:child_process"
 import { randomUUID } from "node:crypto"
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs"
 import { homedir } from "node:os"
@@ -23,6 +23,28 @@ type Step = keyof typeof STEPS
 const fail = (message: string): never => {
   console.error(`\n${message}`)
   process.exit(1)
+}
+
+// La sessione legge `~/.claude/skills/roadmap`, che è una copia e non un link al repo: senza
+// reinstallare, il ciclo giudicherebbe la versione precedente alla modifica sotto esame. È l'unico
+// passo che il driver non può lasciare a chi lo lancia, perché dimenticarlo non si vede nel report.
+const install = () => {
+  console.log("── installo la skill sotto esame ──")
+  const installed = spawnSync("make", ["add"], { stdio: "inherit" })
+  if (installed.error !== undefined) fail(`make add non è partito: ${installed.error.message}`)
+  if (installed.status !== 0) fail(`make add è uscito con ${installed.status}: il ciclo si ferma qui.`)
+
+  const copy = join(homedir(), ".claude", "skills", "roadmap")
+  const compared = spawnSync("diff", ["-r", "skills/roadmap", copy, "--exclude=.claude"], {
+    stdio: "inherit",
+  })
+  if (compared.status !== 0)
+    fail(
+      `${copy} non corrisponde a skills/roadmap: l'installazione non ha preso la versione in\n` +
+        `sviluppo, e il ciclo si ferma qui.`,
+    )
+
+  console.log(`skill installata: ${copy} corrisponde a skills/roadmap.`)
 }
 
 const nextRunDir = () => {
@@ -238,6 +260,8 @@ const main = async () => {
   })
 
   if (!existsSync(SCENARIO)) fail(`Da lanciare dalla radice del repo: ${SCENARIO} non esiste da qui.`)
+
+  install()
 
   const model = values.model as string
   const effort = values.effort as string
