@@ -49,7 +49,11 @@ survives in full and matches exactly one historical version. Each says so, and s
 `ROADMAP-CC-4` the reconstruction and the cheap inference disagree — `779bf17` lands between the
 skill that ran and the commit that added the run — which is the whole reason the record is now taken
 before sending rather than deduced afterwards. `manual-run-1` keeps no transcript, so for that one
-there is nothing to read the skill back out of, and no anchor is claimed.
+there is nothing to read the skill back out of. What it keeps instead is a partial `PROMPT.md`, the
+anchor and nothing else, since nothing else survives: the cheap inference, the one piece of evidence
+that goes past it — the map as committed matches exactly one template version — what would falsify
+it, and what hangs on it. It stays an inference and says so, and what the file removes is the work of
+redoing it every cycle, not the doubt.
 
 | Run | Branch exercised | Starting state | Outcome | Net |
 |---|---|---|---|---|
