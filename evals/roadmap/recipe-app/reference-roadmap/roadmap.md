@@ -38,7 +38,7 @@ questa è la mappa come è stata disegnata la prima volta contro il goal.
 | `S10` | [Copia-incolla del testo di una pagina](slices/S10-copia-incolla.md) | `import-automatico` | `product` | `small` | `ready` | `agent` | `S9` |
 | `S11` | [Foto della ricetta](slices/S11-foto.md) | `foto` | `product` | `medium` | `ready` | `agent` | `S8` |
 | `S12` | [Ricettario condiviso su invito](slices/S12-ricettario-condiviso.md) | `condivisione` | `product` | `large` | `ready` | `agent` | `S6` |
-| `S13` | [Tag e tempo derivati per la ricerca](slices/S13-tag-e-tempo-derivati.md) | `ricerca-semantica` | `enabler` | `small` | `ready` | `agent` | `S9` |
+| `S13` | [Tag e tempo derivati per la ricerca](slices/S13-tag-e-tempo-derivati.md) | `ricerca-semantica` | `enabler` | `small` | `ready` | `agent` | `S8`, `S9` |
 | `S14` | [Messa in mano ai primi utenti](slices/S14-primi-utenti.md) | — | `release` | `small` | `ready` | `mixed` | `S12` |
 
 ## LATER
