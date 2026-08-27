@@ -32,10 +32,10 @@ questa è la mappa come è stata disegnata la prima volta contro il goal.
 | `S4` | [Ricerca semantica cross-lingua](slices/S4-ricerca-semantica.md) | `ricerca-semantica` | `product` | `medium` | `ready` | `agent` | `S3` |
 | `S5` | [Elenco e lettura di una ricetta](slices/S5-elenco-e-lettura.md) | `consultazione` | `product` | `small` | `ready` | `agent` | `S3` |
 | `S6` | [Accesso con Google](slices/S6-accesso-google.md) | `autenticazione` | `product` | `medium` | `ready` | `mixed` | — |
-| `S7` | [Scrittura e correzione a mano](slices/S7-scrittura-a-mano.md) | `inserimento-manuale` | `product` | `medium` | `ready` | `agent` | `S6` |
-| `S8` | [Import da URL con JSON-LD](slices/S8-import-da-url.md) | `import-automatico` | `product` | `large` | `ready` | `agent` | — |
-| `S9` | [Fallback LLM per le pagine senza dati strutturati](slices/S9-fallback-llm.md) | `import-automatico` | `product` | `medium` | `ready` | `agent` | `S8` |
-| `S10` | [Copia-incolla del testo di una pagina](slices/S10-copia-incolla.md) | `import-automatico` | `product` | `small` | `ready` | `agent` | `S9` |
+| `S7` | [Scrittura e correzione a mano](slices/S7-scrittura-a-mano.md) | `inserimento-manuale` | `product` | `medium` | `ready` | `agent` | `S3` |
+| `S8` | [Import da URL con JSON-LD](slices/S8-import-da-url.md) | `import-automatico` | `product` | `large` | `ready` | `agent` | `S3` |
+| `S9` | [Fallback LLM per le pagine senza dati strutturati](slices/S9-fallback-llm.md) | `import-automatico` | `product` | `medium` | `ready` | `agent` | `S3` |
+| `S10` | [Copia-incolla del testo di una pagina](slices/S10-copia-incolla.md) | `import-automatico` | `product` | `small` | `ready` | `agent` | `S7` |
 | `S11` | [Foto della ricetta](slices/S11-foto.md) | `foto` | `product` | `medium` | `ready` | `agent` | `S8` |
 | `S12` | [Ricettario condiviso su invito](slices/S12-ricettario-condiviso.md) | `condivisione` | `product` | `large` | `ready` | `agent` | `S6` |
 | `S13` | [Tag e tempo derivati per la ricerca](slices/S13-tag-e-tempo-derivati.md) | `ricerca-semantica` | `enabler` | `small` | `ready` | `agent` | `S9` |
