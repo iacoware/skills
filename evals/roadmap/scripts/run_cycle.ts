@@ -219,7 +219,39 @@ const invokedTheSkill = (runDir: string) =>
       }
     })
 
-const promptRecord = (runDir: string, sessionId: string, model: string, effort: string, prompt: string) => `# Prompt — ${runDir.split("/").pop()}
+const git = (...args: string[]) => spawnSync("git", args, { encoding: "utf8" }).stdout.trim()
+
+// L'ancoraggio del run alla skill che ha girato. Senza, il ciclo di miglioramento deve dedurlo dalla
+// data del commit che aggiunge il run, e un run committato dopo una modifica a `skills/roadmap`
+// sposta il confine: un fix mai messo alla prova si legge come un fix che non ha preso.
+const skillVersion = () => {
+  const uncommitted = git("status", "--porcelain", "--", "skills/roadmap")
+    .split("\n")
+    .map((line) => line.slice(3).trim())
+    .filter((path) => path !== "")
+
+  return {
+    commit: git("log", "-1", "--format=%h %s"),
+    tree: git("rev-parse", "--short", "HEAD:skills/roadmap"),
+    uncommitted,
+  }
+}
+
+const skillRow = ({ tree, uncommitted }: ReturnType<typeof skillVersion>) =>
+  uncommitted.length === 0
+    ? `tree \`${tree}\`, uguale a HEAD`
+    : `tree \`${tree}\` a HEAD, **più modifiche non committate**: ${uncommitted.map((path) => `\`${path}\``).join(", ")}`
+
+type Recorded = {
+  runDir: string
+  sessionId: string
+  model: string
+  effort: string
+  prompt: string
+  skill: ReturnType<typeof skillVersion>
+}
+
+const promptRecord = ({ runDir, sessionId, model, effort, prompt, skill }: Recorded) => `# Prompt — ${runDir.split("/").pop()}
 
 Run headless: nessuna persona ha guidato la sessione in interattivo, ed è la departure che
 [\`../README.md\`](../README.md) obbliga a registrare qui. Il testo è
@@ -236,6 +268,16 @@ dovuta, quella su che cosa è stato consegnato — quindi la perdita è piccola,
 | Modello | \`${model}\` |
 | Effort | \`${effort}\` |
 | Session id | \`${sessionId}\` |
+| Commit | \`${skill.commit}\` |
+| \`skills/roadmap\` | ${skillRow(skill)} |
+
+Le ultime due righe sono l'ancoraggio, e la skill che ha girato è quella che dichiarano: la sessione
+legge la copia installata, e il ciclo si ferma prima di inviare se quella copia e l'albero di lavoro
+divergono. Il commit è il punto della storia — è da lì che il ciclo di miglioramento delimita
+l'intervallo dei fix che questo run ha messo alla prova, \`git log <commit del run precedente>..<questo>
+-- skills/roadmap\`, e dentro l'intervallo si leggono tutti i commit. Il tree è l'identità del
+contenuto: due run che ne dichiarano uno uguale hanno girato la stessa skill, per quanti commit ci
+siano stati in mezzo.
 
 Il prompt, alla lettera:
 
@@ -251,7 +293,10 @@ const runStep = async ({ step, runDir, model, effort, sessionId }: Planned) => {
 
   if (step === "run") {
     mkdirSync(runDir, { recursive: true })
-    writeFileSync(`${runDir}/PROMPT.md`, promptRecord(runDir, sessionId, model, effort, prompt))
+    writeFileSync(
+      `${runDir}/PROMPT.md`,
+      promptRecord({ runDir, sessionId, model, effort, prompt, skill: skillVersion() }),
+    )
   }
 
   await send(prompt, sessionId, model, effort)

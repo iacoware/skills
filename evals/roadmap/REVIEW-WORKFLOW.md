@@ -47,7 +47,7 @@ number, and writes there in this order:
 
 | File | Written by | What it is |
 |---|---|---|
-| `PROMPT.md` | the driver, before sending | harness, model, effort, session id, and the prompt word for word |
+| `PROMPT.md` | the driver, before sending | harness, model, effort, session id, the prompt word for word, and the commit and `skills/roadmap` tree the run ran on |
 | `.roadmap/` | the drawing session | the map — the artifact under judgement |
 | `TRANSCRIPT.jsonl` | the driver, by session id | the session as the harness recorded it |
 | `METRICS.md` | `run_metrics.ts` | time, tokens, calls, tools. Derived: where it and the transcript disagree, the transcript wins |
@@ -68,9 +68,10 @@ node evals/roadmap/scripts/render_prompt.ts evals/roadmap/recipe-app/prompts/imp
 node evals/roadmap/scripts/render_prompt.ts evals/roadmap/recipe-app/prompts/improve-perf.prompt.md RUN_DIR=<dir>
 ```
 
-The first picks the three changes to the skill that pay most, ranked by which violations recur across
-runs, and writes `IMPROVEMENTS.md`. The second reads the metrics and the transcript for what the run
-cost, and writes `PERF-SUGGESTIONS.md`.
+The first reads every run's `REVIEW.md` and the git history of `skills/roadmap` between them, and
+writes `IMPROVEMENTS.md`: every regression and every fix that did not take, plus the three otherwise
+recurring violations that pay most to close. The second reads the metrics and the transcript for what
+the run cost, and writes `PERF-SUGGESTIONS.md`.
 
 ### What driving it this way costs
 

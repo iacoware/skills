@@ -15,6 +15,20 @@ dovuta, quella su che cosa è stato consegnato — quindi la perdita è piccola,
 | Modello | `opus` |
 | Effort | `high` |
 | Session id | `e87396be-29d6-481a-abc3-56458b5aea1f` |
+| Commit | `d805196` — *Remove Ordering criteria from the map format* |
+| `skills/roadmap` | tree `2f1d0db` |
+
+**Le due righe sono ricostruite, non registrate.** Questo run è di prima che `run_cycle.ts`
+scrivesse l'ancoraggio, quindi non è un dato preso al momento dell'invio. Viene dal transcript: la
+sessione ha letto i file della skill con `cat`, e `TRANSCRIPT.jsonl` ne conserva il testo integrale.
+Confrontato con ogni versione storica di `skills/roadmap`, `references/drawing-the-map.md` e
+`assets/roadmap-template.md` combaciano per intero con una versione sola, e con la stessa: quella di
+`d805196`.
+
+Non è l'inferenza dalla data del commit che aggiunge il run, ed è bene che non lo sia: fra la skill
+che ha girato e `f1e93de`, il commit che aggiunge questo run, sta `779bf17` — *Catch theme
+compression where it leaves a trace* — che questa sessione non ha mai visto. Chi lo desse per messo alla prova da questo
+run leggerebbe un fix mai testato come un fix che non ha preso.
 
 Il prompt, alla lettera:
 

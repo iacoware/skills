@@ -11,6 +11,21 @@ turn in `TRANSCRIPT.jsonl` carries `isSidechain: true`. 37 assistant turns.
 
 Effort: high
 
+## The version of the skill that ran
+
+Commit `666566d` — *Execute session S3 of the refactoring plan* — and `skills/roadmap` at tree
+`eedf170`.
+
+**Reconstructed, not recorded**: this run predates the anchor `run_cycle.ts` now writes before
+sending, so it is read back out of `TRANSCRIPT.jsonl`, where the files the session `cat`-ed survive
+in full. `references/drawing-the-map.md` and `assets/roadmap-template.md` match two candidate
+versions, `676b580` and `666566d`, which differ in `SKILL.md` alone — and `SKILL.md` is loaded by
+the harness, so no `cat` of it is in the transcript. What separates them is what the session quoted
+back:
+76 of the 76 lines proper to `666566d` appear in the transcript, against 1 of the 78 proper to
+`676b580`. No commit touched `skills/roadmap` between that version and `bf979c3`, the commit that
+added this run, so here the anchor and the cheap inference agree.
+
 ## The exact text sent
 
 Sent as the first and only human turn.

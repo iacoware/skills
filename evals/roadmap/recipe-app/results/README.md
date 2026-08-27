@@ -4,7 +4,11 @@ What the skill actually produced, one directory per run. Never read by a generat
 never the input to one: a session gets a copy.
 
 **A run driven headless keeps a `PROMPT.md`, always.** `make eval-run` writes it before sending:
-harness, model, effort, session id, and the prompt word for word. The prompt is no longer a constant
+harness, model, effort, session id, the prompt word for word, and the version of the skill that ran —
+the commit, and the `skills/roadmap` tree at it. Those last two are what let the improvement cycle
+place a run in the history of the skill instead of inferring it from when the run happened to be
+committed: what it needs is the boundary between two runs, since every commit inside the interval is
+a fix that the later run put to the test. The prompt is no longer a constant
 — it is [`../prompts/run.prompt.md`](../prompts/run.prompt.md), a file under version control that the
 improvement cycle may change between one run and the next — so a directory that did not carry its own
 copy would leave nothing saying which version it was sent.
@@ -33,8 +37,19 @@ A run that has been reviewed keeps the report beside the map it judges, as `REVI
 cycle went on to propose changes to the skill, `IMPROVEMENTS.md` beside it. Both cite rule ids, brief
 ids and the oracle, so both are answer key: a generation session pointed at a run directory may not
 read either, and no run directory that holds one is reused for generation. `IMPROVEMENTS.md` is
-anchored to its run but reads every other run's `REVIEW.md` too — what it ranks by is which violations
-recur, which one report cannot show.
+anchored to its run but reads every other run's `REVIEW.md` too, and the history of `skills/roadmap`
+between the commits that added each run — what one report cannot show is which violations recur, and
+what no report shows at all is which of them a change to the skill had already taken aim at: a
+violation that goes green and comes back is a regression, one that never goes green is a fix that did
+not take, and neither is legible from the reports alone.
+
+The three `ROADMAP-CC-*` runs predate that record, and each one's `PROMPT.md` now carries the anchor
+read back out of its own transcript: the sessions `cat`-ed the skill's files, so the text they ran on
+survives in full and matches exactly one historical version. Each says so, and says how. On
+`ROADMAP-CC-4` the reconstruction and the cheap inference disagree — `779bf17` lands between the
+skill that ran and the commit that added the run — which is the whole reason the record is now taken
+before sending rather than deduced afterwards. `manual-run-1` keeps no transcript, so for that one
+there is nothing to read the skill back out of, and no anchor is claimed.
 
 | Run | Branch exercised | Starting state | Outcome | Net |
 |---|---|---|---|---|
