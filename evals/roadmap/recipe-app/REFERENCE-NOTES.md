@@ -36,6 +36,13 @@ scannable at all. The register names the row the way a person names it out loud.
 - **The two prerequisites are not published as `Depends on` edges.** Every row depends on the
   repository and the skeleton; fifteen edges saying the same thing would bury the ten that carry
   information.
+- **`Depends on` names the cheapest row that puts a row on the ground, never every row it builds
+  on.** The predecessor published is the one without which the outcome is not verifiable at all;
+  reuse a rebuild or a stand-in would cover is order, not dependency. `S9` names `S3`, whose model
+  and index every save goes through, and not `S8`, whose progress bar it borrows. `S13` names `S8`
+  and `S9` both, because its derivation has two halves and neither half stands without its own. And
+  a release row names the row its evidence enters through: `S14` names `S12` alone, though the same
+  evidence also adds a recipe from a URL and finds it by searching for it.
 
 ## The shape
 
