@@ -299,6 +299,11 @@ const runStep = async ({ step, runDir, model, effort, sessionId }: Planned) => {
     )
   }
 
+  // Terza guardia, della stessa specie delle altre due: improve legge il report di questo run prima
+  // di ogni altro, e senza quello spenderebbe una chiamata su un run che nessuno ha giudicato.
+  if (step === "improve" && !existsSync(`${runDir}/REVIEW.md`))
+    fail(`${runDir}/REVIEW.md non c'è: improve parte dal report di questo run, e il ciclo si ferma qui.`)
+
   await send(prompt, sessionId, model, effort)
 
   if (step === "run") {
@@ -361,6 +366,7 @@ const main = async () => {
         return [
           plan("run", runDir, model, effort),
           plan("review", runDir, reviewModel, reviewEffort),
+          plan("improve", runDir, reviewModel, reviewEffort),
         ]
       }
       default:
@@ -373,7 +379,11 @@ const main = async () => {
   for (const step of planned) await runStep(step)
 
   if (values.step === "cycle")
-    console.log(`\nCiclo finito su ${planned[0]!.runDir}. improve resta da lanciare a mano.`)
+    console.log(
+      `\nCiclo finito su ${planned[0]!.runDir}: mappa, review e proposte.` +
+        `\nRestano a mano le due letture che il ciclo non fa: improve-perf.prompt.md sul costo del run,` +
+        `\ne i tre interventi da leggere prima di toccare skills/roadmap.`,
+    )
 }
 
 await main()

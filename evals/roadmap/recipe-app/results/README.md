@@ -33,8 +33,8 @@ RUN=<dir>` regenerates it — so it is derived and not evidence: where the two d
 wins. It serves the work on speed and token cost, not the judgement: no rule in
 `EVALUATION-RULES.md` reads it.
 
-A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`, and where the
-cycle went on to propose changes to the skill, `IMPROVEMENTS.md` beside it. Both cite rule ids, brief
+A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`, and the
+proposals the cycle drew from it as `IMPROVEMENTS.md` beside that. Both cite rule ids, brief
 ids and the oracle, so both are answer key: a generation session pointed at a run directory may not
 read either, and no run directory that holds one is reused for generation. `IMPROVEMENTS.md` is
 anchored to its run but reads every other run's `REVIEW.md` too, and the history of `skills/roadmap`

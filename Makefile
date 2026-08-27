@@ -2,7 +2,7 @@ AGENTS := -a claude-code -a codex
 INSTALL := npx -y skills add . -g $(AGENTS) -y
 
 .PHONY: add add-skill list test test-roadmap test-evals validate-roadmap capture-transcript run-metrics capture-run \
-	eval-cycle eval-run eval-review
+	eval-cycle eval-run eval-review eval-improve
 
 add:
 	$(INSTALL)
@@ -46,8 +46,8 @@ MODEL ?= opus
 EFFORT ?= high
 CYCLE := node evals/roadmap/scripts/run_cycle.ts --model $(MODEL) --effort $(EFFORT)
 
-# Il disegno e la sua review, in due sessioni a contesto vuoto. Ogni sessione chiede
-# l'autorizzazione prima di mandare, che è quel che `evals/AGENTS.md` richiede.
+# Il disegno, la sua review e le proposte, in tre sessioni a contesto vuoto. L'autorizzazione si
+# chiede una volta sola davanti all'elenco dei tre passi, che è quel che `evals/AGENTS.md` richiede.
 eval-cycle:
 	@$(CYCLE) --step cycle
 
@@ -58,8 +58,8 @@ eval-review:
 	@test -n "$(RUN)" || { echo "usage: make eval-review RUN=<run directory>"; exit 1; }
 	@$(CYCLE) --step review --run "$(RUN)"
 
-# Commentato di proposito: `improve.prompt.md` va riletto prima di mandarlo la prima volta, e
-# `eval-cycle` si ferma alla review. Lo step esiste già nel driver.
-# eval-improve:
-# 	@test -n "$(RUN)" || { echo "usage: make eval-improve RUN=<run directory>"; exit 1; }
-# 	@$(CYCLE) --step improve --run "$(RUN)"
+# `eval-cycle` lo fa già come terzo passo: questo target serve a rifarlo su un run esistente, o a
+# farlo girare su un run più vecchio dopo un cambiamento al prompt.
+eval-improve:
+	@test -n "$(RUN)" || { echo "usage: make eval-improve RUN=<run directory>"; exit 1; }
+	@$(CYCLE) --step improve --run "$(RUN)"

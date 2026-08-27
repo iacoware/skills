@@ -26,7 +26,7 @@ net does not cover is in [`README.md`](README.md).
 ## Scenario 0, in order
 
 ```bash
-make eval-cycle          # install, then the drawing and its review: two sessions, empty context each
+make eval-cycle          # install, then the drawing, its review and the proposals: three sessions, empty context each
 ```
 
 **The cycle installs the skill itself** — `make add`, before it asks to send anything — and stops if
@@ -40,8 +40,8 @@ make add                 # install the skill under review, then restart the sess
 diff -r skills/roadmap ~/.claude/skills/roadmap --exclude=.claude && echo "installed copy matches"
 ```
 
-`make eval-cycle` asks once, listing both sessions, and sends nothing until you answer — the review
-does not come back to ask a second time: [`../AGENTS.md`](../AGENTS.md) binds, and approval of a plan
+`make eval-cycle` asks once, listing all three sessions, and sends nothing until you answer — no
+later step comes back to ask again: [`../AGENTS.md`](../AGENTS.md) binds, and approval of a plan
 is never approval to send. It works in `recipe-app/results/ROADMAP-CC-<N>`, `<N>` being the next free
 number, and writes there in this order:
 
@@ -52,32 +52,35 @@ number, and writes there in this order:
 | `TRANSCRIPT.jsonl` | the driver, by session id | the session as the harness recorded it |
 | `METRICS.md` | `run_metrics.ts` | time, tokens, calls, tools. Derived: where it and the transcript disagree, the transcript wins |
 | `REVIEW.md` | the review session | one line per violation, with rule and brief ids. **This is the output** |
+| `IMPROVEMENTS.md` | the improvement session | what to change in the skill, in three categories |
 
-`make eval-run` and `make eval-review RUN=<dir>` are each half, for when one of them has to be redone.
+`make eval-run`, `make eval-review RUN=<dir>` and `make eval-improve RUN=<dir>` are each one step, for
+when one of them has to be redone — or to run the proposals again over an older run after a change to
+`improve.prompt.md`.
 The validator is not a step of its own: `review.prompt.md` has the review session run it first thing,
 and report a red rather than repair it.
 
 **Then read `REVIEW.md`.** *Reading a run: a drawing*, below, is the discipline that prompt
 implements, and so is what you read the report against.
 
-**Two further prompts start from the same run and are not sent by the cycle.** `render_prompt.ts`
-prints the text to paste into a fresh session; each writes one file beside `REVIEW.md`:
+**The third session is the proposals.** It reads every run's `REVIEW.md` and the git history of
+`skills/roadmap` between them, and writes `IMPROVEMENTS.md`: every regression and every fix that did
+not take, plus the three otherwise recurring violations that pay most to close. It proposes and
+implements nothing — reading the three before touching `skills/roadmap` is yours.
+
+**One prompt is still not sent by the cycle**: `improve-perf.prompt.md`, which reads the metrics and
+the transcript for what the run cost and writes `PERF-SUGGESTIONS.md`. `render_prompt.ts` prints the
+text to paste into a fresh session:
 
 ```bash
-node evals/roadmap/scripts/render_prompt.ts evals/roadmap/recipe-app/prompts/improve.prompt.md RUN_DIR=<dir>
 node evals/roadmap/scripts/render_prompt.ts evals/roadmap/recipe-app/prompts/improve-perf.prompt.md RUN_DIR=<dir>
 ```
 
-The first reads every run's `REVIEW.md` and the git history of `skills/roadmap` between them, and
-writes `IMPROVEMENTS.md`: every regression and every fix that did not take, plus the three otherwise
-recurring violations that pay most to close. The second reads the metrics and the transcript for what
-the run cost, and writes `PERF-SUGGESTIONS.md`.
-
 ### What driving it this way costs
 
-**Two guards stop the cycle rather than spend the review call**: a transcript holding no
-`Skill(roadmap)` call means the run exercised the model and not the skill, and a session that wrote no
-`roadmap.md` did not finish.
+**Three guards stop the cycle rather than spend a call**: a transcript holding no `Skill(roadmap)`
+call means the run exercised the model and not the skill, a session that wrote no `roadmap.md` did not
+finish, and proposals do not start on a run whose `REVIEW.md` is missing.
 
 **What licenses it is particular to scenario 0.** A router run has to be answered — step 3 below — and
 on this card there is nothing to answer: the prompt already says the project is greenfield and that
