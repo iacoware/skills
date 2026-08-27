@@ -11,13 +11,13 @@ Poi, con quelli in mano: @design/roadmap/ROADMAP-GOAL.md, che resta l'autorità 
 
 Ogni violazione che proponi di chiudere sta in una sola di queste, e quale sia dipende dalla storia dei commit, non dalla gravità.
 
-- **Mai risolta.** Nessun commit fra gli ancoraggi l'ha mai presa di mira. Ci sta dentro anche la violazione nuova, vista in un run solo.
 - **Regressione.** Un commit identificabile la prende di mira, almeno un run dopo di lui la dà verde, e poi ricompare. La causa più probabile è un refactor che ha cancellato il fix senza accorgersene: i commit che spostano, ripuntano o rimuovono sono i primi da guardare.
 - **Fix che non ha preso.** Un commit identificabile la prende di mira e nessun run dopo di lui la dà mai verde. Qui il difetto non è solo nel piano, è nell'intervento.
+- **Mai risolta.** Nessun commit fra gli ancoraggi l'ha mai presa di mira. Ci sta dentro anche la violazione nuova, vista in un run solo.
 
 Le tre sono disgiunte. Un'assenza in un run intermedio che nessun commit spiega non è una regressione: è varianza fra due generazioni, e la violazione resta *mai risolta*.
 
-Per ogni voce delle ultime due categorie cita l'hash e di' come l'hai attribuita — id di violazione nel messaggio del commit, oppure letta dal diff. Un'attribuzione letta dal diff non è debole; è che chi legge deve poterla rifare.
+Per ogni voce delle prime due categorie cita l'hash e di' come l'hai attribuita — id di violazione nel messaggio del commit, oppure letta dal diff. Un'attribuzione letta dal diff non è debole; è che chi legge deve poterla rifare.
 
 ## Quante
 
@@ -43,4 +43,4 @@ E, per una regressione o un fix che non ha preso, in più: **perché il fix prec
 - Non implementare niente in questa sessione e non modificare skills/. Produci proposte.
 - Nessuna provider call.
 
-Scrivi il report in @{{RUN_DIR}}/IMPROVEMENTS.md, in italiano come il resto della directory; è l'unico file che scrivi. Una sezione per categoria, nell'ordine in cui sono elencate qui. Se fra le violazioni ricorrenti mai risolte ce n'è una che hai scartato dalle tre, chiudi con una riga che dice quale e perché.
+Scrivi il report in @{{RUN_DIR}}/IMPROVEMENTS.md, in italiano come il resto della directory; è l'unico file che scrivi. Una sezione per categoria, nell'ordine in cui sono elencate qui: prima quelle dove un commit ha già provato e mancato, poi il resto. Dove segni l'esito di una violazione run per run, scrivi `ok` per verde, `ko` per rosso e `·` per non registrata — mai un segno di spunta o una croce. Se fra le violazioni ricorrenti mai risolte ce n'è una che hai scartato dalle tre, chiudi con una riga che dice quale e perché.
