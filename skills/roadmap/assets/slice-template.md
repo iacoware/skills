@@ -27,7 +27,8 @@ on it.]
 
 ## Verification
 
-[The evidence that says this row is done, in terms somebody can check.]
+- [One observation per bullet, in terms somebody can check; together they are the evidence that
+  says this row is done.]
 
 ## Learning target
 
