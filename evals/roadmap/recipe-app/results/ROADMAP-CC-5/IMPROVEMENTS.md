@@ -2,8 +2,13 @@
 
 Proposte, non implementazioni — **con una eccezione**: il fix di § 2.1 è stato applicato a
 `skills/roadmap/references/drawing-the-map.md` in una sessione successiva, perché toglieva un falso
-positivo invece di aggiungere una regola. Tutto il resto resta proposta. Sotto `evals/` non è toccato
-niente oltre a questo file.
+positivo invece di aggiungere una regola. Tutto il resto resta proposta.
+
+Il § 1.1 è stato **riscritto** in una sessione successiva: la prima stesura pesava male i due fatti
+che il `REVIEW.md` porta contro la riga e ne ricavava una diagnosi sbagliata. Le guardie che
+l'avrebbero presa stanno ora in `prompts/review.prompt.md` e `prompts/improve.prompt.md` — sotto
+`evals/` è l'unica cosa toccata oltre a questo file, e alza l'asticella di prova invece di allentare
+la rete.
 
 ## Dove cade ogni run nella storia della skill
 
@@ -81,69 +86,91 @@ se serve, cade fuori da `skills/roadmap/`.
 
 Una sola.
 
-### 1.1 — `R-015` / `C2`: la ragione della riga di `Assumptions` sulla ricerca torna smentita dalle sue fonti
+### 1.1 — `R-015` / `C2`: la riga di `Assumptions` sulla ricerca riassegna il soggetto della frase che cita
 
 **Storia.** `e27d419` — *fix violazione C2 di ROADMAP-CC-2* — prende di mira la voce: **id del brief
 nel messaggio del commit**. Aggiunge i primi due test («Delivery can refute it», «It lands in a row»),
-e `CC-3` mostra che la voce resta rossa per un terzo modo di fallire. `2bf0a12` — *Ripara i due fix
-della sessione precedente*, il cui messaggio apre con «C2, residuo»: **id del brief nel messaggio** —
-aggiunge il terzo test, *Its reason survives its citations*, con dentro la frase scritta per il caso di
-`CC-3`: «Where two sources state a constraint together, splitting them needs a source that splits
-them». Sta in `e27d419..d805196`, quindi è la skill che `ROADMAP-CC-4` ha girato, e `CC-4` la dà
-**verde**: la riga `ricerca, S8` legge il divieto come vincolo di costo, che è la lettura che il brief
-non falsifica. `ROADMAP-CC-5` la ridà rossa, nella forma esatta di `CC-3`: la riga `ricerca, S4` legge
-il divieto «come riferito all'LLM e alla ri-indicizzazione del corpus», cita `arch-choices.md`
-§ *Embeddings* — dove il soggetto sono gli embedding — e **non cita** `goal.md` § *Vincoli e scala*,
-che ripete lo stesso divieto nominando i due insieme.
+e `CC-3` mostra che la voce resta rossa per un terzo modo di fallire. `2bf0a12` — **id del brief nel
+messaggio**, che apre con «C2, residuo» — aggiunge il terzo test, *Its reason survives its citations*.
+Sta in `e27d419..d805196`, quindi è la skill che `ROADMAP-CC-4` ha girato, e `CC-4` la dà **verde**:
+la riga `ricerca, S8` legge il divieto come vincolo di costo, che è la lettura che le fonti
+sostengono. `ROADMAP-CC-5` la ridà rossa, nella forma esatta di `CC-3`.
 
-**Perché il fix precedente ha mancato: giusto, ma con l'ambito sbagliato.** La clausola non è stata
-cancellata da nessun refactor — sta intatta in `references/drawing-the-map.md:251-256`, e la checklist
-porta il suo item («no reading is contradicted by the lines it cites», riga 301). Il difetto è che il
-test è scritto **sulle citazioni che la riga già porta**: «Read each cited line inside the section that
-holds it». Una riga che non cita la fonte che la refuterebbe passa il test in silenzio, ed è
-esattamente ciò che `CC-5` ha fatto. La diagnosi di `2bf0a12` veniva da `CC-3`, dove la lettura
-sbagliata stava *dentro* il testo citato; la classe di fallimento include anche la scelta della
-citazione, e lì il test non arriva. Vale la pena notare che la clausola aveva persino anticipato
-l'esito — «the one the sources support is usually a few lines from the quote already taken» — e `CC-5`
-la sfiora («poche righe sopra conta il costo delle query») senza farne il fondamento: la regola è
-giusta e non ha forza, perché resta una lettura da fare dopo, senza nessun tell meccanico.
+**Il fatto portante.** Il `REVIEW.md` di `CC-5` porta due fatti contro la riga `ricerca, S4` e li
+lascia allo stesso livello. Li peso qui, e il primo regge da solo.
+
+La riga scrive: «La mappa legge il divieto **come riferito all'LLM e alla ri-indicizzazione del
+corpus**». La frase che cita — «Usato solo in fase di add e all'edit, mai a runtime sulle query di
+ricerca» — sta dentro `arch-choices.md` § *Embeddings*, e il soggetto di quella sezione è il modello
+di embedding. La lettura lascia la frase in piedi e le cambia il soggetto: è una lettura sbagliata,
+non un'assunzione, e il divieto parla proprio dell'embedding della query.
+
+Il secondo fatto — `goal.md` § *Vincoli e scala* ripete il divieto nominando LLM ed embedding
+insieme, e la riga non lo cita — è **corroborazione** e non regge niente da solo: le due fonti dicono
+la stessa cosa, quindi la fonte non citata non aggiunge forza a una smentita che la fonte citata già
+porta per intero. La prima stesura di questo § costruiva su questo secondo fatto, e da lì ricavava
+una diagnosi di ambito mancante che non esiste.
+
+**Perché il fix precedente ha mancato: giusto, e senza forza.** La clausola non è stata cancellata da
+nessun refactor — sta intatta in `references/drawing-the-map.md:257-262` — e **copre già il fatto
+portante**: «Read each cited line inside the section that holds it: a reading the cited text will not
+bear is a misreading». Manda perfino nel posto esatto, dentro la sezione che tiene la frase. Quel che
+non dice è che cosa farci una volta arrivati: la sezione **nomina il soggetto** dell'enunciato, e
+quello è un dato da leggere, non un giudizio da formulare. Senza dirlo, la clausola resta una
+rilettura a mano, e infatti la riga di `CC-5` la sfiora — cita «poche righe sopra conta il costo
+delle query», che è la lettura buona — senza farne il fondamento. Non serve una regola più larga:
+serve un tell meccanico dentro quella che c'è.
 
 **Il fix.** File: `skills/roadmap/references/drawing-the-map.md`, § *What the map reports about its
-input*, terzo test (righe 251-256). Al posto del testo attuale:
+input*, terzo test (righe 257-262). Due frasi dopo la prima; il resto del test non si tocca:
 
-> - **Its reason survives its citations, and the citations are all of them.** Read each cited line
->   inside the section that holds it: a reading the cited text will not bear is a misreading, not an
->   assumption, and delivery cannot refute what the sources already refuted. Before the line is
->   written, look for every other place the sources state the same constraint — the tell is
->   mechanical: the constraint's own words, searched across the sources rather than inside the
->   document the reading came from. A line that cites one statement and takes a reading another
->   refuses has chosen its evidence, and a source the line does not cite refutes it just as well.
->   Where two sources state a constraint together, splitting them needs a source that splits them.
->   When the text will not bear the reading, either the entry is still open or another reading is
->   available — and the one the sources support is usually a few lines from the quote already taken.
+> The section names the subject of what it states, and that is a lookup, not a judgement: a reading
+> that leaves the sentence standing and gives it a different subject — the ban is about *that*
+> mechanism, not this one — is a misreading however the rest of the sources read. Where sources
+> genuinely conflict, the line chooses between them and says which it took; it does not make the
+> conflict go away by re-describing what one of them is about.
 
-E l'item di `The map holds when` (righe 300-301) chiude sul punto in cui la regola perde:
+E l'item di `The map holds when` (righe 306-307) chiude sul lookup:
 
 > - delivery can refute every `Assumptions` line, every reading about how something works lands in a
->   bullet of the row it is traced to, and no reading is contradicted by the lines it cites **or by
->   another statement of the same constraint the line leaves uncited**;
+>   bullet of the row it is traced to, and no reading is contradicted by the lines it cites **or gives
+>   one a subject its section does not name**;
 
-**Chiude:** `R-015` / `C2` in `ROADMAP-CC-3` e `ROADMAP-CC-5`; la forma di `ROADMAP-CC-2` resta chiusa
-dai due test precedenti, che non si toccano.
+**Chiude:** `R-015` / `C2` in `ROADMAP-CC-3` e `ROADMAP-CC-5`; la forma di `ROADMAP-CC-2` resta
+chiusa dai due test precedenti, che non si toccano.
+
+**Il controllo a costo zero.** Prima direzione, prende le righe che deve prendere:
+
+- `CC-5`, `ricerca, S4` — lettura «riferito all'LLM e alla ri-indicizzazione del corpus», citazione
+  sotto `## Embeddings`. Soggetti diversi: presa.
+- `CC-3`, `S4, ricerca` — «si legge il divieto come riferito all'estrazione LLM, non all'embedding
+  della query», stessa citazione. Presa.
+
+Seconda direzione, non marca nessuna delle sei righe `Assumptions` di `reference-roadmap/`:
+
+- `ricerca-semantica, S4` — è questa stessa voce, risolta bene: tiene il soggetto («mai embedding a
+  runtime»), dichiara che i sorgenti si contraddicono, sceglie la lettura economica. Non presa, ed è
+  la riga che il fix deve lasciar passare.
+- `inserimento-manuale, S7` — la più vicina al confine: restringe il referente di «lo stesso motore e
+  schema» sulla forza del diagramma di `concepts.md`. Restringe l'oggetto di una frase, non ne cambia
+  il soggetto, che resta il copia-incolla. Non presa — ed è lei a fissare quanto stretto deve essere
+  il tell.
+- `S1` (Neon e Supabase intercambiabili), `import-automatico, S9` (copertura del JSON-LD), `S3` + `S4`
+  (corpus di seed), `condivisione, S12` (un solo ricettario implicito fino a `S12`) — nessuna prende
+  una lettura sul soggetto di un enunciato citato: niente da marcare.
 
 **Rischia di rompere:** il `⚠ opposite` di R-015 — una mappa che, non riuscendo a far reggere nessuna
-lettura, pubblica la voce come domanda aperta. Il testo lo argina con «either the entry is still open
-or another reading is available», ma la spinta esiste. Se ne accorgerebbe **R-015 `⚠ opposite`»** e la
-clausola «Exposing is not resolving», che vieta di pubblicare come indecisa una voce che una fonte
-seleziona; sul brief, le voci **A1**–**A3** dicono dove una fonte seleziona e quindi l'uscita per
-`Open questions` sarebbe sbagliata, e **C2** dice quale risoluzione è ammessa. Rischio secondario:
-righe di `Assumptions` che diventano rassegne di citazioni — lo prenderebbe il primo test, «A line
-restating what a source already says is true by construction», e il vincolo di
-`ROADMAP-GOAL.md` contro il campo che nessuno rilegge.
+lettura, pubblica la voce come domanda aperta. Rischio nuovo e specifico di questo testo: che una
+restrizione legittima del referente di una frase venga letta come riassegnazione di soggetto e
+spedita in `Open questions`. Il caso limite ce l'abbiamo già scritto — `inserimento-manuale, S7` del
+riferimento — ed è il controllo da rifare a ogni ritocco della formula. Se ne accorgerebbero **R-015
+`⚠ opposite`** e la clausola «Exposing is not resolving», che vieta di pubblicare come indecisa una
+voce che una fonte seleziona; sul brief, **A1**–**A3** dicono dove una fonte seleziona e **C2** quale
+risoluzione è ammessa.
 
 **Come si misura:** metà *drawing*, scenario 0 (`make eval-cycle`); il file è
-`references/drawing-the-map.md`, che quella metà copre per intero. Serve un run nuovo. Il validator qui
-non vede niente e un `OK` verde non è evidenza su questa regola.
+`references/drawing-the-map.md`, che quella metà copre per intero. Serve un run nuovo. Il validator
+qui non vede niente e un `OK` verde non è evidenza su questa regola.
 
 ## 2. Fix che colpisce anche dove non deve
 

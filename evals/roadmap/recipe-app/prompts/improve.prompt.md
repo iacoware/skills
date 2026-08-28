@@ -5,7 +5,7 @@ Poi ricostruisci la storia della skill. I REVIEW.md dicono che cosa ogni run ha 
 - **L'ancoraggio delimita, non seleziona.** Non c'è un commit *del* run da cui leggere la skill: serve solo a sapere dove ogni run cade nella storia, perché fra due run i commit possono essere molti e vanno letti tutti. Il `PROMPT.md` del run lo dichiara — riga `Commit` e riga `skills/roadmap` — ed è la fonte da preferire. Un run che non lo dichiara, e i più vecchi non lo fanno, si ancora al commit che ne aggiunge la mappa: `git log --diff-filter=A --format='%h %ad %s' --date=short -- evals/roadmap/recipe-app/results/<run>/.roadmap`. Quello è un'inferenza e non un dato — un run committato dopo una modifica alla skill sposterebbe il confine — quindi dove ci fondi una regressione, dillo.
 - **Dentro l'intervallo, tutti.** `git log -p <ancoraggio del run precedente>..<ancoraggio di questo> -- skills/roadmap` dà per intero i cambiamenti che quel run ha messo alla prova. Sono pochi commit e diff corti: leggili tutti, non campionarli. Se due run dichiarano lo stesso tree la skill non è cambiata fra loro, quanti che siano i commit in mezzo, e il secondo non mette alla prova nessun fix nuovo.
 
-Poi, con quelli in mano: @design/roadmap/ROADMAP-GOAL.md, che resta l'autorità sull'intento, e @design/roadmap/CONTEXT.md sul vocabolario; il preambolo di @evals/roadmap/EVALUATION-RULES.md, fino alla prima regola; e skills/roadmap/ per intero — SKILL.md, references/, assets/, scripts/.
+Poi, con quelli in mano: @design/roadmap/ROADMAP-GOAL.md, che resta l'autorità sull'intento, e @design/roadmap/CONTEXT.md sul vocabolario; il preambolo di @evals/roadmap/EVALUATION-RULES.md, fino alla prima regola; e skills/roadmap/ per intero — SKILL.md, references/, assets/, scripts/. Oltre a questi, @evals/roadmap/recipe-app/reference-roadmap/, che serve al controllo che ogni proposta deve riportare.
 
 ## Le tre categorie
 
@@ -31,8 +31,11 @@ Per ogni voce delle prime due categorie cita l'hash e di' come l'hai attribuita 
 - quali violazioni chiude, per id (R-xxx, o H/C del brief) e in quali run le hai viste.
 - che cosa rischia di rompere, e quale regola di EVALUATION-RULES.md o quale voce di EVALUATION-BRIEF.md se ne accorgerebbe se si materializzasse.
 - come si misura dopo: quale metà di @evals/roadmap/REVIEW-WORKFLOW.md, e se serve un run nuovo.
+- **il controllo a costo zero, fatto e riportato.** Rileggi il testo che proponi contro la riga che l'ha motivato — deve prenderla — e contro `reference-roadmap/` — non deve marcarne nessuna riga. Riporta l'esito in entrambe le direzioni, nominando le righe del riferimento che hai guardato. Dove la proposta cade ad altitudine di sessione il riferimento non ha niente da dire — è una mappa, non un transcript: dillo, e fermati alla prima metà. Non sostituisce il run nuovo, che resta l'unica misura.
 
 E, per una regressione o un fix che non ha preso, in più: **perché il fix precedente ha mancato** — cancellato da un refactor, scritto nell'artefatto sbagliato, giusto ma senza forza, o costruito su una diagnosi sbagliata della violazione. Senza questo la proposta è un secondo tentativo alla cieca.
+
+Questa diagnosi si argomenta come l'attribuzione di un commit, non si etichetta: cita il fatto che il `REVIEW.md` dà per portante e la clausola che avrebbe dovuto prenderlo, e di' che cosa la clausola avrebbe dovuto dire in più per scattarci sopra. **Prima di dichiarare che la clausola non ci arriva, verifica che non ci arrivi già**: se il testo attuale copre il fatto portante, la diagnosi non è l'ambito ma la forza, e la cura è un tell meccanico, non una regola più larga — e se a reggere è un fatto che la review marca come corroborazione, è la review a sbagliare, e lo si dichiara.
 
 ## Vincoli
 
