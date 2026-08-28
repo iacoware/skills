@@ -256,10 +256,14 @@ Three tests on an `Assumptions` line once it is written:
   where the map says what it assumed.
 - **Its reason survives its citations.** Read each cited line inside the section that holds it: a
   reading the cited text will not bear is a misreading, not an assumption, and delivery cannot refute
-  what the sources already refuted. Where two sources state a constraint together, splitting them
-  needs a source that splits them. When the text will not bear the reading, either the entry is still
-  open or another reading is available — and the one the sources support is usually a few lines from
-  the quote already taken.
+  what the sources already refuted. The section names the subject of what it states, and that is a
+  lookup, not a judgement: a reading that leaves the sentence standing and gives it a different
+  subject — the ban is about *that* mechanism, not this one — is a misreading however the rest of the
+  sources read. Where sources genuinely conflict, the line chooses between them and says which it
+  took; it does not make the conflict go away by re-describing what one of them is about. Where two
+  sources state a constraint together, splitting them needs a source that splits them. When the text
+  will not bear the reading, either the entry is still open or another reading is available — and the
+  one the sources support is usually a few lines from the quote already taken.
 
 `OUT-OF-SCOPE` holds what the solution declares it will never solve, never what is merely far off, and
 each exclusion is written as the licence it gives: *because this stays unsolved, the implementation
@@ -304,7 +308,8 @@ the absence is information — nothing about it was decided here.
 - every conflict and every undecided choice left the sweep by one of the three exits;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - delivery can refute every `Assumptions` line, every reading about how something works lands in a
-  bullet of the row it is traced to, and no reading is contradicted by the lines it cites;
+  bullet of the row it is traced to, and no reading is contradicted by the lines it cites or gives
+  one a subject its section does not name;
 - no published cross-functional concern survives being moved to another project unchanged, and a
   dimension the sweep found nothing in carries no line;
 - `NOW` fits under the cap without inventing detail the map cannot yet know.

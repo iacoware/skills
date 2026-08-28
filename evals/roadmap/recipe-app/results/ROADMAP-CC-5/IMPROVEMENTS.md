@@ -1,8 +1,9 @@
 # Miglioramenti — dopo `ROADMAP-CC-5`
 
-Proposte, non implementazioni — **con una eccezione**: il fix di § 2.1 è stato applicato a
-`skills/roadmap/references/drawing-the-map.md` in una sessione successiva, perché toglieva un falso
-positivo invece di aggiungere una regola. Tutto il resto resta proposta.
+Proposte, non implementazioni — **con due eccezioni**: i fix di § 2.1 e § 1.1 sono stati applicati
+a `skills/roadmap/references/drawing-the-map.md` in sessioni successive — il primo perché toglieva un
+falso positivo invece di aggiungere una regola, il secondo com'è scritto qui sotto, dopo la
+riscrittura. Tutto il resto resta proposta.
 
 Il § 1.1 è stato **riscritto** in una sessione successiva: la prima stesura pesava male i due fatti
 che il `REVIEW.md` porta contro la riga e ne ricavava una diagnosi sbagliata. Le guardie che
@@ -121,8 +122,9 @@ rilettura a mano, e infatti la riga di `CC-5` la sfiora — cita «poche righe s
 delle query», che è la lettura buona — senza farne il fondamento. Non serve una regola più larga:
 serve un tell meccanico dentro quella che c'è.
 
-**Il fix.** File: `skills/roadmap/references/drawing-the-map.md`, § *What the map reports about its
-input*, terzo test (righe 257-262). Due frasi dopo la prima; il resto del test non si tocca:
+**Il fix — applicato.** File: `skills/roadmap/references/drawing-the-map.md`, § *What the map
+reports about its input*, terzo test (righe 257-262). Due frasi dopo la prima; il resto del test non
+si tocca:
 
 > The section names the subject of what it states, and that is a lookup, not a judgement: a reading
 > that leaves the sentence standing and gives it a different subject — the ban is about *that*
