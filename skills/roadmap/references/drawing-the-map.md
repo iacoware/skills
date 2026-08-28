@@ -241,6 +241,13 @@ Every entry then leaves by one of three exits, and no other:
   that row.
 - **A spike**, before the first row the entry blocks.
 
+**Taken in a row and nowhere else** is the failure to watch for, and its tell is mechanical: a bullet
+of `Includes` or `Excludes` picks one side of a conflict the sweep found, and no line of
+`Assumptions`, no line of `Open questions` and no spike names that entry. The bullet is where the
+reading is *applied*, never where it is *reported*, and a reader who finds only the bullet cannot
+tell a decision from an oversight. A neighbouring row that shares the schema, the pipeline or the
+form is not the report either: it says what was built, not which side was taken and why.
+
 Exposing is not resolving. Only a source that selects resolves an entry: a published question and a
 scheduled spike both leave it open, because neither has produced its answer when the map is drawn.
 The reverse costs as much — an entry a source selects is answered, and publishing it as an open
@@ -305,7 +312,8 @@ the absence is information — nothing about it was decided here.
 - every departure from breadth before depth is one of the four the skill licenses;
 - the scope boundary ships with the first row that persists data, and identity deferred past the
   second end-user row is preceded in the register by the rows producing the evidence for it;
-- every conflict and every undecided choice left the sweep by one of the three exits;
+- every conflict and every undecided choice left the sweep by one of the three exits, and no side of
+  one was taken only in a row's `Includes` or `Excludes`;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - delivery can refute every `Assumptions` line, every reading about how something works lands in a
   bullet of the row it is traced to, and no reading is contradicted by the lines it cites or gives

@@ -1,9 +1,11 @@
 # Miglioramenti — dopo `ROADMAP-CC-5`
 
-Proposte, non implementazioni — **con due eccezioni**: i fix di § 2.1 e § 1.1 sono stati applicati
-a `skills/roadmap/references/drawing-the-map.md` in sessioni successive — il primo perché toglieva un
-falso positivo invece di aggiungere una regola, il secondo com'è scritto qui sotto, dopo la
-riscrittura. Tutto il resto resta proposta.
+Proposte, non implementazioni — **con tre eccezioni**: i fix di § 2.1, § 1.1 e § 3.1 sono stati
+applicati a `skills/roadmap/references/drawing-the-map.md` in sessioni successive — il primo perché
+toglieva un falso positivo invece di aggiungere una regola, gli altri due com'è scritto qui sotto; a
+§ 3.1 è stato eseguito al momento di applicarlo il controllo a due direzioni che gli mancava, e passa
+(prende le cinque istanze, non marca nessuna slice di `reference-roadmap/`). Tutto il resto resta
+proposta.
 
 Il § 1.1 è stato **riscritto** in una sessione successiva: la prima stesura pesava male i due fatti
 che il `REVIEW.md` porta contro la riga e ne ricavava una diagnosi sbagliata. Le guardie che
@@ -297,8 +299,8 @@ Tre proposte, nell'ordine in cui le farei. Il criterio è la ricorrenza.
 (m-1), `S3 Includes` (CC-2, CC-4), `S3 Excludes` (CC-3, CC-5), e nessuna riga di `Assumptions`, nessuna
 di `Open questions` e nessuno spike lo dice mai.
 
-**File:** `skills/roadmap/references/drawing-the-map.md`, § *What the map reports about its input*,
-subito dopo il terzo exit (riga 236) e prima di «Exposing is not resolving».
+**File — applicato:** `skills/roadmap/references/drawing-the-map.md`, § *What the map reports about
+its input*, subito dopo il terzo exit (riga 236) e prima di «Exposing is not resolving».
 
 La norma c'è — «Every entry then leaves by one of three exits, and no other» — e non ha tracciato. Si
 aggiunge quello, nella forma che `779bf17` ha appena dimostrato: una lettura che diventa un lookup.
