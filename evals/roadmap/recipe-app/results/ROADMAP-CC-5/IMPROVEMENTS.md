@@ -1,7 +1,9 @@
 # Miglioramenti — dopo `ROADMAP-CC-5`
 
-Proposte, non implementazioni. Niente sotto `skills/` è stato toccato in questa sessione, e niente
-sotto `evals/` oltre a questo file. Git è stato solo letto.
+Proposte, non implementazioni — **con una eccezione**: il fix di § 2.1 è stato applicato a
+`skills/roadmap/references/drawing-the-map.md` in una sessione successiva, perché toglieva un falso
+positivo invece di aggiungere una regola. Tutto il resto resta proposta. Sotto `evals/` non è toccato
+niente oltre a questo file.
 
 ## Dove cade ogni run nella storia della skill
 
@@ -41,14 +43,15 @@ evidenza nuova, e ne scarta una.
 
 ## Che cosa ricorre
 
-`ko` rosso, `ok` verde con la prova nel `REVIEW.md`, `·` non registrata dal run.
+`ko` rosso, `ok` verde con la prova nel `REVIEW.md`, `·` non registrata dal run, `(ko)` rosso
+registrato dal run ma **non valido** — la regola spara a vuoto, e la cella non conta come ricorrenza.
 
 | Violazione | m-1 | CC-2 | CC-3 | CC-4 | CC-5 | Commit che l'ha presa di mira |
 |---|:--:|:--:|:--:|:--:|:--:|---|
 | **R-015 / C1** — il lato preso solo in un bullet di riga | ko | ko | ko | ko | ko | nessuno |
 | **H5** — React Query assente | ko | ko | ko | ko | ko | nessuno (né l'oracolo lo nomina) |
 | **R-015 / C2** — la ragione non regge le citazioni | ok | ko | ko | ok | ko | `e27d419`, `2bf0a12` |
-| **R-017 dropped edge** | · | · | ko | ko | ko | `2bf0a12`, `7b62754` |
+| **R-017 dropped edge** | · | · | ko | ko | (ko) | `2bf0a12`, `7b62754` |
 | **R-020** — claim del `Learning target` senza osservazione | ko | ko | · | · | ko | nessuno |
 | **R-035** — chiusura oltre le quattro parti | · | ok | ko | ko | ko | nessuno |
 | **R-022** — `Includes` che decide ciò che è indeciso | ko | ko | · | ko | ok | nessuno |
@@ -59,12 +62,18 @@ evidenza nuova, e ne scarta una.
 | **R-012** — ampiezza prima di profondità, e ranking | ok | ok | · | ko | ok | nessuno |
 | **R-013** — `Assumptions` non registra cosa ignorare | ok | ko | · | ok | ok | nessuno |
 
+Il `(ko)` di `CC-5` è l'unico della tabella: la clausola che lo produce marca come violazione tre
+righe del `reference-roadmap`, quindi *dropped edge* resta a **due** rossi su tre run osservati e non
+a tre. I rossi di `CC-3` e `CC-4` restano genuini, e sono di due forme diverse fra loro. Vedi § 2.1.
+
 **Fix dimostrati da questo run, e vanno registrati come tali:** `779bf17` (R-008 e R-009 verdi in
 `CC-5` dopo tre run rossi di fila su R-009 — la clausola aggiunta è un lookup posizionale, «no first
-validator excludes a capability its own theme's promise names», e ha preso al primo run); `7b62754`
-per la metà *published order* (`CC-5`: «nessuna cella nomina `S0` o `S1`»); `f77bc61` per la metà
-*false edge*, verde da tre run; `524e180` per la tracciatura delle righe di `Assumptions`, mai più
-rossa dopo `manual-run-1`. Di `79f4a4a` non si può dire niente: nessuna regola di
+validator excludes a capability its own theme's promise names», e ha preso al primo run); `7b62754` su
+entrambe le forme che lo motivavano — *published order* (`CC-5`: «nessuna cella nomina `S0` o `S1`»)
+e la *dropped edge* di `CC-4`, la riga `release` senza prova propria (`CC-5`: `S10` pubblica i suoi
+tre archi e il review le dà ragione contro il riferimento), con l'avvertenza che la seconda clausola
+colpisce anche righe corrette (§ 2.1); `f77bc61` per la metà *false edge*, verde da tre run; `524e180` per la tracciatura
+delle righe di `Assumptions`, mai più rossa dopo `manual-run-1`. Di `79f4a4a` non si può dire niente: nessuna regola di
 `EVALUATION-RULES.md` legge l'*ambient restatement*, quindi il suo effetto non è misurato — e la cura,
 se serve, cade fuori da `skills/roadmap/`.
 
@@ -136,63 +145,101 @@ restating what a source already says is true by construction», e il vincolo di
 `references/drawing-the-map.md`, che quella metà copre per intero. Serve un run nuovo. Il validator qui
 non vede niente e un `OK` verde non è evidenza su questa regola.
 
-## 2. Fix che non hanno preso
+## 2. Fix che colpisce anche dove non deve
 
-Uno solo.
+Uno solo, ed è il contrario di quel che il run sembrava dire.
 
-### 2.1 — `R-017` *dropped edge*: `S5` porta `Depends on: S3` e la sua `Verification` esercita `S4`
+### 2.1 — `R-017` *dropped edge*: la clausola di `7b62754` marca tre righe del riferimento
 
 **Storia.** `2bf0a12` la prende di mira per primo — **id della regola nel messaggio del commit**
 («R-017, overshoot»), con il caso di `CC-3` — e produce il test sintattico su `Includes` (tabella,
-migrazione, resolver, adapter). `ROADMAP-CC-4` resta rosso, e il ciclo precedente diagnostica il
-motivo: il fallimento di `CC-4` stava in `Verification` e non in `Includes`. `7b62754` — *Fix R-017
-both ways: no edge to a prerequisite, and read `Verification`* — implementa quella diagnosi:
-**id della regola nel messaggio**, ed è in `d805196..37a0976`, quindi è la skill che `ROADMAP-CC-5` ha
-girato. È il solo run dopo di lui, ed è di nuovo rosso: `roadmap.md` *NOW*, riga `S5`,
+migrazione, resolver, adapter). `ROADMAP-CC-4` resta rosso in un'altra forma: `S11`, riga `release`
+con `—`, la cui `Verification` è fatta *tutta* di capacità che `S10`, `S5` e `S8` consegnano.
+`7b62754` — *Fix R-017 both ways: no edge to a prerequisite, and read `Verification`* — implementa
+quella diagnosi estendendo la lettura a `Verification`, ed è in `d805196..37a0976`, quindi è la skill
+che `ROADMAP-CC-5` ha girato. `CC-5` risulta rosso una terza volta: `roadmap.md` *NOW*, riga `S5`,
 `Depends on: S3`, mentre l'ultima frase della sua `Verification` — «Le ricette salvate qui compaiono
-nella ricerca di `S4`» — esercita una capacità che `S4` consegna. Nessun run dopo `2bf0a12` ha mai
-dato verde questa metà della regola.
+nella ricerca di `S4`» — nomina una capacità che `S4` consegna.
 
-**Perché il fix precedente ha mancato: la deroga scritta nello stesso respiro se lo mangia.** Il
-paragrafo di `7b62754` (`drawing-the-map.md:98-103`) dice la cosa giusta nella prima frase e poi la
-limita: «What it publishes is the row its evidence enters through, not one edge per capability the
-evidence touches», con l'esempio della riga `kind: release`. La deroga è stata scritta per l'istanza
-che aveva — `S11` di `CC-4`, riga di rilascio la cui prova è *tutta* fatta di capacità altrui — e su
-quella metà **ha preso**: `S10` di `CC-5` pubblica i suoi tre archi e il review le dà ragione contro
-il riferimento. Applicata a una riga la cui prova è locale tranne una frase, la stessa deroga si legge
-come licenza a scartare la frase periferica, che è precisamente quel che `S5` fa. La diagnosi era
-giusta sul campo (`Verification` e non `Includes`) e sbagliata sulla forma del fallimento: il test
-distingue per *quanto pesa* la prova che sconfina, e il fallimento non ha peso, ha una frase.
+**Quel rosso non regge, e il riferimento lo dimostra.** `S5` salva «verso la stessa forma di `Recipe`
+che `S3` persiste»; l'hook di embedding che `S4` installa sta su quel percorso di scrittura, quindi
+`S5` lo eredita senza costruirci sopra niente. La frase è un controllo di non-bypass, non l'esercizio
+di una capacità che serve alla riga per esistere. Il `reference-roadmap` fa la stessa cosa in tre
+righe, e in nessuna pubblica l'arco verso la ricerca:
 
-**Il fix.** Stesso file e stessa sezione, `drawing-the-map.md` § *Hard dependencies*, in coda al
-paragrafo delle righe 98-103, sostituendo l'ultima frase con un binario invece che con una misura di
-centralità:
+| Riga del riferimento | `Depends on` | Frase di `Verification` |
+|---|---|---|
+| `S7` scrittura a mano | `S3` | «la si ritrova **cercandola** a parole proprie … e la **ricerca** segue la modifica» |
+| `S8` import da URL | `S3` | «la ricetta si salva senza altri passaggi **e la si trova cercandola**» |
+| `S10` copia-incolla | `S9` | «la ricetta si salva, **e la si trova cercandola**» |
 
-> A sentence of `Verification` that names what another `NOW` row delivers is either an edge or is not
-> evidence: publish the edge, or cut the sentence. A row whose proof leans on a capability it does not
-> name is the reorder that breaks with nobody noticing, and a proof nobody would miss was decoration.
-> What a row publishes is the row its evidence enters through, never one edge per capability the
-> evidence touches — that bounds **how many** edges a row carries, never **whether** it carries one: a
-> `kind: release` row, whose whole evidence is other rows' capabilities exercised end to end, names the
-> row its evidence enters through; an ordinary row that reaches out in a single clause names that row
-> or drops the clause.
+`S4` (ricerca) precede tutte e tre nel registro del riferimento, e `S8` è l'analogo diretto di `S5`:
+stessa riga, stesso tema, stessa frase. La clausola aggiunta da `7b62754` — «Read the dependent's
+`Verification` as well as its `Includes`. Where the evidence that a row is done exercises a capability
+another `NOW` row delivers … the row does not carry `—`» — marca quindi come violazione tre righe
+della chiave di risposta. È il criterio del preambolo di `EVALUATION-RULES.md` per una regola che
+sbaglia, non per una mappa che sbaglia.
 
-**Chiude:** `R-017` *dropped edge* in `ROADMAP-CC-3`, `ROADMAP-CC-4` e `ROADMAP-CC-5`. Copre anche la
-lettura contraria che `CC-5` registra — l'asserzione di `S5` è marginale e si potrebbe togliere: il
-binario dice che togliere è l'altra uscita legittima, e chiude comunque il buco.
+**`7b62754` ha preso, e ha colpito troppo.** Le tre istanze rosse sono di tre forme, non di una:
 
-**Rischia di rompere:** *published order*, che è l'oscillazione da cui questa coppia nasce — una
-`Verification` scritta larga fa nascere archi che il test di sostituzione non chiedeva. Se ne
-accorgerebbe **R-017 `⚠ opposite`** nella direzione opposta (pubblicare tre archi di troppo costa meno
-di un arco caduto, quindi il rischio è accettato e non nullo), e il lookup di `7b62754` che resta —
-«no `Depends on` cell names the repository row or the skeleton» — taglia i candidati più numerosi. Il
-secondo rischio è che una sessione tagli le frasi di `Verification` invece di pubblicare gli archi,
-impoverendo la prova: lo prenderebbe **R-020**, perché una `Verification` accorciata lascia scoperto un
-claim del `Learning target`, e **R-023** (*fake verticality*) dove il taglio sostituisce il percorso
-reale.
+- `CC-3` — `S4` con `Depends on: S2` mentre il suo `Includes` costruisce sulla tabella `recipe`,
+  sulla migrazione e sul resolver `currentCookbook` che `S3` consegna. **Genuina**, ed è la forma che
+  il test sintattico di `2bf0a12` chiude; `CC-3` la precede.
+- `CC-4` — `S11`, riga `release` con `—` e nessuna prova propria. **Genuina**, ed è la forma che
+  `7b62754` chiude: in `CC-5` `S10` pubblica i suoi tre archi e il review le dà ragione contro il
+  riferimento.
+- `CC-5` — `S5`, prova locale più una frase a valle. **Falso positivo**, per il confronto qui sopra.
 
-**Come si misura:** metà *drawing*, scenario 0. Serve un run nuovo, ed è lo stesso della proposta 1.1:
-i due file toccati sono lo stesso, e le due regole non interferiscono.
+**Perché colpisce troppo.** Il testo chiede se la `Verification` *nomina* una capacità altrui. La domanda che
+separa `S11` da `S5` è un'altra: se la riga **può essere costruita** prima che quella capacità esista.
+`S11` non ha prova propria — tolte le capacità altrui non resta niente da osservare, e la riga non
+esiste. `S5` ha una prova locale e una clausola che guarda a valle: spostata `S4` dopo `S5`, quella
+clausola si sposta o cade e non si rompe nient'altro. È esattamente la differenza fra dipendenza e
+ordine per cui il campo `Depends on` esiste, e pubblicarla direbbe il falso — che l'import non si può
+costruire prima della ricerca.
+
+**Il fix — applicato.** Il binario «publish the edge, or cut the
+sentence» obbligherebbe il riferimento a pubblicare tre archi falsi o a cancellare tre frasi di prova
+legittime: va scartato. Serve invece restringere la clausola di `7b62754`. File:
+`skills/roadmap/references/drawing-the-map.md`, § *Hard dependencies*, il paragrafo alle righe 98-103.
+Al posto del testo attuale:
+
+> Read the dependent's `Verification` as well as its `Includes`, and ask of it the same question:
+> could this row be built before that capability exists? Where the evidence that a row is done is
+> *made of* capabilities other `NOW` rows deliver — a `kind: release` row has no proof of its own —
+> nothing controlled stands in, and the row publishes the row its evidence enters through, not one
+> edge per capability the evidence touches. Where a row's proof stands on its own and one clause
+> reaches downstream to observe that what the row produces arrives somewhere else, that clause is
+> order: a reorder moves it or drops it and breaks nothing, and publishing the edge would claim the
+> row cannot be built first, which is false.
+
+E l'item di `The map holds when` (righe 290-293) torna a nominare la prova, non la menzione:
+
+> - every published `Depends on` survives the substitution test — no controlled input and no narrower
+>   real precursor already in `NOW` can stand in — and no row that builds on a table, resolver or
+>   adapter another `NOW` row delivers, **or whose evidence is made of capabilities other `NOW` rows
+>   deliver**, carries `—`;
+
+**Chiude:** il falso positivo di `ROADMAP-CC-5`, e lascia in piedi i due test che prendono le istanze
+genuine — quello su `Includes` di `2bf0a12` per `CC-3`, e la prima frase per `S11` di `CC-4`. Del
+primo va detto che resta *presunto*: nessun run dopo `2bf0a12` ha riprodotto quella forma, quindi non
+è mai stato osservato verde.
+
+**Rischia di rompere:** che una riga di rilascio scritta con una singola frase di prova apparentemente
+locale si sottragga alla clausola. Se ne accorgerebbe **R-017 `⚠ failed`** nella metà *dropped edge*,
+e il controllo a basso costo è sintattico: nessuna riga `kind: release` porta `—` **tranne lo
+scheletro**, che è il rilascio che non ha ancora niente a monte. Il secondo rischio
+è di leggere «that clause is order» come licenza a scrivere `Verification` che sconfinano ovunque: lo
+prende **R-023** (*fake verticality*), perché una prova che vive a valle non è la prova di questa
+riga.
+
+**Come si misura:** metà *drawing*, scenario 0, e serve un run nuovo per sapere se la clausola
+ristretta continua a prendere le due forme genuine. Il controllo che il fix stesso prescrive è però a
+costo zero, ed è stato fatto al momento di applicarlo: riletta contro `reference-roadmap/`, la
+clausola nuova non marca nessuna delle sue quindici righe. Le quattro righe con `—` (`S0`, `S1`, `S2`,
+`S6`) hanno prova propria; `S7`, `S8` e `S10` cadono ora sotto «that clause is order»; `S14`, riga
+`release` la cui prova è fatta di capacità altrui, pubblica il suo arco (`S12`) ed è presa
+correttamente. È il test che `7b62754` non aveva fatto.
 
 ## 3. Mai risolte
 

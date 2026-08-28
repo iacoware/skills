@@ -95,12 +95,18 @@ without bypassing the production path: the edge is hard and stays published — 
 deliverer is one of the two prerequisites.** The repository row and the skeleton are what every row
 depends on; their edges carry no information and are never published, however hard they are.
 
-Read the dependent's `Verification` as well as its `Includes`. Where the evidence that a row is done
-exercises a capability another `NOW` row delivers, no controlled input stands in — putting the
-capability there by hand is the fixture that bypasses the production path — so the row does not carry
-`—`. What it publishes is the row its evidence enters through, not one edge per capability the
-evidence touches: a `kind: release` row, whose whole evidence is other rows' capabilities exercised
-end to end, would otherwise restate half the map and bury the edges that carry information.
+Read the dependent's `Verification` as well as its `Includes`, and ask of it the same question:
+could this row be built before that capability exists? Where the evidence that a row is done is
+*made of* capabilities other `NOW` rows deliver — a `kind: release` row has no proof of its own —
+nothing controlled stands in, and putting those capabilities there by hand is the fixture that
+bypasses the production path, so the row does not carry `—`. What it publishes is the row its
+evidence enters through, not one edge per capability the evidence touches: otherwise a release row
+restates half the map and buries the edges that carry information.
+
+Where a row's proof stands on its own and one clause reaches downstream to observe that what the row
+produces arrives somewhere else, that clause is order, not dependency. A reorder moves it or drops
+it and breaks nothing else, and publishing the edge would claim the row cannot be built first, which
+is false.
 
 `Depends on` publishes what a reorder would otherwise break with nobody noticing, and it holds ids and
 nothing else — no grades, no counterfactuals. What every row depends on is not published: fifteen
@@ -289,8 +295,8 @@ the absence is information — nothing about it was decided here.
   datastore through the real driver and runs a migration;
 - every published `Depends on` survives the substitution test — no controlled input and no narrower
   real precursor already in `NOW` can stand in — and no row that builds on a table, resolver or
-  adapter another `NOW` row delivers, or whose `Verification` exercises a capability another `NOW`
-  row delivers, carries `—`;
+  adapter another `NOW` row delivers, or whose evidence is made of capabilities other `NOW` rows
+  deliver, carries `—`;
 - no `Depends on` cell names the repository row or the skeleton;
 - every departure from breadth before depth is one of the four the skill licenses;
 - the scope boundary ships with the first row that persists data, and identity deferred past the
