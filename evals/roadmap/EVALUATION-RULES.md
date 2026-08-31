@@ -8,9 +8,20 @@ a new scenario unchanged, where `EVALUATION-BRIEF.md` and `reference-roadmap/` d
 **Half the evidence is not in the files** — what the session asked, what it declined to write, what it
 put to the author. Several rules below have no artifact at all: read the transcript.
 
-**No score, and no verdict from one run.** A failed check is a question: did the skill stop asking for
-this, or did the model have a bad day? Two runs in a row answer it. *Inconclusive* is a result —
-record what the run did and did not do, cite the id, leave the mark off.
+**No verdict from one run.** A failed check is a question: did the skill stop asking for this, or did
+the model have a bad day? Two runs in a row answer it. *Inconclusive* is a result — record what the
+run did and did not do, cite the id, leave the mark off.
+
+**Every review ends on a tally, and the tally is not a verdict.** Four lists of ids over the checks
+the card admits — green, red, inconclusive, not applicable or skipped — counting the rules plus the
+brief's H rows. A check is red when at least one finding stands against it, however many converge; a
+C or U finding counts once, under the rule it instantiates; A and N entries license differences and
+are never counted. The tally closes with the pass rate, green over green plus red, and the commit
+that fixes the rule set. What the rate buys is a trend line across runs of the **same card against
+the same rule set** — the denominator moves when either moves, and a rate compared across cards or
+rule-set versions is noise wearing a number. The judgement stays per check, two runs at a time. The
+hard gate, where one is wanted, is a ratchet and not a percentage: a change to the skill does not
+stand while any check green on the two previous runs of the card goes red under it.
 
 **A check is admitted only while the skill states the clause it guards**, which is why every rule
 names one. If a check fails against a clause the skill no longer states, the defect is in the check:
