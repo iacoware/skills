@@ -182,3 +182,9 @@ Read the proposed block against the card's verdict, and cite what actually faile
 verdict as a whole — a session can get the altitude right and the operation wrong, which is a finding
 against one rule and not against the card. On scenario 2 the correct session ends in a question and
 there is nothing to confirm: record the question and stop.
+
+Either reading ends `REVIEW.md` on the tally the head of [`EVALUATION-RULES.md`](EVALUATION-RULES.md)
+defines — the four id lists, the pass rate, the rule-set commit. On a router card the checks admitted
+are the card's rule list; on a drawing they are everything the card does not skip, plus the brief's H
+rows. The tally is what makes two runs of the same card comparable at a glance; the judgement stays
+per check.
