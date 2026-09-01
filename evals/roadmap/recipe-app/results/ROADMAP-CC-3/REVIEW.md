@@ -63,3 +63,28 @@ Ordinate dalla più discutibile alla meno.
 5. **`Depends on`.** Il candidato ne pubblica 2 su 11 righe, il reference 9 su 15. Sui quattro archi che i criteri già motivano il candidato è nel giusto (vedi *Verde*); su `S4 → S3` il reference è nel giusto e il candidato no.
 6. **Due `Open questions` che il reference ha e il candidato no.** Che cosa succede se l'estrazione fallisce del tutto — il candidato la risponde in `S6` § Verification («Un output non valido non salva nulla di parziale»), che è una risposta e non un silenzio. Se una ricetta si possa spostare fra ricettari — nessuna sorgente lo chiede, quindi non è comportamento in scope e R-024 non lo reclama. Nessuna delle due è una violazione.
 7. **`LATER`: 12 righe contro 6.** Nessuna delle sei in più è comportamento obbligatorio parcheggiato. Differenza di ampiezza, non di regola.
+
+## Tally
+
+Backfill: la sezione non c'era quando il report è stato scritto, ed è derivata dai rilievi sopra
+senza rileggere la mappa. I check che la carta 0 ammette sono le 28 regole — tutte meno R-006,
+R-018 e *Revising an existing map* (R-027–R-031) — più H1–H8: 36. Il report dichiara la lettura
+«regola per regola»: le regole senza rilievo contro e senza verde registrato contano verdi su
+quella dichiarazione.
+
+- **Verdi (26)** — R-001, R-002, R-007, R-008, R-010, R-011, R-013, R-014, R-016, R-019, R-020,
+  R-021, R-022, R-023, R-024, R-025, R-026, R-032, R-033, H1, H2, H3, H4, H6, H7, H8. R-013,
+  R-020 e R-021 sono le «non violazioni, ma da discutere» del report; R-008 è il confine
+  `consultazione` che il report giudica «non un difetto di regola».
+- **Rossi (4)** — R-009, R-015, R-017, R-035. I tre rilievi R-015 — C1, la riga `S4, ricerca`,
+  la riga Neon — contano una volta; R-017 è rossa per l'arco caduto `S4 → S3`, con la metà
+  «false edge» verde.
+- **Inconclusive (2)** — R-012: il report precede la riscrittura della regola (la vecchia leggeva
+  gli `Ordering criteria`, che il formato non ha più) e il registro non è mai giudicato contro la
+  formulazione corrente. H5: rilievo registrato (React Query assente da ogni documento), marchio
+  sospeso — il report di CC-4 chiede di riscrivere o restringere la voce prima di contarla contro
+  un run.
+- **Non applicabili o saltati (4)** — R-003, R-004, R-005 (nessun input da riconciliare), R-034
+  (nessun handover chiesto né offerto).
+
+Pass rate: 26/30 ≈ 87%. Rule set: `7d3c34c`.
