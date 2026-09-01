@@ -183,3 +183,23 @@ licenziato da N6. Le differenze che meritano una domanda su chi ha la ragione mi
 Due cose che il candidato ha e il riferimento no, entrambe legittime: la riga **Cost** in
 *Cross-functional concerns* (sesta dimensione, licenziata quando una fonte ne fa un vincolo di più
 righe) e il conflitto sulla progress bar trovato dentro un solo documento.
+
+## Tally
+
+Backfill: la sezione non c'era quando il report è stato scritto, ed è derivata dai rilievi sopra
+senza rileggere la mappa. I check che la carta 0 ammette sono le 28 regole — tutte meno R-006,
+R-018 e *Revising an existing map* (R-027–R-031) — più H1–H8: 36.
+
+- **Verdi (27)** — R-001, R-002, R-007, R-008, R-009, R-010, R-011, R-012, R-013, R-014, R-016,
+  R-019, R-021, R-022, R-023, R-024, R-025, R-026, R-032, R-033, H1, H2, H3, H4, H6, H7, H8.
+  R-001 è vera per costruzione, come il report registra; H7 è «ticcata in sostanza» e il report
+  sceglie di non contare il pooling come miss.
+- **Rossi (4)** — R-015, R-017, R-020, R-035. C1 conta una volta sotto R-015 e C2 la corrobora; i
+  tre rilievi R-020 (`S5`, `S7`, `S9`) contano una volta.
+- **Inconclusive (1)** — H5: rilievo registrato (React Query assente da ogni riga), marchio
+  sospeso — nemmeno `reference-roadmap/` lo nomina, e il report di CC-4 chiede di riscrivere o
+  restringere la voce prima di contarla contro un run.
+- **Non applicabili o saltati (4)** — R-003, R-004, R-005 (nessun input contro un goal registrato),
+  R-034 (nessun handover richiesto né offerto).
+
+Pass rate: 27/31 ≈ 87%. Rule set: `7d3c34c`.

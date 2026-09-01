@@ -193,3 +193,24 @@ lasciano libera, ed è visibile nella riga.
   pestano i piedi.
 
 Nessun punteggio. Un run solo: ogni rosso qui è una domanda, non un verdetto sulla skill.
+
+## Tally
+
+Backfill: la sezione non c'era quando il report è stato scritto, ed è derivata dai rilievi sopra
+senza rileggere la mappa. I check che la carta 0 ammette sono le 28 regole — tutte meno R-006,
+R-018 e *Revising an existing map* (R-027–R-031) — più H1–H8: 36.
+
+- **Verdi (19)** — R-002, R-010, R-013, R-014, R-016, R-019, R-021, R-023, R-024, R-025, R-026,
+  R-032, R-033, H1, H2, H3, H4, H6, H8.
+- **Rossi (9)** — R-008, R-009, R-011, R-012, R-015, R-017, R-022, R-035, H7. R-012 e R-017
+  portano due rilievi ciascuna e contano una volta; C1 conta una volta sotto R-015, che resta rossa
+  per quanto il suo resto sia verde; R-011 e H7 sono rossi per lo stesso rilievo — pooling e
+  modalità di connessione senza osservazione — pur con il resto di entrambe verde.
+- **Inconclusive (8)** — R-001, R-003, R-004, R-005, R-007, R-034 (come il report le classifica),
+  più R-020 — nessun rilievo contro, ma nessun verde registrato: il report ne discute solo la
+  tensione con R-013 — e H5, che il report stesso dice di non contare finché la voce non è
+  riscritta o ristretta.
+- **Non applicabili o saltati (0)** — nessuno. R-030 è verificata verde nel report ma la carta non
+  la ammette: resta fuori dal conteggio.
+
+Pass rate: 19/28 ≈ 68%. Rule set: `7d3c34c`.
