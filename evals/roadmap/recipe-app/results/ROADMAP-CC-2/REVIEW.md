@@ -122,3 +122,27 @@ aperta qui sopra, perché un run solo non dà verdetto: **R-009** (`import` con 
 promessa a due metà) e **R-015** su **C1** sono esattamente le due forme che `EVALUATION-RULES.md`
 segna già ⚠ failed. Se cadono di nuovo, la domanda smette di essere se il modello ha avuto una
 brutta giornata.
+
+## Tally
+
+Backfill: la sezione non c'era quando il report è stato scritto, ed è derivata dai rilievi sopra
+senza rileggere la mappa. I check che la carta 0 ammette sono le 28 regole — tutte meno R-006,
+R-018 e *Revising an existing map* (R-027–R-031) — più H1–H8: 36.
+
+- **Verdi (21)** — R-002, R-007, R-010, R-011, R-014, R-016, R-019, R-021, R-023, R-025, R-026,
+  R-032, R-033, R-035, H1, H2, H3, H4, H6, H7, H8. Le sette righe H verdi non hanno un tick
+  esplicito nel report, che però cammina il brief per esteso — A, N e U tutte collocate, e solo H5
+  filata — e ne porta la sostanza (R-011 per H7, `LATER` per H6, `S11` per H8).
+- **Rossi (8)** — R-008, R-009, R-013, R-015, R-017, R-020, R-022, R-024. C1 e C2 contano una
+  volta sotto R-015; le due metà (a) e (b) di R-017 e i quattro rilievi (a)–(d) di R-020 contano
+  una volta ciascuna.
+- **Inconclusive (3)** — R-001: greenfield, la domanda dovuta su cosa è stato consegnato non ha
+  niente da chiedere e resta non messa alla prova. R-012: il verde del report è contro la vecchia
+  formulazione della regola — la lista ranked degli `Ordering criteria`, che il formato non ha
+  più — e il registro non è mai giudicato contro quella corrente. H5: rilievo registrato (React
+  Query assente), marchio sospeso — il report stesso rimanda il dubbio a brief oppure oracolo, e
+  il report di CC-4 chiede di riscrivere o restringere la voce prima di contarla contro un run.
+- **Non applicabili o saltati (4)** — R-003, R-004, R-005 (nessun input contro un goal
+  registrato), R-034 (nessun handover chiesto né tentato).
+
+Pass rate: 21/29 ≈ 72%. Rule set: `7d3c34c`.
