@@ -29,17 +29,6 @@ net does not cover is in [`README.md`](README.md).
 make eval-cycle          # install, then the drawing, its review and the proposals: three sessions, empty context each
 ```
 
-**The cycle installs the skill itself** — `make add`, before it asks to send anything — and stops if
-`~/.claude/skills/roadmap` still differs from `skills/roadmap` afterwards. That symlink points at a
-copy of the skill and not at this repository, and it is what the agent reads: a run that skipped the
-step would review the version before your change, and nothing in its report would say so. The
-by-hand path installs nothing for you, so the router scenarios still start here:
-
-```bash
-make add                 # install the skill under review, then restart the session
-diff -r skills/roadmap ~/.claude/skills/roadmap --exclude=.claude && echo "installed copy matches"
-```
-
 `make eval-cycle` asks once, listing all three sessions, and sends nothing until you answer — no
 later step comes back to ask again: [`../AGENTS.md`](../AGENTS.md) binds, and approval of a plan
 is never approval to send. It works in `recipe-app/results/ROADMAP-CC-<N>`, `<N>` being the next free
@@ -60,8 +49,9 @@ when one of them has to be redone — or to run the proposals again over an olde
 The validator is not a step of its own: `review.prompt.md` has the review session run it first thing,
 and report a red rather than repair it.
 
-**Then read `REVIEW.md`.** *Reading a run: a drawing*, below, is the discipline that prompt
-implements, and so is what you read the report against.
+**Then read `REVIEW.md`.** The discipline it was written under is `review.prompt.md`, word for word
+— the brief first, the rules, the reference last, the tally to close — and that is what you read the
+report against.
 
 **The third session is the proposals.** It reads every run's `REVIEW.md` and the git history of
 `skills/roadmap` between them, and writes `IMPROVEMENTS.md`: every regression and every fix that did
@@ -76,24 +66,9 @@ text to paste into a fresh session:
 node evals/roadmap/scripts/render_prompt.ts evals/roadmap/recipe-app/prompts/improve-perf.prompt.md RUN_DIR=<dir>
 ```
 
-### What driving it this way costs
-
-**Three guards stop the cycle rather than spend a call**: a transcript holding no `Skill(roadmap)`
-call means the run exercised the model and not the skill, a session that wrote no `roadmap.md` did not
-finish, and proposals do not start on a run whose `REVIEW.md` is missing.
-
-**What licenses it is particular to scenario 0.** A router run has to be answered — step 3 below — and
-on this card there is nothing to answer: the prompt already says the project is greenfield and that
-the directory is to be created, which is the one question *Establish the situation* obliges the
-session to ask. `ROADMAP-CC-3` bears it out, with one user turn in the whole run and R-001 green.
-
-**What it does not put to the test** is the interactive invocation path, and a headless run is not the
-same run as an interactive one: same prompt text, different harness. Read one against `ROADMAP-CC-3`
-as well as against the oracle, at least until a run has shown the behaviour did not move.
-
 ## The router scenarios, by hand
 
-`make add` first, and the diff above to check it took: nothing below installs the skill for you.
+`make add` first — nothing below installs the skill for you.
 
 1. **Copy the card's starting state** into a fresh `recipe-app/results/ROUTER-<n>-CC-<N>`, with the
    command the card gives. Never point a session at `reference-roadmap/` or at `fixtures/`: both are
@@ -127,64 +102,12 @@ as well as against the oracle, at least until a run has shown the behaviour did 
    finding and not a repair: nothing in the run directory is edited to make it pass. Record it against
    R-033 and read on. A red that is the harness's rather than the session's — the wrong path, a copy
    that did not complete — means the run is broken instead of failed, and it is produced again.
-7. **Write `REVIEW.md`** by walking *Reading a run: a router scenario*, below.
+7. **Write `REVIEW.md`**: read the proposed block against the card's verdict, and cite what actually
+   failed rather than the verdict as a whole — a session can get the altitude right and the operation
+   wrong, which is a finding against one rule and not against the card. Close on the tally the head
+   of [`EVALUATION-RULES.md`](EVALUATION-RULES.md) defines, over the card's rule list.
 
 A router run keeps a `PROMPT.md` always, since its prompt is the thing under test and a paraphrase is
 a different run. What else a run directory keeps, and why, is in
 [`recipe-app/results/README.md`](recipe-app/results/README.md).
 
-## The transcript, in either reading
-
-**What a session may read** is `sources/` and its own copy of `.roadmap/`; the prompt says so. Off
-limits in particular: `reference-roadmap/` and `REFERENCE-NOTES.md`, `EVALUATION-RULES.md`,
-`EVALUATION-BRIEF.md` and `recipe-app/SCENARIOS.md`, which are the answer keys — the cards carry the
-router verdicts outright — the whole of `design/roadmap/`, and any earlier run's `REVIEW.md` or
-`IMPROVEMENTS.md`.
-
-`TRANSCRIPT.jsonl` holds the half of the evidence that is not in `.roadmap/` — what the session asked,
-what it declined to write, what it put to the author — and is the only place that read restriction can
-be checked, since a search ranging over `evals/` shows there and nowhere else. Read it **alongside**
-whichever reading below applies, never instead of one: without it every such rule is *inconclusive*,
-and the report says that rather than green. It is the harness's log and not prose — filter it to the
-`user` and `assistant` turns and their tool calls.
-
-## Reading a run: a drawing
-
-1. **Against `recipe-app/EVALUATION-BRIEF.md`**, opening `sources/` only to verify a citation. **The
-   brief is the authority**, not the sources: it decides which conflicts exist, which alternatives are
-   accepted, which uncertainties are material. Cite its ids instead of paraphrasing. Read the register
-   and the slice documents together — a row whose document contradicts it is a defect the register
-   alone cannot show, and half the rules are about a field the table does not carry.
-2. **Walk [`EVALUATION-RULES.md`](EVALUATION-RULES.md)**, keeping the brief's uncertainty table open
-   for R-016. On a first drawing skip *Revising an existing map*, R-006 and R-018. The four-part
-   report the session closes on is evidence too.
-3. **Only now** open `recipe-app/reference-roadmap/` and `recipe-app/REFERENCE-NOTES.md`. Forming your
-   verdict first is what keeps the reference a memory aid instead of a diff target — the order is the
-   whole discipline, and what you are hunting is what you forgot, not what you did differently.
-
-How binding the reference is:
-
-- Where reference and `sources/` diverge, the defect is in the reference.
-- **Ids, titles, slugs, theme count, row count and register order may all differ.** On each
-  difference, ask which of the two has the better reason; `REFERENCE-NOTES.md` holds the reference's.
-- Each `Verification` shows one way a row could be demonstrated, not the only one. The same holds for
-  `Cross-functional concerns`: the five dimensions are owed to the sweep, a published line is not —
-  the reference publishes what it decided, and a candidate that decided nothing on one of them owes
-  no line.
-- A source may support a `LATER` or `OUT-OF-SCOPE` classification other than the reference's, and the
-  brief says where.
-- The reference takes one exit out of the sweep for each conflict and each undecided choice. Another
-  exit is a different choice and not a defect; **no** exit is R-015.
-
-## Reading a run: a router scenario
-
-Read the proposed block against the card's verdict, and cite what actually failed rather than the
-verdict as a whole — a session can get the altitude right and the operation wrong, which is a finding
-against one rule and not against the card. On scenario 2 the correct session ends in a question and
-there is nothing to confirm: record the question and stop.
-
-Either reading ends `REVIEW.md` on the tally the head of [`EVALUATION-RULES.md`](EVALUATION-RULES.md)
-defines — the four id lists, the pass rate, the rule-set commit. On a router card the checks admitted
-are the card's rule list; on a drawing they are everything the card does not skip, plus the brief's H
-rows. The tally is what makes two runs of the same card comparable at a glance; the judgement stays
-per check.

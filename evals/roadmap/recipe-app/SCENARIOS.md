@@ -37,9 +37,8 @@ to carry a second version, which had already drifted from the one every run was 
 same session. Whatever it asks, answer only what it needs to proceed.
 
 **The verdict is three documents, in this order and no other:** `EVALUATION-BRIEF.md`, then
-`../EVALUATION-RULES.md`, then `reference-roadmap/` with `REFERENCE-NOTES.md`.
-[`../REVIEW-WORKFLOW.md`](../REVIEW-WORKFLOW.md), *Reading a run: a drawing*, says why the order is the
-whole discipline and how binding the reference is.
+`../EVALUATION-RULES.md`, then `reference-roadmap/` with `REFERENCE-NOTES.md` — last, so that the
+reference stays a memory aid and never becomes a diff target.
 
 **Rules:** all of them except *Revising an existing map*, R-006 and R-018.
 
