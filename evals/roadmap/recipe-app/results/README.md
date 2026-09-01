@@ -33,6 +33,17 @@ RUN=<dir>` regenerates it — so it is derived and not evidence: where the two d
 wins. It serves the work on speed and token cost, not the judgement: no rule in
 `EVALUATION-RULES.md` reads it.
 
+**A satellite run is a first-class run minus review.** `make eval-noise RUN=<main run>` launches the
+missing twins of a run — same commit, same prompt, same model and effort, read back out of the main
+run's `PROMPT.md` — as sibling directories suffixed `B` and `C` (`ROADMAP-CC-6B`), each with the
+full kit: `PROMPT.md`, which declares the satellite, `TRANSCRIPT.jsonl`, `METRICS.md`. A satellite
+is generation-only and never receives a `REVIEW.md` — the inverse of the rule below, by which a run
+that holds one is never reused for generation — and what it exists for lands beside the main run's
+map as `NOISE.md`: generated, never hand-written, regenerable, but unlike `METRICS.md` not purely
+derived — it carries the model's alignment judgements, each marked by provenance.
+[`../../../../design/roadmap/EVAL-NOISE.md`](../../../../design/roadmap/EVAL-NOISE.md) is the
+design.
+
 A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`, and the
 proposals the cycle drew from it as `IMPROVEMENTS.md` beside that. Both cite rule ids, brief
 ids and the oracle, so both are answer key: a generation session pointed at a run directory may not

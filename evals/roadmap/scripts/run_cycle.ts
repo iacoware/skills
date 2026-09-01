@@ -6,6 +6,7 @@ import { join } from "node:path"
 import { createInterface } from "node:readline/promises"
 import { parseArgs } from "node:util"
 import { render } from "./render_prompt.ts"
+import { anchorOf, normalizeRunDir, prepareNoise, reportNoise, satelliteDirsOf } from "./noise_report.ts"
 
 const SCENARIO = "evals/roadmap/recipe-app"
 const RESULTS = `${SCENARIO}/results`
@@ -16,6 +17,7 @@ const STEPS = {
   run: { prompt: "run.prompt.md", writes: ".roadmap/roadmap.md", label: "disegno della mappa" },
   review: { prompt: "review.prompt.md", writes: "REVIEW.md", label: "review del run" },
   improve: { prompt: "improve.prompt.md", writes: "IMPROVEMENTS.md", label: "proposte di miglioramento" },
+  noise: { prompt: "noise.prompt.md", writes: "noise/alignment.json", label: "allineamento del residuo" },
 } as const
 
 type Step = keyof typeof STEPS
@@ -83,6 +85,8 @@ type Planned = {
   model: string
   effort: string
   sessionId: string
+  satelliteOf?: string
+  tag?: string
 }
 
 const plan = (step: Step, runDir: string, model: string, effort: string): Planned => ({
@@ -151,9 +155,10 @@ const progressOf = (event: unknown) => {
     .join("\n")
 }
 
-const send = (prompt: string, sessionId: string, model: string, effort: string) =>
+const send = (prompt: string, sessionId: string, model: string, effort: string, tag = "") =>
   new Promise<void>((resolve) => {
     const started = Date.now()
+    const prefix = tag === "" ? "" : `[${tag}] `
     const child = spawn("claude", claudeArgs(prompt, sessionId, model, effort), {
       stdio: ["ignore", "pipe", "inherit"],
     })
@@ -174,7 +179,8 @@ const send = (prompt: string, sessionId: string, model: string, effort: string) 
           continue
         }
         // Thinking and prose arrive block by block; repeating the same line for each is noise.
-        if (progress !== undefined && progress !== "" && progress !== last) console.log(progress)
+        if (progress !== undefined && progress !== "" && progress !== last)
+          console.log(prefix === "" ? progress : progress.replace(/^/gm, prefix))
         if (progress !== undefined && progress !== "") last = progress
       }
     })
@@ -182,7 +188,7 @@ const send = (prompt: string, sessionId: string, model: string, effort: string) 
     child.on("error", (error) => fail(`claude non è partito: ${error.message}`))
     child.on("close", (code) => {
       const elapsed = Math.round((Date.now() - started) / 1000)
-      console.log(`\nSessione chiusa dopo ${Math.floor(elapsed / 60)}m ${elapsed % 60}s (exit ${code}).`)
+      console.log(`\n${prefix}Sessione chiusa dopo ${Math.floor(elapsed / 60)}m ${elapsed % 60}s (exit ${code}).`)
       if (code !== 0) fail(`La sessione è uscita con ${code}: il ciclo si ferma qui.`)
       resolve()
     })
@@ -249,14 +255,24 @@ type Recorded = {
   effort: string
   prompt: string
   skill: ReturnType<typeof skillVersion>
+  satelliteOf?: string
 }
 
-const promptRecord = ({ runDir, sessionId, model, effort, prompt, skill }: Recorded) => `# Prompt — ${runDir.split("/").pop()}
+const satelliteParagraph = (mainDir: string) => `
+Satellite di \`${mainDir.split("/").pop()}\` per il prezzamento del rumore
+([\`design/roadmap/EVAL-NOISE.md\`](../../../../../design/roadmap/EVAL-NOISE.md)): stesso commit,
+stesso prompt, stesso modello ed effort del principale, lanciato da \`make eval-noise\`. È un run di
+prima classe minus review, generation-only: non riceve mai \`REVIEW.md\` né \`IMPROVEMENTS.md\` — e
+i suoi confronti stanno nel \`NOISE.md\` del principale.
+`
+
+const promptRecord = ({ runDir, sessionId, model, effort, prompt, skill, satelliteOf }: Recorded) => `# Prompt — ${runDir.split("/").pop()}
 
 Run headless: nessuna persona ha guidato la sessione in interattivo, ed è la departure che
 [\`../README.md\`](../README.md) obbliga a registrare qui. Il testo è
 [\`../../prompts/run.prompt.md\`](../../prompts/run.prompt.md) con \`{{RUN_DIR}}\` risolto, e non
 differisce in altro dalla card 0 di [\`../../SCENARIOS.md\`](../../SCENARIOS.md).
+${satelliteOf === undefined ? "" : satelliteParagraph(satelliteOf)}
 
 Quel che questa forma non mette alla prova è il path di invocazione interattivo. Nello scenario 0
 non c'è niente da confermare e niente da rispondere — il prompt risponde da sé all'unica domanda
@@ -286,16 +302,16 @@ ${prompt}
 ~~~
 `
 
-const runStep = async ({ step, runDir, model, effort, sessionId }: Planned) => {
+const runStep = async ({ step, runDir, model, effort, sessionId, satelliteOf, tag }: Planned) => {
   const prompt = render(readFileSync(`${PROMPTS}/${STEPS[step].prompt}`, "utf8"), { RUN_DIR: runDir })
 
-  console.log(`\n── ${STEPS[step].label} ──`)
+  console.log(`\n── ${STEPS[step].label}${tag === undefined ? "" : ` [${tag}]`} ──`)
 
   if (step === "run") {
     mkdirSync(runDir, { recursive: true })
     writeFileSync(
       `${runDir}/PROMPT.md`,
-      promptRecord({ runDir, sessionId, model, effort, prompt, skill: skillVersion() }),
+      promptRecord({ runDir, sessionId, model, effort, prompt, skill: skillVersion(), satelliteOf }),
     )
   }
 
@@ -304,7 +320,7 @@ const runStep = async ({ step, runDir, model, effort, sessionId }: Planned) => {
   if (step === "improve" && !existsSync(`${runDir}/REVIEW.md`))
     fail(`${runDir}/REVIEW.md non c'è: improve parte dal report di questo run, e il ciclo si ferma qui.`)
 
-  await send(prompt, sessionId, model, effort)
+  await send(prompt, sessionId, model, effort, tag)
 
   if (step === "run") {
     capture(runDir, sessionId)
@@ -321,6 +337,63 @@ const runStep = async ({ step, runDir, model, effort, sessionId }: Planned) => {
     )
 
   console.log(`${runDir}/${STEPS[step].writes} scritto.`)
+}
+
+// Il prezzamento del rumore (design/roadmap/EVAL-NOISE.md): genera i satelliti mancanti del run
+// principale — gemelli: stesso commit, stesso prompt, modello ed effort presi dal suo PROMPT.md e
+// non dai flag — poi estrazione e match meccanico, la sessione di allineamento sul residuo, e
+// l'aritmetica che scrive NOISE.md.
+const runNoise = async (mainDir: string, model: string, effort: string, yes: boolean) => {
+  if (!existsSync(`${mainDir}/.roadmap/roadmap.md`))
+    fail(`${mainDir}/.roadmap/roadmap.md non c'è: il principale non ha una mappa da confrontare.`)
+  if (!existsSync(`${mainDir}/PROMPT.md`))
+    fail(`${mainDir}/PROMPT.md non c'è: senza ancoraggio i satelliti non possono dirsi gemelli.`)
+
+  const anchor = anchorOf(readFileSync(`${mainDir}/PROMPT.md`, "utf8"))
+  if (anchor.tree === undefined || anchor.model === undefined || anchor.effort === undefined)
+    fail(`${mainDir}/PROMPT.md: ancoraggio illeggibile (tree, modello o effort mancano dalla tabella).`)
+
+  // La guardia sulla versione: satelliti su una skill diversa misurerebbero versione + rumore
+  // insieme, che è il vizio che questo metro elimina.
+  const current = skillVersion()
+  if (anchor.dirty)
+    fail(`${mainDir}/PROMPT.md dichiara modifiche non committate: il tree non identifica la skill che ha girato.`)
+  if (current.uncommitted.length > 0)
+    fail(`skills/roadmap ha modifiche non committate: il tree corrente non identifica la skill che girerebbe.`)
+  if (current.tree !== anchor.tree)
+    fail(
+      `skills/roadmap è al tree \`${current.tree}\`, il principale ha girato su \`${anchor.tree}\`:\n` +
+        `satelliti su una skill diversa misurerebbero versione + rumore insieme. Nessuna sessione parte.`,
+    )
+
+  const satellites = satelliteDirsOf(mainDir)
+    .filter((dir) => !existsSync(`${dir}/.roadmap/roadmap.md`))
+    .map((dir) => ({
+      ...plan("run", dir, anchor.model!, anchor.effort!),
+      satelliteOf: mainDir,
+      tag: dir.slice(-1),
+    }))
+  const alignment = plan("noise", mainDir, model, effort)
+
+  console.log(
+    "\nI satelliti già completi non si rigenerano; la sessione di allineamento parte solo se il match" +
+      "\nmeccanico lascia un residuo.",
+  )
+  await authorize([...satellites, alignment], yes)
+
+  await Promise.all(satellites.map(runStep))
+
+  const residual = prepareNoise(mainDir)
+  console.log(`\nresiduo dopo il match meccanico: ${residual} record -> ${mainDir}/noise/residual.json`)
+  if (residual === 0) {
+    console.log("Residuo vuoto: la sessione di allineamento non parte.")
+    writeFileSync(`${mainDir}/noise/alignment.json`, `${JSON.stringify({ pairs: [] }, null, 2)}\n`)
+  } else {
+    await runStep(alignment)
+  }
+
+  reportNoise(mainDir)
+  console.log(`noise -> ${mainDir}/NOISE.md`)
 }
 
 const main = async () => {
@@ -353,6 +426,9 @@ const main = async () => {
     return given!
   }
 
+  if (values.step === "noise")
+    return runNoise(normalizeRunDir(needsRun("noise")), reviewModel, reviewEffort, yes)
+
   const planned = ((): Planned[] => {
     switch (values.step) {
       case "run":
@@ -370,7 +446,7 @@ const main = async () => {
         ]
       }
       default:
-        return fail(`--step sconosciuto: ${values.step}. Sono run, review, improve, cycle.`)
+        return fail(`--step sconosciuto: ${values.step}. Sono run, review, improve, noise, cycle.`)
     }
   })()
 

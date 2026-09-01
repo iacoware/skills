@@ -61,6 +61,13 @@ Lato eval (nello stesso cambio, o il reviewer non trova i verdetti):
   idem.
 - Candidate regole nuove (o estensioni): log scritto prima della tabella Themes (si legge dal
   transcript); log riletto in un run di revisione; nessun verdetto duplicato nella mappa.
+- `evals/roadmap/scripts/extract_map.ts` — l'asse «verdetti» di `eval-noise` oggi legge la sezione
+  `Theme boundaries`: col log l'estrazione diventa un fold del giornale append-only (per coppia
+  vince l'entry più recente) e riconosce il formato per run, perché proprio CC-7 vs baseline
+  confronta una mappa vecchio formato con una nuova. Il ragionamento sta in `EVAL-NOISE.md`,
+  «Dipendenza dal roadmap-log»; tutto l'adattamento sta nell'estrattore, `noise.prompt.md` non si
+  tocca. Senza, l'asse non fallisce: si svuota, e il report lo dichiara solo come «accordo per
+  assenza».
 
 ## Verifica
 
@@ -90,9 +97,9 @@ perso un ciclo di eval.
 
 ## Fuori da questo documento
 
-Il prezzamento del rumore run-su-run (CC-6b sulla stessa versione, diff mirato senza review
-completa) è un tema a parte e merita un ragionamento proprio; qui conta solo che il giudizio su
-CC-7 non si appoggi all'aggregato finché quel prezzo non è noto.
+Il prezzamento del rumore run-su-run è un tema a parte e il suo ragionamento sta in
+`EVAL-NOISE.md` (satelliti CC-6B/6C sulla stessa versione, `make eval-noise`); qui conta solo che
+il giudizio su CC-7 non si appoggi all'aggregato finché quel prezzo non è noto.
 
 ## Open questions
 

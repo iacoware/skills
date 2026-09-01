@@ -2,7 +2,7 @@ AGENTS := -a claude-code -a codex
 INSTALL := npx -y skills add . -g $(AGENTS) -y
 
 .PHONY: add add-skill list test test-roadmap test-evals validate-roadmap capture-transcript run-metrics capture-run \
-	eval-cycle eval-run eval-review eval-improve
+	eval-cycle eval-run eval-review eval-improve eval-noise
 
 add:
 	$(INSTALL)
@@ -57,6 +57,13 @@ eval-run:
 eval-review:
 	@test -n "$(RUN)" || { echo "usage: make eval-review RUN=<run directory>"; exit 1; }
 	@$(CYCLE) --step review --run "$(RUN)"
+
+# Prezzamento del rumore (design/roadmap/EVAL-NOISE.md): genera i satelliti *mancanti* del run
+# principale — B e C, gemelli su stessa skill, prompt, modello ed effort — poi scrive NOISE.md.
+# Rilanciabile: se i satelliti ci sono, rigenera solo l'analisi.
+eval-noise:
+	@test -n "$(RUN)" || { echo "usage: make eval-noise RUN=<run directory del principale>"; exit 1; }
+	@$(CYCLE) --step noise --run "$(RUN)"
 
 # `eval-cycle` lo fa già come terzo passo: questo target serve a rifarlo su un run esistente, o a
 # farlo girare su un run più vecchio dopo un cambiamento al prompt.
