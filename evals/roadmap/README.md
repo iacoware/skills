@@ -22,15 +22,21 @@ and not beside the skill.
 | `EVALUATION-RULES.md` | What to look for, as numbered checks about the skill. Portable too. |
 | `recipe-app/SCENARIOS.md` | The four cards: a drawing from nothing, and three inputs that hold the router. Starting state, prompt, answer, verdict. Answer key. |
 | `recipe-app/sources/` | The only input a candidate is drawn from. |
-| `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources, with citable ids: where the map may differ, what it must leave open, what only looks like a defect, what it must contain. |
+| `recipe-app/EVALUATION-BRIEF.md` | Facts about those sources, one citable id per entry, sectioned by the reviewer's action: tick off, verify the exit, never flag. |
 | `recipe-app/reference-roadmap/` | The oracle: one good answer, hand-written from the sources before any candidate existed. Taste, not verifiable. Read last. |
 | `recipe-app/REFERENCE-NOTES.md` | The reasons the oracle does not publish. Read with it. |
 | `recipe-app/fixtures/` | Frozen starting states, and one minimal mutation of the oracle per validator check. |
 | `recipe-app/results/` | What the skill produced, one directory per run, written by the run itself, with the transcript that produced it and — always, for a headless run — the `PROMPT.md` it was sent. Never an input to a session. |
 | `../AGENTS.md` | Authorization rules for provider runs. Binding on every generation call. |
 
-Add a second scenario and only the last two jobs are written anew: a **procedure** and **rules** hold
-across scenarios, **facts** about the sources and **worked answers** do not.
+Add a second scenario and only the facts and the worked answer are written anew, because the three
+artifacts of judgement differ in kind:
+
+| Artifact | Kind | Travels to a new scenario |
+|---|---|---|
+| `EVALUATION-RULES.md` | **Rules** — falsifiable predicates about any run, free of scenario constants | Yes, with `REVIEW-WORKFLOW.md`, the procedure |
+| `recipe-app/EVALUATION-BRIEF.md` | **Facts** — this scenario's constants those predicates bind, derived from `sources/` | No |
+| `recipe-app/reference-roadmap/` | **Taste** — the author's one worked answer, not falsifiable | No |
 
 ## What the net does not cover
 

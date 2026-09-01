@@ -3,7 +3,8 @@
 What to look for in a map produced by `skills/roadmap/SKILL.md`, and in the session that produced it.
 Walked when reading a run — [`REVIEW-WORKFLOW.md`](REVIEW-WORKFLOW.md) — and cited card by card in
 [`recipe-app/SCENARIOS.md`](recipe-app/SCENARIOS.md). These are rules about the skill: they travel to
-a new scenario unchanged, where `EVALUATION-BRIEF.md` and `reference-roadmap/` do not.
+a new scenario unchanged, where `EVALUATION-BRIEF.md` and `reference-roadmap/` do not — which is why
+a rule cites the brief's tables and sections, never its ids.
 
 **Half the evidence is not in the files** — what the session asked, what it declined to write, what it
 put to the author. Several rules below have no artifact at all: read the transcript.
