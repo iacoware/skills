@@ -164,8 +164,8 @@ const proposedFor = (alignment: unknown, left: string, right: string, axis: Axis
 }
 
 type VerdictOutcome = {
-  agree: number
-  disagree: string[]
+  agree: string[]
+  disagree: { label: string; delta: string }[]
   onlyLeft: string[]
   onlyRight: string[]
   blind: string[]
@@ -182,8 +182,8 @@ const verdictsOf = (leftMap: MapExtract, rightMap: MapExtract, themePairs: Pairi
     rightMap.boundaries.map((boundary) => [canonPair(boundary.pair[0], boundary.pair[1]), boundary]),
   )
 
-  let agree = 0
-  const disagree: string[] = []
+  const agree: string[] = []
+  const disagree: VerdictOutcome["disagree"] = []
   const onlyLeft: string[] = []
   const blind: string[] = []
 
@@ -191,7 +191,7 @@ const verdictsOf = (leftMap: MapExtract, rightMap: MapExtract, themePairs: Pairi
     const mapped = boundary.pair.map((name) => nameMap.get(name))
     const label = `\`${boundary.pair.join(" / ")}\``
     if (mapped[0] === undefined || mapped[1] === undefined) {
-      blind.push(`${label} (tema senza allineamento, ${leftMap.run})`)
+      blind.push(`${label} — ${leftMap.run}`)
       continue
     }
     const twin = remaining.get(canonPair(mapped[0], mapped[1]))
@@ -200,15 +200,14 @@ const verdictsOf = (leftMap: MapExtract, rightMap: MapExtract, themePairs: Pairi
       continue
     }
     remaining.delete(canonPair(mapped[0], mapped[1]))
-    if (twin.verdict === boundary.verdict) agree += 1
-    else disagree.push(`${label}: ${boundary.verdict} ≠ ${twin.verdict}`)
+    if (twin.verdict === boundary.verdict) agree.push(`${label} — ${boundary.verdict}`)
+    else disagree.push({ label, delta: `${boundary.verdict} ≠ ${twin.verdict}` })
   }
 
   const onlyRight: string[] = []
   for (const boundary of remaining.values()) {
     const label = `\`${boundary.pair.join(" / ")}\``
-    if (boundary.pair.some((name) => !alignedRight.has(name)))
-      blind.push(`${label} (tema senza allineamento, ${rightMap.run})`)
+    if (boundary.pair.some((name) => !alignedRight.has(name))) blind.push(`${label} — ${rightMap.run}`)
     else onlyRight.push(label)
   }
 
@@ -223,7 +222,7 @@ const verdictsOf = (leftMap: MapExtract, rightMap: MapExtract, themePairs: Pairi
   }
 }
 
-type EdgeOutcome = { agree: number; onlyLeft: string[]; onlyRight: string[]; blind: string[] }
+type EdgeOutcome = { agree: string[]; onlyLeft: string[]; onlyRight: string[]; blind: string[] }
 
 const edgesOf = (map: MapExtract) =>
   map.rows.flatMap((row) => row.dependsOn.map((dependency) => [row.id, dependency] as const))
@@ -236,16 +235,16 @@ const edgeOutcomeOf = (leftMap: MapExtract, rightMap: MapExtract, rowPairs: Pair
   const alignedRight = new Set(rowPairs.map((pair) => pair.right.key))
   const remaining = new Set(edgesOf(rightMap).map(([from, to]) => `${from}->${to}`))
 
-  let agree = 0
+  const agree: string[] = []
   const onlyLeft: string[] = []
   const blind: string[] = []
   for (const edge of edgesOf(leftMap)) {
     const from = idMap.get(edge[0])
     const to = idMap.get(edge[1])
     if (from === undefined || to === undefined) {
-      blind.push(`${edgeLabel(leftMap, edge)} (estremo senza allineamento, ${leftMap.run})`)
+      blind.push(`${edgeLabel(leftMap, edge)} — ${leftMap.run}`)
     } else if (remaining.delete(`${from}->${to}`)) {
-      agree += 1
+      agree.push(edgeLabel(leftMap, edge))
     } else {
       onlyLeft.push(edgeLabel(leftMap, edge))
     }
@@ -255,7 +254,7 @@ const edgeOutcomeOf = (leftMap: MapExtract, rightMap: MapExtract, rowPairs: Pair
   for (const key of remaining) {
     const edge = key.split("->") as unknown as readonly [string, string]
     if (alignedRight.has(edge[0]) && alignedRight.has(edge[1])) onlyRight.push(edgeLabel(rightMap, edge))
-    else blind.push(`${edgeLabel(rightMap, edge)} (estremo senza allineamento, ${rightMap.run})`)
+    else blind.push(`${edgeLabel(rightMap, edge)} — ${rightMap.run}`)
   }
 
   return { agree, onlyLeft, onlyRight, blind }
@@ -274,139 +273,309 @@ const rowDivergences = (pairing: Pairing, themeMap: Map<string, string>) =>
     (field) => `${field} (${String(pairing.left.record[field])} ≠ ${String(pairing.right.record[field])})`,
   )
 
+type PairAnalysis = {
+  left: MapExtract
+  right: MapExtract
+  results: Record<Axis, AxisResult>
+  verdicts: VerdictOutcome
+  edges: EdgeOutcome
+  divergentRows: { pairing: Pairing; fields: string[] }[]
+}
+
+const analysePair = (leftMap: MapExtract, rightMap: MapExtract, alignment: unknown): PairAnalysis => {
+  const leftItems = itemsOf(leftMap)
+  const rightItems = itemsOf(rightMap)
+  const results = Object.fromEntries(
+    AXES.map((axis) => [
+      axis,
+      alignAxis(leftItems[axis], rightItems[axis], proposedFor(alignment, leftMap.run, rightMap.run, axis)),
+    ]),
+  ) as Record<Axis, AxisResult>
+  const themeMap = new Map(results.themes.aligned.map((pair) => [pair.left.key, pair.right.key]))
+
+  return {
+    left: leftMap,
+    right: rightMap,
+    results,
+    verdicts: verdictsOf(leftMap, rightMap, results.themes.aligned),
+    edges: edgeOutcomeOf(leftMap, rightMap, results.rows.aligned),
+    divergentRows: results.rows.aligned
+      .map((pairing) => ({ pairing, fields: rowDivergences(pairing, themeMap) }))
+      .filter(({ fields }) => fields.length > 0),
+  }
+}
+
 const itemLabel = (axis: Axis, item: Item) =>
   axis === "themes" ? `\`${item.key}\`` : axis === "rows" ? `«${item.matchOn}»` : `«${item.key}»`
+
+const identityOf = (axis: Axis, pairing: Pairing) => {
+  const same = pairing.left.matchOn === pairing.right.matchOn && pairing.left.key === pairing.right.key
+  return same
+    ? itemLabel(axis, pairing.left)
+    : `${itemLabel(axis, pairing.left)} = ${itemLabel(axis, pairing.right)}`
+}
+
+const row = (cells: (string | number)[]) => `| ${cells.join(" | ")} |`
+const separator = (columns: number) => row(Array(columns).fill("---"))
 
 const provenanceSplit = (result: AxisResult) => {
   const mechanical = result.aligned.filter((pair) => pair.provenance === "meccanico").length
   return `${mechanical}/${result.aligned.length - mechanical}`
 }
 
-const pairingLine = (axis: Axis, pairing: Pairing, note = "") => {
-  const same = pairing.left.matchOn === pairing.right.matchOn && pairing.left.key === pairing.right.key
-  const identity = same
-    ? itemLabel(axis, pairing.left)
-    : `${itemLabel(axis, pairing.left)} = ${itemLabel(axis, pairing.right)}`
-  return `- ${AXIS_NOUN[axis]} ${identity} — ${pairing.provenance}${note}`
+const alignedCount = (result: AxisResult) => {
+  const mechanical = result.aligned.filter((pair) => pair.provenance === "meccanico").length
+  return result.aligned.length === 0
+    ? "accoppiati 0"
+    : `accoppiati ${result.aligned.length} (meccanici ${mechanical}, dal modello ${result.aligned.length - mechanical})`
 }
 
-const summaryRow = (cells: (string | number)[]) => `| ${cells.join(" | ")} |`
+// Ogni gruppo elencato ha esattamente tanti bullet quanti la sua cella in tabella: `Divergenti` è
+// l'unico che ripete — è un sottoinsieme di `Accoppiati`, non una categoria a sé.
+const group = (label: string, items: string[]) =>
+  items.length === 0 ? [] : ["", `${label}:`, ...items.map((item) => `- ${item}`)]
+
+const block = (name: string, counts: string[], groups: [string, string[]][]) => [
+  "",
+  `**${name}** — ${counts.filter((count) => count !== "").join(" · ")}`,
+  ...groups.flatMap(([label, items]) => group(label, items)),
+]
+
+const nonZero = (label: string, count: number) => (count > 0 ? `${label} ${count}` : "")
+
+const EMPTY_VERDICTS = [
+  "",
+  "L'asse verdetti è vuoto su entrambi i run: accordo per assenza. Se la skill registra i",
+  "verdetti altrove, è l'estrattore a non leggerli, non i run a concordare.",
+]
+
+const pairSection = (analysis: PairAnalysis) => {
+  const { left, right, results, verdicts, edges, divergentRows } = analysis
+  const leftOnly = `solo ${left.run}`
+  const rightOnly = `solo ${right.run}`
+  const alignedOf = (axis: Axis) =>
+    results[axis].aligned.map((pairing) => `${identityOf(axis, pairing)} — ${pairing.provenance}`)
+  const soloOf = (axis: Axis, side: "onlyLeft" | "onlyRight") =>
+    results[axis][side].map((item) => itemLabel(axis, item))
+
+  const simpleAxis = (name: string, axis: Axis) =>
+    block(
+      name,
+      [
+        alignedCount(results[axis]),
+        nonZero(`${leftOnly}:`, results[axis].onlyLeft.length),
+        nonZero(`${rightOnly}:`, results[axis].onlyRight.length),
+      ],
+      [
+        ["Accoppiati", alignedOf(axis)],
+        [`Solo ${left.run}`, soloOf(axis, "onlyLeft")],
+        [`Solo ${right.run}`, soloOf(axis, "onlyRight")],
+      ],
+    )
+
+  const verdictBlock =
+    verdicts.leftTotal === 0 && verdicts.rightTotal === 0
+      ? ["", "**verdetti** — nessun verdetto estratto da nessuno dei due run", ...EMPTY_VERDICTS]
+      : block(
+          "verdetti",
+          [
+            `accoppiati ${verdicts.agree.length + verdicts.disagree.length}`,
+            nonZero("divergenti", verdicts.disagree.length),
+            nonZero(`${leftOnly}:`, verdicts.onlyLeft.length),
+            nonZero(`${rightOnly}:`, verdicts.onlyRight.length),
+            nonZero("non confrontabili", verdicts.blind.length),
+          ],
+          [
+            [
+              "Accoppiati",
+              [...verdicts.agree, ...verdicts.disagree.map(({ label }) => `${label} — verdetti diversi`)],
+            ],
+            ["Divergenti", verdicts.disagree.map(({ label, delta }) => `${label} — ${delta}`)],
+            [`Solo ${left.run}`, verdicts.onlyLeft],
+            [`Solo ${right.run}`, verdicts.onlyRight],
+            ["Non confrontabili (un tema della coppia non ha controparte)", verdicts.blind],
+          ],
+        )
+
+  return [
+    `### ${left.run} ↔ ${right.run}`,
+    "",
+    row(["Asse", "Accoppiati", "mecc/mod", "Divergenti", `Solo ${left.run}`, `Solo ${right.run}`, "Non confrontabili"]),
+    separator(7),
+    row([
+      "temi",
+      results.themes.aligned.length,
+      provenanceSplit(results.themes),
+      "—",
+      results.themes.onlyLeft.length,
+      results.themes.onlyRight.length,
+      "—",
+    ]),
+    row([
+      "verdetti",
+      verdicts.agree.length + verdicts.disagree.length,
+      "—",
+      verdicts.disagree.length,
+      verdicts.onlyLeft.length,
+      verdicts.onlyRight.length,
+      verdicts.blind.length,
+    ]),
+    row([
+      "righe",
+      results.rows.aligned.length,
+      provenanceSplit(results.rows),
+      divergentRows.length,
+      results.rows.onlyLeft.length,
+      results.rows.onlyRight.length,
+      "—",
+    ]),
+    row(["archi di dipendenza", edges.agree.length, "—", "—", edges.onlyLeft.length, edges.onlyRight.length, edges.blind.length]),
+    row([
+      "out-of-scope",
+      results.outOfScope.aligned.length,
+      provenanceSplit(results.outOfScope),
+      "—",
+      results.outOfScope.onlyLeft.length,
+      results.outOfScope.onlyRight.length,
+      "—",
+    ]),
+    ...simpleAxis("temi", "themes"),
+    ...verdictBlock,
+    ...block(
+      "righe",
+      [
+        alignedCount(results.rows),
+        nonZero("divergenti sui campi", divergentRows.length),
+        nonZero(`${leftOnly}:`, results.rows.onlyLeft.length),
+        nonZero(`${rightOnly}:`, results.rows.onlyRight.length),
+      ],
+      [
+        ["Accoppiati", alignedOf("rows")],
+        [
+          "Divergenti",
+          divergentRows.map(({ pairing, fields }) => `${itemLabel("rows", pairing.left)} — ${fields.join(", ")}`),
+        ],
+        [`Solo ${left.run}`, soloOf("rows", "onlyLeft")],
+        [`Solo ${right.run}`, soloOf("rows", "onlyRight")],
+      ],
+    ),
+    ...block(
+      "archi di dipendenza",
+      [
+        `accoppiati ${edges.agree.length}`,
+        nonZero(`${leftOnly}:`, edges.onlyLeft.length),
+        nonZero(`${rightOnly}:`, edges.onlyRight.length),
+        nonZero("non confrontabili", edges.blind.length),
+      ],
+      [
+        ["Accoppiati", edges.agree],
+        [`Solo ${left.run}`, edges.onlyLeft],
+        [`Solo ${right.run}`, edges.onlyRight],
+        ["Non confrontabili (un estremo non ha controparte)", edges.blind],
+      ],
+    ),
+    ...simpleAxis("out-of-scope", "outOfScope"),
+  ].join("\n")
+}
+
+const ratio = (aligned: number, onlyLeft: number, onlyRight: number) => {
+  const comparable = aligned + onlyLeft + onlyRight
+  return comparable === 0 ? "—" : `${aligned}/${comparable}`
+}
+
+const synthesis = (maps: MapExtract[], analyses: PairAnalysis[]) => {
+  const inventory = [
+    row(["Asse", ...maps.map((map) => map.run)]),
+    separator(maps.length + 1),
+    row(["temi", ...maps.map((map) => map.themes.length)]),
+    row(["verdetti", ...maps.map((map) => map.boundaries.length)]),
+    row(["righe", ...maps.map((map) => map.rows.length)]),
+    row(["archi di dipendenza", ...maps.map((map) => edgesOf(map).length)]),
+    row(["out-of-scope", ...maps.map((map) => map.outOfScope.length)]),
+  ]
+
+  const axisRatio = (name: string, pick: (analysis: PairAnalysis) => [number, number, number]) =>
+    row([name, ...analyses.map((analysis) => ratio(...pick(analysis)))])
+
+  const agreement = [
+    row(["Asse", ...analyses.map((analysis) => `${analysis.left.run} ↔ ${analysis.right.run}`)]),
+    separator(analyses.length + 1),
+    axisRatio("temi", ({ results }) => [
+      results.themes.aligned.length,
+      results.themes.onlyLeft.length,
+      results.themes.onlyRight.length,
+    ]),
+    axisRatio("verdetti", ({ verdicts }) => [
+      verdicts.agree.length,
+      verdicts.onlyLeft.length + verdicts.disagree.length,
+      verdicts.onlyRight.length,
+    ]),
+    axisRatio("righe", ({ results }) => [
+      results.rows.aligned.length,
+      results.rows.onlyLeft.length,
+      results.rows.onlyRight.length,
+    ]),
+    row([
+      "righe — campi concordi",
+      ...analyses.map(({ results, divergentRows }) =>
+        results.rows.aligned.length === 0
+          ? "—"
+          : `${results.rows.aligned.length - divergentRows.length}/${results.rows.aligned.length}`,
+      ),
+    ]),
+    axisRatio("archi di dipendenza", ({ edges }) => [edges.agree.length, edges.onlyLeft.length, edges.onlyRight.length]),
+    axisRatio("out-of-scope", ({ results }) => [
+      results.outOfScope.aligned.length,
+      results.outOfScope.onlyLeft.length,
+      results.outOfScope.onlyRight.length,
+    ]),
+  ]
+
+  return [
+    "## Sintesi",
+    "",
+    "Quanto ha prodotto ciascun run — conteggi grezzi, nessun confronto:",
+    "",
+    ...inventory,
+    "",
+    "Accordo per coppia, `accoppiati / confrontabili`: il denominatore esclude i non confrontabili,",
+    "e per i verdetti conta come mancato accordo anche una divergenza sul verdetto stesso.",
+    "",
+    ...agreement,
+  ].join("\n")
+}
+
+const LEGEND = [
+  "## Come leggere",
+  "",
+  "Ogni coppia di run ha una tabella e, sotto, un blocco per asse nello stesso ordine. Il numero di",
+  "bullet di ogni gruppo elencato è esattamente la cella corrispondente in tabella.",
+  "",
+  "- **Accoppiati** — oggetti riconosciuti come lo stesso oggetto nei due run. In `«A» = «B»` la",
+  "  sinistra è il primo run della coppia, la destra il secondo; un solo nome significa stringa",
+  "  identica. `mecc/mod` divide gli accoppiamenti fra stringa identica e giudizio del modello, ed è",
+  "  `—` su verdetti e archi di dipendenza perché quei due assi non passano mai dal modello: si",
+  "  confrontano traducendo i nomi già allineati su temi e righe.",
+  "- **Divergenti** — sottoinsieme degli accoppiati, non una categoria a sé: stesso oggetto, campo",
+  "  diverso (`theme`, `kind`, `size` per le righe; il verdetto per i verdetti). Il gruppo elencato",
+  "  ripete quegli accoppiamenti con il delta dei campi.",
+  "- **Solo X** — presente in X, senza controparte nell'altro run.",
+  "- **Archi di dipendenza** — le voci di `Depends on` della tabella NOW, una per coppia. In",
+  "  `«A» → «B»` la punta va al prerequisito: «A» dipende da «B».",
+  "- **Non confrontabili** — oggetti derivati che non arrivano al confronto perché un loro estremo",
+  "  non è allineato: un verdetto su una coppia di temi di cui uno non ha controparte, un arco di",
+  "  dipendenza che tocca una riga senza controparte. Non è disaccordo, è cecità del confronto.",
+]
 
 export const buildReport = (maps: MapExtract[], alignment: unknown, anchor?: Anchor): string => {
-  const sections: string[] = []
-  const rejected: string[] = []
-
-  for (const [l, r] of PAIR_INDICES) {
-    const leftMap = maps[l]
-    const rightMap = maps[r]
-    const leftItems = itemsOf(leftMap)
-    const rightItems = itemsOf(rightMap)
-
-    const results = Object.fromEntries(
-      AXES.map((axis) => [
-        axis,
-        alignAxis(leftItems[axis], rightItems[axis], proposedFor(alignment, leftMap.run, rightMap.run, axis)),
-      ]),
-    ) as Record<Axis, AxisResult>
-    for (const axis of AXES)
-      rejected.push(
-        ...results[axis].rejected.map((line) => `${leftMap.run} ↔ ${rightMap.run}, ${AXIS_NOUN[axis]}: ${line}`),
-      )
-
-    const verdicts = verdictsOf(leftMap, rightMap, results.themes.aligned)
-    const edges = edgeOutcomeOf(leftMap, rightMap, results.rows.aligned)
-    const themeMap = new Map(results.themes.aligned.map((pair) => [pair.left.key, pair.right.key]))
-    const divergentRows = results.rows.aligned
-      .map((pairing) => ({ pairing, fields: rowDivergences(pairing, themeMap) }))
-      .filter(({ fields }) => fields.length > 0)
-
-    const lines: string[] = []
-    for (const axis of AXES) {
-      for (const pairing of results[axis].aligned) {
-        const fields = axis === "rows" ? rowDivergences(pairing, themeMap) : []
-        lines.push(pairingLine(axis, pairing, fields.length > 0 ? `; diverge su ${fields.join(", ")}` : ""))
-      }
-      for (const item of results[axis].onlyLeft)
-        lines.push(`- ${AXIS_NOUN[axis]} ${itemLabel(axis, item)} — non allineabile (solo ${leftMap.run})`)
-      for (const item of results[axis].onlyRight)
-        lines.push(`- ${AXIS_NOUN[axis]} ${itemLabel(axis, item)} — non allineabile (solo ${rightMap.run})`)
-    }
-    lines.push(...verdicts.disagree.map((line) => `- verdetto ${line}`))
-    lines.push(...verdicts.onlyLeft.map((line) => `- verdetto ${line} — solo ${leftMap.run}`))
-    lines.push(...verdicts.onlyRight.map((line) => `- verdetto ${line} — solo ${rightMap.run}`))
-    lines.push(...verdicts.blind.map((line) => `- verdetto ${line}`))
-    if (edges.agree > 0) lines.push(`- archi concordi: ${edges.agree}`)
-    lines.push(...edges.onlyLeft.map((line) => `- arco ${line} — solo ${leftMap.run}`))
-    lines.push(...edges.onlyRight.map((line) => `- arco ${line} — solo ${rightMap.run}`))
-    lines.push(...edges.blind.map((line) => `- arco ${line}`))
-
-    const emptyVerdicts = verdicts.leftTotal === 0 && verdicts.rightTotal === 0
-
-    sections.push(
-      [
-        `### ${leftMap.run} ↔ ${rightMap.run}`,
-        "",
-        summaryRow(["Asse", "Accoppiati", "mecc/mod", "Divergenti", `Solo ${leftMap.run}`, `Solo ${rightMap.run}`, "Non confrontabili"]),
-        summaryRow(Array(7).fill("---")),
-        summaryRow([
-          "temi",
-          results.themes.aligned.length,
-          provenanceSplit(results.themes),
-          "—",
-          results.themes.onlyLeft.length,
-          results.themes.onlyRight.length,
-          "—",
-        ]),
-        summaryRow([
-          "verdetti",
-          verdicts.agree + verdicts.disagree.length,
-          "—",
-          verdicts.disagree.length,
-          verdicts.onlyLeft.length,
-          verdicts.onlyRight.length,
-          verdicts.blind.length,
-        ]),
-        summaryRow([
-          "righe",
-          results.rows.aligned.length,
-          provenanceSplit(results.rows),
-          divergentRows.length,
-          results.rows.onlyLeft.length,
-          results.rows.onlyRight.length,
-          "—",
-        ]),
-        summaryRow([
-          "archi",
-          edges.agree,
-          "—",
-          "—",
-          edges.onlyLeft.length,
-          edges.onlyRight.length,
-          edges.blind.length,
-        ]),
-        summaryRow([
-          "out-of-scope",
-          results.outOfScope.aligned.length,
-          provenanceSplit(results.outOfScope),
-          "—",
-          results.outOfScope.onlyLeft.length,
-          results.outOfScope.onlyRight.length,
-          "—",
-        ]),
-        ...(emptyVerdicts
-          ? [
-              "",
-              "L'asse verdetti è vuoto su entrambi i run: accordo per assenza. Se la skill registra i",
-              "verdetti altrove, è l'estrattore a non leggerli, non i run a concordare.",
-            ]
-          : []),
-        "",
-        "Accoppiamenti e casi:",
-        "",
-        ...lines,
-      ].join("\n"),
-    )
-  }
+  const analyses = PAIR_INDICES.map(([l, r]) => analysePair(maps[l], maps[r], alignment))
+  const rejected = analyses.flatMap((analysis) =>
+    AXES.flatMap((axis) =>
+      analysis.results[axis].rejected.map(
+        (line) => `${analysis.left.run} ↔ ${analysis.right.run}, ${AXIS_NOUN[axis]}: ${line}`,
+      ),
+    ),
+  )
 
   return [
     `# Noise — ${maps[0].run}`,
@@ -425,9 +594,13 @@ export const buildReport = (maps: MapExtract[], alignment: unknown, anchor?: Anc
     "Misura l'accordo tra run a versione ferma, non la qualità contro le regole: i casi non",
     "allineabili non sono errori dello strumento, sono la misura.",
     "",
+    synthesis(maps, analyses),
+    "",
+    ...LEGEND,
+    "",
     "## Accordo per asse",
     "",
-    sections.join("\n\n"),
+    analyses.map(pairSection).join("\n\n"),
     ...(rejected.length > 0
       ? ["", "## Proposte scartate dal validatore", "", ...rejected.map((line) => `- ${line}`)]
       : []),

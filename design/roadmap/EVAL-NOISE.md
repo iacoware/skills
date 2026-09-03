@@ -28,8 +28,8 @@ baseline sugli stessi assi. Il prezzamento è solo il suo primo uso.
 
 1. **Lancio** — A, B, C in parallelo (~13 min wall-clock, costo generazione CC-5 come riferimento).
 2. **Estrazione deterministica** — parse delle tabelle di ogni mappa in JSON normalizzato: temi,
-   verdetti di boundary, righe NOW col record completo (titolo, tema, kind, size, archi),
-   OUT-OF-SCOPE.
+   verdetti di boundary, righe NOW col record completo (titolo, tema, kind, size, archi di
+   dipendenza), OUT-OF-SCOPE.
 3. **Match meccanico** — stringhe identiche e record coincidenti sui campi strutturati si accoppiano
    senza modello. Sui run gemelli fa più lavoro di quanto CC-2..5 suggeriscano (`ricerca` e
    `condivisione` sono identici perfino cross-versione), ma non è il pilastro: il disegno regge
@@ -38,8 +38,14 @@ baseline sugli stessi assi. Il prezzamento è solo il suo primo uso.
    titolo; output vincolato: coppia allineata, oppure «non allineabile». I casi che non si
    allineano — un tema senza controparte, una riga che mappa su due — **non sono errore dello
    strumento: sono la misura** (compression, granularità che balla).
-5. **Aritmetica** — tabella di accordo per asse (temi, verdetti, righe, archi, out-of-scope), ogni
-   accoppiamento con la colonna di provenienza: meccanico / giudicato dal modello / non allineabile.
+5. **Aritmetica** — tabella di accordo per asse (temi, verdetti, righe, archi di dipendenza,
+   out-of-scope), ogni accoppiamento con la colonna di provenienza: meccanico / giudicato dal
+   modello / non allineabile.
+6. **Resa** — sopra le tre coppie, una sintesi: inventario per run (quanto ha prodotto ciascuno,
+   prima di ogni confronto) e accordo per coppia come `accoppiati / confrontabili`. Sotto ogni
+   tabella, un blocco per asse nello stesso ordine, con i gruppi elencati uno a uno — accoppiati,
+   divergenti, solo-X, non confrontabili — e l'invariante che il numero di bullet di un gruppo è la
+   sua cella in tabella. Nessun giudizio nella sintesi: solo aritmetica, la lettura la fa chi legge.
 
 Perché l'estrazione invece del confronto whole-doc: copertura garantita per costruzione (ogni riga
 entra perché ce la mette il codice, il modello non può saltarla); separazione tra giudizio e misura

@@ -105,6 +105,13 @@ const THREE = (a: Partial<MapExtract>, b: Partial<MapExtract>) => [
 
 const NO_ALIGNMENT = { pairs: [] }
 
+// Il report si legge per blocchi: dentro una coppia di run, un asse alla volta. I test asseriscono
+// dove asserisce l'occhio — dentro il blocco dell'asse, sotto il suo gruppo.
+const axisBlock = (report: string, pair: string, axis: string) => {
+  const section = (report.split(`### ${pair}\n`)[1] ?? "").split("\n### ")[0]
+  return section.split(/\n(?=\*\*)/).find((block) => block.startsWith(`**${axis}**`)) ?? ""
+}
+
 test("a model judgement pairs the residual and carries its provenance into the report", () => {
   const maps = THREE({ themes: [theme("foto")] }, { themes: [theme("immagini")] })
   const alignment = {
@@ -113,8 +120,8 @@ test("a model judgement pairs the residual and carries its provenance into the r
 
   const report = buildReport(maps, alignment)
 
-  assert.match(report, /- tema `foto` = `immagini` — modello/)
-  assert.match(report, /- tema `foto` — non allineabile \(solo A\)/)
+  assert.match(axisBlock(report, "A ↔ B", "temi"), /Accoppiati:\n- `foto` = `immagini` — modello/)
+  assert.match(axisBlock(report, "A ↔ C", "temi"), /Solo A:\n- `foto`/)
 })
 
 test("verdicts compare across a model-aligned theme rename", () => {
@@ -132,7 +139,7 @@ test("verdicts compare across a model-aligned theme rename", () => {
 
   const report = buildReport(maps, alignment)
 
-  assert.match(report, /- verdetto `x \/ y`: split ≠ merge/)
+  assert.match(axisBlock(report, "A ↔ B", "verdetti"), /Divergenti:\n- `x \/ y` — split ≠ merge/)
 })
 
 test("a boundary over an unaligned theme is not comparable, not a disagreement", () => {
@@ -143,7 +150,10 @@ test("a boundary over an unaligned theme is not comparable, not a disagreement",
 
   const report = buildReport(maps, NO_ALIGNMENT)
 
-  assert.match(report, /- verdetto `x \/ y` \(tema senza allineamento, A\)/)
+  assert.match(
+    axisBlock(report, "A ↔ B", "verdetti"),
+    /Non confrontabili \(un tema della coppia non ha controparte\):\n- `x \/ y` — A/,
+  )
 })
 
 test("edges agree through the row alignment even when the ids differ", () => {
@@ -154,7 +164,7 @@ test("edges agree through the row alignment even when the ids differ", () => {
 
   const report = buildReport(maps, NO_ALIGNMENT)
 
-  assert.match(report, /- archi concordi: 1/)
+  assert.match(axisBlock(report, "A ↔ B", "archi di dipendenza"), /accoppiati 1\n\nAccoppiati:\n- «Due» → «Uno»/)
 })
 
 test("an edge whose endpoint has no counterpart is not comparable", () => {
@@ -165,7 +175,10 @@ test("an edge whose endpoint has no counterpart is not comparable", () => {
 
   const report = buildReport(maps, NO_ALIGNMENT)
 
-  assert.match(report, /- arco «Solo qui» → «Uno» \(estremo senza allineamento, A\)/)
+  assert.match(
+    axisBlock(report, "A ↔ B", "archi di dipendenza"),
+    /Non confrontabili \(un estremo non ha controparte\):\n- «Solo qui» → «Uno» — A/,
+  )
 })
 
 test("field divergence on an aligned row is measured, not an alignment failure", () => {
@@ -176,7 +189,10 @@ test("field divergence on an aligned row is measured, not an alignment failure",
 
   const report = buildReport(maps, NO_ALIGNMENT)
 
-  assert.match(report, /- riga «Uno» — meccanico; diverge su size \(small ≠ medium\)/)
+  const righe = axisBlock(report, "A ↔ B", "righe")
+
+  assert.match(righe, /Accoppiati:\n- «Uno» — meccanico/)
+  assert.match(righe, /Divergenti:\n- «Uno» — size \(small ≠ medium\)/)
 })
 
 test("a proposal naming a spent or unknown key is rejected, not trusted", () => {
@@ -195,4 +211,17 @@ test("an all-empty verdict axis is named agreement by absence, visibly", () => {
   const report = buildReport(maps, NO_ALIGNMENT)
 
   assert.match(report, /L'asse verdetti è vuoto su entrambi i run/)
+})
+
+test("the synthesis counts each run on its own before any comparison, then the agreement", () => {
+  const maps = [
+    mapOf("A", { rows: [rowOf({ id: "S1", title: "Uno" })] }),
+    mapOf("B", { rows: [rowOf({ id: "S1", title: "Uno" }), rowOf({ id: "S2", title: "Due" })] }),
+    mapOf("C", { rows: [rowOf({ id: "S1", title: "Uno" })] }),
+  ]
+
+  const report = buildReport(maps, NO_ALIGNMENT)
+
+  assert.match(report, /\| righe \| 1 \| 2 \| 1 \|/)
+  assert.match(report, /\| righe \| 1\/2 \| 1\/1 \| 1\/2 \|/)
 })
