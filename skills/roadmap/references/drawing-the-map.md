@@ -25,6 +25,9 @@ behind enters as input, exactly the way a source document does.
   relative to a goal, so a candidate nobody re-read is a candidate nobody chose.
 - **Rows still open in `NOW`.** Each is re-justified against the new goal; the ones that still serve
   it keep their ids, the rest are retired.
+- **`.roadmap/log.md` does not carry.** The themes are drawn from nothing, and a verdict on a theme
+  that no longer exists is dead weight re-read on every later operation. The redraw starts the log
+  again with its own H2 alone.
 
 Redrawn from nothing: the `Goal`, the themes, the register, `Assumptions` and `Open questions`. No
 history of superseded goals is kept — `Current state` has room for the sentence that matters, and git
@@ -48,10 +51,24 @@ The split test decides. Where it holds, the merge test is not asked: a promise t
 alone is a theme however little it is worth on its own. The merge test applies only to a boundary the
 split test leaves standing.
 
-**Record each verdict under the `Theme boundaries` label, one line per boundary: the pair, `split`
-or `merge`, and the one fact that decided it — and nothing more.** Not the argument that reached it,
-not the test that produced it, and not the counter-argument the test already dismissed. A boundary the
-reader has to re-litigate is a boundary the map has not decided.
+**Record each verdict in `.roadmap/log.md` before the `Themes` table is written**, one bullet per
+boundary: the pair in table order, `split` or `merge`, and the one fact that decided it. An
+`Argument:` line of at most two may follow the fact — the log has room for it, the map does not. The
+order is the point: a verdict written after the table is the table's rationalisation, and the table
+then carries whatever compression the verdict would have caught.
+
+The log is the model's memory, not the author's document. `roadmap.md` never repeats a verdict — two
+copies of one decision are guaranteed drift — and where the two disagree the map wins. It is
+append-only: one H2 per session, dated and named after the door, bullets beneath. A session writes
+under its own H2 and leaves the earlier ones as they stand; a pair decided twice is decided by the
+lower bullet.
+
+```markdown
+## 2026-09-03 — Drawing
+
+- `capture` / `search` — **split.** Search defers whole without invalidating the capture evidence.
+  Argument: [optional, two lines at most].
+```
 
 **Theme compression** is the failure to watch for: merging independently schedulable value areas to
 keep the theme count small. Do not optimise for fewer themes. A user-facing identity or access
@@ -304,8 +321,9 @@ the absence is information — nothing about it was decided here.
 
 - every theme has a promise in product language and one first validator that is an existing `NOW` row,
   and no enabler validates a theme whose promise is not to a developer;
-- every theme boundary has a recorded split or merge verdict, and no first validator excludes a
-  capability its own theme's promise names;
+- every theme boundary has a split or merge verdict in `log.md`, written before the `Themes` table
+  and repeated nowhere in the map, and no first validator excludes a capability its own theme's
+  promise names;
 - greenfield draws the repository row and the skeleton separately, and the skeleton reaches the
   datastore through the real driver and runs a migration;
 - every published `Depends on` survives the substitution test — no controlled input and no narrower

@@ -16,13 +16,6 @@ that nothing has been.]
 |---|---|---|
 | `[theme-slug]` | [The promise, in product language: what somebody can do once it holds.] | `[Id of the NOW row that first validates it]` |
 
-**Theme boundaries**
-
-- `[theme-slug]` / `[theme-slug]` — **[split or merge].** [The one fact that decided it, and nothing
-  more.]
-
-[One line per boundary between adjacent themes.]
-
 ## NOW
 
 | Id | Title | Theme | Kind | Size | Readiness | Executor | Depends on |
