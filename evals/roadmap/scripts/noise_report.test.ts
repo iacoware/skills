@@ -13,6 +13,7 @@ const mapOf = (run: string, over: Partial<MapExtract> = {}): MapExtract => ({
   run,
   themes: [],
   boundaries: [],
+  verdictSource: "none",
   rows: [],
   outOfScope: [],
   ...over,

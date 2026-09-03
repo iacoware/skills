@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { basename, join } from "node:path"
 
 export type ThemeRecord = { name: string; promise: string; firstValidator: string }
@@ -12,11 +12,15 @@ export type RowRecord = {
   dependsOn: string[]
 }
 export type ExclusionRecord = { title: string; rationale: string }
+// Where the verdicts came from: `log.md` once it exists, the map's own section before the log was
+// introduced, `both` when a map repeats what the log holds — the duplication the report flags.
+export type VerdictSource = "log" | "map" | "both" | "none"
 
 export type MapExtract = {
   run: string
   themes: ThemeRecord[]
   boundaries: BoundaryRecord[]
+  verdictSource: VerdictSource
   rows: RowRecord[]
   outOfScope: ExclusionRecord[]
 }
@@ -26,6 +30,7 @@ const SEPARATOR_CELL_PATTERN = /^:?-+:?$/
 const LINK_PATTERN = /^\[(.+)\]\((.+)\)$/
 const BOUNDARY_PATTERN = /^`(.+?)`\s*\/\s*`(.+?)`\s*[—–-]+\s*\*\*(.+?)[.:]?\*\*\s*(.*)$/
 const EXCLUSION_PATTERN = /^\*\*(.+?)[.:]?\*\*\s*(.*)$/
+const ARGUMENT_PATTERN = /\s*\bArgument:.*$/
 const NONE = "—"
 
 const bare = (cell: string) => {
@@ -65,9 +70,27 @@ const parseIds = (cell: string) => {
   return value === NONE || value === "" ? [] : value.split(",").map(bare)
 }
 
+const boundariesOf = (body: string): BoundaryRecord[] =>
+  bullets(body)
+    .map((item) => BOUNDARY_PATTERN.exec(item))
+    .filter((match) => match !== null)
+    .map((match) => ({
+      pair: [match[1], match[2]] as [string, string],
+      verdict: match[3].trim().toLowerCase(),
+      fact: match[4].replace(ARGUMENT_PATTERN, "").trim(),
+    }))
+
+// The log is append-only and a pair decided twice is decided by its lowest entry, so the extract is
+// a fold over the journal in document order rather than a read of one section.
+export const extractLog = (log: string): BoundaryRecord[] => {
+  const latest = new Map<string, BoundaryRecord>()
+  for (const boundary of boundariesOf(log)) latest.set(boundary.pair.join(" / "), boundary)
+  return [...latest.values()]
+}
+
 // The parse never fails on a missing or malformed section: an axis that is absent extracts as empty,
 // and empty against empty is agreement the report makes visible rather than an error here.
-export const extractMap = (run: string, roadmap: string): MapExtract => {
+export const extractMap = (run: string, roadmap: string, log?: string): MapExtract => {
   const themesBody = sectionOf(roadmap, "Themes")
 
   const themes = tableRows(themesBody).map((cells) => ({
@@ -76,14 +99,17 @@ export const extractMap = (run: string, roadmap: string): MapExtract => {
     firstValidator: bare(cells[2] ?? ""),
   }))
 
-  const boundaries = bullets(themesBody)
-    .map((item) => BOUNDARY_PATTERN.exec(item))
-    .filter((match) => match !== null)
-    .map((match) => ({
-      pair: [match[1], match[2]] as [string, string],
-      verdict: match[3].trim().toLowerCase(),
-      fact: match[4].trim(),
-    }))
+  const mapBoundaries = boundariesOf(themesBody)
+  const logBoundaries = log === undefined ? [] : extractLog(log)
+  const boundaries = log === undefined ? mapBoundaries : logBoundaries
+  const verdictSource: VerdictSource =
+    log !== undefined && mapBoundaries.length > 0
+      ? "both"
+      : log !== undefined
+        ? "log"
+        : mapBoundaries.length > 0
+          ? "map"
+          : "none"
 
   const rows = tableRows(sectionOf(roadmap, "NOW")).map((cells) => {
     const titleCell = cells[1] ?? ""
@@ -103,12 +129,18 @@ export const extractMap = (run: string, roadmap: string): MapExtract => {
     .filter((match) => match !== null)
     .map((match) => ({ title: match[1].trim(), rationale: match[2].trim() }))
 
-  return { run, themes, boundaries, rows, outOfScope }
+  return { run, themes, boundaries, verdictSource, rows, outOfScope }
 }
 
 export const readMapExtract = (runDir: string): MapExtract => {
   const dir = runDir.replace(/\/+$/, "")
-  return extractMap(basename(dir), readFileSync(join(dir, ".roadmap", "roadmap.md"), "utf8"))
+  const roadmapDir = join(dir, ".roadmap")
+  const logPath = join(roadmapDir, "log.md")
+  return extractMap(
+    basename(dir),
+    readFileSync(join(roadmapDir, "roadmap.md"), "utf8"),
+    existsSync(logPath) ? readFileSync(logPath, "utf8") : undefined,
+  )
 }
 
 if (process.argv[1]?.endsWith("extract_map.ts")) {

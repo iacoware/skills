@@ -1,7 +1,7 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
 import { join } from "node:path"
-import { extractMap, readMapExtract } from "./extract_map.ts"
+import { extractLog, extractMap, readMapExtract } from "./extract_map.ts"
 
 const FIXTURE = `# Roadmap — X
 
@@ -45,6 +45,36 @@ test("extracts a boundary verdict with its fact folded across continuation lines
   const map = extractMap("R", FIXTURE)
 
   assert.deepEqual(map.boundaries, [{ pair: ["a", "b"], verdict: "split", fact: "Il fatto che continua." }])
+  assert.equal(map.verdictSource, "map")
+})
+
+const LOG = `## 2026-09-01 — Drawing
+
+- \`a\` / \`b\` — **split.** Il primo fatto.
+  Argument: due righe che
+  non contano.
+- \`b\` / \`c\` — **split.** Fatto su b e c.
+
+## 2026-09-03 — Revising
+
+- \`a\` / \`b\` — **merge.** Il ripensamento.
+`
+
+test("the log folds to the lowest entry per pair and drops the argument from the fact", () => {
+  assert.deepEqual(extractLog(LOG), [
+    { pair: ["a", "b"], verdict: "merge", fact: "Il ripensamento." },
+    { pair: ["b", "c"], verdict: "split", fact: "Fatto su b e c." },
+  ])
+})
+
+test("a log beside the map takes over the verdict axis, and a map that repeats them is flagged", () => {
+  const withLog = extractMap("R", "# Roadmap — X\n\n**Goal:** g\n", LOG)
+  const duplicated = extractMap("R", FIXTURE, LOG)
+
+  assert.equal(withLog.verdictSource, "log")
+  assert.equal(withLog.boundaries.length, 2)
+  assert.equal(duplicated.verdictSource, "both")
+  assert.deepEqual(duplicated.boundaries, extractLog(LOG))
 })
 
 test("extracts NOW rows with linkless title and dependency ids", () => {
@@ -67,7 +97,7 @@ test("extracts out-of-scope entries as title without trailing period plus ration
 test("a map without boundaries or sections extracts as empty axes, not an error", () => {
   const map = extractMap("R", "# Roadmap — X\n\n**Goal:** g\n")
 
-  assert.deepEqual(map, { run: "R", themes: [], boundaries: [], rows: [], outOfScope: [] })
+  assert.deepEqual(map, { run: "R", themes: [], boundaries: [], verdictSource: "none", rows: [], outOfScope: [] })
 })
 
 test("reads the real ROADMAP-CC-5 map", () => {
@@ -76,6 +106,7 @@ test("reads the real ROADMAP-CC-5 map", () => {
   assert.equal(map.run, "ROADMAP-CC-5")
   assert.equal(map.themes.length, 6)
   assert.equal(map.boundaries.length, 5)
+  assert.equal(map.verdictSource, "map")
   assert.ok(map.boundaries.every((boundary) => boundary.verdict === "split"))
   assert.equal(map.rows.length, 11)
   assert.deepEqual(map.rows.find((row) => row.id === "S4")?.dependsOn, ["S2", "S3"])

@@ -20,6 +20,7 @@ Quanto ha prodotto ciascun run — conteggi grezzi, nessun confronto:
 | --- | --- | --- | --- |
 | temi | 6 | 6 | 5 |
 | verdetti | 6 | 5 | 5 |
+| fonte dei verdetti | `roadmap.md` | `roadmap.md` | `roadmap.md` |
 | righe | 11 | 12 | 12 |
 | archi di dipendenza | 8 | 12 | 9 |
 | out-of-scope | 4 | 5 | 6 |

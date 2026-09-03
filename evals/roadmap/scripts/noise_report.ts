@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
-import { readMapExtract, type MapExtract } from "./extract_map.ts"
+import { readMapExtract, type MapExtract, type VerdictSource } from "./extract_map.ts"
 
 const SUFFIXES = ["B", "C"] as const
 
@@ -483,12 +483,21 @@ const ratio = (aligned: number, onlyLeft: number, onlyRight: number) => {
   return comparable === 0 ? "—" : `${aligned}/${comparable}`
 }
 
+// «both» è la mappa che ripete quel che il log già tiene: il confronto usa il log, il report lo dice.
+const VERDICT_SOURCE_LABEL: Record<VerdictSource, string> = {
+  log: "`log.md`",
+  map: "`roadmap.md`",
+  both: "`log.md` — duplicati in `roadmap.md`",
+  none: "—",
+}
+
 const synthesis = (maps: MapExtract[], analyses: PairAnalysis[]) => {
   const inventory = [
     row(["Asse", ...maps.map((map) => map.run)]),
     separator(maps.length + 1),
     row(["temi", ...maps.map((map) => map.themes.length)]),
     row(["verdetti", ...maps.map((map) => map.boundaries.length)]),
+    row(["fonte dei verdetti", ...maps.map((map) => VERDICT_SOURCE_LABEL[map.verdictSource])]),
     row(["righe", ...maps.map((map) => map.rows.length)]),
     row(["archi di dipendenza", ...maps.map((map) => edgesOf(map).length)]),
     row(["out-of-scope", ...maps.map((map) => map.outOfScope.length)]),
