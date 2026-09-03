@@ -62,13 +62,19 @@ redrawn. The capability is already a candidate, so it is **promoted**, not admit
 line goes, the register gains one row with the next free id, `S12`, a document appears under `slices/`,
 and `Requested by` records where the candidate came from. The cap is checked and holds at nine rows.
 
+**It read `log.md` on entry** — a `Read` of it in the transcript before the proposed block — and
+left the verdicts around `ricerca` and `condivisione` either intact or superseded by an entry under
+a new H2. The promotion widens a promise, and a session that decides the widening also splits or
+merges a theme is not wrong for that; it is wrong if it rewrote an entry, or if it never opened the
+log.
+
 **The failure it watches for** is the map being redrawn because scope sounds structural, and the
 weaker version: a question asked where nothing about the destination is in doubt. *Which* cookbooks a
 search reaches is the reach of a promise the goal already makes. Admitting it straight into `NOW`
 without noticing the candidate gets the altitude right and the operation wrong — a finding against
 R-006 alone.
 
-**Rules:** R-003, R-006, R-002, R-025, R-030, R-031.
+**Rules:** R-003, R-006, R-002, R-025, R-030, R-031, R-038.
 
 ## 2. Sounds like work, is a change of destination
 

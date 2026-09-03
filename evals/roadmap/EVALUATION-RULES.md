@@ -87,9 +87,10 @@ the failure they guard.
 
 ## Drawing the map
 
-- **R-008** — Every theme is a product promise in product language, every boundary carries a recorded
-  split or merge verdict, and no two independently schedulable value areas were merged to keep the
-  count down. *Draw the map* → `drawing-the-map.md` *Themes*.
+- **R-008** — Every theme is a product promise in product language, every boundary between adjacent
+  themes carries a split or merge verdict in `.roadmap/log.md` — a pair with two entries is decided
+  by the lower one — and no two independently schedulable value areas were merged to keep the count
+  down. *Draw the map* → `drawing-the-map.md` *Themes*.
 - **R-009** — Every theme's `First validator` is an existing `NOW` row that validates the theme's
   *complete* promise, and is not `kind: enabler` unless `Promise` says the promise is to a developer.
   `drawing-the-map.md` *Themes*. *Validator: that the reference resolves to a row. Reading: coverage
@@ -186,6 +187,13 @@ the failure they guard.
 - **R-026** — Every `OUT-OF-SCOPE` entry is written as the licence it gives — because this stays
   unsolved, the implementation may do without X, and this is the price — rather than as a line saying
   what will not be done. `drawing-the-map.md` *What the map reports about its input*.
+- **R-036** — `log.md` was written before the `Themes` table: in the transcript, the `Write` of the
+  log precedes the `Write` of `roadmap.md`. A log written after the map is the map's rationalisation,
+  and the order is the whole reason the log exists. *Draw the map*; `drawing-the-map.md` *Themes*.
+  *No artifact: read the transcript.*
+- **R-037** — No verdict is repeated in `roadmap.md`: no `Theme boundaries` label, no bullet of the
+  pair-and-verdict shape anywhere in the map. Two copies of one decision are drift. *Draw the map*;
+  `drawing-the-map.md` *Themes*.
 
 ## Revising an existing map
 
@@ -208,6 +216,11 @@ the failure they guard.
   `NOW` still reach the goal — and a failed answer produced a question carried to the close, never a
   change of door mid-session. Vacuous on `Drawing`, where the theme ceremony and the first validators
   are that door's coverage check. *Operations on the map*, *Last, the coverage question*.
+- **R-038** — `log.md` was read on entry: in the transcript, a `Read` of it precedes the proposed
+  block. An operation that touched the themes appended under an H2 of its own, and no earlier entry
+  was rewritten or removed; a session that touched no theme left the log untouched. *Establish the
+  situation*; *Operations on the map*, *An operation that touches the themes*. *No artifact for the
+  reading: read the transcript.*
 
 ## Closing the session, and handing over
 
