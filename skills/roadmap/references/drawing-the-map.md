@@ -44,6 +44,10 @@ Run both tests explicitly on every boundary between adjacent themes:
   target, and neither produces useful feedback alone. Separate names or modes are not a reason to
   split one coherent promise.
 
+The split test decides. Where it holds, the merge test is not asked: a promise that can be deferred
+alone is a theme however little it is worth on its own. The merge test applies only to a boundary the
+split test leaves standing.
+
 **Record each verdict under the `Theme boundaries` label, one line per boundary: the pair, `split`
 or `merge`, and the one fact that decided it — and nothing more.** Not the argument that reached it,
 not the test that produced it, and not the counter-argument the test already dismissed. A boundary the
