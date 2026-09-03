@@ -103,7 +103,8 @@ taratura insieme.
 
 Il primo prezzamento avviene prima del cambio log (passo 1 dell'altro documento): l'estrattore
 legge i verdetti dalla sezione `Theme boundaries` di `roadmap.md`. Quando il log atterra,
-l'adattamento sta **tutto nello script di estrazione** — `noise.prompt.md` resta intatto: riceve
+l'adattamento sta **tutto nello script di estrazione**, più una riga di inventario nel report che
+dichiara la fonte dei verdetti — `noise.prompt.md` resta intatto: riceve
 record dal JSON normalizzato e non sa da quale file i verdetti arrivino. Il JSON è l'interfaccia
 stabile; un cambio di formato dei documenti che arrivasse fino al prompt vorrebbe dire che il
 taglio a due stadi è sbagliato.

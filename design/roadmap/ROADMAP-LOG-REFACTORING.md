@@ -105,8 +105,8 @@ Lato eval (nello stesso cambio, o il reviewer non trova i verdetti):
   (transcript: l'ordine dei `Write`); nessun verdetto duplicato in `roadmap.md`; log riletto
   all'ingresso in un run di revisione (transcript: un `Read` di `log.md` prima del blocco
   proposto). Vanno sotto *Draw the map* le prime due, sotto *Revising an existing map* la terza.
-- `evals/roadmap/scripts/extract_map.ts` — `readMapExtract` legge solo `roadmap.md`: deve leggere
-  anche `log.md` quando c'è. L'asse «verdetti» diventa un fold del giornale (per coppia vince
+- `evals/roadmap/scripts/extract_map.ts` (più una riga di inventario in `noise_report.ts`) —
+  `readMapExtract` legge solo `roadmap.md`: deve leggere anche `log.md` quando c'è. L'asse «verdetti» diventa un fold del giornale (per coppia vince
   l'entry più in basso) e riconosce il formato per run, perché proprio CC-7 vs baseline confronta
   una mappa vecchio formato con una nuova: sezione in `roadmap.md` → vecchio; `log.md` presente →
   nuovo; entrambi → nuovo, e il report lo segnala come duplicato. Il ragionamento sta in
@@ -118,10 +118,10 @@ Lato eval (nello stesso cambio, o il reviewer non trova i verdetti):
   che il verdetto di tema entrasse nel template con `ff63c96` e `779bf17`). Lo scenario di
   revisione al passo 4 presuppone «mappa + log esistenti»: serve un `log.md` nel fixture con i
   quattro verdetti fra i cinque temi (`cattura/ricerca`, `ricerca/accesso`,
-  `accesso/condivisione`, `condivisione/foto`), datato come il primo disegno. È
-  un fixture che si muove perché lo stato che rappresenta si muove, il caso che `fixtures/README.md`
-  ammette; ma i verdetti sarebbero scritti a mano dove il resto del fixture è «entirely the run's»,
-  e il README deve dirlo. Stesso vuoto in `redrawn/` e in `reference-roadmap/`: il primo si
+  `accesso/condivisione`, `condivisione/foto`), datato col congelamento. È un fixture che si muove
+  perché lo stato che rappresenta si muove, il caso che `fixtures/README.md` ammette; i verdetti
+  sono scritti a mano dove il resto del fixture è «entirely the run's» — il run d'origine precede
+  il verdetto di tema, nessun transcript li porta — e il README lo dice. Stesso vuoto in `redrawn/` e in `reference-roadmap/`: il primo si
   aggiorna solo se lo scenario 3 torna eseguibile; l'oracolo non ha bisogno del log, perché R-008
   giudica la presenza e la lettura dei verdetti del run, non un diff contro l'oracolo.
 - `evals/roadmap/recipe-app/SCENARIOS.md` scenario 1 — aggiungere il check (b): la sessione ha letto
@@ -147,9 +147,12 @@ Sequenza, con lo stato al 2026-09-03:
    dall'insieme e dall'ordine dei temi (5–6 temi, accoppiati 5/7, 5/6, 4/7), e un tema in più o in
    altra posizione cambia le adiacenze. Conseguenza per CC-7: l'asse verdetti di `NOISE.md` non
    distingue il cambio log dal dado, e non va usato per giudicarlo.
-2. **Il cambio log atterra da solo.** L'intervallo non è più pulito: `6f3ba7b` (precedenza dello
-   split test, stessa sezione *Themes* di `drawing-the-map.md`) è atterrato dopo CC-6 senza run.
-   Vedi *Open questions*.
+2. **Il cambio log atterra da solo — fatto il 2026-09-03.** L'intervallo non è pulito: `6f3ba7b`
+   (precedenza dello split test, stessa sezione *Themes* di `drawing-the-map.md`) è atterrato dopo
+   CC-6 senza run e viaggia in CC-7 senza dichiarazione a parte. Le due modifiche si distinguono nel
+   contenuto: la precedenza dello split si vede in un `merge` dove lo split tiene (il caso CC-6B), il
+   log in presenza, posizione e ordine dei `Write`. Se R-008 o R-009 peggiorano, il revert è di
+   entrambi.
 3. **CC-7 (Drawing).** Giudicato sui check mirati — R-008 (presenza e fold dei verdetti nel log),
    R-009, numero di temi contro 6/6/5, transcript per (a) e (c) — **non sul pass rate aggregato**:
    con n=1 per versione, un delta di ±3 regole sull'aggregato non è leggibile, e ora si sa anche
@@ -214,14 +217,3 @@ re-reads».
 Vincolo che cresce con ogni tipo ammesso: la regola 3. Il log è riletto a ogni operazione; a due
 tipi si sta sotto le venti entry, al terzo serve un tetto complessivo o un fold anche in scrittura
 (una sessione riscrive le entry superate della propria sezione, mai delle altre).
-
-## Open questions
-
-- **`6f3ba7b` nell'intervallo di CC-7.** Due opzioni: (i) un run intermedio solo per lui (~30 min
-  più review, n=1 comunque); (ii) fonderlo nel cambio log, dichiarandolo in `PROMPT.md`. Propendo
-  per (ii): tocca la stessa sezione e gli stessi check mirati (R-008/R-009), e le due modifiche si
-  distinguono nel contenuto — la precedenza dello split si vede in un `merge` dove lo split tiene
-  (il caso CC-6B), il log si vede in presenza, posizione e ordine dei `Write`. Costo: se R-008 o
-  R-009 peggiorano, il revert è di entrambi.
-- **I verdetti del fixture `mid-flight`**: scritti a mano e dichiarati nel README, o ricostruiti dal
-  run d'origine se il suo transcript li porta. Non blocca il cambio skill; blocca il passo 4.
