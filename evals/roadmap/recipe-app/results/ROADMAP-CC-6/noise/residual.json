@@ -1,0 +1,894 @@
+{
+  "main": "ROADMAP-CC-6",
+  "pairs": [
+    {
+      "left": "ROADMAP-CC-6",
+      "right": "ROADMAP-CC-6B",
+      "themes": {
+        "left": [
+          {
+            "key": "cattura",
+            "promise": "Incollo il link di una ricetta, l'app la salva da sola mostrandomi a che punto è, e la ritrovo in elenco.",
+            "firstValidator": "Aggiungi da link con JSON-LD, elenco e dettaglio"
+          },
+          {
+            "key": "ricerca",
+            "promise": "Cerco \"cena leggera\" o \"pomodoro\" e trovo le ricette del ricettario che ne parlano, anche quando sono scritte in un'altra lingua.",
+            "firstValidator": "Ricerca semantica nel ricettario"
+          },
+          {
+            "key": "accesso",
+            "promise": "Entro con il mio account Google e trovo il mio ricettario, senza password e senza email.",
+            "firstValidator": "Accesso con Google e ricettario proprio"
+          },
+          {
+            "key": "condivisione",
+            "promise": "Mando un link a mia sorella e da quel momento aggiungiamo e correggiamo le stesse ricette.",
+            "firstValidator": "Invito condivisibile a un ricettario"
+          },
+          {
+            "key": "correzione",
+            "promise": "Correggo una ricetta estratta male, o ne scrivo una a mano che non sta su nessun sito, con lo stesso form.",
+            "firstValidator": "Modifica di una ricetta e inserimento a mano"
+          }
+        ],
+        "right": [
+          {
+            "key": "aggiunta-da-link",
+            "promise": "Incollo l'URL di una ricetta e la ritrovo nel ricettario senza compilare niente, guardando i passi reali dell'estrazione mentre avviene.",
+            "firstValidator": "Aggiunta da link con JSON-LD e elenco del ricettario"
+          },
+          {
+            "key": "aggiunta-da-testo",
+            "promise": "Quando il link non è leggibile — paywall, sito JS-heavy — incollo il testo della pagina e la ricetta entra lo stesso.",
+            "firstValidator": "Aggiunta da testo incollato"
+          },
+          {
+            "key": "ricerca-semantica",
+            "promise": "Cerco \"cena leggera\" o \"pomodoro\" e trovo le ricette pertinenti del ricettario corrente, anche quelle scritte in un'altra lingua.",
+            "firstValidator": "Ricerca semantica cross-lingua nel ricettario"
+          },
+          {
+            "key": "ricettari-condivisi",
+            "promise": "Entro col mio account Google e invito famiglia e amici con un link: dentro un ricettario tutti leggono e modificano le stesse ricette, e ognuno può stare in più ricettari.",
+            "firstValidator": "Invito via link e ricettari condivisi"
+          },
+          {
+            "key": "scrittura-e-correzione",
+            "promise": "Scrivo una ricetta a mano, e correggo qualunque ricetta salvata, nello stesso form.",
+            "firstValidator": "Scrittura a mano e correzione"
+          }
+        ]
+      },
+      "rows": {
+        "left": [
+          {
+            "key": "S1",
+            "title": "Scheletro deployato su Fly con Postgres",
+            "theme": "—",
+            "kind": "release",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S2",
+            "title": "Recall cross-lingua degli embedding multilingue",
+            "theme": "ricerca",
+            "kind": "spike",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S3",
+            "title": "Aggiungi da link con JSON-LD, elenco e dettaglio",
+            "theme": "cattura",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": [
+              "Recall cross-lingua degli embedding multilingue"
+            ]
+          },
+          {
+            "key": "S4",
+            "title": "Estrazione LLM per pagine senza structured data",
+            "theme": "cattura",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S5",
+            "title": "Ricerca semantica nel ricettario",
+            "theme": "ricerca",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S6",
+            "title": "Accesso con Google e ricettario proprio",
+            "theme": "accesso",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S7",
+            "title": "Invito condivisibile a un ricettario",
+            "theme": "condivisione",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Accesso con Google e ricettario proprio"
+            ]
+          },
+          {
+            "key": "S8",
+            "title": "Modifica di una ricetta e inserimento a mano",
+            "theme": "correzione",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S9",
+            "title": "Foto multiple e copertina",
+            "theme": "foto",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S10",
+            "title": "Rilascio a famiglia e amici",
+            "theme": "—",
+            "kind": "release",
+            "size": "small",
+            "dependsOn": [
+              "Invito condivisibile a un ricettario"
+            ]
+          }
+        ],
+        "right": [
+          {
+            "key": "S1",
+            "title": "Spike: la ricerca cross-lingua regge su ricette vere?",
+            "theme": "goal",
+            "kind": "spike",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S2",
+            "title": "Walking skeleton: Next.js su Fly con Postgres e migrazioni",
+            "theme": "—",
+            "kind": "release",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S3",
+            "title": "Aggiunta da link con JSON-LD e elenco del ricettario",
+            "theme": "aggiunta-da-link",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": []
+          },
+          {
+            "key": "S4",
+            "title": "Estrazione LLM quando il JSON-LD manca",
+            "theme": "aggiunta-da-link",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario"
+            ]
+          },
+          {
+            "key": "S5",
+            "title": "Aggiunta da testo incollato",
+            "theme": "aggiunta-da-testo",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Estrazione LLM quando il JSON-LD manca"
+            ]
+          },
+          {
+            "key": "S6",
+            "title": "Ricerca semantica cross-lingua nel ricettario",
+            "theme": "ricerca-semantica",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Spike: la ricerca cross-lingua regge su ricette vere?",
+              "Aggiunta da link con JSON-LD e elenco del ricettario"
+            ]
+          },
+          {
+            "key": "S7",
+            "title": "Accesso con Google e scope autenticato",
+            "theme": "ricettari-condivisi",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario"
+            ]
+          },
+          {
+            "key": "S8",
+            "title": "Invito via link e ricettari condivisi",
+            "theme": "ricettari-condivisi",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Accesso con Google e scope autenticato"
+            ]
+          },
+          {
+            "key": "S9",
+            "title": "Scrittura a mano e correzione",
+            "theme": "scrittura-e-correzione",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario",
+              "Ricerca semantica cross-lingua nel ricettario"
+            ]
+          },
+          {
+            "key": "S10",
+            "title": "Foto della ricetta",
+            "theme": "foto",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario",
+              "Scrittura a mano e correzione"
+            ]
+          },
+          {
+            "key": "S11",
+            "title": "Messa in mano a famiglia e amici",
+            "theme": "—",
+            "kind": "release",
+            "size": "small",
+            "dependsOn": [
+              "Invito via link e ricettari condivisi",
+              "Foto della ricetta"
+            ]
+          }
+        ]
+      },
+      "outOfScope": {
+        "left": [
+          {
+            "key": "La review obbligatoria prima del salvataggio",
+            "rationale": "Perché resta irrisolta, il flusso di add non ha stato intermedio da persistere né schermata di conferma, e la pipeline può scrivere direttamente sulla tabella finale. Il prezzo è che in elenco compaiono ricette estratte male finché qualcuno non le corregge."
+          },
+          {
+            "key": "La deduplica delle ricette",
+            "rationale": "Perché resta irrisolta, l'aggiunta non deve mai confrontare una ricetta con quelle già presenti e non serve una nozione di identità della ricetta oltre alla sua riga. Il prezzo è che la stessa ricetta linkata da due membri dello stesso ricettario compare due volte."
+          },
+          {
+            "key": "Invio di email e notifiche",
+            "rationale": "Perché resta irrisolto, nessuna riga porta un provider email, un template, una coda di invio o un flusso di reset — ed è questo che rende Google OAuth sufficiente come unico metodo di accesso. Il prezzo è che un invito viaggia solo come link copiato a mano su un canale che non è l'app, e che nulla avvisa i membri di quello che succede nel ricettario."
+          }
+        ],
+        "right": [
+          {
+            "key": "Ruoli e permessi granulari",
+            "rationale": "Poiché dentro un ricettario tutti i membri sono pari, un solo controllo — sei membro? — governa lettura e scrittura, e non serve nessun modello di ruolo. Il prezzo: qualunque membro può riscrivere o cancellare le ricette degli altri, e nessuno può risalire a chi l'ha fatto."
+          },
+          {
+            "key": "Deduplica delle ricette",
+            "rationale": "Poiché i duplicati sono consentiti, il salvataggio non fa nessun controllo di unicità né merge. Il prezzo: due membri che linkano la stessa pagina si ritrovano due ricette identiche nel ricettario."
+          },
+          {
+            "key": "Qualunque provider di posta",
+            "rationale": "Poiché non si manda nessuna email, spariscono invio, password, hashing, reset e template. Il prezzo: identità e recupero account dipendono interamente da Google, e chi non ha un account Google resta fuori dall'app."
+          },
+          {
+            "key": "Review obbligatoria dell'estratto",
+            "rationale": "Poiché non c'è nessun passo di conferma prima del salvataggio, il flusso di add non ha stato intermedio da persistere né bozze da riprendere. Il prezzo: un'estrazione sbagliata entra nel ricettario, e la si scopre solo leggendola."
+          }
+        ]
+      }
+    },
+    {
+      "left": "ROADMAP-CC-6",
+      "right": "ROADMAP-CC-6C",
+      "themes": {
+        "left": [
+          {
+            "key": "cattura",
+            "promise": "Incollo il link di una ricetta, l'app la salva da sola mostrandomi a che punto è, e la ritrovo in elenco.",
+            "firstValidator": "Aggiungi da link con JSON-LD, elenco e dettaglio"
+          },
+          {
+            "key": "ricerca",
+            "promise": "Cerco \"cena leggera\" o \"pomodoro\" e trovo le ricette del ricettario che ne parlano, anche quando sono scritte in un'altra lingua.",
+            "firstValidator": "Ricerca semantica nel ricettario"
+          },
+          {
+            "key": "accesso",
+            "promise": "Entro con il mio account Google e trovo il mio ricettario, senza password e senza email.",
+            "firstValidator": "Accesso con Google e ricettario proprio"
+          },
+          {
+            "key": "correzione",
+            "promise": "Correggo una ricetta estratta male, o ne scrivo una a mano che non sta su nessun sito, con lo stesso form.",
+            "firstValidator": "Modifica di una ricetta e inserimento a mano"
+          }
+        ],
+        "right": [
+          {
+            "key": "aggiunta-ricette",
+            "promise": "Incolli il link di una ricetta e la ritrovi salvata nel ricettario, senza confermare niente; quello che l'estrazione ha sbagliato lo correggi dopo.",
+            "firstValidator": "Aggiungi una ricetta da link e correggila dopo"
+          },
+          {
+            "key": "ricerca-semantica",
+            "promise": "Cerchi a parole tue e trovi le ricette del ricettario corrente, anche quando sono scritte in un'altra lingua.",
+            "firstValidator": "Ricerca semantica cross-lingua nel ricettario"
+          },
+          {
+            "key": "identita",
+            "promise": "Entri con il tuo account Google e vedi solo i ricettari di cui fai parte.",
+            "firstValidator": "Accedi con Google e vedi i tuoi ricettari"
+          }
+        ]
+      },
+      "rows": {
+        "left": [
+          {
+            "key": "S0",
+            "title": "Repository, CI e credenziali",
+            "theme": "—",
+            "kind": "enabler",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S2",
+            "title": "Recall cross-lingua degli embedding multilingue",
+            "theme": "ricerca",
+            "kind": "spike",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S3",
+            "title": "Aggiungi da link con JSON-LD, elenco e dettaglio",
+            "theme": "cattura",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": [
+              "Recall cross-lingua degli embedding multilingue"
+            ]
+          },
+          {
+            "key": "S4",
+            "title": "Estrazione LLM per pagine senza structured data",
+            "theme": "cattura",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S5",
+            "title": "Ricerca semantica nel ricettario",
+            "theme": "ricerca",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S6",
+            "title": "Accesso con Google e ricettario proprio",
+            "theme": "accesso",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S7",
+            "title": "Invito condivisibile a un ricettario",
+            "theme": "condivisione",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Accesso con Google e ricettario proprio"
+            ]
+          },
+          {
+            "key": "S8",
+            "title": "Modifica di una ricetta e inserimento a mano",
+            "theme": "correzione",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S9",
+            "title": "Foto multiple e copertina",
+            "theme": "foto",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi da link con JSON-LD, elenco e dettaglio"
+            ]
+          },
+          {
+            "key": "S10",
+            "title": "Rilascio a famiglia e amici",
+            "theme": "—",
+            "kind": "release",
+            "size": "small",
+            "dependsOn": [
+              "Invito condivisibile a un ricettario"
+            ]
+          }
+        ],
+        "right": [
+          {
+            "key": "S0",
+            "title": "Repository, CI e account dei servizi",
+            "theme": "—",
+            "kind": "enabler",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S2",
+            "title": "Quale embedder regge la ricerca cross-lingua",
+            "theme": "goal",
+            "kind": "spike",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S3",
+            "title": "Aggiungi una ricetta da link e correggila dopo",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": [
+              "Quale embedder regge la ricerca cross-lingua"
+            ]
+          },
+          {
+            "key": "S4",
+            "title": "Fallback LLM quando la pagina non ha JSON-LD",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S5",
+            "title": "Ricerca semantica cross-lingua nel ricettario",
+            "theme": "ricerca-semantica",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S6",
+            "title": "Accedi con Google e vedi i tuoi ricettari",
+            "theme": "identita",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S7",
+            "title": "Invita nel ricettario con un link",
+            "theme": "condivisione",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Accedi con Google e vedi i tuoi ricettari"
+            ]
+          },
+          {
+            "key": "S8",
+            "title": "Foto della ricetta con copertina",
+            "theme": "foto",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S9",
+            "title": "Aggiungi una ricetta incollando il testo",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Fallback LLM quando la pagina non ha JSON-LD"
+            ]
+          },
+          {
+            "key": "S10",
+            "title": "Scrivi una ricetta a mano",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S11",
+            "title": "Il ricettario in mano a famiglia e amici",
+            "theme": "—",
+            "kind": "release",
+            "size": "medium",
+            "dependsOn": [
+              "Invita nel ricettario con un link"
+            ]
+          }
+        ]
+      },
+      "outOfScope": {
+        "left": [
+          {
+            "key": "La review obbligatoria prima del salvataggio",
+            "rationale": "Perché resta irrisolta, il flusso di add non ha stato intermedio da persistere né schermata di conferma, e la pipeline può scrivere direttamente sulla tabella finale. Il prezzo è che in elenco compaiono ricette estratte male finché qualcuno non le corregge."
+          },
+          {
+            "key": "La deduplica delle ricette",
+            "rationale": "Perché resta irrisolta, l'aggiunta non deve mai confrontare una ricetta con quelle già presenti e non serve una nozione di identità della ricetta oltre alla sua riga. Il prezzo è che la stessa ricetta linkata da due membri dello stesso ricettario compare due volte."
+          },
+          {
+            "key": "Invio di email e notifiche",
+            "rationale": "Perché resta irrisolto, nessuna riga porta un provider email, un template, una coda di invio o un flusso di reset — ed è questo che rende Google OAuth sufficiente come unico metodo di accesso. Il prezzo è che un invito viaggia solo come link copiato a mano su un canale che non è l'app, e che nulla avvisa i membri di quello che succede nel ricettario."
+          }
+        ],
+        "right": [
+          {
+            "key": "Deduplica delle ricette",
+            "rationale": "Poiché due membri possono linkare la stessa pagina nello stesso ricettario, l'implementazione può salvare senza confronto, senza chiave naturale e senza merge: il prezzo sono duplicati visibili in elenco e in ricerca."
+          },
+          {
+            "key": "Invio di email",
+            "rationale": "Poiché nessun messaggio esce dall'app, l'implementazione può fare a meno di provider SMTP, template, code di invio e flusso di reset password: il prezzo è che entrare richiede un account Google e che l'invito viaggia solo come link che il creator gira a mano."
+          },
+          {
+            "key": "Review obbligatoria prima del salvataggio",
+            "rationale": "Poiché l'estratto si salva sempre, l'implementazione può fare a meno di uno stato bozza, di una coda di conferme e di due percorsi di lettura: il prezzo è che ricette imperfette entrano subito in elenco e in ricerca finché qualcuno non le corregge."
+          },
+          {
+            "key": "Un secondo datastore",
+            "rationale": "Poiché dati e vettori stanno nello stesso Postgres, l'implementazione può fare a meno di sincronizzazione, di transazioni distribuite e di un indice da ricostruire: il prezzo è che la ricerca resta vincolata a quello che pgvector sa fare."
+          },
+          {
+            "key": "Permessi granulari dentro un ricettario",
+            "rationale": "Poiché ogni membro è pari, l'implementazione può fare a meno di un campo ruolo, di una matrice di permessi e di controlli oltre la membership: il prezzo è che chiunque entri dal link può anche modificare e cancellare quello che hanno scritto gli altri."
+          }
+        ]
+      }
+    },
+    {
+      "left": "ROADMAP-CC-6B",
+      "right": "ROADMAP-CC-6C",
+      "themes": {
+        "left": [
+          {
+            "key": "aggiunta-da-link",
+            "promise": "Incollo l'URL di una ricetta e la ritrovo nel ricettario senza compilare niente, guardando i passi reali dell'estrazione mentre avviene.",
+            "firstValidator": "Aggiunta da link con JSON-LD e elenco del ricettario"
+          },
+          {
+            "key": "aggiunta-da-testo",
+            "promise": "Quando il link non è leggibile — paywall, sito JS-heavy — incollo il testo della pagina e la ricetta entra lo stesso.",
+            "firstValidator": "Aggiunta da testo incollato"
+          },
+          {
+            "key": "ricettari-condivisi",
+            "promise": "Entro col mio account Google e invito famiglia e amici con un link: dentro un ricettario tutti leggono e modificano le stesse ricette, e ognuno può stare in più ricettari.",
+            "firstValidator": "Invito via link e ricettari condivisi"
+          },
+          {
+            "key": "scrittura-e-correzione",
+            "promise": "Scrivo una ricetta a mano, e correggo qualunque ricetta salvata, nello stesso form.",
+            "firstValidator": "Scrittura a mano e correzione"
+          }
+        ],
+        "right": [
+          {
+            "key": "aggiunta-ricette",
+            "promise": "Incolli il link di una ricetta e la ritrovi salvata nel ricettario, senza confermare niente; quello che l'estrazione ha sbagliato lo correggi dopo.",
+            "firstValidator": "Aggiungi una ricetta da link e correggila dopo"
+          },
+          {
+            "key": "identita",
+            "promise": "Entri con il tuo account Google e vedi solo i ricettari di cui fai parte.",
+            "firstValidator": "Accedi con Google e vedi i tuoi ricettari"
+          },
+          {
+            "key": "condivisione",
+            "promise": "Mandi un link a chi vuoi e da quel momento legge ed edita le stesse ricette, alla pari con te.",
+            "firstValidator": "Invita nel ricettario con un link"
+          }
+        ]
+      },
+      "rows": {
+        "left": [
+          {
+            "key": "S0",
+            "title": "Repository, CI e credenziali",
+            "theme": "—",
+            "kind": "enabler",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S1",
+            "title": "Spike: la ricerca cross-lingua regge su ricette vere?",
+            "theme": "goal",
+            "kind": "spike",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S2",
+            "title": "Walking skeleton: Next.js su Fly con Postgres e migrazioni",
+            "theme": "—",
+            "kind": "release",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S3",
+            "title": "Aggiunta da link con JSON-LD e elenco del ricettario",
+            "theme": "aggiunta-da-link",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": []
+          },
+          {
+            "key": "S4",
+            "title": "Estrazione LLM quando il JSON-LD manca",
+            "theme": "aggiunta-da-link",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario"
+            ]
+          },
+          {
+            "key": "S5",
+            "title": "Aggiunta da testo incollato",
+            "theme": "aggiunta-da-testo",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Estrazione LLM quando il JSON-LD manca"
+            ]
+          },
+          {
+            "key": "S7",
+            "title": "Accesso con Google e scope autenticato",
+            "theme": "ricettari-condivisi",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario"
+            ]
+          },
+          {
+            "key": "S8",
+            "title": "Invito via link e ricettari condivisi",
+            "theme": "ricettari-condivisi",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Accesso con Google e scope autenticato"
+            ]
+          },
+          {
+            "key": "S9",
+            "title": "Scrittura a mano e correzione",
+            "theme": "scrittura-e-correzione",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario",
+              "Ricerca semantica cross-lingua nel ricettario"
+            ]
+          },
+          {
+            "key": "S10",
+            "title": "Foto della ricetta",
+            "theme": "foto",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiunta da link con JSON-LD e elenco del ricettario",
+              "Scrittura a mano e correzione"
+            ]
+          },
+          {
+            "key": "S11",
+            "title": "Messa in mano a famiglia e amici",
+            "theme": "—",
+            "kind": "release",
+            "size": "small",
+            "dependsOn": [
+              "Invito via link e ricettari condivisi",
+              "Foto della ricetta"
+            ]
+          }
+        ],
+        "right": [
+          {
+            "key": "S0",
+            "title": "Repository, CI e account dei servizi",
+            "theme": "—",
+            "kind": "enabler",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S1",
+            "title": "Scheletro deployato su Fly con Postgres",
+            "theme": "—",
+            "kind": "release",
+            "size": "medium",
+            "dependsOn": []
+          },
+          {
+            "key": "S2",
+            "title": "Quale embedder regge la ricerca cross-lingua",
+            "theme": "goal",
+            "kind": "spike",
+            "size": "small",
+            "dependsOn": []
+          },
+          {
+            "key": "S3",
+            "title": "Aggiungi una ricetta da link e correggila dopo",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": [
+              "Quale embedder regge la ricerca cross-lingua"
+            ]
+          },
+          {
+            "key": "S4",
+            "title": "Fallback LLM quando la pagina non ha JSON-LD",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S6",
+            "title": "Accedi con Google e vedi i tuoi ricettari",
+            "theme": "identita",
+            "kind": "product",
+            "size": "large",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S7",
+            "title": "Invita nel ricettario con un link",
+            "theme": "condivisione",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Accedi con Google e vedi i tuoi ricettari"
+            ]
+          },
+          {
+            "key": "S8",
+            "title": "Foto della ricetta con copertina",
+            "theme": "foto",
+            "kind": "product",
+            "size": "medium",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S9",
+            "title": "Aggiungi una ricetta incollando il testo",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Fallback LLM quando la pagina non ha JSON-LD"
+            ]
+          },
+          {
+            "key": "S10",
+            "title": "Scrivi una ricetta a mano",
+            "theme": "aggiunta-ricette",
+            "kind": "product",
+            "size": "small",
+            "dependsOn": [
+              "Aggiungi una ricetta da link e correggila dopo"
+            ]
+          },
+          {
+            "key": "S11",
+            "title": "Il ricettario in mano a famiglia e amici",
+            "theme": "—",
+            "kind": "release",
+            "size": "medium",
+            "dependsOn": [
+              "Invita nel ricettario con un link"
+            ]
+          }
+        ]
+      },
+      "outOfScope": {
+        "left": [
+          {
+            "key": "Ruoli e permessi granulari",
+            "rationale": "Poiché dentro un ricettario tutti i membri sono pari, un solo controllo — sei membro? — governa lettura e scrittura, e non serve nessun modello di ruolo. Il prezzo: qualunque membro può riscrivere o cancellare le ricette degli altri, e nessuno può risalire a chi l'ha fatto."
+          },
+          {
+            "key": "Qualunque provider di posta",
+            "rationale": "Poiché non si manda nessuna email, spariscono invio, password, hashing, reset e template. Il prezzo: identità e recupero account dipendono interamente da Google, e chi non ha un account Google resta fuori dall'app."
+          },
+          {
+            "key": "Review obbligatoria dell'estratto",
+            "rationale": "Poiché non c'è nessun passo di conferma prima del salvataggio, il flusso di add non ha stato intermedio da persistere né bozze da riprendere. Il prezzo: un'estrazione sbagliata entra nel ricettario, e la si scopre solo leggendola."
+          }
+        ],
+        "right": [
+          {
+            "key": "Invio di email",
+            "rationale": "Poiché nessun messaggio esce dall'app, l'implementazione può fare a meno di provider SMTP, template, code di invio e flusso di reset password: il prezzo è che entrare richiede un account Google e che l'invito viaggia solo come link che il creator gira a mano."
+          },
+          {
+            "key": "Review obbligatoria prima del salvataggio",
+            "rationale": "Poiché l'estratto si salva sempre, l'implementazione può fare a meno di uno stato bozza, di una coda di conferme e di due percorsi di lettura: il prezzo è che ricette imperfette entrano subito in elenco e in ricerca finché qualcuno non le corregge."
+          },
+          {
+            "key": "Un secondo datastore",
+            "rationale": "Poiché dati e vettori stanno nello stesso Postgres, l'implementazione può fare a meno di sincronizzazione, di transazioni distribuite e di un indice da ricostruire: il prezzo è che la ricerca resta vincolata a quello che pgvector sa fare."
+          },
+          {
+            "key": "Permessi granulari dentro un ricettario",
+            "rationale": "Poiché ogni membro è pari, l'implementazione può fare a meno di un campo ruolo, di una matrice di permessi e di controlli oltre la membership: il prezzo è che chiunque entri dal link può anche modificare e cancellare quello che hanno scritto gli altri."
+          }
+        ]
+      }
+    }
+  ]
+}

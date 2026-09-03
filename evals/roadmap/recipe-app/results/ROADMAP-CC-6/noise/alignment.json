@@ -1,0 +1,83 @@
+{
+  "pairs": [
+    {
+      "left": "ROADMAP-CC-6",
+      "right": "ROADMAP-CC-6B",
+      "themes": [
+        { "left": "cattura", "right": "aggiunta-da-link" },
+        { "left": "ricerca", "right": "ricerca-semantica" },
+        { "left": "condivisione", "right": "ricettari-condivisi" },
+        { "left": "correzione", "right": "scrittura-e-correzione" }
+      ],
+      "rows": [
+        { "left": "S1", "right": "S2" },
+        { "left": "S2", "right": "S1" },
+        { "left": "S3", "right": "S3" },
+        { "left": "S4", "right": "S4" },
+        { "left": "S5", "right": "S6" },
+        { "left": "S6", "right": "S7" },
+        { "left": "S7", "right": "S8" },
+        { "left": "S8", "right": "S9" },
+        { "left": "S9", "right": "S10" },
+        { "left": "S10", "right": "S11" }
+      ],
+      "outOfScope": [
+        { "left": "La review obbligatoria prima del salvataggio", "right": "Review obbligatoria dell'estratto" },
+        { "left": "La deduplica delle ricette", "right": "Deduplica delle ricette" },
+        { "left": "Invio di email e notifiche", "right": "Qualunque provider di posta" }
+      ]
+    },
+    {
+      "left": "ROADMAP-CC-6",
+      "right": "ROADMAP-CC-6C",
+      "themes": [
+        { "left": "cattura", "right": "aggiunta-ricette" },
+        { "left": "ricerca", "right": "ricerca-semantica" },
+        { "left": "accesso", "right": "identita" }
+      ],
+      "rows": [
+        { "left": "S0", "right": "S0" },
+        { "left": "S2", "right": "S2" },
+        { "left": "S3", "right": "S3" },
+        { "left": "S4", "right": "S4" },
+        { "left": "S5", "right": "S5" },
+        { "left": "S6", "right": "S6" },
+        { "left": "S7", "right": "S7" },
+        { "left": "S8", "right": "S10" },
+        { "left": "S9", "right": "S8" },
+        { "left": "S10", "right": "S11" }
+      ],
+      "outOfScope": [
+        { "left": "La review obbligatoria prima del salvataggio", "right": "Review obbligatoria prima del salvataggio" },
+        { "left": "La deduplica delle ricette", "right": "Deduplica delle ricette" },
+        { "left": "Invio di email e notifiche", "right": "Invio di email" }
+      ]
+    },
+    {
+      "left": "ROADMAP-CC-6B",
+      "right": "ROADMAP-CC-6C",
+      "themes": [
+        { "left": "aggiunta-da-link", "right": "aggiunta-ricette" },
+        { "left": "ricettari-condivisi", "right": "condivisione" }
+      ],
+      "rows": [
+        { "left": "S0", "right": "S0" },
+        { "left": "S1", "right": "S2" },
+        { "left": "S2", "right": "S1" },
+        { "left": "S3", "right": "S3" },
+        { "left": "S4", "right": "S4" },
+        { "left": "S5", "right": "S9" },
+        { "left": "S7", "right": "S6" },
+        { "left": "S8", "right": "S7" },
+        { "left": "S9", "right": "S10" },
+        { "left": "S10", "right": "S8" },
+        { "left": "S11", "right": "S11" }
+      ],
+      "outOfScope": [
+        { "left": "Ruoli e permessi granulari", "right": "Permessi granulari dentro un ricettario" },
+        { "left": "Qualunque provider di posta", "right": "Invio di email" },
+        { "left": "Review obbligatoria dell'estratto", "right": "Review obbligatoria prima del salvataggio" }
+      ]
+    }
+  ]
+}
