@@ -268,11 +268,8 @@ and below the theme verdicts, one bullet per entry the sweep found and not only 
 citations on both sides — the one naming the choice, for an undecided one — then `assumption`,
 `question` or `spike`, the one fact that decided it, and after an arrow where the entry went: the
 trace of the line at map altitude, the row's id when the question lives on the row, the spike's id.
-An `Argument:` line of at most two may follow the fact. The order is the point, as it is for the
-verdicts: an entry written after the section is the section's rationalisation. An entry with no
-destination is an entry that never left, and showing it is what the log is for — a reader who finds
-the pair in the log and no line in the map has found the diff, where a reader who finds only the map
-has found nothing. The line carries the reading and its reason in full; the entry carries the pair,
+An `Argument:` line of at most two may follow the fact. An entry with no destination is an entry
+that never left. The line carries the reading and its reason in full; the entry carries the pair,
 the exit and one line, and where the two disagree the map wins.
 
 ```markdown
@@ -294,7 +291,7 @@ oversight. A neighbouring row that shares the schema, the pipeline or the form i
 either: it says what was built, not which side was taken and why. A bullet that only says which row
 or which horizon a behaviour belongs to owes nothing. What the lookup turns up is an entry the sweep
 missed: it goes into the log with its exit before the line is written, never into `Assumptions`
-alone, so that the log says the pair was found late rather than not at all.
+alone.
 
 Exposing is not resolving. Only a source that selects resolves an entry: a published question and a
 scheduled spike both leave it open, because neither has produced its answer when the map is drawn.
