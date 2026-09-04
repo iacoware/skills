@@ -31,6 +31,9 @@ const LINK_PATTERN = /^\[(.+)\]\((.+)\)$/
 const BOUNDARY_PATTERN = /^`(.+?)`\s*\/\s*`(.+?)`\s*[—–-]+\s*\*\*(.+?)[.:]?\*\*\s*(.*)$/
 const EXCLUSION_PATTERN = /^\*\*(.+?)[.:]?\*\*\s*(.*)$/
 const ARGUMENT_PATTERN = /\s*\bArgument:.*$/
+// The log holds the sweep entries beside the theme verdicts, in the same bullet shape with a source
+// pair as subject and the exit as verdict; only the theme verdicts belong to the boundary axis.
+const THEME_VERDICTS = new Set(["split", "merge"])
 const NONE = "—"
 
 const bare = (cell: string) => {
@@ -79,6 +82,7 @@ const boundariesOf = (body: string): BoundaryRecord[] =>
       verdict: match[3].trim().toLowerCase(),
       fact: match[4].replace(ARGUMENT_PATTERN, "").trim(),
     }))
+    .filter((boundary) => THEME_VERDICTS.has(boundary.verdict))
 
 // The log is append-only and a pair decided twice is decided by its lowest entry, so the extract is
 // a fold over the journal in document order rather than a read of one section.

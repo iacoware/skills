@@ -31,15 +31,27 @@ mostrano presa male o non presa. In ordine di evidenza, stato al 2026-09-04 (CC-
    scritto prima di `Assumptions`; soggetto la coppia di sorgenti, verdetto l'uscita:
 
    ```markdown
-   - `arch-choices.md` § Estrazione contenuto / `goal.md` § Aggiunta ricetta — **assunzione.**
+   - `arch-choices.md` § Estrazione contenuto / `goal.md` § Aggiunta ricetta — **assumption.**
      Inserimento manuale e edit sono lo stesso form; l'estrazione è un terzo motore. → `capture, S5`
    ```
 
-   Verdetti ammessi: `assunzione` / `domanda` / `spike`, più la destinazione (`Assumptions` riga,
-   `Open questions` riga, id dello spike). Un'entry senza destinazione è il diff. Tetto per entry
-   come per i verdetti: fatto in una riga, argomento in due. Il lookup di `51a81eb`, quando trova una
-   coppia dopo il primo taglio, la appende qui con la sua uscita, non scrive direttamente in
-   `Assumptions`. Un redraw azzera anche queste.
+   Verdetti ammessi: `assumption` / `question` / `spike` — token inglesi come `split` / `merge`,
+   perché nomi di campo e di stato sono inglesi ovunque — più la destinazione dopo una freccia: la
+   traccia della riga a quota mappa, l'id della riga quando la domanda vive sulla riga, l'id dello
+   spike. Un'entry senza destinazione è il diff. Tetto per entry come per i verdetti: fatto in una
+   riga, argomento in due. Il lookup di `51a81eb`, quando trova una coppia dopo il primo taglio, la
+   appende qui con la sua uscita, non scrive direttamente in `Assumptions`. Un redraw azzera anche
+   queste.
+   **Stato: skill modificata il 2026-09-04, run non ancora fatto.** `drawing-the-map.md` § *What the
+   map reports about its input* porta la regola, l'esempio e il raccordo col lookup; *The map holds
+   when* chiede entry prima di `Assumptions` e uscita nominata; `SKILL.md` nomina lo sweep nel
+   preambolo, in *Establish the situation*, in *Draw the map* (il log va giù intero prima di
+   `roadmap.md`, quindi R-036 copre anche queste) e nella checklist. `extract_map.ts` tiene sull'asse
+   verdetti solo `split` / `merge`, così un'entry di sweep con due sorgenti senza `§` non entra nel
+   fold di `NOISE.md`. Non toccati: `EVALUATION-RULES.md` (R-015 si aggiorna dopo il run, per tenere
+   il tally di CC-8 confrontabile con CC-7), `fixtures/mid-flight/log.md` (verdetti a mano, senza
+   sweep: lo scenario 1 giudica solo lettura e append), `reference-roadmap/` (niente log: la lista
+   dello sweep di riferimento è già C1, C2, U1–U5 del brief).
    **Run.** Un solo CC-8 con lo sweep e `51a81eb` insieme, senza gemelli: gli assi di `NOISE.md`
    (temi, verdetti, righe, archi, out-of-scope) non leggono `Assumptions` né il bullet di `S5`, e a
    0 su 7 il rumore di R-015 sul lato rosso è già prezzato. `PROMPT.md` dichiara i due cambi e i

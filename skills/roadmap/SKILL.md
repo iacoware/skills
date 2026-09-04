@@ -13,9 +13,9 @@ percentage complete, no field nobody re-reads.
 
 It lives in `.roadmap/`: `roadmap.md` is the readable overview, `slices/S<id>-<slug>.md` one document
 per open row, `archive/S<id>-<slug>.md` one per delivered row, and `log.md` the model's memory of the
-theme verdicts — read at the start of every session, appended by whatever touches the themes, never
-reported to the author. One roadmap per project, serving one declared `Goal` at a time. A row is a
-slice or a spike.
+theme verdicts and of the sweep of the sources — read at the start of every session, appended by
+whatever touches the themes, never reported to the author. One roadmap per project, serving one
+declared `Goal` at a time. A row is a slice or a spike.
 
 **Two references carry the rules.** [references/slice-rules.md](references/slice-rules.md) says what
 makes a row valid; read it at the start of every session, whatever the input asks for.
@@ -48,8 +48,9 @@ Read before deciding anything:
   `LATER`, `OUT-OF-SCOPE`, `Assumptions`, `Open questions` and `Cross-functional concerns`;
 - `.roadmap/slices/` and `.roadmap/archive/`, which give the open documents and what was delivered;
 - `.roadmap/log.md`, the verdicts on the theme boundaries as the last session left them — a pair
-  decided twice is decided by its lowest entry. Nothing else carries them: a session that skips the
-  log re-litigates every boundary from scratch;
+  decided twice is decided by its lowest entry — and the entries of the sweep: every conflict and
+  undecided choice the drawing found, with the exit it took. Nothing else carries them: a session
+  that skips the log re-litigates every boundary from scratch;
 - the sources the input points at, and `docs/agents/issue-tracker.md` when it is there.
 
 **What has been delivered since the last session is asked, never read off a tracker.** A local
@@ -99,8 +100,8 @@ The `Drawing` door. Follow [references/drawing-the-map.md](references/drawing-th
 the two prerequisites, ordering, the identity seam, what the map reports about its own input, and
 what carries when a map already stands.
 
-Write `log.md` first — the theme verdicts, in the shape and order the reference gives, before the
-`Themes` table exists; on a redraw the log starts again. Then `roadmap.md` from
+Write `log.md` first — the theme verdicts and the entries of the sweep, in the shape and order the
+reference gives, before `roadmap.md` exists; on a redraw the log starts again. Then `roadmap.md` from
 [assets/roadmap-template.md](assets/roadmap-template.md) and one document per `NOW` row from
 [assets/slice-template.md](assets/slice-template.md). Keep the headings, field names and order; write
 the content in the author's language.
@@ -235,7 +236,8 @@ owns its altitude.
   before being written;
 - on `Revising`, the coverage question was asked, and it produced a question rather than a change of
   door;
-- `log.md` was read on entry, the verdicts a drawing produced went down before the `Themes` table,
-  and an operation that touched the themes appended under its own H2;
+- `log.md` was read on entry, the verdicts a drawing produced went down before the `Themes` table
+  and its sweep entries before `Assumptions`, and an operation that touched the themes appended
+  under its own H2;
 - the session closed on the four-part report — themes, register, open questions, path — and nothing
   else.

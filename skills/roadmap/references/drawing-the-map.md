@@ -26,8 +26,9 @@ behind enters as input, exactly the way a source document does.
 - **Rows still open in `NOW`.** Each is re-justified against the new goal; the ones that still serve
   it keep their ids, the rest are retired.
 - **`.roadmap/log.md` does not carry.** The themes are drawn from nothing, and a verdict on a theme
-  that no longer exists is dead weight re-read on every later operation. The redraw starts the log
-  again with its own H2 alone.
+  that no longer exists is dead weight re-read on every later operation; the sources are swept again
+  against the new goal, and the entries of the old sweep go with the verdicts. The redraw starts the
+  log again with its own H2 alone.
 
 Redrawn from nothing: the `Goal`, the themes, the register, `Assumptions` and `Open questions`. No
 history of superseded goals is kept — `Current state` has room for the sentence that matters, and git
@@ -262,6 +263,24 @@ Every entry then leaves by one of three exits, and no other:
   that row.
 - **A spike**, before the first row the entry blocks.
 
+**Record each entry in `.roadmap/log.md` before `Assumptions` is written**, under the session's H2
+and below the theme verdicts, one bullet per entry the sweep found and not only per exit taken: the
+citations on both sides — the one naming the choice, for an undecided one — then `assumption`,
+`question` or `spike`, the one fact that decided it, and after an arrow where the entry went: the
+trace of the line at map altitude, the row's id when the question lives on the row, the spike's id.
+An `Argument:` line of at most two may follow the fact. The order is the point, as it is for the
+verdicts: an entry written after the section is the section's rationalisation. An entry with no
+destination is an entry that never left, and showing it is what the log is for — a reader who finds
+the pair in the log and no line in the map has found the diff, where a reader who finds only the map
+has found nothing. The line carries the reading and its reason in full; the entry carries the pair,
+the exit and one line, and where the two disagree the map wins.
+
+```markdown
+- `concepts.md` § Extraction / `architecture.md` § Manual entry — **assumption.** The manual form
+  saves without entering the extractor; *same engine* names the schema, not the path. → `capture, S5`
+- `architecture.md` § Search — **spike.** No source selects the embedding model. → `S2`
+```
+
 **Taken in a row and nowhere else** is the failure to watch for, and its tell is a lookup, not a
 memory of the sweep. After the first cut, read every `Includes` and `Excludes` bullet that says
 **how** a behaviour works or does not — *it skips the extractor*, *it shares the form and not the
@@ -273,7 +292,9 @@ agreeing is making the very claim the lookup checks. The bullet is where the rea
 never where it is *reported*, and a reader who finds only the bullet cannot tell a decision from an
 oversight. A neighbouring row that shares the schema, the pipeline or the form is not the report
 either: it says what was built, not which side was taken and why. A bullet that only says which row
-or which horizon a behaviour belongs to owes nothing.
+or which horizon a behaviour belongs to owes nothing. What the lookup turns up is an entry the sweep
+missed: it goes into the log with its exit before the line is written, never into `Assumptions`
+alone, so that the log says the pair was found late rather than not at all.
 
 Exposing is not resolving. Only a source that selects resolves an entry: a published question and a
 scheduled spike both leave it open, because neither has produced its answer when the map is drawn.
@@ -340,9 +361,10 @@ the absence is information — nothing about it was decided here.
 - every departure from breadth before depth is one of the four the skill licenses;
 - the scope boundary ships with the first row that persists data, and identity deferred past the
   second end-user row is preceded in the register by the rows producing the evidence for it;
-- every conflict and every undecided choice left the sweep by one of the three exits, and every
-  bullet stating how a behaviour works, or reading the sources as agreeing on it, was looked up in
-  the sources before the map was written;
+- every conflict and every undecided choice is an entry in `log.md` written before `Assumptions`,
+  every entry names the exit it left by and where the line or the spike is, and every bullet stating
+  how a behaviour works, or reading the sources as agreeing on it, was looked up in the sources
+  before the map was written;
 - every line of `Assumptions` and `Open questions` traces to a theme, an id or `goal`;
 - delivery can refute every `Assumptions` line, every reading about how something works lands in a
   bullet of the row it is traced to, and no reading is contradicted by the lines it cites or gives

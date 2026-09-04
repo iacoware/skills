@@ -67,6 +67,18 @@ test("the log folds to the lowest entry per pair and drops the argument from the
   ])
 })
 
+test("sweep entries in the log are left out of the boundary axis, whatever their subject looks like", () => {
+  const log = `## 2026-09-04 — Drawing
+
+- \`a\` / \`b\` — **split.** Il fatto.
+- \`goal.md\` / \`concepts.md\` — **assumption.** Il lato preso. → \`a, S1\`
+- \`goal.md\` § Ricerca / \`arch.md\` § Embedding — **question.** Nessuna sorgente sceglie. → \`a\`
+- \`arch.md\` § Estrazione — **spike.** Modello non scelto. → \`S2\`
+`
+
+  assert.deepEqual(extractLog(log), [{ pair: ["a", "b"], verdict: "split", fact: "Il fatto." }])
+})
+
 test("a log beside the map takes over the verdict axis, and a map that repeats them is flagged", () => {
   const withLog = extractMap("R", "# Roadmap — X\n\n**Goal:** g\n", LOG)
   const duplicated = extractMap("R", FIXTURE, LOG)
