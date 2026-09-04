@@ -26,6 +26,35 @@ mostrano presa male o non presa. In ordine di evidenza, stato al 2026-09-04 (CC-
    far atterrare quel che trova (un'entry nuova con la sua uscita). Diventa superfluo solo se
    scrivere le entry per comportamento rende lo sweep abbastanza attento da trovare C1 da solo:
    si vede nel run, R-015 verde con C1 nel log sotto lo sweep e non aggiunto dopo.
+   **Formato.** Un'entry per coppia trovata, non solo per uscita presa: è la presenza o l'assenza
+   della coppia nel log che rende leggibile il run (sotto). Stesso H2 di sessione dei verdetti,
+   scritto prima di `Assumptions`; soggetto la coppia di sorgenti, verdetto l'uscita:
+
+   ```markdown
+   - `arch-choices.md` § Estrazione contenuto / `goal.md` § Aggiunta ricetta — **assunzione.**
+     Inserimento manuale e edit sono lo stesso form; l'estrazione è un terzo motore. → `capture, S5`
+   ```
+
+   Verdetti ammessi: `assunzione` / `domanda` / `spike`, più la destinazione (`Assumptions` riga,
+   `Open questions` riga, id dello spike). Un'entry senza destinazione è il diff. Tetto per entry
+   come per i verdetti: fatto in una riga, argomento in due. Il lookup di `51a81eb`, quando trova una
+   coppia dopo il primo taglio, la appende qui con la sua uscita, non scrive direttamente in
+   `Assumptions`. Un redraw azzera anche queste.
+   **Run.** Un solo CC-8 con lo sweep e `51a81eb` insieme, senza gemelli: gli assi di `NOISE.md`
+   (temi, verdetti, righe, archi, out-of-scope) non leggono `Assumptions` né il bullet di `S5`, e a
+   0 su 7 il rumore di R-015 sul lato rosso è già prezzato. `PROMPT.md` dichiara i due cambi e i
+   due tell. Il giudizio non è il pass rate ma quattro letture su C1 — il bullet di `Excludes` di
+   `S5` e l'entry C1 nel log:
+   - verde, C1 nel log sotto lo sweep: lo sweep l'ha trovata da solo; il lookup è candidato al
+     ritiro;
+   - verde, C1 assente dal log o appesa dopo il primo taglio: ha lavorato il lookup, lo sweep no;
+   - rosso, C1 nel log senza uscita: lo sweep l'ha vista, la regola dell'uscita non tiene; il lookup
+     non conta;
+   - rosso, C1 assente e bullet che legge ancora le sorgenti come concordi: falliti entrambi, e il
+     revert doppio non perde nulla.
+   Review completa come da `REVIEW-WORKFLOW.md`, per il tally; la decisione esce dalle quattro
+   letture. Dopo il run, R-015 nelle regole dice dove sta la lista dello sweep, come R-008 per i
+   verdetti.
 2. **Il test di sostituzione sugli archi** (*Hard dependencies*): per coppia candidata, `edge` /
    `order`, e lo stand-in nominato oppure il deliverable che nessun fixture fornisce. R-017 rossa in
    4 run su 6 (CC-2…CC-5), **verde in CC-6 e CC-7**: i quattro commit a bersaglio hanno attecchito e
