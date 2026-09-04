@@ -593,8 +593,8 @@ export const buildReport = (maps: MapExtract[], alignment: unknown, anchor?: Anc
     "differenza di `METRICS.md` non è derivato puro: la colonna di provenienza distingue gli",
     "accoppiamenti meccanici da quelli giudicati dalla sessione di allineamento",
     "(`../../prompts/noise.prompt.md` su `noise/residual.json`, giudizi in `noise/alignment.json`),",
-    "e rilanciando possono cambiare al più quei giudizi. Il disegno è",
-    "`design/roadmap/EVAL-NOISE.md`.",
+    "e rilanciando possono cambiare al più quei giudizi. Il razionale è l'ADR",
+    "`design/roadmap/adr/001-prezzamento-del-rumore.md`.",
     "",
     `Run gemelli: ${maps.map((map) => `\`${map.run}\``).join(", ")} — stessa skill` +
       (anchor?.tree !== undefined ? ` (tree \`${anchor.tree}\`)` : "") +

@@ -41,8 +41,8 @@ is generation-only and never receives a `REVIEW.md` — the inverse of the rule 
 that holds one is never reused for generation — and what it exists for lands beside the main run's
 map as `NOISE.md`: generated, never hand-written, regenerable, but unlike `METRICS.md` not purely
 derived — it carries the model's alignment judgements, each marked by provenance.
-[`../../../../design/roadmap/EVAL-NOISE.md`](../../../../design/roadmap/EVAL-NOISE.md) is the
-design.
+The rationale is
+[`design/roadmap/adr/001-prezzamento-del-rumore.md`](../../../../design/roadmap/adr/001-prezzamento-del-rumore.md).
 
 A run that has been reviewed keeps the report beside the map it judges, as `REVIEW.md`, and the
 proposals the cycle drew from it as `IMPROVEMENTS.md` beside that. Both cite rule ids, brief

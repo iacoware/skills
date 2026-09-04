@@ -260,7 +260,7 @@ type Recorded = {
 
 const satelliteParagraph = (mainDir: string) => `
 Satellite di \`${mainDir.split("/").pop()}\` per il prezzamento del rumore
-([\`design/roadmap/EVAL-NOISE.md\`](../../../../../design/roadmap/EVAL-NOISE.md)): stesso commit,
+(ADR [\`design/roadmap/adr/001-prezzamento-del-rumore.md\`](../../../../../design/roadmap/adr/001-prezzamento-del-rumore.md)): stesso commit,
 stesso prompt, stesso modello ed effort del principale, lanciato da \`make eval-noise\`. È un run di
 prima classe minus review, generation-only: non riceve mai \`REVIEW.md\` né \`IMPROVEMENTS.md\` — e
 i suoi confronti stanno nel \`NOISE.md\` del principale.
@@ -339,7 +339,7 @@ const runStep = async ({ step, runDir, model, effort, sessionId, satelliteOf, ta
   console.log(`${runDir}/${STEPS[step].writes} scritto.`)
 }
 
-// Il prezzamento del rumore (design/roadmap/EVAL-NOISE.md): genera i satelliti mancanti del run
+// Il prezzamento del rumore (ADR design/roadmap/adr/001-prezzamento-del-rumore.md): genera i satelliti mancanti del run
 // principale — gemelli: stesso commit, stesso prompt, modello ed effort presi dal suo PROMPT.md e
 // non dai flag — poi estrazione e match meccanico, la sessione di allineamento sul residuo, e
 // l'aritmetica che scrive NOISE.md.
