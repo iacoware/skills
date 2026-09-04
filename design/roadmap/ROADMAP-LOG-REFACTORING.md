@@ -18,6 +18,14 @@ mostrano presa male o non presa. In ordine di evidenza, stato al 2026-09-04 (CC-
    e il lato preso in un bullet senza riga nella mappa diventa un diff (entry nel log senza uscita).
    Il reviewer guadagna la lista dello sweep, che oggi ricostruisce rifacendolo. Costo: 5–10 entry
    per disegno; azzerate dal redraw come i verdetti. Candidato più forte.
+   **Non rende superfluo `51a81eb`**: i due coprono fallimenti diversi dello stesso passo. Il log
+   vede solo le coppie che lo sweep ha trovato, e scatta su «coppia trovata, uscita non presa». Il
+   fallimento di CC-7 è l'altro — «coppia non trovata»: la sessione ha letto le sorgenti come
+   concordi su C1, e un log scritto da quella sessione non avrebbe avuto l'entry. Il lookup parte
+   dai bullet della riga, dopo il primo taglio, e risale alle sorgenti; con il log ha un posto dove
+   far atterrare quel che trova (un'entry nuova con la sua uscita). Diventa superfluo solo se
+   scrivere le entry per comportamento rende lo sweep abbastanza attento da trovare C1 da solo:
+   si vede nel run, R-015 verde con C1 nel log sotto lo sweep e non aggiunto dopo.
 2. **Il test di sostituzione sugli archi** (*Hard dependencies*): per coppia candidata, `edge` /
    `order`, e lo stand-in nominato oppure il deliverable che nessun fixture fornisce. R-017 rossa in
    4 run su 6 (CC-2…CC-5), **verde in CC-6 e CC-7**: i quattro commit a bersaglio hanno attecchito e
